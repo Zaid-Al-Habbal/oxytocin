@@ -7,7 +7,7 @@ from rest_framework import serializers
 User = get_user_model()
 
 
-class UserRegistrationSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, style={"input_type": "password"})
     password_confirm = serializers.CharField(
         write_only=True, style={"input_type": "password"}
@@ -27,6 +27,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             "password_confirm",
         ]
 
+    def validate_email(self, value):
+        if not value:
+            return None
+        return value
+
     def validate_password(self, value):
         validate_password(value)
         return value
@@ -45,3 +50,12 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get("first_name", instance.first_name)
+        instance.last_name = validated_data.get("last_name", instance.last_name)
+        instance.image = validated_data.get("image", instance.image)
+        instance.gender = validated_data.get("gender", instance.gender)
+        instance.birth_date = validated_data.get("birth_date", instance.birth_date)
+        instance.save()
+        return instance
