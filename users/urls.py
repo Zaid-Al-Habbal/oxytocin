@@ -21,6 +21,6 @@ urlpatterns = [
     path(
         "refresh-token/",
         views.CustomTokenRefreshView.as_view(),
-        name="refresh-token-patient",
+        name="refresh-token",
     ),
 ]
