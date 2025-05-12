@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
 from decouple import config
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,8 +40,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # 3rd party
     "rest_framework",
-    # project apps:
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
+    # project apps
     "users",
 ]
 
@@ -100,12 +104,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {"min_length": 8},
     },
     {
         "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
+    {
+        "NAME": "users.validators.UpperLowerCaseValidator",
+    },
+    {
+        "NAME": "users.validators.DigitSymbolValidator",
     },
 ]
 
@@ -134,3 +145,30 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Use Custom User:
 AUTH_USER_MODEL = "users.CustomUser"
+
+# Media
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+# DRF
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "5/minute",  # 5 requests/minute for unauthenticated
+        "user": "10/minute",  # 10 requests/minute for authenticated
+        "login": "3/minute",  # custom scope for login
+    },
+}
+
+# JWT
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "BLACKLIST_AFTER_ROTATION": True,
+    "ROTATE_REFRESH_TOKENS": True,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_BLACKLIST_ENABLED": True,
+}

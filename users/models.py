@@ -1,6 +1,11 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 from django.db import models
 from django.utils import timezone
+
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, phone, password=None, **extra_fields):
@@ -12,38 +17,41 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, phone, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('role', 'admin')
-        extra_fields.setdefault('birth_date', timezone.now().date())  # or use a placeholder
-        extra_fields.setdefault('gender', 'male')  # or another default
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("role", "admin")
+        extra_fields.setdefault(
+            "birth_date", timezone.now().date()
+        )  # or use a placeholder
+        extra_fields.setdefault("gender", "male")  # or another default
 
-        if not extra_fields.get('is_staff'):
-            raise ValueError('Superuser must have is_staff=True.')
-        if not extra_fields.get('is_superuser'):
-            raise ValueError('Superuser must have is_superuser=True.')
+        if not extra_fields.get("is_staff"):
+            raise ValueError("Superuser must have is_staff=True.")
+        if not extra_fields.get("is_superuser"):
+            raise ValueError("Superuser must have is_superuser=True.")
 
         return self.create_user(phone, password, **extra_fields)
 
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    
+
     GENDER_CHOICES = [
-        ('male', 'Male'),
-        ('female', 'Female'),
+        ("male", "Male"),
+        ("female", "Female"),
     ]
-    
+
     ROLE_CHOICES = [
-        ('patient', 'Patient'),
-        ('assistant', 'Assistant'),
-        ('doctor', 'Doctor'),
-        ('admin', 'Admin'),
+        ("patient", "Patient"),
+        ("assistant", "Assistant"),
+        ("doctor", "Doctor"),
+        ("admin", "Admin"),
     ]
 
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=100, unique=True, null=True, blank=True)
-    image = models.CharField(max_length=255, null=True, blank=True)
+    image = models.ImageField(upload_to="images/%Y/%m/%d/", null=True, blank=True)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     birth_date = models.DateField()
 
@@ -59,8 +67,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'phone'
+    USERNAME_FIELD = "phone"
     REQUIRED_FIELDS = []
 
+    class Meta:
+        indexes = [
+            models.Index(fields=["-created_at"]),
+            models.Index(fields=["-updated_at"]),
+            models.Index(fields=["-birth_date"]),
+        ]
+        ordering = ["-created_at"]
+
     def __str__(self):
-        return f'{self.first_name} {self.last_name} ({self.phone})'
+        return f"{self.first_name} {self.last_name} ({self.phone})"
