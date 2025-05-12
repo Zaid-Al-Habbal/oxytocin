@@ -1,5 +1,12 @@
 #!/usr/bin/env sh
+
 # entrypoint.sh - waits for the database, runs migrations, then starts Django server
+
+if [ "$(id -u)" -eq 0 ]; then
+  mkdir -p /app/media
+  chown -R appuser:appuser /app/media
+  exec gosu appuser "$0" "$@"
+fi
 
 set -e
 
