@@ -9,7 +9,8 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, style={"input_type": "password"})
+    password = serializers.CharField(write_only=True, style={"input_type": "password"},
+                                     help_text="Password must meet the validation rules (min length=8, has both lowercase and uppercase latters, number, special character, not common, not similar to user's attributes ).")
     password_confirm = serializers.CharField(
         write_only=True, style={"input_type": "password"}
     )

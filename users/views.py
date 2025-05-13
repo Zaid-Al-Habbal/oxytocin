@@ -10,11 +10,36 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.views import TokenRefreshView
 
+from drf_spectacular.utils import extend_schema, OpenApiExample
+
 from .serializers import UserSerializer
+
 
 User = get_user_model()
 
-
+@extend_schema(
+    summary="Register a new user",
+    description="Creates a new user account. The password must satisfy the password policy.",
+    request=UserSerializer,
+    responses={201: UserSerializer},
+    examples=[
+        OpenApiExample(
+            name="User registration example",
+            value={
+                "first_name": "John",
+                "last_name": "Doe",
+                "phone": "0999888777",
+                "email": "john@example.com",
+                "image": None,
+                "gender": "male",
+                "birth_date": "1990-01-01",
+                "password": "abcX123#",
+                "password_confirm": "abcX123#"
+            },
+            request_only=True,
+        )
+    ]
+)
 class UserCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
