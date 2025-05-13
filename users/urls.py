@@ -23,4 +23,7 @@ urlpatterns = [
         views.CustomTokenRefreshView.as_view(),
         name="refresh-token",
     ),
+    path('change-password/',
+        ChangePasswordView.as_view(), 
+        name='change-password'),
 ]

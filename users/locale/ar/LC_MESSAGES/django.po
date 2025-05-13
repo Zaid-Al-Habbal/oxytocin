@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-13 12:06+0300\n"
+"POT-Creation-Date: 2025-05-13 15:30+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,9 +18,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-#: users/serializers.py:43
+
+#: users/serializers.py:44 users/serializers.py:77
 msgid "Passwords don't match!"
-msgstr ""
+msgstr "كلمات السر غير متطابقة"
+
+#: users/serializers.py:84
+msgid "Old password is not correct."
+msgstr "كلمة السر القديمة غير صحيحة"
 
 #: users/validators.py:10
 msgid "Password must contain at least one lowercase letter."
@@ -32,7 +37,8 @@ msgstr "كلمة السر يجب أن تحوي على حرف كبير واحد �
 
 #: users/validators.py:20
 msgid "Your password must contain both uppercase and lowercase letters."
-msgstr "كلمة السر يجب أن تحوي على حرف كبير واحد على الأقل و حرف صغير واحد على الأقل"
+msgstr ""
+"كلمة السر يجب أن تحوي على حرف كبير واحد على الأقل و حرف صغير واحد على الأقل"
 
 #: users/validators.py:27
 msgid "Password must contain at least one number."
@@ -43,9 +49,14 @@ msgid "Password must contain at least one special character (!@#$%^&*()_-+=)."
 msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد الرموز التالية على أقل"
 
 #: users/validators.py:40
-msgid "Your password must contain at least one number and one special character (!"@#$%^&*()_-+=)."
-msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على رقم واحد و أحد الرموز التالية على أقل"
+#, fuzzy
+#| msgid ""
+#| "Password must contain at least one special character (!@#$%^&*()_-+=)."
+msgid ""
+"Your password must contain at least one number and one special character (!"
+"@#$%^&*()_-+=)."
+msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد الرموز التالية على أقل"
 
-#: users/views.py:47
+#: users/views.py:72
 msgid "Logout successful."
 msgstr "تم تسجيل الخروج"
