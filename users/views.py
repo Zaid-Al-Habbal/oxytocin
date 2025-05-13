@@ -13,10 +13,11 @@ from rest_framework.permissions import IsAuthenticated
 
 from drf_spectacular.utils import extend_schema, OpenApiExample
 
-from .serializers import UserSerializer, ChangePasswordSerializer
+from .serializers import UserSerializer, LogoutSerializer, ChangePasswordSerializer
 
 
 User = get_user_model()
+
 
 @extend_schema(
     summary="Register a new user",
@@ -35,11 +36,11 @@ User = get_user_model()
                 "gender": "male",
                 "birth_date": "1990-01-01",
                 "password": "abcX123#",
-                "password_confirm": "abcX123#"
+                "password_confirm": "abcX123#",
             },
             request_only=True,
         )
-    ]
+    ],
 )
 class UserCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -61,21 +62,20 @@ class UserUpdateDestroyView(
         return self.destroy(request, *args, **kwargs)
 
 
-class LogoutView(APIView):
+class LogoutView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = LogoutSerializer
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        refresh_token = serializer.validated_data["refresh"]
         try:
-            refresh_token = request.data["refresh"]
             token = RefreshToken(refresh_token)
             token.blacklist()
             return Response(
-                {"detail": _("Logout successful.")}, status=status.HTTP_205_RESET_CONTENT
-            )
-        except KeyError:
-            return Response(
-                {"error": "Refresh token is required."},
-                status=status.HTTP_400_BAD_REQUEST,
+                {"detail": _("Logout successful.")},
+                status=status.HTTP_205_RESET_CONTENT,
             )
         except TokenError:
             return Response(
@@ -103,12 +103,15 @@ class CustomTokenRefreshView(TokenRefreshView):
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
 
-class ChangePasswordView(APIView):
+class ChangePasswordView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = ChangePasswordSerializer
 
-    def post(self, request):
-        serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"detail": "Password updated successfully."}, status=status.HTTP_200_OK)
+            return Response(
+                {"detail": "Password updated successfully."}, status=status.HTTP_200_OK
+            )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

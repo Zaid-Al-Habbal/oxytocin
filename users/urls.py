@@ -11,7 +11,7 @@ urlpatterns = [
     path(
         "logout/",
         views.LogoutView.as_view(),
-        name="login",
+        name="logout",
     ),
     path(
         "<int:pk>/",
@@ -24,6 +24,6 @@ urlpatterns = [
         name="refresh-token",
     ),
     path('change-password/',
-        ChangePasswordView.as_view(), 
+        views.ChangePasswordView.as_view(), 
         name='change-password'),
 ]
