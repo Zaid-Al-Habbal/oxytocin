@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework import status
 from rest_framework.views import APIView
@@ -43,7 +44,7 @@ class LogoutView(APIView):
             token = RefreshToken(refresh_token)
             token.blacklist()
             return Response(
-                {"detail": "Logout successful."}, status=status.HTTP_205_RESET_CONTENT
+                {"detail": _("Logout successful.")}, status=status.HTTP_205_RESET_CONTENT
             )
         except KeyError:
             return Response(

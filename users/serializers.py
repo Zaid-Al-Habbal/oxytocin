@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers
 
@@ -39,7 +40,7 @@ class UserSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if data["password"] != data["password_confirm"]:
             raise serializers.ValidationError(
-                {"password_confirm": "Passwords don't match!"}
+                {"password_confirm": _("Passwords don't match!")}
             )
         return data
 
