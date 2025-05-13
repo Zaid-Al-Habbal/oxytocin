@@ -55,7 +55,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     birth_date = models.DateField()
 
-    is_verified_phone = models.BooleanField(default=False)
+    #for Now ALL Users Are verified by Default:
+    is_verified_phone = models.BooleanField(default=True)
+    
     is_verified_email = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
