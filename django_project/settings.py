@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+    "drf_spectacular",
+    "drf_spectacular_sidecar",  # required for Django collectstatic discovery
     # project apps
     "users",
 ]
@@ -160,6 +162,8 @@ REST_FRAMEWORK = {
         "user": "10/minute",  # 10 requests/minute for authenticated
         "login": "3/minute",  # custom scope for login
     },
+    
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 # JWT
@@ -171,4 +175,16 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
     "TOKEN_BLACKLIST_ENABLED": True,
+}
+
+# Spectacular
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Oxytocin API',
+    'DESCRIPTION': 'All endpoints you need for doctor, patient and assistant!!',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+    # OTHER SETTINGS
 }
