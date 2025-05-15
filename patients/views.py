@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework import generics, permissions
 
-from .serializers import LoginPatientSerializer, CompletePatientRegistrationSerializer
+from .serializers import LoginPatientSerializer, CompletePatientRegistrationSerializer, PatientProfileSerializer
 from .models import Patient
 
 
@@ -25,3 +25,11 @@ class CompletePatientRegistrationView(generics.CreateAPIView):
     
     def get_queryset(self):
         return Patient.objects.none()
+    
+    
+class PatientProfileView(generics.RetrieveUpdateAPIView):
+    serializer_class = PatientProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return Patient.objects.get(pk=self.request.user.id)

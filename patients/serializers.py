@@ -5,6 +5,8 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Patient
+from users.serializers import UserSerializer, UserProfileSerializer
+
 
 class LoginPatientSerializer(serializers.Serializer):
     phone = serializers.CharField()
@@ -36,7 +38,7 @@ class LoginPatientSerializer(serializers.Serializer):
 class CompletePatientRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        exclude = ['id']  # since the ID is the FK to CustomUser
+        exclude = ['user_id']  # since the ID is the FK to CustomUser
 
     def validate(self, data):
         user = self.context['request'].user
@@ -51,3 +53,36 @@ class CompletePatientRegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = self.context['request'].user
         return Patient.objects.create(id=user, **validated_data)
+    
+    
+class PatientProfileSerializer(serializers.ModelSerializer):
+    user = UserProfileSerializer()
+    class Meta:
+        model = Patient
+        fields = [
+            'user',
+            'location',
+            'longitude',
+            'latitude',
+            'job',
+            'blood_type',
+            'medical_history',
+            'surgical_history',
+            'allergies',
+            'medicines',
+            'is_smoker',
+            'is_drinker',
+            'is_married'
+        ]
+    
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user')
+        instance = super().update(instance, validated_data)
+
+        user = instance.user
+        
+        user_serializer = UserProfileSerializer(user, data=user_data, partial=True)
+        user_serializer.is_valid(raise_exception=True)
+        user_serializer.save()
+
+        return instance
