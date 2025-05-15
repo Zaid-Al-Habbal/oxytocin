@@ -7,7 +7,7 @@ class Patient(models.Model):
     location = models.CharField(max_length=255)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
-    job = models.CharField(max_length=255)
+    job = models.CharField(max_length=255, null=True, blank=True)
 
     BLOOD_TYPES = [
         ('A-', 'A-'), ('A+', 'A+'), ('B+', 'B+'), ('B-', 'B-'),

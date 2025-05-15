@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from .models import Patient
 
 class LoginPatientSerializer(serializers.Serializer):
     phone = serializers.CharField()
@@ -30,3 +31,23 @@ class LoginPatientSerializer(serializers.Serializer):
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }
+
+
+class CompletePatientRegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Patient
+        exclude = ['id']  # since the ID is the FK to CustomUser
+
+    def validate(self, data):
+        user = self.context['request'].user
+        if not user.is_verified_phone:
+            raise serializers.ValidationError(_("Phone number is not verified."))
+        if hasattr(user, 'patient'):
+            raise serializers.ValidationError(_("Patient profile already exists."))
+        return data
+        if user.role is not None:
+            raise serializers.ValidationError(_("You have no access to complete this registration"))
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        return Patient.objects.create(id=user, **validated_data)
