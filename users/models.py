@@ -52,12 +52,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=100, unique=True, null=True, blank=True)
     image = models.ImageField(upload_to="images/%Y/%m/%d/", null=True, blank=True)
-    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
-    birth_date = models.DateField()
+    gender = models.CharField(
+        max_length=10, choices=GENDER_CHOICES, null=True, blank=True
+    )
+    birth_date = models.DateField(null=True, blank=True)
 
-    #for Now ALL Users Are verified by Default:
+    # for Now ALL Users Are verified by Default:
     is_verified_phone = models.BooleanField(default=True)
-    
+
     is_verified_email = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
