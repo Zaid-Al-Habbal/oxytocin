@@ -11,6 +11,7 @@ User = get_user_model()
 class UserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True,
+        validators=[validate_password],
         style={"input_type": "password"},
         help_text="Password must meet the validation rules (min length=8, has both lowercase and uppercase latters, number, special character, not common, not similar to user's attributes ).",
     )
@@ -35,10 +36,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
     def validate_email(self, value):
         if not value:
             return None
-        return value
-
-    def validate_password(self, value):
-        validate_password(value)
         return value
 
     def validate(self, data):
