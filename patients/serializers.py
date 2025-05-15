@@ -38,7 +38,7 @@ class LoginPatientSerializer(serializers.Serializer):
 class CompletePatientRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        exclude = ['user_id']  # since the ID is the FK to CustomUser
+        exclude = ['user']  # since the ID is the FK to CustomUser
 
     def validate(self, data):
         user = self.context['request'].user

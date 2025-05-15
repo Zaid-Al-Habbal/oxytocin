@@ -32,4 +32,4 @@ class PatientProfileView(generics.RetrieveUpdateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):
-        return Patient.objects.get(pk=self.request.user.id)
+        return self.request.user.patient
