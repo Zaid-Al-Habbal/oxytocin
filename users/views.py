@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from rest_framework import status
@@ -12,15 +11,13 @@ from rest_framework.permissions import IsAuthenticated
 
 from drf_spectacular.utils import extend_schema, OpenApiExample
 
+from .models import CustomUser as User
 from .serializers import (
     UserCreateSerializer,
     UserUpdateDestroySerializer,
     LogoutSerializer,
     ChangePasswordSerializer,
 )
-
-
-User = get_user_model()
 
 
 @extend_schema(

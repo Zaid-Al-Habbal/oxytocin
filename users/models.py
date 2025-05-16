@@ -35,26 +35,22 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 
-    GENDER_CHOICES = [
-        ("male", "Male"),
-        ("female", "Female"),
-    ]
+    class Gender(models.TextChoices):
+        MALE = "male", "Male"
+        FEMALE = "female", "Female"
 
-    ROLE_CHOICES = [
-        ("patient", "Patient"),
-        ("assistant", "Assistant"),
-        ("doctor", "Doctor"),
-        ("admin", "Admin"),
-    ]
+    class Role(models.TextChoices):
+        PATIENT = "patient", "Patient"
+        ASSISTANT = "assistant", "Assistant"
+        DOCTOR = "doctor", "Doctor"
+        ADMIN = "admin", "Admin"
 
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=100, unique=True, null=True, blank=True)
     image = models.ImageField(upload_to="images/%Y/%m/%d/", null=True, blank=True)
-    gender = models.CharField(
-        max_length=10, choices=GENDER_CHOICES, null=True, blank=True
-    )
+    gender = models.CharField(max_length=10, choices=Gender, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
 
     # for Now ALL Users Are verified by Default:
@@ -64,7 +60,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     last_login = models.DateTimeField(null=True, blank=True)
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES)
+    role = models.CharField(max_length=10, choices=Role, default=Role.PATIENT)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

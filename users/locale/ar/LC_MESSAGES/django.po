@@ -60,3 +60,20 @@ msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد ا
 #: users/views.py:72
 msgid "Logout successful."
 msgstr "تم تسجيل الخروج"
+
+#: users/permissions.py:21
+msgid "You don't have the required role."
+msgstr "ليس لديك الدور المطلوب."
+
+#: users/permissions.py:28
+msgid "Patient profile incomplete."
+msgstr "ملف المريض غير مكتمل."
+
+#: users/permissions.py:35
+msgid "Doctor profile incomplete."
+msgstr "ملف الطبيب غير مكتمل."
+
+#: users/permissions.py:42
+msgid "Assistant profile incomplete."
+msgstr "ملف المساعد او المساعدة غير مكتمل."
+

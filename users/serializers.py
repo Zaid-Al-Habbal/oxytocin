@@ -1,14 +1,20 @@
-from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers
 
 
-User = get_user_model()
+from .models import CustomUser as User
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
+
+    ROLE_CHOICES = [
+        ("doctor", "Doctor"),
+        ("assistant", "Assistant"),
+    ]
+
+    role = serializers.ChoiceField(choices=ROLE_CHOICES, default=User.Role.PATIENT)
     password = serializers.CharField(
         write_only=True,
         validators=[validate_password],
@@ -29,6 +35,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             "image",
             "gender",
             "birth_date",
+            "role",
             "password",
             "password_confirm",
         ]
