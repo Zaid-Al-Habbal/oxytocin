@@ -5,7 +5,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Patient
-from users.serializers import UserSerializer, UserProfileSerializer
+from users.serializers import UserCreateSerializer, UserUpdateDestroySerializer
 
 
 class LoginPatientSerializer(serializers.Serializer):
@@ -56,7 +56,7 @@ class CompletePatientRegistrationSerializer(serializers.ModelSerializer):
     
     
 class PatientProfileSerializer(serializers.ModelSerializer):
-    user = UserProfileSerializer()
+    user = UserUpdateDestroySerializer()
     class Meta:
         model = Patient
         fields = [
@@ -81,7 +81,7 @@ class PatientProfileSerializer(serializers.ModelSerializer):
 
         user = instance.user
         
-        user_serializer = UserProfileSerializer(user, data=user_data, partial=True)
+        user_serializer = UserUpdateDestroySerializer(user, data=user_data, partial=True)
         user_serializer.is_valid(raise_exception=True)
         user_serializer.save()
 

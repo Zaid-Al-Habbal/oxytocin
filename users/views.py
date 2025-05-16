@@ -1,8 +1,6 @@
-from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from rest_framework import status
-from rest_framework.views import APIView
 from rest_framework import generics, mixins
 from rest_framework.response import Response
 from rest_framework import permissions
@@ -13,17 +11,20 @@ from rest_framework.permissions import IsAuthenticated
 
 from drf_spectacular.utils import extend_schema, OpenApiExample
 
-from .serializers import UserSerializer, LogoutSerializer, ChangePasswordSerializer
-
-
-User = get_user_model()
+from .models import CustomUser as User
+from .serializers import (
+    UserCreateSerializer,
+    UserUpdateDestroySerializer,
+    LogoutSerializer,
+    ChangePasswordSerializer,
+)
 
 
 @extend_schema(
     summary="Register a new user",
     description="Creates a new user account. The password must satisfy the password policy.",
-    request=UserSerializer,
-    responses={201: UserSerializer},
+    request=UserCreateSerializer,
+    responses={201: UserCreateSerializer},
     examples=[
         OpenApiExample(
             name="User registration example",
@@ -44,7 +45,7 @@ User = get_user_model()
 )
 class UserCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserCreateSerializer
 
 
 class UserUpdateDestroyView(
@@ -53,7 +54,7 @@ class UserUpdateDestroyView(
     generics.GenericAPIView,
 ):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserUpdateDestroySerializer
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)

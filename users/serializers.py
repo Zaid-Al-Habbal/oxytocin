@@ -1,16 +1,23 @@
-from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers
 
 
-User = get_user_model()
+from .models import CustomUser as User
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserCreateSerializer(serializers.ModelSerializer):
+    
+    ROLE_CHOICES = [
+        ("doctor", "Doctor"),
+        ("assistant", "Assistant"),
+    ]
+
+    role = serializers.ChoiceField(choices=ROLE_CHOICES, default=User.Role.PATIENT)
     password = serializers.CharField(
         write_only=True,
+        validators=[validate_password],
         style={"input_type": "password"},
         help_text="Password must meet the validation rules (min length=8, has both lowercase and uppercase latters, number, special character, not common, not similar to user's attributes ).",
     )
@@ -28,6 +35,7 @@ class UserSerializer(serializers.ModelSerializer):
             "image",
             "gender",
             "birth_date",
+            "role",
             "password",
             "password_confirm",
         ]
@@ -35,10 +43,6 @@ class UserSerializer(serializers.ModelSerializer):
     def validate_email(self, value):
         if not value:
             return None
-        return value
-
-    def validate_password(self, value):
-        validate_password(value)
         return value
 
     def validate(self, data):
@@ -55,6 +59,19 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+
+class UserUpdateDestroySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = [
+            "first_name",
+            "last_name",
+            "image",
+            "gender",
+            "birth_date",
+        ]
 
     def update(self, instance, validated_data):
         instance.first_name = validated_data.get("first_name", instance.first_name)
@@ -103,26 +120,3 @@ class ChangePasswordSerializer(serializers.Serializer):
         user.set_password(self.validated_data["new_password"])
         user.save()
         return user
-
-
-class UserProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = [
-            "first_name", 
-            "last_name", 
-            "phone",
-            "email",
-            "image",
-            "gender",
-            "birth_date"
-        ]
-        
-        
-    def update(self, instance, validated_data):
-        instance.first_name = validated_data.get("first_name", instance.first_name)
-        instance.last_name = validated_data.get("last_name", instance.last_name)
-        instance.gender = validated_data.get("gender", instance.gender)
-        instance.birth_date = validated_data.get("birth_date", instance.birth_date)
-        instance.save()
-        return instance
