@@ -4,6 +4,8 @@ services:
       context: .
     networks:
       - net
+    volumes:
+      - server-media:/app/media
     ports:
       - 8000:8000
     depends_on:
@@ -42,3 +44,4 @@ networks:
 
 volumes:
   db-data:
+  server-media:
