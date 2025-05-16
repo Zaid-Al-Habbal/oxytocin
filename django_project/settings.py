@@ -140,6 +140,7 @@ USE_TZ = True
 LOCALE_PATHS = [
     BASE_DIR / 'locale',  # or os.path.join(BASE_DIR, 'locale')
     BASE_DIR / 'users/locale',
+    BASE_DIR / 'patients/locale',
 ]
 
 # Static files (CSS, JavaScript, Images)

@@ -6,6 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Patient
 from users.serializers import UserCreateSerializer, UserUpdateDestroySerializer
+from users.models import CustomUser as User
 
 
 class LoginPatientSerializer(serializers.Serializer):
@@ -36,9 +37,27 @@ class LoginPatientSerializer(serializers.Serializer):
 
 
 class CompletePatientRegistrationSerializer(serializers.ModelSerializer):
+    gender = serializers.ChoiceField(choices=User.Gender, required=False)
+    birth_date = serializers.DateField(required=False)
+    
     class Meta:
         model = Patient
-        exclude = ['user']  # since the ID is the FK to CustomUser
+        fields = [
+            'gender',
+            'birth_date',
+            'location',
+            'longitude',
+            'latitude',
+            'job',
+            'blood_type',
+            'medical_history',
+            'surgical_history',
+            'allergies',
+            'medicines',
+            'is_smoker',
+            'is_drinker',
+            'is_married'
+        ] 
 
     def validate(self, data):
         user = self.context['request'].user
@@ -47,12 +66,16 @@ class CompletePatientRegistrationSerializer(serializers.ModelSerializer):
         if hasattr(user, 'patient'):
             raise serializers.ValidationError(_("Patient profile already exists."))
         return data
-        if user.role is not None:
+        if user.role != User.Role.PATIENT:
             raise serializers.ValidationError(_("You have no access to complete this registration"))
 
     def create(self, validated_data):
         user = self.context['request'].user
-        return Patient.objects.create(id=user, **validated_data)
+        user.gender = validated_data.pop('gender')
+        user.birth_date = validated_data.pop('birth_date')
+        user.save()
+        
+        return Patient.objects.create(user=user, **validated_data)
     
     
 class PatientProfileSerializer(serializers.ModelSerializer):

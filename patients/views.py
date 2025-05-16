@@ -4,11 +4,13 @@ from rest_framework import status
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework import generics, permissions
 
-from .serializers import LoginPatientSerializer, CompletePatientRegistrationSerializer, PatientProfileSerializer
+from .serializers import LoginPatientSerializer, PatientProfileSerializer, CompletePatientRegistrationSerializer
 from .models import Patient
+from users.permissions import HasRole
+from users.models import CustomUser as User
 
 
-class LoginPatientView(APIView):
+class LoginPatientView(generics.GenericAPIView):
     throttle_classes = [ScopedRateThrottle]
     throttle_scope = 'login'
 
@@ -29,7 +31,8 @@ class CompletePatientRegistrationView(generics.CreateAPIView):
     
 class PatientProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = PatientProfileSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    required_roles = [User.Role.PATIENT]
+    permission_classes = [permissions.IsAuthenticated, HasRole]
 
     def get_object(self):
         return self.request.user.patient
