@@ -1,0 +1,55 @@
+from django.contrib import admin
+
+from nested_admin import nested
+
+from .models import Doctor, Specialty, DoctorSpecialty, Achievement, Clinic, ClinicImage
+
+
+class DoctorSpecialtyInline(nested.NestedTabularInline):
+    model = DoctorSpecialty
+    raw_id_fields = ["specialty"]
+
+
+class ClinicImageInline(nested.NestedTabularInline):
+    model = ClinicImage
+    raw_id_fields = ["clinic"]
+
+
+class ClinicInline(nested.NestedTabularInline):
+    model = Clinic
+    extra = 1
+    inlines = [ClinicImageInline]
+
+
+@admin.register(Doctor)
+class DoctorAdmin(nested.NestedModelAdmin):
+    list_display = [
+        "user",
+        "description",
+        "education",
+        "start_work_date",
+        "status",
+        "certificate",
+    ]
+    list_filter = ["status"]
+    list_editable = ["status"]
+    inlines = [DoctorSpecialtyInline, ClinicInline]
+
+
+@admin.register(Specialty)
+class SpecialtyAdmin(admin.ModelAdmin):
+    list_display = ["name", "parent"]
+    list_filter = ["parent"]
+
+
+@admin.register(Achievement)
+class AchievementAdmin(admin.ModelAdmin):
+    list_display = ["title", "description", "doctor", "created_at", "updated_at"]
+    list_filter = ["doctor", "created_at", "updated_at"]
+
+
+@admin.register(Clinic)
+class ClinicAdmin(nested.NestedModelAdmin):
+    list_display = ["doctor", "location", "phone"]
+    list_filter = ["doctor"]
+    inlines = [ClinicImageInline]
