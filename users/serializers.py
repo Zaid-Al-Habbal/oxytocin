@@ -73,6 +73,15 @@ class UserUpdateDestroySerializer(serializers.ModelSerializer):
             "birth_date",
         ]
 
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+
+            # if this serializer was instantiated as `partial=True`,
+            # make all fields optional
+            if getattr(self, "partial", False):
+                for field in self.fields.values():
+                    field.required = False
+
     def update(self, instance, validated_data):
         instance.first_name = validated_data.get("first_name", instance.first_name)
         instance.last_name = validated_data.get("last_name", instance.last_name)

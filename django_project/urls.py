@@ -26,6 +26,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("_nested_admin/", include("nested_admin.urls")),
     path("api/users/", include("users.urls")),
+    path("api/doctors/", include("doctors.urls")),
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # Optional UI:
