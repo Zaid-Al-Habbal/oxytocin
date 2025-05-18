@@ -57,7 +57,6 @@ class Specialty(models.Model):
 
 
 class DoctorSpecialty(models.Model):
-    pk = models.CompositePrimaryKey("doctor_id", "specialty_id")
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE)
     university = models.CharField(max_length=150)
@@ -65,6 +64,11 @@ class DoctorSpecialty(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["doctor", "specialty"], name="unique_doctor_specialty"
+            ),
+        ]
         indexes = [
             models.Index(fields=["-created_at"]),
             models.Index(fields=["-updated_at"]),

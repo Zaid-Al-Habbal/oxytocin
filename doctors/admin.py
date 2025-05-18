@@ -7,7 +7,7 @@ from .models import Doctor, Specialty, DoctorSpecialty, Achievement, Clinic, Cli
 
 class DoctorSpecialtyInline(nested.NestedTabularInline):
     model = DoctorSpecialty
-    raw_id_fields = ["specialty"]
+    autocomplete_fields = ["specialty"]
 
 
 class ClinicImageInline(nested.NestedTabularInline):
@@ -40,6 +40,7 @@ class DoctorAdmin(nested.NestedModelAdmin):
 class SpecialtyAdmin(admin.ModelAdmin):
     list_display = ["name", "parent"]
     list_filter = ["parent"]
+    search_fields = ["name"]
 
 
 @admin.register(Achievement)
@@ -51,5 +52,5 @@ class AchievementAdmin(admin.ModelAdmin):
 @admin.register(Clinic)
 class ClinicAdmin(nested.NestedModelAdmin):
     list_display = ["doctor", "location", "phone"]
-    list_filter = ["doctor"]
+    search_fields = ["phone"]
     inlines = [ClinicImageInline]
