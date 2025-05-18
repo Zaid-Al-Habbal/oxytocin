@@ -15,7 +15,7 @@ class Doctor(models.Model):
         primary_key=True,
         related_name="doctor",
     )
-    description = models.TextField()
+    about = models.TextField()
     education = models.TextField()
     start_work_date = models.DateField(null=True, blank=True)
     certificate = models.FileField(upload_to="documents/%Y/%m/%d/")
@@ -39,7 +39,7 @@ class Doctor(models.Model):
 
 
 class Specialty(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     parent = models.ForeignKey(
         "self",
         null=True,

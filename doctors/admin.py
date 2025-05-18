@@ -25,7 +25,7 @@ class ClinicInline(nested.NestedTabularInline):
 class DoctorAdmin(nested.NestedModelAdmin):
     list_display = [
         "user",
-        "description",
+        "about",
         "education",
         "start_work_date",
         "status",
