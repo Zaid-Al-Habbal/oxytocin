@@ -37,14 +37,12 @@ class LoginPatientSerializer(serializers.Serializer):
 
 
 class CompletePatientRegistrationSerializer(serializers.ModelSerializer):
-    gender = serializers.ChoiceField(choices=User.Gender, required=False)
-    birth_date = serializers.DateField(required=False)
+    user = UserUpdateDestroySerializer()
     
     class Meta:
         model = Patient
         fields = [
-            'gender',
-            'birth_date',
+            'user',
             'location',
             'longitude',
             'latitude',
@@ -71,9 +69,12 @@ class CompletePatientRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = self.context['request'].user
-        user.gender = validated_data.pop('gender')
-        user.birth_date = validated_data.pop('birth_date')
-        user.save()
+        user_data = validated_data.pop('user')
+        
+        user_serializer = UserUpdateDestroySerializer(user, data=user_data, partial=True)
+        user_serializer.is_valid(raise_exception=True)
+        user_serializer.save()
+
         
         return Patient.objects.create(user=user, **validated_data)
     
