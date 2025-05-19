@@ -7,14 +7,7 @@ from rest_framework import serializers
 from .models import CustomUser as User
 
 
-class UserCreateSerializer(serializers.ModelSerializer):
-
-    ROLE_CHOICES = [
-        ("doctor", "Doctor"),
-        ("assistant", "Assistant"),
-    ]
-
-    role = serializers.ChoiceField(choices=ROLE_CHOICES, default=User.Role.PATIENT)
+class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True,
         validators=[validate_password],
