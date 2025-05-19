@@ -6,7 +6,7 @@ from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import CustomUser as User
-from users.serializers import UserUpdateDestroySerializer
+from users.serializers import UserUpdateDestroySerializer, UserNestedSerializer
 from .models import Doctor, Specialty, Clinic
 
 
@@ -72,6 +72,7 @@ class DoctorLoginSerializer(serializers.Serializer):
 
 
 class DoctorCreateSerializer(serializers.ModelSerializer):
+    user = UserNestedSerializer()
     specialties = serializers.SlugRelatedField(
         slug_field="name",
         queryset=Specialty.objects.all(),
@@ -82,6 +83,7 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = [
+            "user",
             "about",
             "education",
             "start_work_date",
@@ -92,10 +94,29 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ["status"]
 
-    def create(self, validated_data):
+    def validate(self, data):
         user = self.context["request"].user
+        if not user.is_verified_phone:
+            raise serializers.ValidationError(_("Phone number is not verified."))
+        if user.role != User.Role.DOCTOR.value:
+            raise serializers.ValidationError(_("You don't have the required rule."))
+        if hasattr(user, "doctor"):
+            raise serializers.ValidationError(_("You already have a doctor profile."))
+        return super().validate(data)
+
+    def create(self, validated_data):
+        user_data = validated_data.pop("user")
         clinic_data = validated_data.pop("clinic")
         specialties = validated_data.pop("specialties")
+
+        user = self.context["request"].user
+        user_serializer = UserNestedSerializer(
+            instance=user,
+            data=user_data,
+            partial=True,
+        )
+        user_serializer.is_valid(raise_exception=True)
+        user = user_serializer.save()
 
         doctor = Doctor.objects.create(user=user, **validated_data)
         doctor.specialties.set(specialties)
