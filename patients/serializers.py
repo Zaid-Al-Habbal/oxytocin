@@ -63,9 +63,9 @@ class CompletePatientRegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(_("Phone number is not verified."))
         if hasattr(user, 'patient'):
             raise serializers.ValidationError(_("Patient profile already exists."))
-        return data
         if user.role != User.Role.PATIENT:
             raise serializers.ValidationError(_("You have no access to complete this registration"))
+        return data
 
     def create(self, validated_data):
         user = self.context['request'].user
