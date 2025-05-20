@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # project apps
     "users",
     "doctors",
+    "clinics",
 ]
 
 MIDDLEWARE = [
@@ -141,6 +142,8 @@ USE_TZ = True
 LOCALE_PATHS = [
     BASE_DIR / 'locale',  # or os.path.join(BASE_DIR, 'locale')
     BASE_DIR / 'users/locale',
+    BASE_DIR / 'doctors/locale',
+    BASE_DIR / 'clinics/locale',
 ]
 
 # Static files (CSS, JavaScript, Images)

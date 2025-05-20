@@ -26,7 +26,6 @@ class DoctorLoginView(generics.GenericAPIView):
 
 
 class DoctorCreateView(generics.CreateAPIView):
-    queryset = Doctor.objects.all()
     serializer_class = DoctorCreateSerializer
     permission_classes = [IsAuthenticated]
 
@@ -36,3 +35,6 @@ class DoctorRetrieveUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = DoctorUpdateSerializer
     permission_classes = [IsAuthenticated, HasRole]
     required_roles = [User.Role.DOCTOR]
+
+    def get_object(self):
+        return self.request.user.doctor

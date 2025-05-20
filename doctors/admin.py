@@ -2,17 +2,15 @@ from django.contrib import admin
 
 from nested_admin import nested
 
-from .models import Doctor, Specialty, DoctorSpecialty, Achievement, Clinic, ClinicImage
+from clinics.models import Clinic
+from clinics.admin import ClinicImageInline
+
+from .models import Doctor, Specialty, DoctorSpecialty, Achievement
 
 
 class DoctorSpecialtyInline(nested.NestedTabularInline):
     model = DoctorSpecialty
     autocomplete_fields = ["specialty"]
-
-
-class ClinicImageInline(nested.NestedTabularInline):
-    model = ClinicImage
-    raw_id_fields = ["clinic"]
 
 
 class ClinicInline(nested.NestedTabularInline):
@@ -47,10 +45,3 @@ class SpecialtyAdmin(admin.ModelAdmin):
 class AchievementAdmin(admin.ModelAdmin):
     list_display = ["title", "description", "doctor", "created_at", "updated_at"]
     list_filter = ["doctor", "created_at", "updated_at"]
-
-
-@admin.register(Clinic)
-class ClinicAdmin(nested.NestedModelAdmin):
-    list_display = ["doctor", "location", "phone"]
-    search_fields = ["phone"]
-    inlines = [ClinicImageInline]

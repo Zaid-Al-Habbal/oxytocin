@@ -1,9 +1,10 @@
-from django.urls import path
+from django.urls import path, include
 
-from . import views
+from .views import DoctorLoginView, DoctorCreateView, DoctorRetrieveUpdateView
 
 urlpatterns = [
-    path("login/", views.DoctorLoginView.as_view(), name="doctor-login"),
-    path("register/", views.DoctorCreateView.as_view(), name="doctor-create"),
-    path("<int:pk>/", views.DoctorRetrieveUpdateView.as_view(), name="doctor-retrieve-update"),
+    path("", include("clinics.urls")),
+    path("login/", DoctorLoginView.as_view(), name="doctor-login"),
+    path("", DoctorCreateView.as_view(), name="doctor-create"),
+    path("my-profile/", DoctorRetrieveUpdateView.as_view(), name="doctor-retrieve-update"),
 ]

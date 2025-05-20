@@ -2,45 +2,12 @@ from django.utils.translation import gettext as _
 from django.contrib.auth import authenticate
 
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import CustomUser as User
 from users.serializers import UserUpdateDestroySerializer, UserNestedSerializer
-from .models import Doctor, Specialty, Clinic
 
-
-class ClinicSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Clinic
-        fields = [
-            "location",
-            "longitude",
-            "latitude",
-            "phone",
-        ]
-        extra_kwargs = {
-            # Remove DRF's automatic UniqueValidator on `phone`
-            "phone": {"validators": []}
-        }
-
-    def validate_phone(self, value):
-        queryset = Clinic.objects.all()
-        validator = UniqueValidator(queryset=queryset)
-        serializer_field = self.fields["phone"]
-        validator(value, serializer_field)
-        return value
-
-    def create(self, validated_data):
-        doctor = self.context.get("doctor")
-        return Clinic.objects.create(doctor=doctor, **validated_data)
-
-    def update(self, instance, validated_data):
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        instance.save()
-        return instance
+from .models import Doctor, Specialty
 
 
 class DoctorLoginSerializer(serializers.Serializer):
@@ -78,7 +45,6 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
         queryset=Specialty.objects.all(),
         many=True,
     )
-    clinic = ClinicSerializer()
 
     class Meta:
         model = Doctor
@@ -90,7 +56,6 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
             "certificate",
             "status",
             "specialties",
-            "clinic",
         ]
         read_only_fields = ["status"]
 
@@ -106,7 +71,6 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user_data = validated_data.pop("user")
-        clinic_data = validated_data.pop("clinic")
         specialties = validated_data.pop("specialties")
 
         user = self.context["request"].user
@@ -121,12 +85,6 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
         doctor = Doctor.objects.create(user=user, **validated_data)
         doctor.specialties.set(specialties)
 
-        clinic_serializer = ClinicSerializer(
-            data=clinic_data, context={"doctor": doctor}
-        )
-        clinic_serializer.is_valid(raise_exception=True)
-        clinic_serializer.save()
-
         return doctor
 
 
@@ -137,7 +95,6 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
         slug_field="name",
         queryset=Specialty.objects.all(),
     )
-    clinic = ClinicSerializer()
 
     class Meta:
         model = Doctor
@@ -148,20 +105,12 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
             "start_work_date",
             "status",
             "specialties",
-            "clinic",
         ]
         read_only_fields = ["status"]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        if self.instance and hasattr(self.instance, "clinic"):
-            self.fields["clinic"].instance = self.instance.clinic
 
     def update(self, instance, validated_data):
         user_data = validated_data.pop("user")
         specialties_data = validated_data.pop("specialties")
-        clinic_data = validated_data.pop("clinic")
 
         user = instance.user
         user_serializer = UserUpdateDestroySerializer(
@@ -178,14 +127,5 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
         instance.save()
 
         instance.specialties.set(specialties_data)
-
-        clinic = instance.clinic
-        clinic_serializer = ClinicSerializer(
-            instance=clinic,
-            data=clinic_data,
-            partial=True,
-        )
-        clinic_serializer.is_valid(raise_exception=True)
-        clinic_serializer.save()
 
         return instance
