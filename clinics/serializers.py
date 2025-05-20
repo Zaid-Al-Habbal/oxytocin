@@ -2,6 +2,8 @@ from django.utils.translation import gettext as _
 
 from rest_framework import serializers
 
+from users.models import CustomUser as User
+
 from .models import Clinic
 
 
@@ -21,14 +23,14 @@ class ClinicSerializer(serializers.ModelSerializer):
         return self.context["request"].user
 
     def validate(self, data):
+        if self.user.role != User.Role.DOCTOR:
+            raise serializers.ValidationError(_("You don't have the required role."))
         if not hasattr(self.user, "doctor"):
             raise serializers.ValidationError(
                 _("Please create a doctor profile first.")
             )
         if self.instance is None and hasattr(self.user.doctor, "clinic"):
-            raise serializers.ValidationError(
-                _("You already have a clinic.")
-            )
+            raise serializers.ValidationError(_("You already have a clinic."))
         return super().validate(data)
 
     def create(self, validated_data):
