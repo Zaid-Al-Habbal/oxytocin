@@ -64,7 +64,7 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
         if not user.is_verified_phone:
             raise serializers.ValidationError(_("Phone number is not verified."))
         if user.role != User.Role.DOCTOR.value:
-            raise serializers.ValidationError(_("You don't have the required rule."))
+            raise serializers.ValidationError(_("You don't have the required role."))
         if hasattr(user, "doctor"):
             raise serializers.ValidationError(_("You already have a doctor profile."))
         return super().validate(data)
