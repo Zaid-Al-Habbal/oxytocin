@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-13 15:30+0300\n"
+"POT-Creation-Date: 2025-05-23 13:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +19,46 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: users/serializers.py:44 users/serializers.py:77
+#: users/permissions.py:23
+msgid "You don't have the required role."
+msgstr "ليس لديك الدور المطلوب."
+
+#: users/permissions.py:27
+msgid "Patient profile incomplete."
+msgstr "ملف المريض غير مكتمل."
+
+#: users/permissions.py:32
+msgid "Doctor profile incomplete."
+msgstr "ملف الطبيب غير مكتمل."
+
+#: users/permissions.py:36
+#, fuzzy
+#| msgid "Doctor profile incomplete."
+msgid "Doctor clinic incomplete."
+msgstr "ملف الطبيب غير مكتمل."
+
+#: users/permissions.py:40
+msgid "Your account is under review. Please wait for approval."
+msgstr "حسابك قيد المراجعة. يُرجى انتظار الموافقة."
+
+#: users/permissions.py:45
+msgid ""
+"Your account has been declined. Please contact support for more information."
+msgstr "تم رفض حسابك. يُرجى التواصل مع الدعم لمزيد من المعلومات."
+
+#: users/permissions.py:50
+msgid "Assistant profile incomplete."
+msgstr "ملف المساعد او المساعدة غير مكتمل."
+
+#: users/serializers.py:52 users/serializers.py:134
 msgid "Passwords don't match!"
 msgstr "كلمات السر غير متطابقة"
 
-#: users/serializers.py:84
+#: users/serializers.py:108
+msgid "must be in the past."
+msgstr "يجب أن يكون في الماضي."
+
+#: users/serializers.py:141
 msgid "Old password is not correct."
 msgstr "كلمة السر القديمة غير صحيحة"
 
@@ -57,23 +92,6 @@ msgid ""
 "@#$%^&*()_-+=)."
 msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد الرموز التالية على أقل"
 
-#: users/views.py:72
+#: users/views.py:81
 msgid "Logout successful."
 msgstr "تم تسجيل الخروج"
-
-#: users/permissions.py:21
-msgid "You don't have the required role."
-msgstr "ليس لديك الدور المطلوب."
-
-#: users/permissions.py:28
-msgid "Patient profile incomplete."
-msgstr "ملف المريض غير مكتمل."
-
-#: users/permissions.py:35
-msgid "Doctor profile incomplete."
-msgstr "ملف الطبيب غير مكتمل."
-
-#: users/permissions.py:42
-msgid "Assistant profile incomplete."
-msgstr "ملف المساعد او المساعدة غير مكتمل."
-

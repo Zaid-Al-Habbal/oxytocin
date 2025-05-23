@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from pathlib import Path
 from django.core.management.utils import get_random_secret_key
+
+from pathlib import Path
 from decouple import config
 from datetime import timedelta
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "drf_spectacular_sidecar",  # required for Django collectstatic discovery
     "nested_admin",
+    "file_validator",
     # project apps
     "users",
     "doctors",
@@ -140,10 +142,10 @@ USE_TZ = True
 
 # for translating error & messages:
 LOCALE_PATHS = [
-    BASE_DIR / 'locale',  # or os.path.join(BASE_DIR, 'locale')
-    BASE_DIR / 'users/locale',
-    BASE_DIR / 'doctors/locale',
-    BASE_DIR / 'clinics/locale',
+    BASE_DIR / "locale",  # or os.path.join(BASE_DIR, 'locale')
+    BASE_DIR / "users/locale",
+    BASE_DIR / "doctors/locale",
+    BASE_DIR / "clinics/locale",
 ]
 
 # Static files (CSS, JavaScript, Images)
@@ -163,6 +165,19 @@ AUTH_USER_MODEL = "users.CustomUser"
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+# file-validator
+FILE_UPLOAD_HANDLERS = [
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+]
+FILE_VALIDATOR_ERROR_MESSAGE = (
+    "The file '{current_file_name}' (size {current_file_size}, "
+    "type {current_file_type}/{current_file_extension}, MIME {current_file_mime}) is not supported. "
+    "Accepted types: {acceptable_types}. "
+    "Accepted MIME types: {acceptable_mimes}. "
+    "Maximum file size: {max_file_size}."
+)
+
+
 # DRF
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -173,8 +188,7 @@ REST_FRAMEWORK = {
         "user": "10/minute",  # 10 requests/minute for authenticated
         "login": "3/minute",  # custom scope for login
     },
-    
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 # JWT
@@ -190,12 +204,12 @@ SIMPLE_JWT = {
 
 # Spectacular
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Oxytocin API',
-    'DESCRIPTION': 'All endpoints you need for doctor, patient and assistant!!',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
-    'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
-    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
-    'REDOC_DIST': 'SIDECAR',
+    "TITLE": "Oxytocin API",
+    "DESCRIPTION": "All endpoints you need for doctor, patient and assistant!!",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_DIST": "SIDECAR",  # shorthand to use the sidecar instead
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "REDOC_DIST": "SIDECAR",
     # OTHER SETTINGS
 }
