@@ -20,7 +20,7 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 #: doctors/serializers.py:26
 msgid "Invalid credentials!"
-msgstr ""
+msgstr "بيانات اعتماد خاطئة."
 
 #: doctors/serializers.py:29
 msgid "Please, verify your phone number first"
