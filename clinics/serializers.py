@@ -1,11 +1,36 @@
 from django.utils.translation import gettext as _
 
-from file_validator.models import DjangoFileValidator
 from rest_framework import serializers
+from rest_framework.exceptions import PermissionDenied
+from file_validator.models import DjangoFileValidator
 
 from users.models import CustomUser as User
 
 from .models import Clinic, ClinicImage
+
+
+class ClinicMixin:
+    """
+    Adds .request, .user, and a reusable `validate()` that ensures
+    request.user is a doctor with a clinic.
+    """
+
+    @property
+    def request(self):
+        return self.context.get("request")
+
+    @property
+    def user(self):
+        return self.request.user
+
+    def validate(self, data):
+        if self.user.role != User.Role.DOCTOR:
+            raise PermissionDenied(_("You don't have the required role."))
+        if not hasattr(self.user, "doctor"):
+            raise serializers.ValidationError(_("Doctor profile incomplete."))
+        if not hasattr(self.user.doctor, "clinic"):
+            raise serializers.ValidationError(_("Doctor clinic incomplete."))
+        return super().validate(data)
 
 
 class ClinicSerializer(serializers.ModelSerializer):
@@ -25,7 +50,7 @@ class ClinicSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if self.user.role != User.Role.DOCTOR:
-            raise serializers.ValidationError(_("You don't have the required role."))
+            raise PermissionDenied(_("You don't have the required role."))
         if not hasattr(self.user, "doctor"):
             raise serializers.ValidationError(
                 _("Please create a doctor profile first.")
@@ -95,7 +120,7 @@ class NestedClinicImageSerializer(serializers.ModelSerializer):
         return super().validate(data)
 
 
-class ClinicImageCreateSerializer(serializers.Serializer):
+class ClinicImageCreateSerializer(ClinicMixin, serializers.Serializer):
     images = serializers.ListField(
         child=serializers.ImageField(
             validators=[
@@ -117,14 +142,6 @@ class ClinicImageCreateSerializer(serializers.Serializer):
         max_length=8,
     )
 
-    @property
-    def request(self):
-        return self.context.get("request")
-
-    @property
-    def user(self):
-        return self.request.user
-
     def validate_images(self, value):
         uploaded_images_len = len(value)
         if hasattr(self.user, "doctor") and hasattr(self.user.doctor, "clinic"):
@@ -136,15 +153,6 @@ class ClinicImageCreateSerializer(serializers.Serializer):
                     _("You can upload a maximum of 8 images.")
                 )
         return value
-
-    def validate(self, data):
-        if self.user.role != User.Role.DOCTOR:
-            raise serializers.ValidationError(_("You don't have the required role."))
-        if not hasattr(self.user, "doctor"):
-            raise serializers.ValidationError(_("Doctor profile incomplete."))
-        if not hasattr(self.user.doctor, "clinic"):
-            raise serializers.ValidationError(_("Doctor clinic incomplete."))
-        return super().validate(data)
 
     def to_representation(self, instance):
         serializer = NestedClinicImageSerializer(
@@ -164,16 +172,8 @@ class ClinicImageCreateSerializer(serializers.Serializer):
         return saved_clinic_images
 
 
-class ClinicImagesUpdateSerializer(serializers.Serializer):
+class ClinicImagesUpdateSerializer(ClinicMixin, serializers.Serializer):
     clinic_images = NestedClinicImageSerializer(many=True)
-
-    @property
-    def request(self):
-        return self.context.get("request")
-
-    @property
-    def user(self):
-        return self.request.user
 
     def validate_clinic_images(self, value):
         uploaded_images_len = len(value)
@@ -182,15 +182,6 @@ class ClinicImagesUpdateSerializer(serializers.Serializer):
                 _("You can upload a maximum of 8 images.")
             )
         return value
-
-    def validate(self, data):
-        if self.user.role != User.Role.DOCTOR:
-            raise serializers.ValidationError(_("You don't have the required role."))
-        if not hasattr(self.user, "doctor"):
-            raise serializers.ValidationError(_("Doctor profile incomplete."))
-        if not hasattr(self.user.doctor, "clinic"):
-            raise serializers.ValidationError(_("Doctor clinic incomplete."))
-        return super().validate(data)
 
     def to_representation(self, instance):
         serializer = NestedClinicImageSerializer(
@@ -213,19 +204,11 @@ class ClinicImagesUpdateSerializer(serializers.Serializer):
         return updated_clinic_images
 
 
-class ClinicImageDeleteSerializer(serializers.Serializer):
+class ClinicImageDeleteSerializer(ClinicMixin, serializers.Serializer):
     clinic_images = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=ClinicImage.objects.all(),
     )
-
-    @property
-    def request(self):
-        return self.context.get("request")
-
-    @property
-    def user(self):
-        return self.request.user
 
     def validate_clinic_images(self, value):
         if hasattr(self.user, "doctor") and hasattr(self.user.doctor, "clinic"):
@@ -246,12 +229,3 @@ class ClinicImageDeleteSerializer(serializers.Serializer):
                     )
                 )
         return value
-
-    def validate(self, data):
-        if self.user.role != User.Role.DOCTOR:
-            raise serializers.ValidationError(_("You don't have the required role."))
-        if not hasattr(self.user, "doctor"):
-            raise serializers.ValidationError(_("Doctor profile incomplete."))
-        if not hasattr(self.user.doctor, "clinic"):
-            raise serializers.ValidationError(_("Doctor clinic incomplete."))
-        return super().validate(data)

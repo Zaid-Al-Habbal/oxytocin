@@ -2,7 +2,9 @@ from django.utils.translation import gettext as _
 from django.contrib.auth import authenticate
 
 from rest_framework import serializers
+from rest_framework.exceptions import PermissionDenied
 from rest_framework_simplejwt.tokens import RefreshToken
+from file_validator.models import DjangoFileValidator
 
 from users.models import CustomUser as User
 from users.serializers import UserUpdateDestroySerializer, UserNestedSerializer
@@ -40,6 +42,25 @@ class DoctorLoginSerializer(serializers.Serializer):
 
 class DoctorCreateSerializer(serializers.ModelSerializer):
     user = UserNestedSerializer()
+    certificate = serializers.FileField(
+        validators=[
+            DjangoFileValidator(
+                libraries=["python_magic", "filetype"],
+                acceptable_mimes=[
+                    "application/pdf",
+                    "image/jpg",
+                    "image/jpeg",
+                    "image/png",
+                    "image/gif",
+                    "image/webp",
+                    "image/bmp",
+                ],
+                acceptable_types=["archive", "image"],
+                max_upload_file_size=8 * 1024 * 1024,  # 8MB
+            )
+        ],
+        write_only=True,
+    )
     specialties = serializers.SlugRelatedField(
         slug_field="name",
         queryset=Specialty.objects.all(),
@@ -64,7 +85,7 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
         if not user.is_verified_phone:
             raise serializers.ValidationError(_("Phone number is not verified."))
         if user.role != User.Role.DOCTOR.value:
-            raise serializers.ValidationError(_("You don't have the required role."))
+            raise PermissionDenied(_("You don't have the required role."))
         if hasattr(user, "doctor"):
             raise serializers.ValidationError(_("You already have a doctor profile."))
         return super().validate(data)
