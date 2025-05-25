@@ -69,10 +69,12 @@ class UserUpdateDestroySerializer(serializers.ModelSerializer):
         fields = [
             "first_name",
             "last_name",
+            "phone",
             "image",
             "gender",
             "birth_date",
         ]
+        read_only_fields = ["phone"]
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
