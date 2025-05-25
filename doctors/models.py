@@ -57,7 +57,11 @@ class Specialty(models.Model):
 
 
 class DoctorSpecialty(models.Model):
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(
+        Doctor,
+        on_delete=models.CASCADE,
+        related_name="doctor_specialties",
+    )
     specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE)
     university = models.CharField(max_length=150)
     created_at = models.DateTimeField(auto_now_add=True)

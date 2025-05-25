@@ -35,6 +35,7 @@ class DoctorRetrieveUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = DoctorUpdateSerializer
     permission_classes = [IsAuthenticated, HasRole]
     required_roles = [User.Role.DOCTOR]
+    http_method_names = ["get", "put"]
 
     def get_object(self):
         return self.request.user.doctor

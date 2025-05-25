@@ -9,7 +9,7 @@ from file_validator.models import DjangoFileValidator
 from users.models import CustomUser as User
 from users.serializers import UserUpdateDestroySerializer, UserNestedSerializer
 
-from .models import Doctor, Specialty
+from .models import Doctor, Specialty, DoctorSpecialty
 
 
 class DoctorLoginSerializer(serializers.Serializer):
@@ -40,6 +40,23 @@ class DoctorLoginSerializer(serializers.Serializer):
         }
 
 
+class SpecialtySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Specialty
+
+
+class DoctorSpecialtySerializer(serializers.ModelSerializer):
+    specialty = serializers.SlugRelatedField(
+        slug_field="name",
+        queryset=Specialty.objects.all(),
+    )
+
+    class Meta:
+        model = DoctorSpecialty
+        fields = ["specialty", "university", "created_at", "updated_at"]
+        read_only_fields = ["created_at", "updated_at"]
+
+
 class DoctorCreateSerializer(serializers.ModelSerializer):
     user = UserNestedSerializer()
     certificate = serializers.FileField(
@@ -61,11 +78,7 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
         ],
         write_only=True,
     )
-    specialties = serializers.SlugRelatedField(
-        slug_field="name",
-        queryset=Specialty.objects.all(),
-        many=True,
-    )
+    specialties = DoctorSpecialtySerializer(many=True)
 
     class Meta:
         model = Doctor
@@ -90,9 +103,22 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(_("You already have a doctor profile."))
         return super().validate(data)
 
+    def to_representation(self, instance):
+        return {
+            "user": UserNestedSerializer(instance.user).data,
+            "about": instance.about,
+            "education": instance.education,
+            "start_work_date": instance.start_work_date,
+            "status": instance.status,
+            "specialties": DoctorSpecialtySerializer(
+                instance.doctor_specialties.select_related("specialty").all(),
+                many=True,
+            ).data,
+        }
+
     def create(self, validated_data):
         user_data = validated_data.pop("user")
-        specialties = validated_data.pop("specialties")
+        specialties_data = validated_data.pop("specialties")
 
         user = self.context["request"].user
         user_serializer = UserNestedSerializer(
@@ -104,18 +130,24 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
         user = user_serializer.save()
 
         doctor = Doctor.objects.create(user=user, **validated_data)
-        doctor.specialties.set(specialties)
+
+        DoctorSpecialty.objects.bulk_create(
+            [
+                DoctorSpecialty(
+                    doctor=doctor,
+                    specialty=obj["specialty"],
+                    university=obj["university"],
+                )
+                for obj in specialties_data
+            ]
+        )
 
         return doctor
 
 
 class DoctorUpdateSerializer(serializers.ModelSerializer):
     user = UserUpdateDestroySerializer()
-    specialties = serializers.SlugRelatedField(
-        many=True,
-        slug_field="name",
-        queryset=Specialty.objects.all(),
-    )
+    specialties = DoctorSpecialtySerializer(many=True)
 
     class Meta:
         model = Doctor
@@ -128,6 +160,19 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
             "specialties",
         ]
         read_only_fields = ["status"]
+
+    def to_representation(self, instance):
+        return {
+            "user": UserUpdateDestroySerializer(instance.user).data,
+            "about": instance.about,
+            "education": instance.education,
+            "start_work_date": instance.start_work_date,
+            "status": instance.status,
+            "specialties": DoctorSpecialtySerializer(
+                instance.doctor_specialties.select_related("specialty").all(),
+                many=True,
+            ).data,
+        }
 
     def update(self, instance, validated_data):
         user_data = validated_data.pop("user")
@@ -142,11 +187,22 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
         user_serializer.is_valid(raise_exception=True)
         user_serializer.save()
 
-        instance.about = validated_data.get("about")
-        instance.education = validated_data.get("education")
-        instance.start_work_date = validated_data.get("start_work_date")
+        instance.about = validated_data.get("about", instance.about)
+        instance.education = validated_data.get("education", instance.education)
+        instance.start_work_date = validated_data.get(
+            "start_work_date", instance.start_work_date
+        )
+
+        DoctorSpecialty.objects.filter(doctor=instance).exclude(
+            specialty__in=[obj["specialty"] for obj in specialties_data]
+        ).delete()
+        for obj in specialties_data:
+            specialty = obj["specialty"]
+            university = obj["university"]
+            DoctorSpecialty.objects.update_or_create(
+                doctor=instance,
+                specialty=specialty,
+                defaults={"university": university},
+            )
         instance.save()
-
-        instance.specialties.set(specialties_data)
-
         return instance
