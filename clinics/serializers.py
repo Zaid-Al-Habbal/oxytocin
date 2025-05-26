@@ -77,6 +77,7 @@ class NestedClinicImageSerializer(ClinicMixin, serializers.ModelSerializer):
                 max_upload_file_size=5 * 1024 * 1024,  # 5MB
             )
         ],
+        help_text="Accepted MIME types: image/jpg, image/jpeg, image/png, image/gif, image/webp, image/bmp. Max file size: 5MB.",
     )
 
     class Meta:
@@ -119,6 +120,7 @@ class ClinicImageCreateSerializer(ClinicMixin, serializers.Serializer):
             ],
         ),
         max_length=8,
+        help_text="Accepted MIME types: image/jpg, image/jpeg, image/png, image/gif, image/webp, image/bmp. Max file size: 5MB.",
     )
 
     def validate_images(self, value):
@@ -183,9 +185,7 @@ class ClinicImageDeleteSerializer(ClinicMixin, serializers.Serializer):
     def validate_clinic_images(self, value):
         clinic = self.user.doctor.clinic
         if len(value) != len(set(value)):
-            raise serializers.ValidationError(
-                _("Duplicate is not allowed.")
-            )
+            raise serializers.ValidationError(_("Duplicate is not allowed."))
         for clinic_image in value:
             if clinic_image.clinic != clinic:
                 msg = _('Invalid pk "%(value)s" - object does not exist.')

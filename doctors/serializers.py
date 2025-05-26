@@ -84,6 +84,7 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
             )
         ],
         write_only=True,
+        help_text="Accepted MIME types: application/pdf, image/jpg, image/jpeg, image/png, image/gif, image/webp, image/bmp. Max file size: 8MB.",
     )
     specialties = DoctorSpecialtySerializer(many=True)
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-26 19:01+0300\n"
+"POT-Creation-Date: 2025-05-26 21:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,15 +31,15 @@ msgstr "الرجاء إنشاء حساب طبيب أولاً."
 msgid "You already have a clinic."
 msgstr "لديك عيادة بالفعل."
 
-#: clinics/serializers.py:96 clinics/serializers.py:98
+#: clinics/serializers.py:97 clinics/serializers.py:99
 msgid "This field is required."
 msgstr "هذا الحقل مطلوب."
 
-#: clinics/serializers.py:131
+#: clinics/serializers.py:133
 msgid "You can upload a maximum of 8 images."
 msgstr "يمكنك رفع مايصل الى 8 صور كحد أقصى."
 
-#: clinics/serializers.py:187
+#: clinics/serializers.py:188
 msgid "Duplicate is not allowed."
 msgstr "التكرار غير مسموح به."
 
