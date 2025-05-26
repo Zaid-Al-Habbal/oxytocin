@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-26 16:50+0300\n"
+"POT-Creation-Date: 2025-05-26 19:01+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,19 +35,19 @@ msgstr "لديك عيادة بالفعل."
 msgid "This field is required."
 msgstr "هذا الحقل مطلوب."
 
-#: clinics/serializers.py:132
+#: clinics/serializers.py:131
 msgid "You can upload a maximum of 8 images."
 msgstr "يمكنك رفع مايصل الى 8 صور كحد أقصى."
 
-#: clinics/serializers.py:189
+#: clinics/serializers.py:187
+msgid "Duplicate is not allowed."
+msgstr "التكرار غير مسموح به."
+
+#: clinics/serializers.py:191
 #, python-format
 msgid "Invalid pk \"%(value)s\" - object does not exist."
 msgstr "معرف العنصر \"%(value)s\" غير صالح - العنصر غير موجود."
 
-#: clinics/serializers.py:191
+#: clinics/serializers.py:192
 msgid "value"
 msgstr ""
-
-#: clinics/serializers.py:199
-msgid "You cannot delete more images than currently exist for this clinic."
-msgstr "لا يمكنك حذف عدد أكبر من الصور الموجودة حالياً لهذه العيادة."

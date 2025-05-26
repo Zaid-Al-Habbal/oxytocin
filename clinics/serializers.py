@@ -175,18 +175,16 @@ class ClinicImagesUpdateSerializer(ClinicMixin, serializers.Serializer):
 
 
 class ClinicImageDeleteSerializer(ClinicMixin, serializers.Serializer):
-    clinic_images = serializers.PrimaryKeyRelatedField(
-        many=True,
-        queryset=ClinicImage.objects.all(),
+    clinic_images = serializers.ListField(
+        child=serializers.PrimaryKeyRelatedField(queryset=ClinicImage.objects.all()),
+        max_length=8,
     )
 
     def validate_clinic_images(self, value):
         clinic = self.user.doctor.clinic
-        clinic_images_len = len(value)
-        existing_clinic_image_count = clinic.images.count()
-        if clinic_images_len > existing_clinic_image_count:
+        if len(value) != len(set(value)):
             raise serializers.ValidationError(
-                _("You cannot delete more images than currently exist for this clinic.")
+                _("Duplicate is not allowed.")
             )
         for clinic_image in value:
             if clinic_image.clinic != clinic:
