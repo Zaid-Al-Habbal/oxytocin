@@ -33,7 +33,6 @@ from .serializers import (
                 "last_name": "Doe",
                 "phone": "0999888777",
                 "email": "john@example.com",
-                "image": None,
                 "gender": "male",
                 "birth_date": "1990-01-01",
                 "password": "abcX123#",

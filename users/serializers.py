@@ -40,6 +40,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             "password",
             "password_confirm",
         ]
+        read_only_fields = ["image"]
 
     def validate_email(self, value):
         if not value:
@@ -74,7 +75,7 @@ class UserUpdateDestroySerializer(serializers.ModelSerializer):
             "gender",
             "birth_date",
         ]
-        read_only_fields = ["phone"]
+        read_only_fields = ["phone", "image"]
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
