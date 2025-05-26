@@ -1,5 +1,3 @@
-from django.utils.translation import gettext as _
-
 from rest_framework import generics, mixins
 from rest_framework.permissions import IsAuthenticated
 
