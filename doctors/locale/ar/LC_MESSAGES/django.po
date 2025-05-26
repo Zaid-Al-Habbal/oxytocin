@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-26 11:34+0300\n"
+"POT-Creation-Date: 2025-05-26 16:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "You don't have the required role."
 msgstr "ليس لديك الدور المطلوب."
 
-#: doctors/permissions.py:20
+#: doctors/permissions.py:21
 msgid "Please create a doctor profile first."
 msgstr "الرجاء إنشاء حساب طبيب أولاً."
 
-#: doctors/permissions.py:22
+#: doctors/permissions.py:24
 msgid "Please create a clinic first."
 msgstr "الرجاء إنشاء عيادة أولاً."
 
