@@ -93,8 +93,12 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ["status"]
 
+    @property
+    def request(self):
+        return self.context.get("request")
+
     def validate(self, data):
-        user = self.context["request"].user
+        user = self.request.user
         if not user.is_verified_phone:
             raise serializers.ValidationError(_("Phone number is not verified."))
         if user.role != User.Role.DOCTOR.value:

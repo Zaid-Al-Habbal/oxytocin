@@ -1,8 +1,7 @@
+from django.utils.translation import gettext as _
+
 from rest_framework import generics, mixins
 from rest_framework.permissions import IsAuthenticated
-
-from users.models import CustomUser as User
-from users.permissions import HasRole
 
 from .models import Clinic, ClinicImage
 from .serializers import (
@@ -11,6 +10,7 @@ from .serializers import (
     ClinicImagesUpdateSerializer,
     ClinicImageDeleteSerializer,
 )
+from doctors.permissions import IsDoctorWithClinic
 
 
 class ClinicCreateView(generics.CreateAPIView):
@@ -21,8 +21,7 @@ class ClinicCreateView(generics.CreateAPIView):
 class ClinicRetrieveUpdateView(generics.RetrieveUpdateAPIView):
     queryset = Clinic.objects.all()
     serializer_class = ClinicSerializer
-    permission_classes = [IsAuthenticated, HasRole]
-    required_roles = [User.Role.DOCTOR]
+    permission_classes = [IsAuthenticated, IsDoctorWithClinic]
 
     def get_object(self):
         return self.request.user.doctor.clinic
@@ -35,24 +34,19 @@ class ClinicImageView(
     generics.GenericAPIView,
 ):
     queryset = ClinicImage.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsDoctorWithClinic]
 
     def get_serializer_class(self):
         if self.request.method == "POST":
             return ClinicImageCreateSerializer
-        elif self.request.method == "PUT":
+        if self.request.method == "PUT":
             return ClinicImagesUpdateSerializer
-        elif self.request.method == "DELETE":
+        if self.request.method == "DELETE":
             return ClinicImageDeleteSerializer
-        else:
-            return super().get_serializer_class()
+        return super().get_serializer_class()
 
     def get_object(self):
-        user = self.request.user
-        if not hasattr(user, "doctor") or not hasattr(user.doctor, "clinic"):
-            return None
-        else:
-            return user.doctor.clinic
+        return self.request.user.doctor.clinic
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)

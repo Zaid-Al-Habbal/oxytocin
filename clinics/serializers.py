@@ -11,8 +11,8 @@ from .models import Clinic, ClinicImage
 
 class ClinicMixin:
     """
-    Adds .request, .user, and a reusable `validate()` that ensures
-    request.user is a doctor with a clinic.
+    Mixin providing convenient access to the current request and user objects
+    from the serializer context.
     """
 
     @property
@@ -23,17 +23,8 @@ class ClinicMixin:
     def user(self):
         return self.request.user
 
-    def validate(self, data):
-        if self.user.role != User.Role.DOCTOR:
-            raise PermissionDenied(_("You don't have the required role."))
-        if not hasattr(self.user, "doctor"):
-            raise serializers.ValidationError(_("Doctor profile incomplete."))
-        if not hasattr(self.user.doctor, "clinic"):
-            raise serializers.ValidationError(_("Doctor clinic incomplete."))
-        return super().validate(data)
 
-
-class ClinicSerializer(serializers.ModelSerializer):
+class ClinicSerializer(ClinicMixin, serializers.ModelSerializer):
 
     class Meta:
         model = Clinic
@@ -44,10 +35,6 @@ class ClinicSerializer(serializers.ModelSerializer):
             "phone",
         ]
 
-    @property
-    def user(self):
-        return self.context["request"].user
-
     def validate(self, data):
         if self.user.role != User.Role.DOCTOR:
             raise PermissionDenied(_("You don't have the required role."))
@@ -55,7 +42,7 @@ class ClinicSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 _("Please create a doctor profile first.")
             )
-        if self.instance is None and hasattr(self.user.doctor, "clinic"):
+        if self.request.method == "POST" and hasattr(self.user.doctor, "clinic"):
             raise serializers.ValidationError(_("You already have a clinic."))
         return super().validate(data)
 
@@ -70,7 +57,7 @@ class ClinicSerializer(serializers.ModelSerializer):
         return instance
 
 
-class NestedClinicImageSerializer(serializers.ModelSerializer):
+class NestedClinicImageSerializer(ClinicMixin, serializers.ModelSerializer):
     id = serializers.PrimaryKeyRelatedField(
         queryset=ClinicImage.objects.none(),  # override in the get_fields
     )
@@ -96,14 +83,6 @@ class NestedClinicImageSerializer(serializers.ModelSerializer):
         model = ClinicImage
         fields = ["id", "image", "created_at", "updated_at"]
         read_only_fields = ["created_at", "updated_at"]
-
-    @property
-    def request(self):
-        return self.context.get("request")
-
-    @property
-    def user(self):
-        return self.request.user
 
     def get_fields(self):
         fields = super().get_fields()
