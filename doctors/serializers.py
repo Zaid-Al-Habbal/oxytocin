@@ -14,7 +14,11 @@ from .models import Doctor, Specialty, DoctorSpecialty
 
 class DoctorLoginSerializer(serializers.Serializer):
     phone = serializers.CharField(write_only=True)
-    password = serializers.CharField(write_only=True, style={"input_type": "password"})
+    password = serializers.CharField(
+        write_only=True,
+        style={"input_type": "password"},
+        help_text="Password must meet the validation rules (min length=8, has both lowercase and uppercase latters, number, special character, not common, not similar to user's attributes ).",
+    )
     access_token = serializers.CharField(read_only=True)
     refresh_token = serializers.CharField(read_only=True)
     expires_in = serializers.IntegerField(read_only=True)
