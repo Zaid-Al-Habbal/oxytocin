@@ -20,7 +20,7 @@ msgstr ""
 #: relations.py:246
 #, python-brace-format
 msgid "Invalid pk \"{pk_value}\" - object does not exist."
-msgstr "معرف العنصر \"%(value)s\" غير صالح - العنصر غير موجود."
+msgstr "معرف العنصر \"{pk_value}\" غير صالح - العنصر غير موجود."
 
 #: fields.py:1606
 #, python-brace-format

@@ -123,14 +123,13 @@ class ClinicImageCreateSerializer(ClinicMixin, serializers.Serializer):
 
     def validate_images(self, value):
         uploaded_images_len = len(value)
-        if hasattr(self.user, "doctor") and hasattr(self.user.doctor, "clinic"):
-            clinic = self.user.doctor.clinic
-            existing_image_count = clinic.images.count()
-            total_images = existing_image_count + uploaded_images_len
-            if total_images > 8:
-                raise serializers.ValidationError(
-                    _("You can upload a maximum of 8 images.")
-                )
+        clinic = self.user.doctor.clinic
+        existing_image_count = clinic.images.count()
+        total_images = existing_image_count + uploaded_images_len
+        if total_images > 8:
+            raise serializers.ValidationError(
+                _("You can upload a maximum of 8 images.")
+            )
         return value
 
     def to_representation(self, instance):
@@ -182,21 +181,15 @@ class ClinicImageDeleteSerializer(ClinicMixin, serializers.Serializer):
     )
 
     def validate_clinic_images(self, value):
-        if hasattr(self.user, "doctor") and hasattr(self.user.doctor, "clinic"):
-            clinic = self.user.doctor.clinic
-            for clinic_image in value:
-                if clinic_image.clinic != clinic:
-                    msg = _('Invalid pk "%(value)s" - object does not exist.')
-                    raise serializers.ValidationError(
-                        _(msg % {"value": clinic_image.id})
-                    )
-
-            clinic_images_len = len(value)
-            existing_clinic_image_count = clinic.images.count()
-            if clinic_images_len > existing_clinic_image_count:
-                raise serializers.ValidationError(
-                    _(
-                        "You cannot delete more images than currently exist for this clinic."
-                    )
-                )
+        clinic = self.user.doctor.clinic
+        clinic_images_len = len(value)
+        existing_clinic_image_count = clinic.images.count()
+        if clinic_images_len > existing_clinic_image_count:
+            raise serializers.ValidationError(
+                _("You cannot delete more images than currently exist for this clinic.")
+            )
+        for clinic_image in value:
+            if clinic_image.clinic != clinic:
+                msg = _('Invalid pk "%(value)s" - object does not exist.')
+                raise serializers.ValidationError(_(msg % {"value": clinic_image.id}))
         return value
