@@ -5,12 +5,12 @@ from datetime import timedelta
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from doctors.tests import generate_test_image, generate_test_pdf
+from doctors.tests import generate_test_pdf
 
 from users.models import CustomUser as User
 from doctors.models import Doctor, Specialty, DoctorSpecialty
 
-from .models import Clinic, ClinicImage
+from clinics.models import Clinic
 
 
 class ClinicTests(APITestCase):
