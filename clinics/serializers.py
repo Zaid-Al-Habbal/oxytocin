@@ -154,14 +154,6 @@ class ClinicImageCreateSerializer(ClinicMixin, serializers.Serializer):
 class ClinicImagesUpdateSerializer(ClinicMixin, serializers.Serializer):
     clinic_images = NestedClinicImageSerializer(many=True)
 
-    def validate_clinic_images(self, value):
-        uploaded_images_len = len(value)
-        if uploaded_images_len > 8:
-            raise serializers.ValidationError(
-                _("You can upload a maximum of 8 images.")
-            )
-        return value
-
     def to_representation(self, instance):
         serializer = NestedClinicImageSerializer(
             instance,
