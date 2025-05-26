@@ -5,19 +5,17 @@ from datetime import timedelta
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from common.utils import generate_test_pdf
-
 from users.models import CustomUser as User
-from doctors.models import Doctor, Specialty, DoctorSpecialty
-
 from clinics.models import Clinic
 
+from doctors.models import Doctor, Specialty, DoctorSpecialty
 
-class ClinicTests(APITestCase):
+from common.utils import generate_test_pdf
 
+
+class DoctorRetrieveUpdateTests(APITestCase):
     def setUp(self):
-        self.create_path = reverse("clinic-create")
-        self.retrieve_update_path = reverse("clinic-retrieve-update")
+        self.path = reverse("doctor-retrieve-update")
         self.password = "abcX123#"
 
         self.user = User.objects.create_user(
@@ -107,125 +105,112 @@ class ClinicTests(APITestCase):
         )
 
         self.data = {
-            "location": "Test Street",
-            "longitude": 39.1,
-            "latitude": 55.5,
-            "phone": "011 224 4531",
-        }
-        self.update_data = {
-            "location": "Test Update Street",
-            "longitude": 66.1,
-            "latitude": 32.5,
-            "phone": "011 224 4533",
+            "user": {
+                "first_name": "John",
+                "last_name": "Doe",
+                "gender": "male",
+                "birth_date": "1990-02-04",
+            },
+            "about": "Hello, I'm test doctor",
+            "education": "IDK",
+            "start_work_date": "2007-05-12",
+            "specialties": [
+                {
+                    "specialty": specialty1.name,
+                    "university": "Damascus",
+                },
+                {
+                    "specialty": specialty2.name,
+                    "university": "Tokyo",
+                },
+            ],
         }
 
-    def test_successful_clinic_creation(self):
-        self.client.force_authenticate(self.user_doctor)
-        response = self.client.post(self.create_path, self.data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertIn("location", str(response.data))
-        self.assertIn("longitude", str(response.data))
-        self.assertIn("latitude", str(response.data))
-        self.assertIn("phone", str(response.data))
-        exists = Clinic.objects.filter(
-            location=self.data["location"],
-            longitude=self.data["longitude"],
-            latitude=self.data["latitude"],
-            phone=self.data["phone"],
-        ).exists()
-        self.assertTrue(exists)
-
-    def test_successful_clinic_retrieve(self):
+    def test_successful_doctor_update(self):
         self.client.force_authenticate(self.user_doctor_clinic)
-        response = self.client.get(self.retrieve_update_path)
+        response = self.client.put(self.path, self.data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("location", str(response.data))
-        self.assertIn("longitude", str(response.data))
-        self.assertIn("latitude", str(response.data))
-        self.assertIn("phone", str(response.data))
-
-    def test_successful_clinic_update(self):
-        self.client.force_authenticate(self.user_doctor_clinic)
-        response = self.client.put(
-            self.retrieve_update_path,
-            self.update_data,
-            format="json",
+        self.assertIn("user", str(response.data))
+        self.assertIn("about", str(response.data))
+        self.assertIn("education", str(response.data))
+        self.assertIn("start_work_date", str(response.data))
+        self.assertIn("status", str(response.data))
+        self.assertIn("specialties", str(response.data))
+        doctor = Doctor.objects.filter(pk=self.doctor_with_clinic.pk).get()
+        self.assertEqual(doctor.user.first_name, self.data["user"]["first_name"])
+        self.assertEqual(doctor.user.last_name, self.data["user"]["last_name"])
+        self.assertEqual(doctor.user.gender, self.data["user"]["gender"])
+        self.assertEqual(
+            doctor.user.birth_date,
+            timezone.datetime.strptime(
+                self.data["user"]["birth_date"], "%Y-%m-%d"
+            ).date(),
         )
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("location", str(response.data))
-        self.assertIn("longitude", str(response.data))
-        self.assertIn("latitude", str(response.data))
-        self.assertIn("phone", str(response.data))
-        exists = Clinic.objects.filter(
-            location=self.update_data["location"],
-            longitude=self.update_data["longitude"],
-            latitude=self.update_data["latitude"],
-            phone=self.update_data["phone"],
-        ).exists()
-        self.assertTrue(exists)
+        self.assertEqual(doctor.about, self.data["about"])
+        self.assertEqual(doctor.education, self.data["education"])
+        self.assertEqual(
+            doctor.start_work_date,
+            timezone.datetime.strptime(self.data["start_work_date"], "%Y-%m-%d").date(),
+        )
+        self.assertEqual(doctor.specialties.count(), len(self.data["specialties"]))
+        for specialty_obj in self.data["specialties"]:
+            self.assertTrue(
+                doctor.doctor_specialties.filter(
+                    specialty__name=specialty_obj["specialty"],
+                    university=specialty_obj["university"],
+                ).exists()
+            )
 
-    def test_creation_fails_if_user_has_no_doctor_profile(self):
+    def test_successful_doctor_retrieve(self):
+        self.client.force_authenticate(self.user_doctor_clinic)
+        response = self.client.get(self.path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("user", str(response.data))
+        self.assertIn("about", str(response.data))
+        self.assertIn("education", str(response.data))
+        self.assertIn("start_work_date", str(response.data))
+        self.assertIn("specialties", str(response.data))
+
+    def test_update_fails_if_user_has_no_doctor_profile(self):
         self.client.force_authenticate(self.user)
-        response = self.client.post(self.create_path, self.data, format="json")
+        response = self.client.put(self.path, self.data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("الرجاء إنشاء حساب طبيب أولاً.", str(response.data))
 
     def test_retrieve_fails_if_user_has_no_doctor_profile(self):
         self.client.force_authenticate(self.user)
-        response = self.client.get(self.retrieve_update_path)
+        response = self.client.get(self.path)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("الرجاء إنشاء حساب طبيب أولاً.", str(response.data))
 
-    def test_update_fails_if_user_has_no_doctor_profile(self):
-        self.client.force_authenticate(self.user)
-        response = self.client.put(
-            self.retrieve_update_path,
-            self.update_data,
-            format="json",
-        )
+    def test_update_fails_if_doctor_has_no_clinic(self):
+        self.client.force_authenticate(self.user_doctor)
+        response = self.client.put(self.path, self.data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn("الرجاء إنشاء حساب طبيب أولاً.", str(response.data))
+        self.assertIn("الرجاء إنشاء عيادة أولاً.", str(response.data))
 
-    def test_creation_fails_if_doctor_already_has_clinic(self):
-        self.client.force_authenticate(self.user_doctor_clinic)
-        response = self.client.post(self.create_path, self.data, format="json")
+    def test_retrieve_fails_if_doctor_has_no_clinic(self):
+        self.client.force_authenticate(self.user_doctor)
+        response = self.client.get(self.path)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn("لديك عيادة بالفعل.", str(response.data))
+        self.assertIn("الرجاء إنشاء عيادة أولاً.", str(response.data))
 
-    def test_creation_fails_if_user_role_is_not_doctor(self):
+    def test_update_fails_if_user_role_is_not_doctor(self):
         self.client.force_authenticate(self.patient)
-        response = self.client.post(self.create_path, self.data, format="json")
+        response = self.client.put(self.path, self.data, format="json")
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertIn("ليس لديك الدور المطلوب.", str(response.data))
 
     def test_retrieve_fails_if_user_role_is_not_doctor(self):
         self.client.force_authenticate(self.patient)
-        response = self.client.get(self.retrieve_update_path)
+        response = self.client.get(self.path)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertIn("ليس لديك الدور المطلوب.", str(response.data))
 
-    def test_update_fails_if_user_role_is_not_doctor(self):
-        self.client.force_authenticate(self.patient)
-        response = self.client.put(
-            self.retrieve_update_path,
-            self.update_data,
-            format="json",
-        )
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-        self.assertIn("ليس لديك الدور المطلوب.", str(response.data))
-
-    def test_creation_fails_if_unauthenticated_user_try_to_access(self):
-        response = self.client.post(self.create_path, self.data, format="json")
+    def test_update_fails_if_unauthenticated_user_try_to_access(self):
+        response = self.client.put(self.path, self.data, format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_retrieve_fails_if_unauthenticated_user_try_to_access(self):
-        response = self.client.get(self.retrieve_update_path)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
-    def test_update_fails_if_unauthenticated_user_try_to_access(self):
-        response = self.client.put(
-            self.retrieve_update_path,
-            self.update_data,
-            format="json",
-        )
+        response = self.client.get(self.path)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
