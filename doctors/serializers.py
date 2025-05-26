@@ -13,8 +13,11 @@ from .models import Doctor, Specialty, DoctorSpecialty
 
 
 class DoctorLoginSerializer(serializers.Serializer):
-    phone = serializers.CharField()
+    phone = serializers.CharField(write_only=True)
     password = serializers.CharField(write_only=True, style={"input_type": "password"})
+    access_token = serializers.CharField(read_only=True)
+    refresh_token = serializers.CharField(read_only=True)
+    expires_in = serializers.IntegerField(read_only=True)
 
     def validate(self, data):
         phone = data.get("phone")
