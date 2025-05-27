@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     "file_validator",
     # project apps
     "users",
-    "patients"
+    "patients",
     "doctors",
     "clinics",
 ]
