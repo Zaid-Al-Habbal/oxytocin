@@ -52,7 +52,7 @@ msgstr "ملف المساعد او المساعدة غير مكتمل."
 
 #: users/serializers.py:53 users/serializers.py:137
 msgid "Passwords don't match!"
-msgstr "كلمات السر غير متطابقة"
+msgstr "كلمات السر غير متطابقة."
 
 #: users/serializers.py:111
 msgid "must be in the past."
@@ -60,28 +60,28 @@ msgstr "يجب أن يكون في الماضي."
 
 #: users/serializers.py:144
 msgid "Old password is not correct."
-msgstr "كلمة السر القديمة غير صحيحة"
+msgstr "كلمة السر القديمة غير صحيحة."
 
 #: users/validators.py:10
 msgid "Password must contain at least one lowercase letter."
-msgstr "كلمة السر يجب أن تحوي على حرف صغير واحد على الأقل"
+msgstr "كلمة السر يجب أن تحوي على حرف صغير واحد على الأقل."
 
 #: users/validators.py:15
 msgid "Password must contain at least one uppercase letter."
-msgstr "كلمة السر يجب أن تحوي على حرف كبير واحد على الأقل"
+msgstr "كلمة السر يجب أن تحوي على حرف كبير واحد على الأقل."
 
 #: users/validators.py:20
 msgid "Your password must contain both uppercase and lowercase letters."
 msgstr ""
-"كلمة السر يجب أن تحوي على حرف كبير واحد على الأقل و حرف صغير واحد على الأقل"
+"كلمة السر يجب أن تحوي على حرف كبير واحد على الأقل و حرف صغير واحد على الأقل."
 
 #: users/validators.py:27
 msgid "Password must contain at least one number."
-msgstr "كلمة السر يجب أن تحوي على رقم واحد على الأقل"
+msgstr "كلمة السر يجب أن تحوي على رقم واحد على الأقل."
 
 #: users/validators.py:33
 msgid "Password must contain at least one special character (!@#$%^&*()_-+=)."
-msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد الرموز التالية على أقل"
+msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد الرموز التالية على أقل."
 
 #: users/validators.py:40
 #, fuzzy
@@ -90,8 +90,8 @@ msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد ا
 msgid ""
 "Your password must contain at least one number and one special character (!"
 "@#$%^&*()_-+=)."
-msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد الرموز التالية على أقل"
+msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد الرموز التالية على أقل."
 
 #: users/views.py:80
 msgid "Logout successful."
-msgstr "تم تسجيل الخروج"
+msgstr "تم تسجيل الخروج."
