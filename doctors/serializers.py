@@ -7,7 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from file_validator.models import DjangoFileValidator
 
 from users.models import CustomUser as User
-from users.serializers import UserUpdateDestroySerializer, UserNestedSerializer
+from users.serializers import UserUpdateSerializer, UserNestedSerializer
 
 from .models import Doctor, Specialty, DoctorSpecialty
 
@@ -158,7 +158,7 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
 
 
 class DoctorUpdateSerializer(serializers.ModelSerializer):
-    user = UserUpdateDestroySerializer()
+    user = UserUpdateSerializer()
     specialties = DoctorSpecialtySerializer(many=True)
 
     class Meta:
@@ -175,7 +175,7 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return {
-            "user": UserUpdateDestroySerializer(instance.user).data,
+            "user": UserUpdateSerializer(instance.user).data,
             "about": instance.about,
             "education": instance.education,
             "start_work_date": instance.start_work_date,
@@ -191,7 +191,7 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
         specialties_data = validated_data.pop("specialties")
 
         user = instance.user
-        user_serializer = UserUpdateDestroySerializer(
+        user_serializer = UserUpdateSerializer(
             instance=user,
             data=user_data,
             partial=True,

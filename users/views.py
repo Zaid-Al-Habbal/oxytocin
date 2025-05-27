@@ -15,7 +15,6 @@ from drf_spectacular.utils import extend_schema, OpenApiExample
 from .models import CustomUser as User
 from .serializers import (
     UserCreateSerializer,
-    UserUpdateDestroySerializer,
     LogoutSerializer,
     ChangePasswordSerializer,
 )
@@ -44,6 +43,8 @@ from .serializers import (
     ],
 )
 class UserCreateDestroyView(generics.CreateAPIView, generics.DestroyAPIView):
+    serializer_class = UserCreateSerializer
+
     def get_object(self):
         return self.request.user
 
@@ -51,13 +52,6 @@ class UserCreateDestroyView(generics.CreateAPIView, generics.DestroyAPIView):
         if self.request.method == "DELETE":
             return [permissions.IsAuthenticated()]
         return super().get_permissions()
-
-    def get_serializer_class(self):
-        if self.request.method == "POST":
-            return UserCreateSerializer
-        elif self.request.method == "DELETE":
-            return UserUpdateDestroySerializer
-        return super().get_serializer_class()
 
     def get_queryset(self):
         if self.request.method == "POST":
