@@ -66,7 +66,7 @@ class LoginPatientTestCase(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("non_field_errors", response.data)
-        self.assertIn("من فضلك, قم بتفعيل رقم جوالك أولا", response.data["non_field_errors"][0].lower())
+        self.assertIn("الرجاء التحقق من رقم هاتفك أولاً.", response.data["non_field_errors"][0].lower())
 
     def test_login_fails_if_not_patient(self):
         response = self.client.post(self.login_url, {
@@ -169,7 +169,7 @@ class CompletePatientRegistrationTests(APITestCase):
 
         response = self.client.post(self.url, self.payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn("رقم الجوال غير مفعل", str(response.data))
+        self.assertIn("لم يتم التحقق من رقم الهاتف.", str(response.data))
 
     def test_reject_if_user_is_not_patient(self):
         self.client.force_authenticate(self.doctor_user)

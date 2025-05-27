@@ -29,11 +29,11 @@ msgstr "فقط المرضى يستطيعون تسجيل الدحول هنا"
 
 #: patients/serializers.py:29
 msgid "Please, verify your phone number first"
-msgstr "من فضلك, قم بتفعيل رقم جوالك أولا"
+msgstr "الرجاء التحقق من رقم هاتفك أولاً."
 
 #: patients/serializers.py:63
 msgid "Phone number is not verified."
-msgstr "رقم الجوال غير مفعل"
+msgstr "لم يتم التحقق من رقم الهاتف."
 
 #: patients/serializers.py:65
 msgid "Patient profile already exists."

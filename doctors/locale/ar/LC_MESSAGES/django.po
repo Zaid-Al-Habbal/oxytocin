@@ -37,7 +37,7 @@ msgstr "بيانات اعتماد خاطئة!"
 
 #: doctors/serializers.py:38
 msgid "Please, verify your phone number first"
-msgstr "الرجاء تاكيد الرقم أولاً."
+msgstr "الرجاء التحقق من رقم هاتفك أولاً."
 
 #: doctors/serializers.py:111
 msgid "Phone number is not verified."

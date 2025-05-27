@@ -56,7 +56,7 @@ class DoctorLoginTests(APITestCase):
         }
         response = self.client.post(self.path, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn("الرجاء تاكيد الرقم أولاً.", str(response.data))
+        self.assertIn("الرجاء التحقق من رقم هاتفك أولاً.", str(response.data))
 
     def test_fails_if_user_role_is_not_doctor(self):
         data = {
