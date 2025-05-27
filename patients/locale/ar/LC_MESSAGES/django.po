@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-16 14:55+0300\n"
+"POT-Creation-Date: 2025-05-27 11:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,26 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-#: patients/serializers.py:22
+
+#: patients/serializers.py:23
 msgid "Invalid credentials"
 msgstr ""
 
-#: patients/serializers.py:25
+#: patients/serializers.py:26
 msgid "Only patients can log in here."
 msgstr "فقط المرضى يستطيعون تسجيل الدحول هنا"
 
-#: patients/serializers.py:28
+#: patients/serializers.py:29
 msgid "Please, verify your phone number first"
 msgstr "من فضلك, قم بتفعيل رقم جوالك أولا"
 
-#: patients/serializers.py:46
+#: patients/serializers.py:63
 msgid "Phone number is not verified."
 msgstr "رقم الجوال غير مفعل"
 
-#: patients/serializers.py:48
+#: patients/serializers.py:65
 msgid "Patient profile already exists."
 msgstr "لقد قمت بإنشاء ملف شخصي سابقا"
 
-#: patients/serializers.py:51
+#: patients/serializers.py:67
 msgid "You have no access to complete this registration"
 msgstr "ليس لديك الصلاحيات لإكمال هذه العملية"
