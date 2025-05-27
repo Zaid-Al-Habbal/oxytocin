@@ -47,22 +47,10 @@ class UserCreateView(generics.CreateAPIView):
     serializer_class = UserCreateSerializer
 
 
-class UserUpdateDestroyView(
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-    generics.GenericAPIView,
-):
+class UserDestroyView(generics.DestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserUpdateDestroySerializer
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class LogoutView(generics.GenericAPIView):

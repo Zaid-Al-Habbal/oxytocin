@@ -15,8 +15,8 @@ urlpatterns = [
     ),
     path(
         "<int:pk>/",
-        views.UserUpdateDestroyView.as_view(),
-        name="user-update-destroy",
+        views.UserDestroyView.as_view(),
+        name="user-destroy",
     ),
     path(
         "refresh-token/",

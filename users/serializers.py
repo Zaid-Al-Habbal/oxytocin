@@ -4,12 +4,11 @@ from django.utils import timezone
 
 from rest_framework import serializers
 
-
 from .models import CustomUser as User
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
-    
+
     ROLE_CHOICES = [
         ("doctor", "Doctor"),
         ("assistant", "Assistant"),
@@ -32,20 +31,11 @@ class UserCreateSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "phone",
-            "email",
-            "image",
-            "gender",
-            "birth_date",
             "role",
             "password",
             "password_confirm",
         ]
         read_only_fields = ["image"]
-
-    def validate_email(self, value):
-        if not value:
-            return None
-        return value
 
     def validate(self, data):
         if data["password"] != data["password_confirm"]:
