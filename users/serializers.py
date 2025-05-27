@@ -1,5 +1,6 @@
 from django.contrib.auth.password_validation import validate_password
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 
 from rest_framework import serializers
 
@@ -39,6 +40,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             "password",
             "password_confirm",
         ]
+        read_only_fields = ["image"]
 
     def validate_email(self, value):
         if not value:
@@ -68,10 +70,21 @@ class UserUpdateDestroySerializer(serializers.ModelSerializer):
         fields = [
             "first_name",
             "last_name",
+            "phone",
             "image",
             "gender",
             "birth_date",
         ]
+        read_only_fields = ["phone", "image"]
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+
+            # if this serializer was instantiated as `partial=True`,
+            # make all fields optional
+            if getattr(self, "partial", False):
+                for field in self.fields.values():
+                    field.required = False
 
     def update(self, instance, validated_data):
         instance.first_name = validated_data.get("first_name", instance.first_name)
@@ -81,6 +94,22 @@ class UserUpdateDestroySerializer(serializers.ModelSerializer):
         instance.birth_date = validated_data.get("birth_date", instance.birth_date)
         instance.save()
         return instance
+
+
+class UserNestedSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ["gender", "birth_date"]
+        extra_kwargs = {
+            "gender": {"required": True},
+            "birth_date": {"required": True},
+        }
+
+    def validate_birth_date(self, value):
+        if value >= timezone.now().date():
+            raise serializers.ValidationError(_("must be in the past."))
+        return value
 
 
 class LogoutSerializer(serializers.Serializer):

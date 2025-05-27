@@ -33,7 +33,6 @@ from .serializers import (
                 "last_name": "Doe",
                 "phone": "0999888777",
                 "email": "john@example.com",
-                "image": None,
                 "gender": "male",
                 "birth_date": "1990-01-01",
                 "password": "abcX123#",
@@ -58,6 +57,9 @@ class UserUpdateDestroyView(
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)

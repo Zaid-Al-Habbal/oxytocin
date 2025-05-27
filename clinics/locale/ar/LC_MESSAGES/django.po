@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-26 21:12+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: clinics/serializers.py:40
+msgid "You don't have the required role."
+msgstr "ليس لديك الدور المطلوب."
+
+#: clinics/serializers.py:43
+msgid "Please create a doctor profile first."
+msgstr "الرجاء إنشاء حساب طبيب أولاً."
+
+#: clinics/serializers.py:46
+msgid "You already have a clinic."
+msgstr "لديك عيادة بالفعل."
+
+#: clinics/serializers.py:97 clinics/serializers.py:99
+msgid "This field is required."
+msgstr "هذا الحقل مطلوب."
+
+#: clinics/serializers.py:133
+msgid "You can upload a maximum of 8 images."
+msgstr "يمكنك رفع مايصل الى 8 صور كحد أقصى."
+
+#: clinics/serializers.py:188
+msgid "Duplicate is not allowed."
+msgstr "التكرار غير مسموح به."
+
+#: clinics/serializers.py:191
+#, python-format
+msgid "Invalid pk \"%(value)s\" - object does not exist."
+msgstr "معرف العنصر \"%(value)s\" غير صالح - العنصر غير موجود."
+
+#: clinics/serializers.py:192
+msgid "value"
+msgstr ""

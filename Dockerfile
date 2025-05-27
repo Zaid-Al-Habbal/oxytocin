@@ -33,6 +33,7 @@ RUN adduser \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gosu \
+    && apt-get install -y --no-install-recommends libmagic1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
