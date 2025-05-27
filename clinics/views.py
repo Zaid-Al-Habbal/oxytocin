@@ -72,7 +72,7 @@ class ClinicImageView(
 
     def get_parsers(self):
         if hasattr(self.request, "method") and self.request.method in ["POST", "PUT"]:
-            return [MultiPartParser]
+            return [MultiPartParser()]
         return super().get_parsers()
 
     @extend_schema(
