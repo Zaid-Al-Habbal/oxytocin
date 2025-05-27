@@ -1,7 +1,8 @@
 from django.utils.translation import gettext_lazy as _
+from django.utils.timezone import now
 
 from rest_framework import status
-from rest_framework import generics, mixins
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -42,15 +43,35 @@ from .serializers import (
         )
     ],
 )
-class UserCreateView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserCreateSerializer
+class UserCreateDestroyView(generics.CreateAPIView, generics.DestroyAPIView):
+    def get_object(self):
+        return self.request.user
 
+    def get_permissions(self):
+        if self.request.method == "DELETE":
+            return [permissions.IsAuthenticated()]
+        return super().get_permissions()
 
-class UserDestroyView(generics.DestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserUpdateDestroySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return UserCreateSerializer
+        elif self.request.method == "DELETE":
+            return UserUpdateDestroySerializer
+        return super().get_serializer_class()
+
+    def get_queryset(self):
+        if self.request.method == "POST":
+            return User.objects.all()
+        elif self.request.method == "DELETE":
+            return User.objects.filter(deleted_at__isnull=True)
+        return super().get_queryset()
+
+    def perform_destroy(self, instance):
+        if instance.role == User.Role.DOCTOR:
+            instance.deleted_at = now()
+            instance.save()
+        else:
+            instance.delete()
 
 
 class LogoutView(generics.GenericAPIView):

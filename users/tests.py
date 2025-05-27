@@ -8,7 +8,7 @@ from .models import CustomUser as User
 
 class UserCreateTests(APITestCase):
     def setUp(self):
-        self.path = reverse("user-create")
+        self.path = reverse("user-create-destroy")
 
     def test_a_correct_create_view(self):
         """
@@ -135,7 +135,8 @@ class UserCreateTests(APITestCase):
 
 
 class UserDestroyTests(APITestCase):
-    def test_successful_destroy_view(self):
+    def setUp(self):
+        self.path = reverse("user-create-destroy")
         user_data = {
             "first_name": "John",
             "last_name": "Doe",
@@ -146,24 +147,22 @@ class UserDestroyTests(APITestCase):
             "birth_date": "1996-11-22",
             "password": "Password123test",
         }
-        user = User.objects.create_user(**user_data)
-        self.client.force_authenticate(user)
-        path = reverse("user-destroy", kwargs={"pk": user.pk})
-        response = self.client.delete(path)
+        self.user = User.objects.create_user(**user_data)
+
+    def test_successful_destroy(self):
+        self.client.force_authenticate(self.user)
+        response = self.client.delete(self.path)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
+    def test_successful_soft_destroy_for_doctor(self):
+        self.user.role = User.Role.DOCTOR
+        self.user.save()
+        self.client.force_authenticate(self.user)
+        response = self.client.delete(self.path)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.user.refresh_from_db()
+        self.assertIsNotNone(self.user.deleted_at)
+
     def test_fails_on_unauthenticated_user(self):
-        user_data = {
-            "first_name": "John",
-            "last_name": "Doe",
-            "phone": "1234567890",
-            "email": "test@test.com",
-            "image": None,
-            "gender": "male",
-            "birth_date": "1996-11-22",
-            "password": "Password123test",
-        }
-        user = User.objects.create_user(**user_data)
-        path = reverse("user-destroy", kwargs={"pk": user.pk})
-        response = self.client.delete(path)
+        response = self.client.delete(self.path)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
