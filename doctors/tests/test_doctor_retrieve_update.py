@@ -136,26 +136,34 @@ class DoctorRetrieveUpdateTests(APITestCase):
         self.assertIn("start_work_date", str(response.data))
         self.assertIn("status", str(response.data))
         self.assertIn("specialties", str(response.data))
-        doctor = Doctor.objects.filter(pk=self.doctor_with_clinic.pk).get()
-        self.assertEqual(doctor.user.first_name, self.data["user"]["first_name"])
-        self.assertEqual(doctor.user.last_name, self.data["user"]["last_name"])
-        self.assertEqual(doctor.user.gender, self.data["user"]["gender"])
+        self.doctor_with_clinic.refresh_from_db()
         self.assertEqual(
-            doctor.user.birth_date,
+            self.doctor_with_clinic.user.first_name, self.data["user"]["first_name"]
+        )
+        self.assertEqual(
+            self.doctor_with_clinic.user.last_name, self.data["user"]["last_name"]
+        )
+        self.assertEqual(
+            self.doctor_with_clinic.user.gender, self.data["user"]["gender"]
+        )
+        self.assertEqual(
+            self.doctor_with_clinic.user.birth_date,
             timezone.datetime.strptime(
                 self.data["user"]["birth_date"], "%Y-%m-%d"
             ).date(),
         )
-        self.assertEqual(doctor.about, self.data["about"])
-        self.assertEqual(doctor.education, self.data["education"])
+        self.assertEqual(self.doctor_with_clinic.about, self.data["about"])
+        self.assertEqual(self.doctor_with_clinic.education, self.data["education"])
         self.assertEqual(
-            doctor.start_work_date,
+            self.doctor_with_clinic.start_work_date,
             timezone.datetime.strptime(self.data["start_work_date"], "%Y-%m-%d").date(),
         )
-        self.assertEqual(doctor.specialties.count(), len(self.data["specialties"]))
+        self.assertEqual(
+            self.doctor_with_clinic.specialties.count(), len(self.data["specialties"])
+        )
         for specialty_obj in self.data["specialties"]:
             self.assertTrue(
-                doctor.doctor_specialties.filter(
+                self.doctor_with_clinic.doctor_specialties.filter(
                     specialty__name=specialty_obj["specialty"],
                     university=specialty_obj["university"],
                 ).exists()
