@@ -45,7 +45,7 @@ class Specialty(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name="sub_specialties",
+        related_name="subspecialties",
     )
 
     class Meta:
