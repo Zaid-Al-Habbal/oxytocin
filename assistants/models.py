@@ -1,3 +1,24 @@
 from django.db import models
+from users.models import CustomUser
+from clinics.models import Clinic
 
-# Create your models here.
+class Assistant(models.Model):
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.CASCADE,
+        primary_key=True,
+        related_name="assistant"
+        )
+    clinic = models.ForeignKey(
+        Clinic,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="assistants",
+    )
+    about = models.TextField()
+    education = models.TextField()
+    start_work_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Assistant: {self.user.email}"
