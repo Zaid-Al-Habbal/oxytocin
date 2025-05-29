@@ -16,9 +16,9 @@ class Assistant(models.Model):
         on_delete=models.SET_NULL,
         related_name="assistants",
     )
-    about = models.TextField()
+    about = models.TextField(null=True, blank=True)
     education = models.TextField()
-    start_work_date = models.DateField(null=True, blank=True)
+    start_work_date = models.DateField()
 
     def __str__(self):
         return f"Assistant: {self.user.email}"

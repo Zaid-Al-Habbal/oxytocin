@@ -11,7 +11,13 @@ from users.models import CustomUser as User
 
 class LoginPatientSerializer(serializers.Serializer):
     phone = serializers.CharField()
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(
+        write_only=True,
+        style={"input_type": "password"},
+        help_text="Password must meet the validation rules (min length=8, has both lowercase and uppercase latters, number, special character, not common, not similar to user's attributes ).",
+    )
+    access_token = serializers.CharField(read_only=True)
+    refresh_token = serializers.CharField(read_only=True)
     
     def validate(self, data):
         phone = data.get('phone')
