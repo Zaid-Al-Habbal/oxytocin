@@ -4,12 +4,7 @@ from users.models import CustomUser as User
 from rest_framework import status
 from django.test import override_settings
 
-@override_settings(
-    REST_FRAMEWORK={
-        'DEFAULT_THROTTLE_CLASSES': [],
-        'DEFAULT_THROTTLE_RATES': {}
-    }
-)
+
 class LoginAssistantTestCase(APITestCase):
     def setUp(self):
         self.login_url = reverse('login-assistant')  # Make sure your url name matches
