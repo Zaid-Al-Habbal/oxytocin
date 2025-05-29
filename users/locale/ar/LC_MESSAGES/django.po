@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-27 11:19+0300\n"
+"POT-Creation-Date: 2025-05-29 15:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,15 +50,15 @@ msgstr "تم رفض حسابك. يُرجى التواصل مع الدعم لمز
 msgid "Assistant profile incomplete."
 msgstr "ملف المساعد او المساعدة غير مكتمل."
 
-#: users/serializers.py:53 users/serializers.py:137
+#: users/serializers.py:43 users/serializers.py:127
 msgid "Passwords don't match!"
 msgstr "كلمات السر غير متطابقة."
 
-#: users/serializers.py:111
+#: users/serializers.py:101
 msgid "must be in the past."
 msgstr "يجب أن يكون في الماضي."
 
-#: users/serializers.py:144
+#: users/serializers.py:134
 msgid "Old password is not correct."
 msgstr "كلمة السر القديمة غير صحيحة."
 
@@ -92,6 +92,6 @@ msgid ""
 "@#$%^&*()_-+=)."
 msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد الرموز التالية على أقل."
 
-#: users/views.py:80
+#: users/views.py:83
 msgid "Logout successful."
 msgstr "تم تسجيل الخروج."
