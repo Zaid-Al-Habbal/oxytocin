@@ -25,7 +25,7 @@ class UserCreateTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["first_name"], "John")
         self.assertEqual(response.data["last_name"], "Doe")
-        self.assertEqual(response.data["phone"], "1234567890")
+        self.assertEqual(response.data["phone"], data["phone"])
 
     def test_create_fails_when_passwords_do_not_match(self):
         """

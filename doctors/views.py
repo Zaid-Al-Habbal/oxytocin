@@ -12,6 +12,7 @@ from .models import Doctor
 from .serializers import (
     DoctorLoginSerializer,
     DoctorCreateSerializer,
+    DoctorCertificateSerializer,
     DoctorUpdateSerializer,
 )
 from .permissions import IsDoctorWithClinic
@@ -36,20 +37,21 @@ class DoctorLoginView(generics.GenericAPIView):
 @extend_schema(
     summary="Create a Doctor",
     description="Create a doctor profile for the currently authenticated user.",
+    tags=["Doctor"],
+)
+class DoctorCreateView(generics.CreateAPIView):
+    serializer_class = DoctorCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+
+@extend_schema(
+    summary="Upload a Doctor Certificate",
+    description="Upload a doctor certificate for the currently authenticated user.",
     examples=[
         OpenApiExample(
-            name="Doctor Registration",
+            name="Doctor Certificate Upload",
             value={
-                "user.gender": "male",
-                "user.birth_date": "1990-02-05",
-                "about": "Hello, I'm good doctor",
-                "education": "Sample",
-                "start_work_date": "2007-05-12",
                 "certificate": "certificate.pdf",
-                "specialties[0]specialty": "Neurology",
-                "specialties[0]university": "Damascus",
-                "specialties[1]specialty": "Pediatrics",
-                "specialties[1]university": "London",
             },
             request_only=True,
             media_type="multipart/form-data",
@@ -57,9 +59,9 @@ class DoctorLoginView(generics.GenericAPIView):
     ],
     tags=["Doctor"],
 )
-class DoctorCreateView(generics.CreateAPIView):
+class DoctorCertificateView(generics.CreateAPIView):
     parser_classes = [MultiPartParser]
-    serializer_class = DoctorCreateSerializer
+    serializer_class = DoctorCertificateSerializer
     permission_classes = [IsAuthenticated]
 
 
@@ -76,10 +78,14 @@ class DoctorCreateView(generics.CreateAPIView):
     ),
 )
 class DoctorRetrieveUpdateView(generics.RetrieveUpdateAPIView):
-    queryset = Doctor.objects.filter(user__deleted_at__isnull=True)
     serializer_class = DoctorUpdateSerializer
     permission_classes = [IsAuthenticated, IsDoctorWithClinic]
     http_method_names = ["get", "put"]
 
+    def get_queryset(self):
+        return Doctor.objects.with_categorized_specialties().filter(
+            user=self.request.user, user__deleted_at__isnull=True
+        )
+
     def get_object(self):
-        return self.request.user.doctor
+        return self.get_queryset().first()

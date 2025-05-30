@@ -39,9 +39,12 @@ class ClinicSerializer(ClinicMixin, serializers.ModelSerializer):
         if self.user.role != User.Role.DOCTOR:
             raise PermissionDenied(_("You don't have the required role."))
         if not hasattr(self.user, "doctor"):
-            raise serializers.ValidationError(
+            raise PermissionDenied(
                 _("Please create a doctor profile first.")
             )
+        certificate = self.user.doctor.certificate
+        if not certificate:
+            raise PermissionDenied(_("Please upload a certificate first."))
         if self.request.method == "POST" and hasattr(self.user.doctor, "clinic"):
             raise serializers.ValidationError(_("You already have a clinic."))
         return super().validate(data)

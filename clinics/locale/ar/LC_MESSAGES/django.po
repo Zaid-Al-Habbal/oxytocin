@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-26 21:12+0300\n"
+"POT-Creation-Date: 2025-05-28 22:17+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,27 +27,31 @@ msgstr "ليس لديك الدور المطلوب."
 msgid "Please create a doctor profile first."
 msgstr "الرجاء إنشاء حساب طبيب أولاً."
 
-#: clinics/serializers.py:46
+#: clinics/serializers.py:47
+msgid "Please upload a certificate first."
+msgstr "يرجى رفع الشهادة اولاً."
+
+#: clinics/serializers.py:49
 msgid "You already have a clinic."
 msgstr "لديك عيادة بالفعل."
 
-#: clinics/serializers.py:97 clinics/serializers.py:99
+#: clinics/serializers.py:100 clinics/serializers.py:102
 msgid "This field is required."
 msgstr "هذا الحقل مطلوب."
 
-#: clinics/serializers.py:133
+#: clinics/serializers.py:136
 msgid "You can upload a maximum of 8 images."
 msgstr "يمكنك رفع مايصل الى 8 صور كحد أقصى."
 
-#: clinics/serializers.py:188
+#: clinics/serializers.py:191
 msgid "Duplicate is not allowed."
 msgstr "التكرار غير مسموح به."
 
-#: clinics/serializers.py:191
+#: clinics/serializers.py:194
 #, python-format
 msgid "Invalid pk \"%(value)s\" - object does not exist."
 msgstr "معرف العنصر \"%(value)s\" غير صالح - العنصر غير موجود."
 
-#: clinics/serializers.py:192
+#: clinics/serializers.py:195
 msgid "value"
 msgstr ""

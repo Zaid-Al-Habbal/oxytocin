@@ -2,6 +2,34 @@ from django.db import models
 from django.conf import settings
 
 
+class DoctorQuerySet(models.QuerySet):
+    def with_specialties(self):
+        return self.prefetch_related(
+            models.Prefetch(
+                "doctor_specialties",
+                queryset=DoctorSpecialty.objects.select_related("specialty"),
+            )
+        )
+
+    def with_categorized_specialties(self):
+        return self.prefetch_related(
+            models.Prefetch(
+                "doctor_specialties",
+                queryset=DoctorSpecialty.objects.select_related("specialty").filter(
+                    specialty__parent__isnull=True
+                ),
+                to_attr="main_specialty",
+            ),
+            models.Prefetch(
+                "doctor_specialties",
+                queryset=DoctorSpecialty.objects.select_related("specialty").filter(
+                    specialty__parent__isnull=False
+                ),
+                to_attr="subspecialties",
+            ),
+        )
+
+
 class Doctor(models.Model):
 
     class Status(models.TextChoices):
@@ -30,12 +58,25 @@ class Doctor(models.Model):
         related_name="doctors",
     )
 
+    objects = DoctorQuerySet.as_manager()
+
     class Meta:
         indexes = [models.Index(fields=["start_work_date"])]
         ordering = ["start_work_date"]
 
     def __str__(self):
         return str(self.user)
+
+
+class SpecialtyQuerySet(models.QuerySet):
+    def with_parent(self):
+        return self.select_related("parent")
+
+    def main_specialties(self):
+        return self.filter(parent__isnull=True)
+
+    def subspecialties(self):
+        return self.filter(parent__isnull=False)
 
 
 class Specialty(models.Model):
@@ -47,6 +88,8 @@ class Specialty(models.Model):
         on_delete=models.SET_NULL,
         related_name="subspecialties",
     )
+
+    objects = SpecialtyQuerySet.as_manager()
 
     class Meta:
         verbose_name = "specialty"
