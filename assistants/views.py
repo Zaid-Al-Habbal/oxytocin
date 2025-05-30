@@ -4,9 +4,9 @@ from rest_framework import status
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework import generics, permissions
 
-from drf_spectacular.utils import extend_schema, OpenApiExample
+from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
 
-from .serializers import LoginAssistantSerializer, CompleteAssistantRegistrationSerializer
+from .serializers import LoginAssistantSerializer, CompleteAssistantRegistrationSerializer, AssistantProfileSerializer
 from .models import Assistant
 
 from users.permissions import HasRole
@@ -56,3 +56,25 @@ class CompleteAssistantRegistrationView(generics.CreateAPIView):
     
     def get_queryset(self):
         return Assistant.objects.none()
+    
+    
+@extend_schema_view(
+    get=extend_schema(
+        summary="Retrieve Assistant Profile",
+        description="Returns the profile data of the currently authenticated Assistant.",
+        tags=["Assistant"],
+    ),
+    patch=extend_schema(
+        summary="Update Assistant Profile",
+        description="Updates the profile data of the currently authenticated Assistant.",
+        tags=["Assistant"],
+    )
+)
+class AssistantProfileView(generics.RetrieveUpdateAPIView):
+    serializer_class = AssistantProfileSerializer
+    required_roles = [User.Role.ASSISTANT]
+    permission_classes = [permissions.IsAuthenticated, HasRole]
+    http_method_names = ["get", "patch"]
+
+    def get_object(self):
+        return self.request.user.assistant

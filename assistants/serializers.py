@@ -77,3 +77,26 @@ class CompleteAssistantRegistrationSerializer(serializers.ModelSerializer):
         
         return Assistant.objects.create(user=user, **validated_data)
     
+    
+class AssistantProfileSerializer(serializers.ModelSerializer):
+    user = UserUpdateSerializer()
+    class Meta:
+        model = Assistant
+        fields = [
+            'user',
+            'about',
+            'education',
+            'start_work_date'
+        ]
+    
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user')
+        instance = super().update(instance, validated_data)
+
+        user = instance.user
+        
+        user_serializer = UserUpdateSerializer(user, data=user_data, partial=True)
+        user_serializer.is_valid(raise_exception=True)
+        user_serializer.save()
+
+        return instance
