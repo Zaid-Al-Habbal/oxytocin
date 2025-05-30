@@ -9,4 +9,4 @@ class SpecialtySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Specialty
-        fields = ["id", "name"]
+        fields = ["id", "name_en", "name_ar"]

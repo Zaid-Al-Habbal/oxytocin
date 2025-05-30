@@ -68,6 +68,7 @@ class DoctorCertificateTests(APITestCase):
     def test_fails_when_certificate_already_exists(self):
         self.doctor.certificate = generate_test_pdf()
         self.doctor.save()
+        self.user.refresh_from_db()
         self.client.force_authenticate(self.user)
         response = self.client.post(self.path, self.data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

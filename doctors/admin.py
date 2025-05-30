@@ -36,9 +36,9 @@ class DoctorAdmin(nested.NestedModelAdmin):
 
 @admin.register(Specialty)
 class SpecialtyAdmin(admin.ModelAdmin):
-    list_display = ["name", "parent"]
+    list_display = ["name_en", "name_ar", "parent"]
     list_filter = ["parent"]
-    search_fields = ["name"]
+    search_fields = ["name_en", "name_ar"]
 
 
 @admin.register(Achievement)

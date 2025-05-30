@@ -80,7 +80,8 @@ class SpecialtyQuerySet(models.QuerySet):
 
 
 class Specialty(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name_en = models.CharField(max_length=100)
+    name_ar = models.CharField(max_length=100)
     parent = models.ForeignKey(
         "self",
         null=True,
@@ -92,11 +93,16 @@ class Specialty(models.Model):
     objects = SpecialtyQuerySet.as_manager()
 
     class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["name_en", "name_ar"], name="unique_name"
+            ),
+        ]
         verbose_name = "specialty"
         verbose_name_plural = "specialties"
 
     def __str__(self):
-        return self.name
+        return f"{self.name_en} - {self.name_ar}"
 
 
 class DoctorSpecialty(models.Model):

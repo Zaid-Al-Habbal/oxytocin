@@ -15,20 +15,11 @@ class DoctorCreateTests(APITestCase):
         self.path = reverse("doctor-create")
         self.password = "abcX123#"
 
-        self.verified_doctor = User.objects.create_user(
+        self.user = User.objects.create_user(
             first_name="verified",
             last_name="doctor",
             phone="0921341239",
             is_verified_phone=True,
-            password=self.password,
-            role=User.Role.DOCTOR,
-        )
-
-        self.unverified_doctor = User.objects.create_user(
-            first_name="unverified",
-            last_name="doctor",
-            phone="0921341240",
-            is_verified_phone=False,
             password=self.password,
             role=User.Role.DOCTOR,
         )
@@ -42,11 +33,29 @@ class DoctorCreateTests(APITestCase):
             role=User.Role.PATIENT,
         )
 
-        self.specialty1 = Specialty.objects.create(name="Test1")
-        self.specialty2 = Specialty.objects.create(name="Test2", parent=self.specialty1)
-        self.specialty3 = Specialty.objects.create(name="Test3", parent=self.specialty1)
-        self.specialty4 = Specialty.objects.create(name="Test4")
-        self.specialty5 = Specialty.objects.create(name="Test5", parent=self.specialty4)
+        self.main_specialty1 = Specialty.objects.create(
+            name_en="Test1",
+            name_ar="تجريبي1",
+        )
+        self.subspecialty1 = Specialty.objects.create(
+            name_en="Test2",
+            name_ar="تجريبي2",
+            parent=self.main_specialty1,
+        )
+        self.subspecialty2 = Specialty.objects.create(
+            name_en="Test3",
+            name_ar="تجريبي3",
+            parent=self.main_specialty1,
+        )
+        self.main_specialty2 = Specialty.objects.create(
+            name_en="Test4",
+            name_ar="تجريبي4",
+        )
+        self.subspecialty3 = Specialty.objects.create(
+            name_en="Test5",
+            name_ar="تجريبي5",
+            parent=self.main_specialty2,
+        )
 
         self.data = {
             "user": {
@@ -57,26 +66,26 @@ class DoctorCreateTests(APITestCase):
             "education": "about education",
             "start_work_date": timezone.now().date() - timedelta(days=30),
             "main_specialty": {
-                "specialty_id": self.specialty1.pk,
+                "specialty_id": self.main_specialty1.pk,
                 "university": "London",
             },
             "subspecialties": [
                 {
-                    "specialty_id": self.specialty2.pk,
+                    "specialty_id": self.subspecialty1.pk,
                     "university": "Damascus",
                 },
                 {
-                    "specialty_id": self.specialty3.pk,
+                    "specialty_id": self.subspecialty2.pk,
                     "university": "Tokyo",
                 },
             ],
         }
 
     def test_successful_doctor_creation(self):
-        self.client.force_authenticate(self.verified_doctor)
+        self.client.force_authenticate(self.user)
         response = self.client.post(self.path, self.data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertTrue(Doctor.objects.filter(user=self.verified_doctor).exists())
+        self.assertTrue(Doctor.objects.filter(user=self.user).exists())
         self.assertIn("user", str(response.data))
         self.assertIn("gender", str(response.data))
         self.assertIn("birth_date", str(response.data))
@@ -95,15 +104,18 @@ class DoctorCreateTests(APITestCase):
         data.pop("user")
         data.pop("main_specialty")
         data.pop("subspecialties")
-        Doctor.objects.create(user=self.verified_doctor, **data)
+        Doctor.objects.create(user=self.user, **data)
 
-        self.client.force_authenticate(self.verified_doctor)
+        self.client.force_authenticate(self.user)
         response = self.client.post(self.path, self.data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("لديك حساب طبيب بالفعل.", str(response.data))
 
     def test_fails_if_phone_is_not_verified(self):
-        self.client.force_authenticate(self.unverified_doctor)
+        self.user.is_verified_phone = False
+        self.user.save()
+        self.user.refresh_from_db()
+        self.client.force_authenticate(self.user)
         response = self.client.post(self.path, self.data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("لم يتم التحقق من رقم الهاتف.", str(response.data))
@@ -119,10 +131,10 @@ class DoctorCreateTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_fails_when_subspecialties_exceed_available_for_main_specialty(self):
-        self.client.force_authenticate(self.verified_doctor)
+        self.client.force_authenticate(self.user)
         data = self.data.copy()
         new_subspecialty = {
-            "specialty_id": self.specialty5.pk,
+            "specialty_id": self.subspecialty3.pk,
             "university": "New York",
         }
         data["subspecialties"].append(new_subspecialty)
@@ -134,10 +146,10 @@ class DoctorCreateTests(APITestCase):
         )
 
     def test_fails_on_duplicate_subspecialties(self):
-        self.client.force_authenticate(self.verified_doctor)
+        self.client.force_authenticate(self.user)
         data = self.data.copy()
         data["subspecialties"][1] = {
-            "specialty_id": self.specialty2.pk,
+            "specialty_id": self.subspecialty1.pk,
             "university": "Aleppo",
         }
         response = self.client.post(self.path, data, format="json")
@@ -145,10 +157,10 @@ class DoctorCreateTests(APITestCase):
         self.assertIn("التكرار غير مسموح به.", str(response.data))
 
     def test_fails_when_one_of_subspecialties_not_under_main_specialty(self):
-        self.client.force_authenticate(self.verified_doctor)
+        self.client.force_authenticate(self.user)
         data = self.data.copy()
         data["subspecialties"][1] = {
-            "specialty_id": self.specialty5.pk,
+            "specialty_id": self.subspecialty3.pk,
             "university": "Aleppo",
         }
         response = self.client.post(self.path, data, format="json")
@@ -156,10 +168,10 @@ class DoctorCreateTests(APITestCase):
         self.assertIn("ليس فرعاً من التخصص الرئيسي.", str(response.data))
 
     def test_rejects_subspecialty_as_main_specialty(self):
-        self.client.force_authenticate(self.verified_doctor)
+        self.client.force_authenticate(self.user)
         data = self.data.copy()
         data["main_specialty"] = {
-            "specialty_id": self.specialty2.pk,
+            "specialty_id": self.subspecialty1.pk,
             "university": "Aleppo",
         }
         response = self.client.post(self.path, data, format="json")
@@ -167,10 +179,10 @@ class DoctorCreateTests(APITestCase):
         self.assertIn("لا يمكن أن يكون التخصص الرئيسي تخصصاً فرعياً.", str(response.data))
 
     def test_rejects_main_specialty_as_subspecialty(self):
-        self.client.force_authenticate(self.verified_doctor)
+        self.client.force_authenticate(self.user)
         data = self.data.copy()
         data["subspecialties"][1] = {
-            "specialty_id": self.specialty4.pk,
+            "specialty_id": self.main_specialty2.pk,
             "university": "Aleppo",
         }
         response = self.client.post(self.path, data, format="json")

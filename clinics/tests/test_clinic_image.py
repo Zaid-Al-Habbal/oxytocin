@@ -20,27 +20,9 @@ class ClinicImageTests(APITestCase):
         self.password = "abcX123#"
 
         self.user = User.objects.create_user(
-            first_name="user",
-            last_name="without doctor profile",
-            phone="0934567890",
-            is_verified_phone=True,
-            password=self.password,
-            role=User.Role.DOCTOR,
-        )
-
-        self.user_doctor_clinic = User.objects.create_user(
             first_name="doctor",
-            last_name="clinic",
-            phone="0934567891",
-            is_verified_phone=True,
-            password=self.password,
-            role=User.Role.DOCTOR,
-        )
-
-        self.user_doctor = User.objects.create_user(
-            first_name="no clinic",
-            last_name="doctor",
-            phone="0934567892",
+            last_name="user",
+            phone="0934567890",
             is_verified_phone=True,
             password=self.password,
             role=User.Role.DOCTOR,
@@ -53,37 +35,24 @@ class ClinicImageTests(APITestCase):
             "certificate": generate_test_pdf(),
             "status": Doctor.Status.APPROVED,
         }
-        self.doctor_with_clinic = Doctor.objects.create(
-            user=self.user_doctor_clinic,
-            **doctor_data,
-        )
-        self.doctor_without_clinic = Doctor.objects.create(
-            user=self.user_doctor,
-            **doctor_data,
-        )
+        self.doctor = Doctor.objects.create(user=self.user, **doctor_data)
 
-        specialty1 = Specialty.objects.create(name="Test1")
-        specialty2 = Specialty.objects.create(name="Test2", parent=specialty1)
+        main_specialty1 = Specialty.objects.create(name_en="Test1", name_ar="تجريبي1")
+        subspecialty1 = Specialty.objects.create(
+            name_en="Test2",
+            name_ar="تجريبي2",
+            parent=main_specialty1,
+        )
         specialties = [
             DoctorSpecialty(
-                doctor=self.doctor_with_clinic,
-                specialty=specialty1,
+                doctor=self.doctor,
+                specialty=main_specialty1,
                 university="Damascus",
             ),
             DoctorSpecialty(
-                doctor=self.doctor_with_clinic,
-                specialty=specialty2,
+                doctor=self.doctor,
+                specialty=subspecialty1,
                 university="Tokyo",
-            ),
-            DoctorSpecialty(
-                doctor=self.doctor_without_clinic,
-                specialty=specialty1,
-                university="Tokyo",
-            ),
-            DoctorSpecialty(
-                doctor=self.doctor_without_clinic,
-                specialty=specialty2,
-                university="London",
             ),
         ]
         DoctorSpecialty.objects.bulk_create(specialties)
@@ -94,14 +63,12 @@ class ClinicImageTests(APITestCase):
             "latitude": 32.1,
             "phone": "011 223 3333",
         }
-        self.clinic = Clinic.objects.create(
-            doctor=self.doctor_with_clinic, **clinic_data
-        )
+        self.clinic = Clinic.objects.create(doctor=self.doctor, **clinic_data)
 
         self.patient = User.objects.create_user(
-            phone="0922334455",
             first_name="patient",
             last_name="patient",
+            phone="0922334455",
             is_verified_phone=True,
             password=self.password,
             role="patient",
@@ -114,7 +81,7 @@ class ClinicImageTests(APITestCase):
         return clinic_image
 
     def test_successful_image_creation(self):
-        self.client.force_authenticate(self.user_doctor_clinic)
+        self.client.force_authenticate(self.user)
         data = {"images": [generate_test_image(), generate_test_image()]}
         response = self.client.post(self.path, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -126,7 +93,7 @@ class ClinicImageTests(APITestCase):
         self.assertIn("updated_at", str(response.data))
 
     def test_successful_image_update(self):
-        self.client.force_authenticate(self.user_doctor_clinic)
+        self.client.force_authenticate(self.user)
         clinic_image = self.create_clinic_image(self.clinic)
         data = {
             "clinic_images[0]id": clinic_image.pk,
@@ -145,7 +112,7 @@ class ClinicImageTests(APITestCase):
         self.assertGreater(updated_clinic_image.updated_at, clinic_image.updated_at)
 
     def test_successful_image_deletion(self):
-        self.client.force_authenticate(self.user_doctor_clinic)
+        self.client.force_authenticate(self.user)
         clinic_image = self.create_clinic_image(self.clinic)
         data = {
             "clinic_images": [clinic_image.pk],
@@ -156,7 +123,7 @@ class ClinicImageTests(APITestCase):
         self.assertFalse(exists)
 
     def test_creation_fails_if_number_of_uploaded_images_exceeds_the_limit(self):
-        self.client.force_authenticate(self.user_doctor_clinic)
+        self.client.force_authenticate(self.user)
         self.create_clinic_image(self.clinic)
         data = {
             "images": [
@@ -175,14 +142,30 @@ class ClinicImageTests(APITestCase):
         self.assertIn("يمكنك رفع مايصل الى 8 صور كحد أقصى.", str(response.data))
 
     def test_update_fails_on_unowned_images(self):
-        self.client.force_authenticate(self.user_doctor_clinic)
+        self.client.force_authenticate(self.user)
+        user = User.objects.create_user(
+            first_name="doctor",
+            last_name="user",
+            phone="0934567891",
+            is_verified_phone=True,
+            password=self.password,
+            role=User.Role.DOCTOR,
+        )
+        doctor_data = {
+            "about": "About Test2",
+            "education": "Test2",
+            "start_work_date": timezone.now().date() - timedelta(days=50),
+            "certificate": generate_test_pdf(),
+            "status": Doctor.Status.APPROVED,
+        }
+        doctor = Doctor.objects.create(user=user, **doctor_data)
         clinic_data = {
             "location": "Test Street 3",
             "longitude": 74.2,
             "latitude": 92.1,
             "phone": "011 223 4444",
         }
-        clinic = Clinic.objects.create(doctor=self.doctor_without_clinic, **clinic_data)
+        clinic = Clinic.objects.create(doctor=doctor, **clinic_data)
         clinic_image = self.create_clinic_image(clinic)
         data = {
             "clinic_images[0]id": clinic_image.pk,
@@ -193,7 +176,7 @@ class ClinicImageTests(APITestCase):
         self.assertIn("العنصر غير موجود", str(response.data))
 
     def test_update_fails_on_nonexistent_images(self):
-        self.client.force_authenticate(self.user_doctor_clinic)
+        self.client.force_authenticate(self.user)
         data = {
             "clinic_images[0]id": 999999,
             "clinic_images[0]image": generate_test_image(),
@@ -203,14 +186,30 @@ class ClinicImageTests(APITestCase):
         self.assertIn("العنصر غير موجود", str(response.data))
 
     def test_deletion_fails_on_delete_unowned_images(self):
-        self.client.force_authenticate(self.user_doctor_clinic)
+        self.client.force_authenticate(self.user)
+        user = User.objects.create_user(
+            first_name="doctor",
+            last_name="user",
+            phone="0934567891",
+            is_verified_phone=True,
+            password=self.password,
+            role=User.Role.DOCTOR,
+        )
+        doctor_data = {
+            "about": "About Test2",
+            "education": "Test2",
+            "start_work_date": timezone.now().date() - timedelta(days=50),
+            "certificate": generate_test_pdf(),
+            "status": Doctor.Status.APPROVED,
+        }
+        doctor = Doctor.objects.create(user=user, **doctor_data)
         clinic_data = {
             "location": "Test Street 3",
             "longitude": 74.2,
             "latitude": 92.1,
             "phone": "011 223 4444",
         }
-        clinic = Clinic.objects.create(doctor=self.doctor_without_clinic, **clinic_data)
+        clinic = Clinic.objects.create(doctor=doctor, **clinic_data)
         clinic_image = self.create_clinic_image(clinic)
         data = {"clinic_images": [clinic_image.pk]}
         response = self.client.delete(self.path, data, format="json")
@@ -218,67 +217,45 @@ class ClinicImageTests(APITestCase):
         self.assertIn("العنصر غير موجود", str(response.data))
 
     def test_deletion_fails_on_delete_nonexistent_images(self):
-        self.client.force_authenticate(self.user_doctor_clinic)
+        self.client.force_authenticate(self.user)
         data = {"clinic_images": [99]}
         response = self.client.delete(self.path, data, format="json")
         self.assertTrue(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("العنصر غير موجود", str(response.data))
 
     def test_deletion_fails_on_duplicate_pks(self):
-        self.client.force_authenticate(self.user_doctor_clinic)
+        self.client.force_authenticate(self.user)
         clinic_image = self.create_clinic_image(self.clinic)
         data = {"clinic_images": [clinic_image.pk, clinic_image.pk]}
         response = self.client.delete(self.path, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("التكرار غير مسموح به.", str(response.data))
 
-    def test_creation_fails_if_user_role_is_not_doctor(self):
+    def test_view_rejects_users_with_non_doctor_role(self):
         self.client.force_authenticate(self.patient)
         data = {"images": [generate_test_image(), generate_test_image()]}
         response = self.client.post(self.path, data)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertIn("ليس لديك الدور المطلوب.", str(response.data))
 
-    def test_update_fails_if_user_role_is_not_doctor(self):
-        self.client.force_authenticate(self.patient)
-        clinic_image = self.create_clinic_image(self.clinic)
-        data = {
-            "clinic_images[0]id": clinic_image.pk,
-            "clinic_images[0]image": generate_test_image(color=(0, 0, 255)),
-        }
-        response = self.client.put(self.path, data)
+    def test_view_rejects_users_without_doctor_profile(self):
+        self.doctor.delete()
+        self.user.refresh_from_db()
+        self.client.force_authenticate(self.user)
+        response = self.client.get(self.path)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-        self.assertIn("ليس لديك الدور المطلوب.", str(response.data))
+        self.assertIn("الرجاء إنشاء حساب طبيب أولاً.", str(response.data))
 
-    def test_deletion_fails_if_user_role_is_not_doctor(self):
-        self.client.force_authenticate(self.patient)
-        clinic_image = self.create_clinic_image(self.clinic)
-        data = {
-            "clinic_images": [clinic_image.pk],
-        }
-        response = self.client.delete(self.path, data, format="json")
+    def test_view_rejects_users_without_certificate(self):
+        self.doctor.certificate = None
+        self.doctor.save()
+        self.user.refresh_from_db()
+        self.client.force_authenticate(self.user)
+        response = self.client.get(self.path)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-        self.assertIn("ليس لديك الدور المطلوب.", str(response.data))
+        self.assertIn("يرجى رفع الشهادة اولاً.", str(response.data))
 
-    def test_creation_fails_on_unauthenticated_user(self):
+    def test_view_rejects_unauthenticated_users(self):
         data = {"images": [generate_test_image(), generate_test_image()]}
         response = self.client.post(self.path, data)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
-    def test_update_fails_on_unauthenticated_user(self):
-        clinic_image = self.create_clinic_image(self.clinic)
-        data = {
-            "clinic_images[0]id": clinic_image.pk,
-            "clinic_images[0]image": generate_test_image(color=(0, 0, 255)),
-        }
-        response = self.client.put(self.path, data)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
-    def test_deletion_fails_on_unauthenticated_user(self):
-        clinic_image = self.create_clinic_image(self.clinic)
-        data = {
-            "clinic_images": [clinic_image.pk],
-        }
-        response = self.client.delete(self.path, data, format="json")
-        response = self.client.put(self.path, data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
