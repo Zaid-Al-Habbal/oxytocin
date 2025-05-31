@@ -4,6 +4,7 @@ from django.utils.timezone import now
 from rest_framework import status
 from rest_framework import generics
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser
 from rest_framework import permissions
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
@@ -17,6 +18,7 @@ from .serializers import (
     UserCreateSerializer,
     LogoutSerializer,
     ChangePasswordSerializer,
+    UserImageSerializer,
 )
 
 
@@ -121,3 +123,31 @@ class ChangePasswordView(generics.GenericAPIView):
                 {"detail": "Password updated successfully."}, status=status.HTTP_200_OK
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(
+    summary="Upload a Profile Picture",
+    description="Upload or update the profile picture of the currently authenticated user.",
+    examples=[
+        OpenApiExample(
+            name="Upload Image",
+            value={
+                "image": "image.png",
+            },
+            request_only=True,
+            media_type="multipart/form-data"
+        )
+    ],
+    tags=["User"],
+)
+class UserImageView(generics.GenericAPIView):
+    parser_classes = [MultiPartParser]
+    queryset = User.objects.not_deleted()
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserImageSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-30 11:39+0300\n"
+"POT-Creation-Date: 2025-05-31 21:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,17 +50,21 @@ msgstr "تم رفض حسابك. يُرجى التواصل مع الدعم لمز
 msgid "Assistant profile incomplete."
 msgstr "ملف المساعد او المساعدة غير مكتمل."
 
-#: users/serializers.py:43 users/serializers.py:127
+#: users/serializers.py:45 users/serializers.py:129
 msgid "Passwords don't match!"
 msgstr "كلمات السر غير متطابقة."
 
-#: users/serializers.py:101
+#: users/serializers.py:103
 msgid "must be in the past."
 msgstr "يجب أن يكون في الماضي."
 
-#: users/serializers.py:134
+#: users/serializers.py:136
 msgid "Old password is not correct."
 msgstr "كلمة السر القديمة غير صحيحة."
+
+#: users/serializers.py:176
+msgid "Phone number is not verified."
+msgstr "لم يتم التحقق من رقم الهاتف."
 
 #: users/validators.py:10
 msgid "Password must contain at least one lowercase letter."

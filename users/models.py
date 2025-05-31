@@ -7,7 +7,15 @@ from django.db import models
 from django.utils import timezone
 
 
-class CustomUserManager(BaseUserManager):
+class CustomUserQuerySet(models.QuerySet):
+    def verified_phone(self):
+        return self.filter(is_verified_phone=True)
+
+    def not_deleted(self):
+        return self.filter(deleted_at__isnull=True)
+
+
+class CustomUserManager(BaseUserManager.from_queryset(CustomUserQuerySet)):
     def create_user(self, phone, password=None, **extra_fields):
         if not phone:
             raise ValueError("The Phone number must be set")
