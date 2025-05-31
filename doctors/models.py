@@ -3,6 +3,10 @@ from django.conf import settings
 
 
 class DoctorQuerySet(models.QuerySet):
+
+    def not_deleted(self):
+        return self.filter(user__deleted_at__isnull=True)
+
     def with_specialties(self):
         return self.prefetch_related(
             models.Prefetch(
@@ -78,6 +82,9 @@ class SpecialtyQuerySet(models.QuerySet):
     def subspecialties(self):
         return self.filter(parent__isnull=False)
 
+    def main_specialties_with_their_subspecialties(self):
+        return self.main_specialties().prefetch_related("subspecialties")
+
 
 class Specialty(models.Model):
     name_en = models.CharField(max_length=100)
@@ -94,9 +101,7 @@ class Specialty(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(
-                fields=["name_en", "name_ar"], name="unique_name"
-            ),
+            models.UniqueConstraint(fields=["name_en", "name_ar"], name="unique_name"),
         ]
         verbose_name = "specialty"
         verbose_name_plural = "specialties"

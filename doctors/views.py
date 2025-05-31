@@ -8,12 +8,13 @@ from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.parsers import MultiPartParser
 from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiExample
 
-from .models import Doctor
+from .models import Doctor, Specialty
 from .serializers import (
     DoctorLoginSerializer,
     DoctorCreateSerializer,
     DoctorCertificateSerializer,
     DoctorUpdateSerializer,
+    SpecialtyListSerializer,
 )
 from .permissions import IsDoctorWithClinic
 
@@ -83,9 +84,21 @@ class DoctorRetrieveUpdateView(generics.RetrieveUpdateAPIView):
     http_method_names = ["get", "put"]
 
     def get_queryset(self):
-        return Doctor.objects.with_categorized_specialties().filter(
-            user=self.request.user, user__deleted_at__isnull=True
+        return (
+            Doctor.objects.not_deleted()
+            .with_categorized_specialties()
+            .filter(user=self.request.user)
         )
 
     def get_object(self):
         return self.get_queryset().first()
+
+
+@extend_schema(
+    summary="Get Main Specialties with Subspecialties",
+    description="Retrieves a list of main specialties, each including its associated subspecialties.",
+    tags=["Specialty"],
+)
+class SpecialtyListView(generics.ListAPIView):
+    queryset = Specialty.objects.main_specialties_with_their_subspecialties()
+    serializer_class = SpecialtyListSerializer
