@@ -145,7 +145,7 @@ USE_TZ = True
 LOCALE_PATHS = [
     BASE_DIR / "locale",  # or os.path.join(BASE_DIR, 'locale')
     BASE_DIR / "users/locale",
-    BASE_DIR / 'patients/locale',
+    BASE_DIR / "patients/locale",
     BASE_DIR / "doctors/locale",
     BASE_DIR / "clinics/locale",
 ]
@@ -215,3 +215,38 @@ SPECTACULAR_SETTINGS = {
     "REDOC_DIST": "SIDECAR",
     # OTHER SETTINGS
 }
+
+# Redis
+REDIS_PASSWORD = config("REDIS_PASSWORD", "12345678")
+
+# Cache
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": REDIS_PASSWORD,
+        },
+    },
+    "otp": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": REDIS_PASSWORD,
+        },
+        "KEY_PREFIX": "otp",
+        "TIMEOUT": 300,
+    },
+}
+
+# RabbitMQ
+RABBITMQ_USER = config("RABBITMQ_USER", "guest")
+RABBITMQ_PASS = config("RABBITMQ_PASS", "guest")
+
+# Celery
+CELERY_BROKER_URL = f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASS}@rabbitmq:5672//"
+CELERY_RESULT_BACKEND = f"redis://:{REDIS_PASSWORD}@redis:6379/0"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"

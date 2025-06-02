@@ -1,16 +1,18 @@
 services:
-  server:
+  app:
     image: "oxytocin:latest"
     build:
       context: .
+    entrypoint: ["./entrypoint.sh"]
     networks:
       - net
     volumes:
-      - server-media:/app/media
-    ports:
-      - 8000:8000
+      - app-media:/app/media
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     # Comment out any environment variable to use its default value
     environment:
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
@@ -26,6 +28,24 @@ services:
     env_file:
       - .env
 
+  migrate:
+    extends:
+      service: app
+    command: python manage.py migrate
+    depends_on:
+      app:
+        condition: service_completed_successfully
+
+  server:
+    extends:
+      service: app
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
   db:
     image: postgres:17.5
     user: postgres
@@ -39,10 +59,84 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     env_file:
       - .env
+    healthcheck:
+      test:
+        ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 10s
+
+  rabbitmq:
+    image: rabbitmq:4.1.0-management
+    ports:
+      - 15672:15672
+    networks:
+      - net
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  redis:
+    image: redis:8.0.2
+    command: sh -c 'redis-server --requirepass "$REDIS_PASSWORD"'
+    networks:
+      - net
+    volumes:
+      - redis-data:/data
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a ${REDIS_PASSWORD} ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  worker:
+    extends:
+      service: app
+    command: celery -A django_project worker -l info
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      app:
+        condition: service_completed_successfully
+
+  flower:
+    extends:
+      service: app
+    command: >
+      sh -c "celery -A django_project flower --broker_api=http://${RABBITMQ_USER}:${RABBITMQ_PASS}@rabbitmq:15672/api/"
+    ports:
+      - 5555:5555
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      worker:
+        condition: service_started
+    environment:
+      FLOWER_BASIC_AUTH: ${FLOWER_BASIC_AUTH}
 
 networks:
   net:
 
 volumes:
   db-data:
-  server-media:
+  app-media:
+  rabbitmq-data:
+  redis-data:
