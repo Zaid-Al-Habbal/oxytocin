@@ -50,7 +50,7 @@ class Doctor(models.Model):
     about = models.TextField()
     education = models.TextField()
     start_work_date = models.DateField(null=True, blank=True)
-    certificate = models.FileField(upload_to="documents/%Y/%m/%d/")
+    certificate = models.FileField(upload_to="documents/certificates/%Y/%m/%d/")
     status = models.CharField(
         max_length=20,
         choices=Status.choices,
