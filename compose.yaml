@@ -89,7 +89,10 @@ services:
 
   redis:
     image: redis:8.0.2
-    command: sh -c 'redis-server --requirepass "$REDIS_PASSWORD"'
+    command:
+      - redis-server
+      - --requirepass
+      - "${REDIS_PASSWORD}"
     networks:
       - net
     volumes:
@@ -120,8 +123,12 @@ services:
   flower:
     extends:
       service: app
-    command: >
-      sh -c "celery -A django_project flower --broker_api=http://${RABBITMQ_USER}:${RABBITMQ_PASS}@rabbitmq:15672/api/"
+    command:
+      - celery
+      - -A
+      - django_project
+      - flower
+      - --broker_api=http://${RABBITMQ_USER}:${RABBITMQ_PASS}@rabbitmq:15672/api/
     ports:
       - 5555:5555
     depends_on:
