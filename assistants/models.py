@@ -16,6 +16,7 @@ class Assistant(models.Model):
         on_delete=models.SET_NULL,
         related_name="assistants",
     )
+    joined_clinic_at = models.DateField(null=True, blank=True)
     about = models.TextField(null=True, blank=True)
     education = models.TextField()
     start_work_date = models.DateField()
