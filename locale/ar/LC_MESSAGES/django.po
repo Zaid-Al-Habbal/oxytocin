@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-13 21:45+0200\n"
+"POT-Creation-Date: 2025-06-03 09:57+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: relations.py:246
 #, python-brace-format
 msgid "Invalid pk \"{pk_value}\" - object does not exist."
 msgstr "معرف العنصر \"{pk_value}\" غير صالح - العنصر غير موجود."
 
-#: fields.py:1606
 #, python-brace-format
 msgid "Ensure this field has no more than {max_length} elements."
-msgstr "تأكد من أن هذا الحقل لا يحتوي على أكثر من 8 عناصر."
+msgstr "تأكد من أن هذا الحقل لا يحتوي على أكثر من {max_length} عناصر."
+
+#, python-format
+msgid ""
+"🩺 Welcome to Oxytocin!\n"
+"Your sign-in code is %(otp)s.\n"
+"Don't share it with anyone."
+msgstr ""
+"🩺 مرحباً بك في أوكسيتوسين!\n"
+"رمز تسجيل الدخول الخاص بك هو %(otp)s.\n"
+"لا تشاركه مع أي أحد."

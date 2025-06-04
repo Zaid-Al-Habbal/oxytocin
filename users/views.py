@@ -19,7 +19,10 @@ from .serializers import (
     LogoutSerializer,
     ChangePasswordSerializer,
     UserImageSerializer,
+    UserPhoneVerificationSendSerializer,
+    UserPhoneVerificationSerializer,
 )
+from .throttles import OTPThrottle
 
 
 @extend_schema(
@@ -135,14 +138,14 @@ class ChangePasswordView(generics.GenericAPIView):
                 "image": "image.png",
             },
             request_only=True,
-            media_type="multipart/form-data"
+            media_type="multipart/form-data",
         )
     ],
     tags=["User"],
 )
 class UserImageView(generics.GenericAPIView):
     parser_classes = [MultiPartParser]
-    queryset = User.objects.not_deleted()
+    queryset = User.objects.not_deleted().not_verified_phone()
     permission_classes = [IsAuthenticated]
     serializer_class = UserImageSerializer
 
@@ -150,4 +153,25 @@ class UserImageView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        return Response(serializer.data)
+
+
+class UserPhoneVerificationSendView(generics.GenericAPIView):
+    throttle_classes = [OTPThrottle]
+    serializer_class = UserPhoneVerificationSendSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        data = {"message": _("Phone verification code sent successfully.")}
+        return Response(data)
+
+
+class UserPhoneVerificationView(generics.GenericAPIView):
+    serializer_class = UserPhoneVerificationSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         return Response(serializer.data)

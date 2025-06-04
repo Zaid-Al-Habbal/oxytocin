@@ -28,4 +28,14 @@ urlpatterns = [
         views.UserImageView.as_view(),
         name="user-image",
     ),
+    path(
+        "phone-verification/send/",
+        views.UserPhoneVerificationSendView.as_view(),
+        name="user-phone-verification-send",
+    ),
+    path(
+        "phone-verification/",
+        views.UserPhoneVerificationView.as_view(),
+        name="user-phone-verification",
+    ),
 ]

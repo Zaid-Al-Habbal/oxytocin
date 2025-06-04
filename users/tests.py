@@ -6,6 +6,9 @@ from rest_framework import status
 from common.utils import generate_test_image
 
 from .models import CustomUser as User
+from .services import OTPService
+
+otp_service = OTPService()
 
 
 class UserCreateTests(APITestCase):
@@ -202,3 +205,72 @@ class UserImageTests(APITestCase):
     def test_fails_on_unauthenticated_users(self):
         response = self.client.post(self.path, self.data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class UserPhoneVerificationTests(APITestCase):
+    def setUp(self):
+        self.path = reverse("user-phone-verification")
+        self.send_path = reverse("user-phone-verification-send")
+        user_data = {
+            "first_name": "John",
+            "last_name": "Doe",
+            "phone": "0000",
+            "password": "abcX123#",
+            "is_verified_phone": False,
+        }
+        self.user = User.objects.create_user(**user_data)
+
+    def test_send_sms_successful(self):
+        data = {"user_id": self.user.id}
+        response = self.client.post(self.send_path, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("تم إرسال رمز التحقق من الهاتف بنجاح.", str(response.data))
+
+    def test_send_sms_fails_on_non_existing_user(self):
+        data = {"user_id": 9999999}
+        response = self.client.post(self.send_path, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("العنصر غير موجود", str(response.data))
+
+    def test_verification_successful(self):
+        data = {
+            "user_id": self.user.id,
+            "verification_code": otp_service.generate(self.user.id),
+        }
+        response = self.client.post(self.path, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("access_token", str(response.data))
+
+    def test_verification_fails_on_invalid_code(self):
+        data = {
+            "user_id": self.user.id,
+            "verification_code": 99999,
+        }
+        response = self.client.post(self.path, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertIn("رمز التحقق غير صالح.", str(response.data))
+
+    def test_verification_fails_on_invalid_user(self):
+        user = User.objects.create_user(
+            first_name="Mary",
+            last_name="Hart",
+            phone="00000",
+            password="abcX123#",
+            is_verified_phone=False,
+        )
+        data = {
+            "user_id": user.id,
+            "verification_code": otp_service.generate(self.user.id),
+        }
+        response = self.client.post(self.path, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertIn("رمز التحقق غير صالح.", str(response.data))
+
+    def test_verification_fails_on_non_existing_user(self):
+        data = {
+            "user_id": 99999999999999,
+            "verification_code": otp_service.generate(self.user.id),
+        }
+        response = self.client.post(self.path, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("العنصر غير موجود", str(response.data))

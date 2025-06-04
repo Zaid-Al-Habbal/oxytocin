@@ -25,6 +25,7 @@ services:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_PORT: ${DATABASE_PORT}
+      SAFE_PHONE_NUMBERS: ${SAFE_PHONE_NUMBERS}
     env_file:
       - .env
 
@@ -42,6 +43,16 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     ports:
       - 8000:8000
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  test:
+    extends:
+      service: app
+    command: python manage.py test
+    environment:
+      DJANGO_TESTING: True
     depends_on:
       migrate:
         condition: service_completed_successfully

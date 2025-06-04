@@ -10,6 +10,9 @@ from django.utils import timezone
 class CustomUserQuerySet(models.QuerySet):
     def verified_phone(self):
         return self.filter(is_verified_phone=True)
+    
+    def not_verified_phone(self):
+        return self.filter(is_verified_phone=False)
 
     def not_deleted(self):
         return self.filter(deleted_at__isnull=True)

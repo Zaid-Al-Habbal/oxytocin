@@ -1,12 +1,20 @@
 from django.contrib.auth.password_validation import validate_password
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from django.conf import settings
 
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 from file_validator.models import DjangoFileValidator
 from rest_framework.exceptions import PermissionDenied
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import CustomUser as User
+from .services import OTPService
+from .tasks import send_sms
+
+
+otp_service = OTPService()
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -16,6 +24,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         ("assistant", "Assistant"),
     ]
 
+    phone = serializers.CharField(min_length=10, max_length=10)
     role = serializers.ChoiceField(choices=ROLE_CHOICES, default=User.Role.PATIENT)
     password = serializers.CharField(
         write_only=True,
@@ -30,6 +39,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
+            "id",
             "first_name",
             "last_name",
             "phone",
@@ -38,6 +48,21 @@ class UserCreateSerializer(serializers.ModelSerializer):
             "password_confirm",
         ]
         read_only_fields = ["image"]
+
+    def validate_phone(self, value):
+        if settings.TESTING:
+            return value
+        if settings.DEBUG:
+            if value not in settings.SAFE_PHONE_NUMBERS:
+                raise serializers.ValidationError(
+                    _("This phone number is not allowed during development.")
+                )
+        if not value.startswith("09"):
+            raise serializers.ValidationError(_("Phone number must start with '09'."))
+        value = "+963" + value[1:]
+        unique_validator = UniqueValidator(queryset=User.objects.all())
+        unique_validator(value, self.fields["phone"])
+        return value
 
     def validate(self, data):
         if data["password"] != data["password_confirm"]:
@@ -180,3 +205,49 @@ class UserImageSerializer(serializers.Serializer):
         self.user.image = validated_data["image"]
         self.user.save()
         return self.user
+
+
+class UserPhoneVerificationSendSerializer(serializers.Serializer):
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.not_deleted().all(),
+        source="user",
+        write_only=True,
+    )
+    message = serializers.CharField(read_only=True)
+
+    def save(self, **kwargs):
+        user = self.validated_data["user"]
+        if not settings.TESTING:
+            message = _(settings.VERIFICATION_CODE_MESSAGE)
+            send_sms.delay(user.id, message)
+
+
+class UserPhoneVerificationSerializer(serializers.Serializer):
+    user_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.not_deleted().not_verified_phone().all(),
+        source="user",
+        write_only=True,
+    )
+    verification_code = serializers.CharField(
+        min_length=5,
+        max_length=5,
+        write_only=True,
+    )
+    access_token = serializers.CharField(read_only=True)
+    refresh_token = serializers.CharField(read_only=True)
+    expires_in = serializers.IntegerField(read_only=True)
+
+    def validate(self, data):
+        user = data["user"]
+        otp = data["verification_code"]
+        otp_service.validate(user.id, otp)
+        user.is_verified_phone = True
+        user.save()
+        refresh_token = RefreshToken.for_user(user)
+        access_token = refresh_token.access_token
+        expires_in = int(access_token.lifetime.total_seconds())
+        return {
+            "access_token": str(access_token),
+            "refresh_token": str(refresh_token),
+            "expires_in": expires_in,
+        }

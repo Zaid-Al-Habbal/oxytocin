@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-31 21:23+0300\n"
+"POT-Creation-Date: 2025-06-04 21:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,21 +50,34 @@ msgstr "تم رفض حسابك. يُرجى التواصل مع الدعم لمز
 msgid "Assistant profile incomplete."
 msgstr "ملف المساعد او المساعدة غير مكتمل."
 
-#: users/serializers.py:45 users/serializers.py:129
+#: users/serializers.py:56
+msgid "This phone number is not allowed during development."
+msgstr "لا يُسمح باستخدام رقم الهاتف هذا أثناء التطوير."
+
+#: users/serializers.py:59
+#, fuzzy
+msgid "Phone number must start with '09'."
+msgstr "يجب أن يبدأ رقم الهاتف بـ '09'."
+
+#: users/serializers.py:68 users/serializers.py:152
 msgid "Passwords don't match!"
 msgstr "كلمات السر غير متطابقة."
 
-#: users/serializers.py:103
+#: users/serializers.py:126
 msgid "must be in the past."
 msgstr "يجب أن يكون في الماضي."
 
-#: users/serializers.py:136
+#: users/serializers.py:159
 msgid "Old password is not correct."
 msgstr "كلمة السر القديمة غير صحيحة."
 
-#: users/serializers.py:176
+#: users/serializers.py:199
 msgid "Phone number is not verified."
 msgstr "لم يتم التحقق من رقم الهاتف."
+
+#: users/services.py:57 users/services.py:62
+msgid "Invalid OTP."
+msgstr "رمز التحقق غير صالح."
 
 #: users/validators.py:10
 msgid "Password must contain at least one lowercase letter."
@@ -96,6 +109,10 @@ msgid ""
 "@#$%^&*()_-+=)."
 msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد الرموز التالية على أقل."
 
-#: users/views.py:83
+#: users/views.py:88
 msgid "Logout successful."
 msgstr "تم تسجيل الخروج."
+
+#: users/views.py:167
+msgid "Phone verification code sent successfully."
+msgstr "تم إرسال رمز التحقق من الهاتف بنجاح."

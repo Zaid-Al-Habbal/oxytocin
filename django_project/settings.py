@@ -189,6 +189,8 @@ REST_FRAMEWORK = {
         "anon": "5/minute",  # 5 requests/minute for unauthenticated
         "user": "10/minute",  # 10 requests/minute for authenticated
         "login": "3/minute",  # custom scope for login
+        "otp_daily": "3/day",
+        "otp_interval": "1/15m",
     },
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
@@ -250,3 +252,21 @@ CELERY_BROKER_URL = f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASS}@rabbitmq:5672//"
 CELERY_RESULT_BACKEND = f"redis://:{REDIS_PASSWORD}@redis:6379/0"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
+
+
+# Textbee
+TEXTBEE_API_KEY = config("TEXTBEE_API_KEY")
+TEXTBEE_DEVICE_ID = config("TEXTBEE_DEVICE_ID")
+
+# Messages
+VERIFICATION_CODE_MESSAGE = "🩺 Welcome to Oxytocin!\nYour sign-in code is %(otp)s.\nDon't share it with anyone."
+
+# Safe phone numbers
+SAFE_PHONE_NUMBERS = config(
+    "SAFE_PHONE_NUMBERS",
+    cast=lambda v: [s for s in v.split(",")],
+    default=[],
+)
+
+# Testing
+TESTING = config("DJANGO_TESTING", cast=bool, default=False)
