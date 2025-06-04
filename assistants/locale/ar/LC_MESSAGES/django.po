@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-29 20:01+0300\n"
+"POT-Creation-Date: 2025-06-04 15:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,14 +31,14 @@ msgstr "فقط المساعدون/المساعدات يستطيعون تسجيل
 msgid "Please, verify your phone number first"
 msgstr ""
 
-#: assistants/serializers.py:62
+#: assistants/serializers.py:64
 msgid "Phone number is not verified."
 msgstr ""
 
-#: assistants/serializers.py:64
+#: assistants/serializers.py:66
 msgid "Assistant profile already exists."
 msgstr "لقد قمت بإنشاء ملف مساعد من قبل"
 
-#: assistants/serializers.py:66
+#: assistants/serializers.py:68
 msgid "You have no access to complete this registration"
 msgstr ""
