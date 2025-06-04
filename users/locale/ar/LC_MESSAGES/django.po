@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-04 21:06+0300\n"
+"POT-Creation-Date: 2025-06-04 21:42+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,28 +50,28 @@ msgstr "تم رفض حسابك. يُرجى التواصل مع الدعم لمز
 msgid "Assistant profile incomplete."
 msgstr "ملف المساعد او المساعدة غير مكتمل."
 
-#: users/serializers.py:56
+#: users/serializers.py:58
 msgid "This phone number is not allowed during development."
 msgstr "لا يُسمح باستخدام رقم الهاتف هذا أثناء التطوير."
 
-#: users/serializers.py:59
+#: users/serializers.py:61
 #, fuzzy
 msgid "Phone number must start with '09'."
 msgstr "يجب أن يبدأ رقم الهاتف بـ '09'."
 
-#: users/serializers.py:68 users/serializers.py:152
+#: users/serializers.py:70 users/serializers.py:154
 msgid "Passwords don't match!"
 msgstr "كلمات السر غير متطابقة."
 
-#: users/serializers.py:126
+#: users/serializers.py:128
 msgid "must be in the past."
 msgstr "يجب أن يكون في الماضي."
 
-#: users/serializers.py:159
+#: users/serializers.py:161
 msgid "Old password is not correct."
 msgstr "كلمة السر القديمة غير صحيحة."
 
-#: users/serializers.py:199
+#: users/serializers.py:201
 msgid "Phone number is not verified."
 msgstr "لم يتم التحقق من رقم الهاتف."
 
@@ -114,5 +114,6 @@ msgid "Logout successful."
 msgstr "تم تسجيل الخروج."
 
 #: users/views.py:167
-msgid "Phone verification code sent successfully."
-msgstr "تم إرسال رمز التحقق من الهاتف بنجاح."
+#, fuzzy
+msgid "Your verification code has been sent. Please check your phone shortly."
+msgstr "تم إرسال رمز التحقق. يرجى التحقق من هاتفك قريبًا."

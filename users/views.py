@@ -164,7 +164,7 @@ class UserPhoneVerificationSendView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        data = {"message": _("Phone verification code sent successfully.")}
+        data = {"message": _("Your verification code has been sent. Please check your phone shortly.")}
         return Response(data)
 
 
