@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-26 21:12+0300\n"
+"POT-Creation-Date: 2025-06-04 09:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,35 +19,47 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: clinics/serializers.py:40
+#: clinics/serializers.py:41
 msgid "You don't have the required role."
 msgstr "ليس لديك الدور المطلوب."
 
-#: clinics/serializers.py:43
+#: clinics/serializers.py:44
 msgid "Please create a doctor profile first."
 msgstr "الرجاء إنشاء حساب طبيب أولاً."
 
-#: clinics/serializers.py:46
+#: clinics/serializers.py:47
 msgid "You already have a clinic."
 msgstr "لديك عيادة بالفعل."
 
-#: clinics/serializers.py:97 clinics/serializers.py:99
+#: clinics/serializers.py:98 clinics/serializers.py:100
 msgid "This field is required."
 msgstr "هذا الحقل مطلوب."
 
-#: clinics/serializers.py:133
+#: clinics/serializers.py:134
 msgid "You can upload a maximum of 8 images."
 msgstr "يمكنك رفع مايصل الى 8 صور كحد أقصى."
 
-#: clinics/serializers.py:188
+#: clinics/serializers.py:189
 msgid "Duplicate is not allowed."
 msgstr "التكرار غير مسموح به."
 
-#: clinics/serializers.py:191
+#: clinics/serializers.py:192
 #, python-format
 msgid "Invalid pk \"%(value)s\" - object does not exist."
 msgstr "معرف العنصر \"%(value)s\" غير صالح - العنصر غير موجود."
 
-#: clinics/serializers.py:192
+#: clinics/serializers.py:193
 msgid "value"
 msgstr ""
+
+#: clinics/serializers.py:204
+msgid "There is no assistant with this phone number!"
+msgstr "ليس هناك مساعدة بهذا الرقم"
+
+#: clinics/serializers.py:207
+msgid "This assistant is already connected to a clinic."
+msgstr "المساعدة مرتبطة بعيادة أخرى"
+
+#: clinics/views.py:176
+msgid "Assistant added successfully!"
+msgstr "تمت إضافة المساعدة بنجاح"
