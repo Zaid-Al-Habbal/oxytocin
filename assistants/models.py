@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from users.models import CustomUser
 from clinics.models import Clinic
 
@@ -23,3 +24,12 @@ class Assistant(models.Model):
 
     def __str__(self):
         return f"Assistant: {self.user.email}"
+    
+    @property
+    def years_of_experience(self):
+        if not self.start_work_date:
+            return 0
+        today = timezone.now().date()
+        return today.year - self.start_work_date.year - (
+            (today.month, today.day) < (self.start_work_date.month, self.start_work_date.day)
+        )

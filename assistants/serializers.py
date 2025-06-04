@@ -53,8 +53,10 @@ class CompleteAssistantRegistrationSerializer(serializers.ModelSerializer):
             'user',
             'about',
             'education',
-            'start_work_date'
+            'start_work_date',
+            'years_of_experience',
         ] 
+        read_only_fields = ['years_of_experience',]
 
     def validate(self, data):
         user = self.context['request'].user
@@ -86,8 +88,11 @@ class AssistantProfileSerializer(serializers.ModelSerializer):
             'user',
             'about',
             'education',
-            'start_work_date'
+            'start_work_date',
+            'joined_clinic_at',
+            'years_of_experience',
         ]
+        read_only_fields = ['joined_clinic_at', 'years_of_experience',]
     
     def update(self, instance, validated_data):
         user_data = validated_data.pop('user')
