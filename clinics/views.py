@@ -5,6 +5,7 @@ from rest_framework import generics, mixins, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiExample
 
 from .models import Clinic, ClinicImage
@@ -19,6 +20,7 @@ from .serializers import (
 from doctors.permissions import IsDoctorWithClinic
 
 from assistants.serializers import AssistantProfileSerializer
+from assistants.models import Assistant
 
 
 @extend_schema(
@@ -195,3 +197,21 @@ class RetriveAssistantView(generics.RetrieveAPIView):
     
     def get_queryset(self):
         return self.request.user.doctor.clinic.assistants.all()
+  
+  
+class RemoveAssistantFromClinic(APIView):
+    permission_classes = [IsAuthenticated, IsDoctorWithClinic]
+    
+    def delete(self, request, pk):
+        clinic = request.user.doctor.clinic
+        try:
+            assistant = Assistant.objects.get(user=pk, clinic=clinic)
+        except Assistant.DoesNotExist:
+            return Response({"detail": _("Assistant not found or not in your clinic.")}, status=404)
+        
+        assistant.clinic = None
+        assistant.joined_clinic_at = None
+        assistant.save()
+        
+        return Response({"detail": _("Assistant removed from clinic.")}, status=status.HTTP_200_OK)
+        
