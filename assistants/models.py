@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from users.models import CustomUser
 from clinics.models import Clinic
+from drf_spectacular.utils import extend_schema_field, OpenApiTypes
 
 class Assistant(models.Model):
     user = models.OneToOneField(
@@ -26,6 +27,7 @@ class Assistant(models.Model):
         return f"Assistant: {self.user.email}"
     
     @property
+    @extend_schema_field(OpenApiTypes.INT)
     def years_of_experience(self):
         if not self.start_work_date:
             return 0

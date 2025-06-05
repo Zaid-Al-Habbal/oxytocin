@@ -81,7 +81,11 @@ class AssistantProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user.assistant
     
-    
+@extend_schema(
+    summary="Assistant leave his/her clinic",
+    description="Assitant can use this endpoint to leave its clinic if he/she is connected to one",
+    tags=["Assistant"]
+)
 class LeaveMyClinicView(APIView):
     required_roles = [User.Role.ASSISTANT]
     permission_classes = [permissions.IsAuthenticated, HasRole]

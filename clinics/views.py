@@ -167,6 +167,11 @@ class ClinicImageView(
             clinic_image.delete()
 
 
+@extend_schema(
+    summary="Add Assistant to Clinic",
+    description="Add an Assistant by its phone number to clinic if she is not connected to a clinic.",
+    tags=["Assistant Management"],
+)
 class AddAssistantView(generics.GenericAPIView):
     required_roles = [User.Role.DOCTOR]
     permission_classes = [IsAuthenticated, HasRole]
@@ -185,7 +190,11 @@ class AddAssistantView(generics.GenericAPIView):
 
         return Response({"detail": _("Assistant added successfully!")}, status=status.HTTP_200_OK)
     
-    
+@extend_schema(
+    summary="List All Assistants in my Clinic",
+    description="List assistants basic info that work in my clinic.",
+    tags=["Assistant Management"],
+)   
 class ListAssistantView(generics.ListAPIView):
     required_roles = [User.Role.DOCTOR]
     permission_classes = [IsAuthenticated, HasRole]
@@ -194,7 +203,11 @@ class ListAssistantView(generics.ListAPIView):
     def get_queryset(self):
         return self.request.user.doctor.clinic.assistants.all() 
     
-    
+@extend_schema(
+    summary="Show Assistant Profile that works in my Clinic",
+    description="View all info about the assistant",
+    tags=["Assistant Management"],
+)     
 class RetriveAssistantView(generics.RetrieveAPIView):
     required_roles = [User.Role.DOCTOR]
     permission_classes = [IsAuthenticated, HasRole]
@@ -203,7 +216,11 @@ class RetriveAssistantView(generics.RetrieveAPIView):
     def get_queryset(self):
         return self.request.user.doctor.clinic.assistants.all()
   
-  
+@extend_schema(
+    summary="Remove Assistant",
+    description="Remove assistant that works in my clinic",
+    tags=["Assistant Management"],
+) 
 class RemoveAssistantFromClinic(APIView):
     required_roles = [User.Role.DOCTOR]
     permission_classes = [IsAuthenticated, HasRole]
