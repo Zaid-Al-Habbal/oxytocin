@@ -218,7 +218,8 @@ class UserPhoneVerificationSendSerializer(serializers.Serializer):
     def save(self, **kwargs):
         user = self.validated_data["user"]
         if not settings.TESTING:
-            message = _(settings.VERIFICATION_CODE_MESSAGE)
+            otp = otp_service.generate(user.id)
+            message = _(settings.VERIFICATION_CODE_MESSAGE  % {"otp": otp})
             send_sms.delay(user.id, message)
 
 

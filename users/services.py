@@ -20,12 +20,12 @@ class OTPService:
 
     cache = caches["otp"]
 
-    def generate(self, user_id):
+    def generate(self, key):
         """
         Generate a new 5-digit OTP for the specified user and store it in the cache.
 
         Args:
-            user_id (str or int): Unique identifier for the user.
+            key (str): Unique identifier for the user.
 
         Returns:
             str: The plain-text OTP to be sent to the user.
@@ -35,23 +35,23 @@ class OTPService:
         # Hash the OTP for secure storage
         hashed_otp = make_password(otp)
         # Store the hashed OTP in the cache with the user ID as the key
-        self.cache.set(user_id, hashed_otp)
+        self.cache.set(key, hashed_otp)
         # Return the plain-text OTP for delivery to the user
         return otp
 
-    def validate(self, user_id, otp):
+    def validate(self, key, otp):
         """
         Validate the OTP provided by the user against the stored hash.
 
         Args:
-            user_id (str or int): Unique identifier for the user.
+            key (str): Unique identifier for the user.
             otp (str): The plain-text OTP input provided by the user.
 
         Raises:
             AuthenticationFailed: If the OTP is invalid or missing.
         """
         # Retrieve the hashed OTP from the cache
-        hashed_otp = self.cache.get(user_id)
+        hashed_otp = self.cache.get(key)
         # If no OTP is found for the user, raise an authentication error
         if not hashed_otp:
             raise AuthenticationFailed(_("Invalid OTP."))
@@ -61,7 +61,7 @@ class OTPService:
         if not is_valid:
             raise AuthenticationFailed(_("Invalid OTP."))
         # Delete the OTP from cache after successful validation to prevent reuse
-        self.cache.delete(user_id)
+        self.cache.delete(key)
 
 
 class SMSService:

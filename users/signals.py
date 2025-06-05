@@ -4,11 +4,16 @@ from django.dispatch import receiver
 from django.conf import settings
 
 from .models import CustomUser as User
+from .services import OTPService
 from .tasks import send_sms
+
+
+otp_service = OTPService()
 
 
 @receiver(post_save, sender=User)
 def post_save_user(sender, instance, created, **kwargs):
     if created and not instance.is_superuser and not settings.TESTING:
-        message = _(settings.VERIFICATION_CODE_MESSAGE)
+        otp = otp_service.generate(instance.id)
+        message = _(settings.VERIFICATION_CODE_MESSAGE % {"otp": otp})
         send_sms.delay(instance.id, message)

@@ -224,7 +224,9 @@ class UserPhoneVerificationTests(APITestCase):
         data = {"user_id": self.user.id}
         response = self.client.post(self.send_path, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("تم إرسال رمز التحقق من الهاتف بنجاح.", str(response.data))
+        self.assertIn(
+            "تم إرسال رمز التحقق. يرجى التحقق من هاتفك قريبًا.", str(response.data)
+        )
 
     def test_send_sms_fails_on_non_existing_user(self):
         data = {"user_id": 9999999}

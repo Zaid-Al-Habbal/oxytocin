@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-04 21:42+0300\n"
+"POT-Creation-Date: 2025-06-05 11:36+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,6 +75,10 @@ msgstr "كلمة السر القديمة غير صحيحة."
 msgid "Phone number is not verified."
 msgstr "لم يتم التحقق من رقم الهاتف."
 
+#: users/serializers.py:222 users/signals.py:18
+msgid "otp"
+msgstr ""
+
 #: users/services.py:57 users/services.py:62
 msgid "Invalid OTP."
 msgstr "رمز التحقق غير صالح."
@@ -114,6 +118,5 @@ msgid "Logout successful."
 msgstr "تم تسجيل الخروج."
 
 #: users/views.py:167
-#, fuzzy
 msgid "Your verification code has been sent. Please check your phone shortly."
 msgstr "تم إرسال رمز التحقق. يرجى التحقق من هاتفك قريبًا."
