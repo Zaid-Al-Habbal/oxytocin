@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-04 15:35+0300\n"
+"POT-Creation-Date: 2025-06-05 09:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,3 +42,11 @@ msgstr "لقد قمت بإنشاء ملف مساعد من قبل"
 #: assistants/serializers.py:68
 msgid "You have no access to complete this registration"
 msgstr ""
+
+#: assistants/views.py:91
+msgid "You are not connected to any clinic."
+msgstr "أنت غير مرتبط بأي عيادة"
+
+#: assistants/views.py:97
+msgid "You leaved your clinic."
+msgstr "لقد غادرت العيادة, بنجاح"

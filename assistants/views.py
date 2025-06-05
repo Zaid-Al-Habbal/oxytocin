@@ -1,3 +1,5 @@
+from django.utils.translation import gettext_lazy as _
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -78,3 +80,21 @@ class AssistantProfileView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user.assistant
+    
+    
+class LeaveMyClinicView(APIView):
+    required_roles = [User.Role.ASSISTANT]
+    permission_classes = [permissions.IsAuthenticated, HasRole]
+    
+    def delete(self, request):
+        assistant = request.user.assistant
+        
+        if assistant.clinic is None:
+            return Response({"detail": _("You are not connected to any clinic.")}, status=status.HTTP_404_NOT_FOUND)
+        
+        assistant.clinic = None
+        assistant.joined_clinic_at = None
+        assistant.save()
+        
+        return Response({"detail": _("You leaved your clinic.")}, status=status.HTTP_200_OK)
+    
