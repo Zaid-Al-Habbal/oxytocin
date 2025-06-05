@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-04 15:35+0300\n"
+"POT-Creation-Date: 2025-06-04 18:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -60,16 +60,14 @@ msgstr "ليس هناك مساعدة بهذا الرقم"
 msgid "This assistant is already connected to a clinic."
 msgstr "المساعدة مرتبطة بعيادة أخرى"
 
-#: clinics/views.py:183
+#: clinics/views.py:186
 msgid "Assistant added successfully!"
 msgstr "تمت إضافة المساعدة بنجاح"
 
-#: clinics/views.py:210
+#: clinics/views.py:216
 msgid "Assistant not found or not in your clinic."
 msgstr "المساعدة غير موجودة"
 
-#: clinics/views.py:216
-#, fuzzy
-#| msgid "This assistant is already connected to a clinic."
+#: clinics/views.py:222
 msgid "Assistant removed from clinic."
-msgstr "المساعدة مرتبطة بعيادة أخرى"
+msgstr "تمت إزالة المساعدة من العيادة"

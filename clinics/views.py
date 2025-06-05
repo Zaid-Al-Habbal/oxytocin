@@ -22,6 +22,8 @@ from doctors.permissions import IsDoctorWithClinic
 from assistants.serializers import AssistantProfileSerializer
 from assistants.models import Assistant
 
+from users.models import CustomUser as User
+from users.permissions import HasRole
 
 @extend_schema(
     summary="Create a Clinic",
@@ -166,8 +168,9 @@ class ClinicImageView(
 
 
 class AddAssistantView(generics.GenericAPIView):
+    required_roles = [User.Role.DOCTOR]
+    permission_classes = [IsAuthenticated, HasRole]
     serializer_class = AddAssistantSerializer
-    permission_classes = [IsAuthenticated, IsDoctorWithClinic]
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data, context={"request": request})
@@ -184,23 +187,26 @@ class AddAssistantView(generics.GenericAPIView):
     
     
 class ListAssistantView(generics.ListAPIView):
+    required_roles = [User.Role.DOCTOR]
+    permission_classes = [IsAuthenticated, HasRole]
     serializer_class = ListAssistantsSerializer
-    permission_classes = [IsAuthenticated, IsDoctorWithClinic]
     
     def get_queryset(self):
         return self.request.user.doctor.clinic.assistants.all() 
     
     
 class RetriveAssistantView(generics.RetrieveAPIView):
+    required_roles = [User.Role.DOCTOR]
+    permission_classes = [IsAuthenticated, HasRole]
     serializer_class = AssistantProfileSerializer
-    permission_classes = [IsAuthenticated, IsDoctorWithClinic]
     
     def get_queryset(self):
         return self.request.user.doctor.clinic.assistants.all()
   
   
 class RemoveAssistantFromClinic(APIView):
-    permission_classes = [IsAuthenticated, IsDoctorWithClinic]
+    required_roles = [User.Role.DOCTOR]
+    permission_classes = [IsAuthenticated, HasRole]
     
     def delete(self, request, pk):
         clinic = request.user.doctor.clinic

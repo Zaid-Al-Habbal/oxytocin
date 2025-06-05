@@ -1,0 +1,171 @@
+from rest_framework.test import APITestCase
+from rest_framework import status
+from django.utils import timezone
+from datetime import timedelta
+from django.urls import reverse
+
+from common.utils import generate_test_pdf
+
+from users.models import CustomUser as User
+from clinics.models import Clinic  
+from assistants.models import Assistant
+from doctors.models import Doctor, Specialty, DoctorSpecialty
+
+
+class AddAssistantToClinicTest(APITestCase):
+    def setUp(self):
+        self.list_url = reverse("list-clinic-assistants")
+        self.password = "abcX123#"
+
+        self.user = User.objects.create_user(
+            first_name="user",
+            last_name="without doctor profile",
+            phone="0934567890",
+            is_verified_phone=True,
+            password=self.password,
+            role=User.Role.DOCTOR,
+        )
+
+        self.user_doctor_clinic = User.objects.create_user(
+            first_name="doctor",
+            last_name="clinic",
+            phone="0934567891",
+            is_verified_phone=True,
+            password=self.password,
+            role=User.Role.DOCTOR,
+        )
+
+        self.user_doctor = User.objects.create_user(
+            first_name="no clinic",
+            last_name="doctor",
+            phone="0934567892",
+            is_verified_phone=True,
+            password=self.password,
+            role=User.Role.DOCTOR,
+        )
+
+        doctor_data = {
+            "about": "About Test",
+            "education": "Test",
+            "start_work_date": timezone.now().date() - timedelta(days=30),
+            "certificate": generate_test_pdf(),
+            "status": Doctor.Status.APPROVED,
+        }
+        self.doctor_with_clinic = Doctor.objects.create(
+            user=self.user_doctor_clinic,
+            **doctor_data,
+        )
+        self.doctor_without_clinic = Doctor.objects.create(
+            user=self.user_doctor,
+            **doctor_data,
+        )
+
+        specialty1 = Specialty.objects.create(name="Test1")
+        specialty2 = Specialty.objects.create(name="Test2", parent=specialty1)
+        specialties = [
+            DoctorSpecialty(
+                doctor=self.doctor_with_clinic,
+                specialty=specialty1,
+                university="Damascus",
+            ),
+            DoctorSpecialty(
+                doctor=self.doctor_with_clinic,
+                specialty=specialty2,
+                university="Tokyo",
+            ),
+            DoctorSpecialty(
+                doctor=self.doctor_without_clinic,
+                specialty=specialty1,
+                university="Tokyo",
+            ),
+            DoctorSpecialty(
+                doctor=self.doctor_without_clinic,
+                specialty=specialty2,
+                university="London",
+            ),
+        ]
+        DoctorSpecialty.objects.bulk_create(specialties)
+
+        clinic_data = {
+            "location": "Test Street",
+            "longitude": 44.2,
+            "latitude": 32.1,
+            "phone": "011 223 3333",
+        }
+        self.clinic =  Clinic.objects.create(doctor=self.doctor_with_clinic, **clinic_data)
+
+        self.data = {
+            "location": "Test Street",
+            "longitude": 39.1,
+            "latitude": 55.5,
+            "phone": "011 224 4531",
+        }
+        self.user2 = User.objects.create_user(
+            first_name="user",
+            last_name="assistant",
+            phone="0999888777",
+            is_verified_phone=True,
+            password=self.password,
+            role=User.Role.ASSISTANT,
+        )
+        
+        self.assistant = Assistant.objects.create(
+            user=self.user2,
+            education="bla bla bla",
+            start_work_date="2020-2-2",
+            clinic=self.clinic,
+            joined_clinic_at=timezone.now().date()
+        )
+        self.remove_url = reverse("remove-clinic-assistant", kwargs={ "pk": self.user2.id})
+        self.bad_remove_url = reverse("remove-clinic-assistant", kwargs={ "pk": 10000})
+        self.view_url = reverse("view-clinic-assistant", kwargs={ "pk": self.user2.id})
+
+    
+    #test remove assistant successfully
+    def test_remove_assistant_successfully(self):
+        self.client.force_authenticate(user=self.user_doctor_clinic)
+        
+        response = self.client.delete(self.remove_url)
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assistant.refresh_from_db()
+
+        self.assertIsNone(self.assistant.clinic)
+        self.assertIsNone(self.assistant.joined_clinic_at)
+        self.assertIn(
+             "تمت إزالة المساعدة من العيادة", str(response.data)
+        )
+    
+    def test_unable_to_remove_an_assistant_not_exists(self):
+        self.client.force_authenticate(user=self.user_doctor_clinic)
+        
+        response = self.client.delete(self.bad_remove_url)
+        
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertIn(
+             "المساعدة غير موجودة", str(response.data)
+        )
+    
+    def test_list_clinic_assistants(self):
+        self.client.force_authenticate(user=self.user_doctor_clinic)
+        
+        response = self.client.get(self.list_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        for assistant_obj in response.data:
+            self.assertIn("full_name", assistant_obj)
+            self.assertIn("phone", assistant_obj)
+            self.assertIn("joined_clinic_at", assistant_obj)
+            self.assertIn("image", assistant_obj)
+            
+    def test_view_clinic_assistant(self):
+        self.client.force_authenticate(user=self.user_doctor_clinic)
+        
+        response = self.client.get(self.view_url)
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("user", response.data)
+        self.assertIn("about", response.data)
+        self.assertIn("education", response.data)
+        self.assertIn("joined_clinic_at", response.data)
+        self.assertIn("years_of_experience", response.data)
+        self.assertIn("start_work_date", response.data)
