@@ -60,32 +60,42 @@ class AddAssistantToClinicTest(APITestCase):
             **doctor_data,
         )
 
-        specialty1 = Specialty.objects.create(name="Test1")
-        specialty2 = Specialty.objects.create(name="Test2", parent=specialty1)
+        self.main_specialty1 = Specialty.objects.create(
+            name_en="Test1",
+            name_ar="تجريبي1",
+        )
+        self.subspecialty1 = Specialty.objects.create(
+            name_en="Test2",
+            name_ar="تجريبي2",
+            parent=self.main_specialty1,
+        )
+        self.subspecialty2 = Specialty.objects.create(
+            name_en="Test3",
+            name_ar="تجريبي3",
+            parent=self.main_specialty1,
+        )
+        self.main_specialty2 = Specialty.objects.create(
+            name_en="Test4",
+            name_ar="تجريبي4",
+        )
+        self.subspecialty3 = Specialty.objects.create(
+            name_en="Test5",
+            name_ar="تجريبي5",
+            parent=self.main_specialty2,
+        )
         specialties = [
             DoctorSpecialty(
                 doctor=self.doctor_with_clinic,
-                specialty=specialty1,
+                specialty=self.main_specialty1,
                 university="Damascus",
             ),
             DoctorSpecialty(
                 doctor=self.doctor_with_clinic,
-                specialty=specialty2,
+                specialty=self.subspecialty1,
                 university="Tokyo",
-            ),
-            DoctorSpecialty(
-                doctor=self.doctor_without_clinic,
-                specialty=specialty1,
-                university="Tokyo",
-            ),
-            DoctorSpecialty(
-                doctor=self.doctor_without_clinic,
-                specialty=specialty2,
-                university="London",
             ),
         ]
         DoctorSpecialty.objects.bulk_create(specialties)
-
         clinic_data = {
             "location": "Test Street",
             "longitude": 44.2,

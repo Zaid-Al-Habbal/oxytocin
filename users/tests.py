@@ -184,6 +184,7 @@ class UserImageTests(APITestCase):
             "gender": "male",
             "birth_date": "1996-11-22",
             "password": "Password123test",
+            "is_verified_phone": True,
         }
         self.user = User.objects.create_user(**user_data)
         self.data = {"image": generate_test_image()}
