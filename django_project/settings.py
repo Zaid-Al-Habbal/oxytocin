@@ -186,6 +186,19 @@ FILE_VALIDATOR_ERROR_MESSAGE = (
     "Maximum file size: {max_file_size}."
 )
 
+# Testing
+TESTING = config("DJANGO_TESTING", cast=bool, default=False)
+
+anon_rate = "5/minute"
+user_rate = "10/minute"
+login_rate = "3/minute"
+otp_daily_rate = "3/day"
+
+if TESTING:
+    anon_rate = "400/minute"
+    user_rate = "400/minute"
+    login_rate = "400/minute"
+    otp_daily_rate = "100/day"
 
 # DRF
 REST_FRAMEWORK = {
@@ -193,11 +206,11 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "5/minute",  # 5 requests/minute for unauthenticated
-        "user": "10/minute",  # 10 requests/minute for authenticated
-        "login": "3/minute",  # custom scope for login
-        "otp_daily": "3/day",
-        "otp_interval": "1/15m",
+        "anon": anon_rate,
+        "user": user_rate,
+        "login": login_rate,
+        "otp_daily": otp_daily_rate,
+        "otp_interval": "1/15m", 
     },
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
@@ -275,5 +288,3 @@ SAFE_PHONE_NUMBERS = config(
     default=[],
 )
 
-# Testing
-TESTING = config("DJANGO_TESTING", cast=bool, default=False)
