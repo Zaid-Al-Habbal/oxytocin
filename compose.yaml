@@ -50,7 +50,7 @@ services:
   test:
     extends:
       service: app
-    command: python manage.py test
+    command: python manage.py test --noinput
     environment:
       DJANGO_TESTING: True
     depends_on:
