@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-04 18:48+0300\n"
+"POT-Creation-Date: 2025-06-06 16:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,47 +27,51 @@ msgstr "ليس لديك الدور المطلوب."
 msgid "Please create a doctor profile first."
 msgstr "الرجاء إنشاء حساب طبيب أولاً."
 
-#: clinics/serializers.py:47
+#: clinics/serializers.py:48
+msgid "Please upload a certificate first."
+msgstr "يرجى رفع الشهادة اولاً."
+
+#: clinics/serializers.py:50
 msgid "You already have a clinic."
 msgstr "لديك عيادة بالفعل."
 
-#: clinics/serializers.py:98 clinics/serializers.py:100
+#: clinics/serializers.py:101 clinics/serializers.py:103
 msgid "This field is required."
 msgstr "هذا الحقل مطلوب."
 
-#: clinics/serializers.py:134
+#: clinics/serializers.py:137
 msgid "You can upload a maximum of 8 images."
 msgstr "يمكنك رفع مايصل الى 8 صور كحد أقصى."
 
-#: clinics/serializers.py:189
+#: clinics/serializers.py:192
 msgid "Duplicate is not allowed."
 msgstr "التكرار غير مسموح به."
 
-#: clinics/serializers.py:192
+#: clinics/serializers.py:195
 #, python-format
 msgid "Invalid pk \"%(value)s\" - object does not exist."
 msgstr "معرف العنصر \"%(value)s\" غير صالح - العنصر غير موجود."
 
-#: clinics/serializers.py:193
+#: clinics/serializers.py:196
 msgid "value"
 msgstr ""
 
-#: clinics/serializers.py:204
+#: clinics/serializers.py:207
 msgid "There is no assistant with this phone number!"
 msgstr "ليس هناك مساعدة بهذا الرقم"
 
-#: clinics/serializers.py:207
+#: clinics/serializers.py:210
 msgid "This assistant is already connected to a clinic."
 msgstr "المساعدة مرتبطة بعيادة أخرى"
 
-#: clinics/views.py:186
+#: clinics/views.py:191
 msgid "Assistant added successfully!"
 msgstr "تمت إضافة المساعدة بنجاح"
 
-#: clinics/views.py:216
+#: clinics/views.py:233
 msgid "Assistant not found or not in your clinic."
 msgstr "المساعدة غير موجودة"
 
-#: clinics/views.py:222
+#: clinics/views.py:239
 msgid "Assistant removed from clinic."
 msgstr "تمت إزالة المساعدة من العيادة"
