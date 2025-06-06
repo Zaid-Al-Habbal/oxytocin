@@ -20,16 +20,6 @@ class LoginAssistantTestCase(APITestCase):
             is_verified_phone=True
         )
 
-        # Unverified assistant
-        self.unverified_assistant = User.objects.create_user(
-            phone="0888888888",
-            password=self.password,
-            first_name="Unverified",
-            last_name='xxx',
-            role='assistant',
-            is_verified_phone=False
-        )
-
         # A doctor
         self.doctor = User.objects.create_user(
             phone="0777777777",
@@ -60,8 +50,10 @@ class LoginAssistantTestCase(APITestCase):
         self.assertIn("non_field_errors", response.data)
 
     def test_login_fails_if_not_verified_phone(self):
+        self.assistant.is_verified_phone = False
+        self.assistant.save()
         response = self.client.post(self.login_url, {
-            "phone": self.unverified_assistant.phone,
+            "phone": self.assistant.phone,
             "password": self.password
         })
 

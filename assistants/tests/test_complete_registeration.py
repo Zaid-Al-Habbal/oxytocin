@@ -21,17 +21,6 @@ class CompleteAssistantRegistrationTests(APITestCase):
             role="assistant"
         )
 
-        self.unverified_assistant = User.objects.create_user(
-            phone="0888888888",
-            password=self.password,
-            first_name="Assistant2",
-            last_name="Two",
-            birth_date="1992-02-02",
-            gender="female",
-            is_verified_phone=False,
-            role="assistant"
-        )
-
         self.doctor_user = User.objects.create_user(
             phone="0777777777",
             password=self.password,
@@ -69,7 +58,9 @@ class CompleteAssistantRegistrationTests(APITestCase):
         self.assertIn("لقد قمت بإنشاء ملف مساعد من قبل", str(response.data))
 
     def test_reject_if_phone_not_verified(self):
-        self.client.force_authenticate(self.unverified_assistant)
+        self.verified_assistant.is_verified_phone = False
+        self.verified_assistant.save()
+        self.client.force_authenticate(self.verified_assistant)
 
         response = self.client.post(self.url, self.payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
