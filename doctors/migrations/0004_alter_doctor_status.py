@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("doctors", "0003_alter_specialty_parent"),
+        ("doctors", "0003_alter_doctor_certificate"),
     ]
 
     operations = [

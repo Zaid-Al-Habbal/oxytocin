@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("clinics", "0001_initial"),
-        ("users", "0010_customuser_deleted_at"),
+        ("users", "0003_alter_customuser_is_verified_phone"),
     ]
 
     operations = [
