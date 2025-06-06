@@ -59,6 +59,8 @@ services:
 
   db:
     image: postgres:17.5
+    ports:
+      - 5432:5432
     user: postgres
     networks:
       - net
