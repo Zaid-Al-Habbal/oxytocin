@@ -65,7 +65,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     birth_date = models.DateField(null=True, blank=True)
 
     # for Now ALL Users Are verified by Default:
-    is_verified_phone = models.BooleanField(default=True)
+    is_verified_phone = models.BooleanField(default=False)
 
     is_verified_email = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
