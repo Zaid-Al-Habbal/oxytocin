@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "patients",
     "doctors",
     "clinics",
+    "assistants",
 ]
 
 MIDDLEWARE = [
@@ -150,6 +151,7 @@ LOCALE_PATHS = [
     BASE_DIR / "patients/locale",
     BASE_DIR / "doctors/locale",
     BASE_DIR / "clinics/locale",
+    BASE_DIR / "assistants/locale",
 ]
 
 # Static files (CSS, JavaScript, Images)

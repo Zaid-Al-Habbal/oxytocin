@@ -1,0 +1,10 @@
+from django.urls import path
+
+from .views import LoginAssistantView, CompleteAssistantRegistrationView, AssistantProfileView, LeaveMyClinicView
+
+urlpatterns = [
+    path('login/', LoginAssistantView.as_view(), name='login-assistant'),
+    path('complete-register/', CompleteAssistantRegistrationView.as_view(), name='complete-assistant-registeration'),
+    path('me/', AssistantProfileView.as_view(), name='view-update-assistant-profile'),
+    path('myclinic/leave/', LeaveMyClinicView.as_view(), name='leave-myclinic'),
+]

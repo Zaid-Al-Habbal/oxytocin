@@ -4,20 +4,21 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import Patient
 from users.serializers import UserUpdateSerializer, UserNestedSerializer
 from users.models import CustomUser as User
 
+from .models import Assistant
 
-class LoginPatientSerializer(serializers.Serializer):
+
+class LoginAssistantSerializer(serializers.Serializer):
     phone = serializers.CharField(write_only=True)
     password = serializers.CharField(
         write_only=True,
         style={"input_type": "password"},
         help_text="Password must meet the validation rules (min length=8, has both lowercase and uppercase latters, number, special character, not common, not similar to user's attributes ).",
     )
-    access = serializers.CharField(read_only=True)
-    refresh = serializers.CharField(read_only=True)
+    access_token = serializers.CharField(read_only=True)
+    refresh_token = serializers.CharField(read_only=True)
     
     def validate(self, data):
         phone = data.get('phone')
@@ -28,8 +29,8 @@ class LoginPatientSerializer(serializers.Serializer):
         if user is None:
             raise serializers.ValidationError(_("Invalid credentials"))
         
-        if user.role != 'patient':
-            raise serializers.ValidationError(_("Only patients can log in here."))
+        if user.role != 'assistant':
+            raise serializers.ValidationError(_("Only assistants can log in here."))
         
         if not user.is_verified_phone:
             raise serializers.ValidationError(_("Please, verify your phone number first"))
@@ -40,36 +41,30 @@ class LoginPatientSerializer(serializers.Serializer):
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }
+        
+        
 
-
-class CompletePatientRegistrationSerializer(serializers.ModelSerializer):
+class CompleteAssistantRegistrationSerializer(serializers.ModelSerializer):
     user = UserNestedSerializer()
     
     class Meta:
-        model = Patient
+        model = Assistant
         fields = [
             'user',
-            'location',
-            'longitude',
-            'latitude',
-            'job',
-            'blood_type',
-            'medical_history',
-            'surgical_history',
-            'allergies',
-            'medicines',
-            'is_smoker',
-            'is_drinker',
-            'is_married'
+            'about',
+            'education',
+            'start_work_date',
+            'years_of_experience',
         ] 
+        read_only_fields = ['years_of_experience',]
 
     def validate(self, data):
         user = self.context['request'].user
         if not user.is_verified_phone:
             raise serializers.ValidationError(_("Phone number is not verified."))
-        if hasattr(user, 'patient'):
-            raise serializers.ValidationError(_("Patient profile already exists."))
-        if user.role != User.Role.PATIENT:
+        if hasattr(user, 'assistant'):
+            raise serializers.ValidationError(_("Assistant profile already exists."))
+        if user.role != User.Role.ASSISTANT:
             raise serializers.ValidationError(_("You have no access to complete this registration"))
         return data
 
@@ -82,28 +77,22 @@ class CompletePatientRegistrationSerializer(serializers.ModelSerializer):
         user_serializer.save()
 
         
-        return Patient.objects.create(user=user, **validated_data)
+        return Assistant.objects.create(user=user, **validated_data)
     
     
-class PatientProfileSerializer(serializers.ModelSerializer):
+class AssistantProfileSerializer(serializers.ModelSerializer):
     user = UserUpdateSerializer()
     class Meta:
-        model = Patient
+        model = Assistant
         fields = [
             'user',
-            'location',
-            'longitude',
-            'latitude',
-            'job',
-            'blood_type',
-            'medical_history',
-            'surgical_history',
-            'allergies',
-            'medicines',
-            'is_smoker',
-            'is_drinker',
-            'is_married'
+            'about',
+            'education',
+            'start_work_date',
+            'joined_clinic_at',
+            'years_of_experience',
         ]
+        read_only_fields = ['joined_clinic_at', 'years_of_experience',]
     
     def update(self, instance, validated_data):
         user_data = validated_data.pop('user')

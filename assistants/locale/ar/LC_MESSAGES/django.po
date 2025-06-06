@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-29 20:01+0300\n"
+"POT-Creation-Date: 2025-06-05 09:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,26 +19,34 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: patients/serializers.py:29
+#: assistants/serializers.py:30
 msgid "Invalid credentials"
 msgstr ""
 
-#: patients/serializers.py:32
-msgid "Only patients can log in here."
-msgstr "فقط المرضى يستطيعون تسجيل الدحول هنا"
+#: assistants/serializers.py:33
+msgid "Only assistants can log in here."
+msgstr "فقط المساعدون/المساعدات يستطيعون تسجيل الدحول هنا"
 
-#: patients/serializers.py:35
+#: assistants/serializers.py:36
 msgid "Please, verify your phone number first"
-msgstr "الرجاء التحقق من رقم هاتفك أولاً."
+msgstr ""
 
-#: patients/serializers.py:69
+#: assistants/serializers.py:64
 msgid "Phone number is not verified."
-msgstr "لم يتم التحقق من رقم الهاتف."
+msgstr ""
 
-#: patients/serializers.py:71
-msgid "Patient profile already exists."
-msgstr "لقد قمت بإنشاء ملف شخصي سابقا"
+#: assistants/serializers.py:66
+msgid "Assistant profile already exists."
+msgstr "لقد قمت بإنشاء ملف مساعد من قبل"
 
-#: patients/serializers.py:73
+#: assistants/serializers.py:68
 msgid "You have no access to complete this registration"
-msgstr "ليس لديك الصلاحيات لإكمال هذه العملية"
+msgstr ""
+
+#: assistants/views.py:91
+msgid "You are not connected to any clinic."
+msgstr "أنت غير مرتبط بأي عيادة"
+
+#: assistants/views.py:97
+msgid "You leaved your clinic."
+msgstr "لقد غادرت العيادة, بنجاح"

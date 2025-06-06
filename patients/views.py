@@ -4,14 +4,18 @@ from rest_framework import status
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework import generics, permissions
 
-from drf_spectacular.utils import extend_schema, OpenApiExample
+from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
 
 from .serializers import LoginPatientSerializer, PatientProfileSerializer, CompletePatientRegistrationSerializer
 from .models import Patient
 from users.permissions import HasRole
 from users.models import CustomUser as User
 
-
+@extend_schema(
+    summary="Patient Login",
+    description="Authenticate a Patient using phone and password. Returns access credentials if successful.",
+    tags=["Patient"],
+)
 class LoginPatientView(generics.GenericAPIView):
     throttle_classes = [ScopedRateThrottle]
     throttle_scope = 'login'
@@ -33,8 +37,6 @@ class LoginPatientView(generics.GenericAPIView):
             name="Complete Patient registeration example",
             value={   
                 "user": {
-                    "first_name": "Zaid",
-                    "last_name": "Al Habbal", 
                     "gender": "male",
                     "birth_date": "2004-9-30"
                 },
@@ -55,6 +57,7 @@ class LoginPatientView(generics.GenericAPIView):
             request_only=True,
         )
     ],
+    tags=["Patient"]
 )
 class CompletePatientRegistrationView(generics.CreateAPIView):
     serializer_class = CompletePatientRegistrationSerializer
@@ -63,11 +66,23 @@ class CompletePatientRegistrationView(generics.CreateAPIView):
     def get_queryset(self):
         return Patient.objects.none()
     
-    
+@extend_schema_view(
+    get=extend_schema(
+        summary="Retrieve Patient Profile",
+        description="Returns the profile data of the currently authenticated Patient.",
+        tags=["Patient"],
+    ),
+    patch=extend_schema(
+        summary="Update Patient Profile",
+        description="Updates the profile data of the currently authenticated Patient.",
+        tags=["Patient"],
+    )
+)
 class PatientProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = PatientProfileSerializer
     required_roles = [User.Role.PATIENT]
     permission_classes = [permissions.IsAuthenticated, HasRole]
+    http_method_names = ["get", "patch"]
 
     def get_object(self):
         return self.request.user.patient

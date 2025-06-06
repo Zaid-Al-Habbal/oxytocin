@@ -92,3 +92,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.phone})"
+    
+    @property
+    def full_name(self):
+        "Returns the person's full name."
+        return f"{self.first_name} {self.last_name}"

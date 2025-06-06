@@ -32,8 +32,6 @@ msgid "Doctor profile incomplete."
 msgstr "ملف الطبيب غير مكتمل."
 
 #: users/permissions.py:36
-#, fuzzy
-#| msgid "Doctor profile incomplete."
 msgid "Doctor clinic incomplete."
 msgstr "عيادة الطبيب غير مكتملة."
 

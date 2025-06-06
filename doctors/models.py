@@ -54,7 +54,7 @@ class Doctor(models.Model):
     status = models.CharField(
         max_length=20,
         choices=Status.choices,
-        default=Status.PENDING,
+        default=Status.APPROVED, #Just for now
     )
     specialties = models.ManyToManyField(
         "doctors.Specialty",
