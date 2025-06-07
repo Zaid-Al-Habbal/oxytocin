@@ -21,6 +21,7 @@ from .serializers import (
     UserImageSerializer,
     UserPhoneVerificationSendSerializer,
     UserPhoneVerificationSerializer,
+    ForgetPasswordOTPSendSerializer,
 )
 from .throttles import OTPThrottle
 
@@ -175,3 +176,15 @@ class UserPhoneVerificationView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data)
+
+
+class ForgetPasswordOTPSendView(generics.GenericAPIView):
+    throttle_classes = [OTPThrottle]
+    serializer_class = ForgetPasswordOTPSendSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        data = {"message": _("Your verification code has been sent. Please check your phone shortly.")}
+        return Response(data)

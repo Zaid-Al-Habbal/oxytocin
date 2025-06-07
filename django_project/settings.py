@@ -280,6 +280,7 @@ TEXTBEE_DEVICE_ID = config("TEXTBEE_DEVICE_ID")
 
 # Messages
 VERIFICATION_CODE_MESSAGE = "🩺 Welcome to Oxytocin!\nYour sign-in code is %(otp)s.\nDon't share it with anyone."
+FORGET_PASSWORD_CODE = "To add a new password, please verify your phone number using this code: %(otp)s."
 
 # Safe phone numbers
 SAFE_PHONE_NUMBERS = config(

@@ -38,4 +38,9 @@ urlpatterns = [
         views.UserPhoneVerificationView.as_view(),
         name="user-phone-verification",
     ),
+    path(
+        "forget-password/send-otp/",
+        views.ForgetPasswordOTPSendView.as_view(),
+        name="forget-password-send-otp",
+    ),
 ]

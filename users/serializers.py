@@ -252,3 +252,21 @@ class UserPhoneVerificationSerializer(serializers.Serializer):
             "refresh_token": str(refresh_token),
             "expires_in": expires_in,
         }
+
+
+class ForgetPasswordOTPSendSerializer(serializers.Serializer):
+    phone = serializers.CharField(min_length=10, max_length=10)
+    message = serializers.CharField(read_only=True)
+
+    def save(self, **kwargs):
+        phone = self.validated_data["phone"]
+        try:
+            user = User.objects.get(phone=phone)
+        except User.DoesNotExist:
+            raise serializers.ValidationError(_("Phone Number Not Found"))
+        
+        if not settings.TESTING:
+            userKey = f"{user.id}:forget-password"
+            otp = otp_service.generate(userKey)
+            message = _(settings.VERIFICATION_CODE_MESSAGE  % {"otp": otp})
+            send_sms.delay(user.id, message)
