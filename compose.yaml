@@ -121,6 +121,23 @@ services:
       retries: 10
       start_period: 5s
 
+  redis-insight:
+    image: redis/redisinsight:2.70
+    ports:
+      - 5540:5540
+    networks:
+      - net
+    volumes:
+      - redis-insight-data:/data
+    environment:
+      RI_REDIS_HOST: redis
+      RI_REDIS_PASSWORD: ${REDIS_PASSWORD}
+    env_file:
+      - .env
+    depends_on:
+      redis:
+        condition: service_healthy
+
   worker:
     extends:
       service: app
@@ -160,3 +177,4 @@ volumes:
   app-media:
   rabbitmq-data:
   redis-data:
+  redis-insight-data:
