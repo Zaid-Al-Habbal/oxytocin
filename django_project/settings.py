@@ -193,12 +193,14 @@ anon_rate = "5/minute"
 user_rate = "10/minute"
 login_rate = "3/minute"
 otp_daily_rate = "3/day"
+otp_interval_rate = "1/15minute"
 
 if TESTING:
     anon_rate = "400/minute"
     user_rate = "400/minute"
     login_rate = "400/minute"
     otp_daily_rate = "100/day"
+    otp_interval_rate = "400/minute"
 
 # DRF
 REST_FRAMEWORK = {
@@ -210,7 +212,7 @@ REST_FRAMEWORK = {
         "user": user_rate,
         "login": login_rate,
         "otp_daily": otp_daily_rate,
-        "otp_interval": "1/15m", 
+        "otp_interval": otp_interval_rate,
     },
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
@@ -250,6 +252,7 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "PASSWORD": REDIS_PASSWORD,
         },
+        "KEY_PREFIX": "default",
     },
     "otp": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -279,7 +282,6 @@ TEXTBEE_API_KEY = config("TEXTBEE_API_KEY")
 TEXTBEE_DEVICE_ID = config("TEXTBEE_DEVICE_ID")
 
 # Messages
-VERIFICATION_CODE_MESSAGE = "🩺 Welcome to Oxytocin!\nYour sign-in code is %(otp)s.\nDon't share it with anyone."
 FORGET_PASSWORD_CODE = "To add a new password, please verify your phone number using this code: %(otp)s."
 
 # Safe phone numbers
@@ -288,4 +290,3 @@ SAFE_PHONE_NUMBERS = config(
     cast=lambda v: [s for s in v.split(",")],
     default=[],
 )
-

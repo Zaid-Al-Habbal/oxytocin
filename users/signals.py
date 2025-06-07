@@ -6,6 +6,7 @@ from django.conf import settings
 from .models import CustomUser as User
 from .services import OTPService
 from .tasks import send_sms
+from .serializers import SIGNUP_MESSAGE
 
 
 otp_service = OTPService()
@@ -15,5 +16,5 @@ otp_service = OTPService()
 def post_save_user(sender, instance, created, **kwargs):
     if created and not instance.is_superuser and not settings.TESTING:
         otp = otp_service.generate(instance.id)
-        message = _(settings.VERIFICATION_CODE_MESSAGE % {"otp": otp})
-        send_sms.delay(instance.id, message)
+        message = _(SIGNUP_MESSAGE) % {"otp": otp}
+        send_sms.delay(instance.phone, message)

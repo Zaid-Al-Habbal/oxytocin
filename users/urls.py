@@ -25,18 +25,28 @@ urlpatterns = [
     ),
     path(
         "images/",
-        views.UserImageView.as_view(),
+        views.ImageView.as_view(),
         name="user-image",
     ),
     path(
-        "phone-verification/send/",
-        views.UserPhoneVerificationSendView.as_view(),
-        name="user-phone-verification-send",
+        "otp/signup/send/",
+        views.SendSignUpOTPView.as_view(),
+        name="otp-signup-send",
     ),
     path(
-        "phone-verification/",
-        views.UserPhoneVerificationView.as_view(),
-        name="user-phone-verification",
+        "otp/signup/verify/",
+        views.VerifySignUpOTPView.as_view(),
+        name="otp-signup-verify",
+    ),
+    path(
+        "otp/change-phone/send/",
+        views.SendChangePhoneOTPView.as_view(),
+        name="otp-change-phone-send",
+    ),
+    path(
+        "otp/change-phone/verify/",
+        views.VerifyChangePhoneOTPView.as_view(),
+        name="otp-change-phone-verify",
     ),
     path(
         "forget-password/send-otp/",

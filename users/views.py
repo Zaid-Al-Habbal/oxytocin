@@ -18,14 +18,16 @@ from .serializers import (
     UserCreateSerializer,
     LogoutSerializer,
     ChangePasswordSerializer,
-    UserImageSerializer,
-    UserPhoneVerificationSendSerializer,
-    UserPhoneVerificationSerializer,
     ForgetPasswordOTPSendSerializer,
     ForgetPasswordOTPVerificationSerializer,
-    AddNewPasswordSerializer
+    AddNewPasswordSerializer,
+    ImageSerializer,
+    SendSignUpOTPSerializer,
+    VerifySignUpOTPSerializer,
+    SendChangePhoneOTPSerializer,
+    VerifyChangePhoneOTPSerializer,
 )
-from .throttles import OTPThrottle
+from .throttles import OTPThrottle, ChangePhoneOTPThrottle
 
 
 @extend_schema(
@@ -146,11 +148,11 @@ class ChangePasswordView(generics.GenericAPIView):
     ],
     tags=["User"],
 )
-class UserImageView(generics.GenericAPIView):
+class ImageView(generics.GenericAPIView):
     parser_classes = [MultiPartParser]
     queryset = User.objects.not_deleted().not_verified_phone()
     permission_classes = [IsAuthenticated]
-    serializer_class = UserImageSerializer
+    serializer_class = ImageSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -159,20 +161,73 @@ class UserImageView(generics.GenericAPIView):
         return Response(serializer.data)
 
 
-class UserPhoneVerificationSendView(generics.GenericAPIView):
+@extend_schema(
+    summary="Send Signup Code",
+    description=(
+        "Sends a one-time signup code (OTP) to a newly registered user.\n"
+        "This code is required to verify the user's phone number during the signup process."
+    ),
+    tags=["User"],
+)
+class SendSignUpOTPView(generics.GenericAPIView):
     throttle_classes = [OTPThrottle]
-    serializer_class = UserPhoneVerificationSendSerializer
+    serializer_class = SendSignUpOTPSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        data = {"message": _("Your verification code has been sent. Please check your phone shortly.")}
+        data = serializer.save()
         return Response(data)
 
 
-class UserPhoneVerificationView(generics.GenericAPIView):
-    serializer_class = UserPhoneVerificationSerializer
+@extend_schema(
+    summary="Verify Signup Code",
+    description=(
+        "Verifies the one-time code (OTP) sent during signup.\n"
+        "Successful verification confirms the user's phone number and completes the registration process."
+    ),
+    tags=["User"],
+)
+class VerifySignUpOTPView(generics.GenericAPIView):
+    serializer_class = VerifySignUpOTPSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data)
+
+
+@extend_schema(
+    summary="Send Change Phone Number Code",
+    description=(
+        "Sends a one-time verification code (OTP) to the specified new phone number.\n"
+        "This code is used to confirm ownership of the new number before updating the user's profile."
+    ),
+    tags=["User"],
+)
+class SendChangePhoneOTPView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [ChangePhoneOTPThrottle]
+    serializer_class = SendChangePhoneOTPSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.save()
+        return Response(data)
+
+
+@extend_schema(
+    summary="Verify Change Phone Number Code",
+    description=(
+        "Verifies the one-time code (OTP) sent to the new phone number.\n"
+        "A successful verification confirms ownership and updates the user's phone number."
+    ),
+    tags=["User"],
+)
+class VerifyChangePhoneOTPView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = VerifyChangePhoneOTPSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -188,10 +243,14 @@ class ForgetPasswordOTPSendView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        data = {"message": _("Your verification code has been sent. Please check your phone shortly.")}
+        data = {
+            "message": _(
+                "Your verification code has been sent. Please check your phone shortly."
+            )
+        }
         return Response(data)
-    
-    
+
+
 class ForgetPasswordOTPVerificationView(generics.GenericAPIView):
     serializer_class = ForgetPasswordOTPVerificationSerializer
 
@@ -199,8 +258,8 @@ class ForgetPasswordOTPVerificationView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data)
-    
-    
+
+
 class AddNewPasswordView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = AddNewPasswordSerializer
@@ -209,4 +268,4 @@ class AddNewPasswordView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response({"detail": _("Password changed successfully")}) 
+        return Response({"detail": _("Password changed successfully")})

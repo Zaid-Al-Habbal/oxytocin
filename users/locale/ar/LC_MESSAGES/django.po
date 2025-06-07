@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-07 18:45+0300\n"
+"POT-Creation-Date: 2025-06-08 00:42+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,38 +48,65 @@ msgstr "تم رفض حسابك. يُرجى التواصل مع الدعم لمز
 msgid "Assistant profile incomplete."
 msgstr "ملف المساعد او المساعدة غير مكتمل."
 
-#: users/serializers.py:58
+#: users/serializers/base.py:21
+msgid "must be in the past."
+msgstr "يجب أن يكون في الماضي."
+
+#: users/serializers/change_password.py:25 users/serializers/create.py:61
+msgid "Passwords don't match!"
+msgstr "كلمات السر غير متطابقة."
+
+#: users/serializers/change_password.py:32
+msgid "Old password is not correct."
+msgstr "كلمة السر القديمة غير صحيحة."
+
+#: users/serializers/change_phone.py:38 users/serializers/create.py:49
+#: users/serializers/sign_in_otp.py:31 users/serializers/sign_in_otp.py:82
 msgid "This phone number is not allowed during development."
 msgstr "لا يُسمح باستخدام رقم الهاتف هذا أثناء التطوير."
 
-#: users/serializers.py:61
+#: users/serializers/change_phone.py:41 users/serializers/create.py:52
+#: users/serializers/sign_in_otp.py:34 users/serializers/sign_in_otp.py:85
 #, fuzzy
 msgid "Phone number must start with '09'."
 msgstr "يجب أن يبدأ رقم الهاتف بـ '09'."
 
-#: users/serializers.py:70 users/serializers.py:154
-msgid "Passwords don't match!"
-msgstr "كلمات السر غير متطابقة."
+#: users/serializers/change_phone.py:46
+msgid "The new phone number must be different from your current phone number."
+msgstr "يجب أن يكون رقم الهاتف الجديد مختلفًا عن رقم هاتفك الحالي."
 
-#: users/serializers.py:128
-msgid "must be in the past."
-msgstr "يجب أن يكون في الماضي."
+#: users/serializers/change_phone.py:64
+msgid "Your change-phone code has been sent. Please check your phone shortly."
+msgstr "تم إرسال رمز تغيير رقم هاتفك. يُرجى التحقق من هاتفك قريبًا."
 
-#: users/serializers.py:161
-msgid "Old password is not correct."
-msgstr "كلمة السر القديمة غير صحيحة."
+#: users/serializers/change_phone.py:96
+msgid "Phone number updated successfully."
+msgstr "تم تحديث رقم الهاتف بنجاح."
 
-#: users/serializers.py:201
-msgid "Phone number is not verified."
-msgstr "لم يتم التحقق من رقم الهاتف."
+#: users/serializers/forgot_password.py:25
+#: users/serializers/forgot_password.py:51
+msgid "Phone Number Not Found"
+msgstr "رقم الجوال غير موجود"
 
-#: users/serializers.py:222 users/serializers.py:271 users/signals.py:18
+#: users/serializers/forgot_password.py:30
 msgid "otp"
 msgstr ""
 
-#: users/serializers.py:266 users/serializers.py:292
-msgid "Phone Number Not Found"
-msgstr "رقم الجوال غير موجود"
+#: users/serializers/image.py:38
+msgid "Phone number is not verified."
+msgstr "لم يتم التحقق من رقم الهاتف."
+
+#: users/serializers/sign_in_otp.py:40 users/serializers/sign_in_otp.py:91
+msgid "Please check the phone number and try again."
+msgstr "يرجى التحقق من رقم الهاتف والمحاولة مرة أخرى."
+
+#: users/serializers/sign_in_otp.py:44 users/serializers/sign_in_otp.py:95
+msgid "This phone number is already verified."
+msgstr "تم التحقق من رقم الهاتف هذا بالفعل."
+
+#: users/serializers/sign_in_otp.py:57
+msgid "Your sign-in code has been sent. Please check your phone shortly."
+msgstr "تم إرسال رمز تسجيل الدخول إليك. يُرجى التحقق من هاتفك قريبًا."
 
 #: users/services.py:57 users/services.py:62 users/services.py:81
 #: users/services.py:86
@@ -116,14 +143,34 @@ msgid ""
 "@#$%^&*()_-+=)."
 msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد الرموز التالية على أقل."
 
-#: users/views.py:91
+#: users/views.py:93
 msgid "Logout successful."
 msgstr "تم تسجيل الخروج."
 
-#: users/views.py:170 users/views.py:191
+#: users/views.py:216
 msgid "Your verification code has been sent. Please check your phone shortly."
 msgstr "تم إرسال رمز التحقق. يرجى التحقق من هاتفك قريبًا."
 
-#: users/views.py:212
+#: users/views.py:239
 msgid "Password changed successfully"
 msgstr "تم تغيير كلمة السر بنجاح"
+
+#, python-format
+msgid ""
+"🩺 Welcome to Oxytocin!\n"
+"Your signup code is %(otp)s.\n"
+"Don't share it with anyone."
+msgstr ""
+"🩺 مرحباً بك في أوكسيتوسين!\n"
+"رمز التسجيل الخاص بك هو %(otp)s.\n"
+"لا تشاركه مع أي أحد."
+
+#, python-format
+msgid ""
+"🩺 Oxytocin:\n"
+"Use code %(otp)s to confirm your phone number change.\n"
+"Don't share this code with anyone."
+msgstr ""
+"🩺 أوكسيتوسين:\n"
+"استخدم الرمز %(otp)s لتأكيد تغيير رقم هاتفك.\n"
+"لا تشارك هذا الرمز مع أي أحد."

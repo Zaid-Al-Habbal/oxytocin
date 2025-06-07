@@ -6,6 +6,17 @@ import time
 from rest_framework.settings import api_settings
 from rest_framework.throttling import BaseThrottle
 
+from .models import CustomUser as User
+
+
+def strip_unit_from_value(s):
+    i = len(s)
+    while i > 0 and s[i - 1].isalpha():
+        i -= 1
+    if i <= 0:
+        return s[0], int(1)
+    return s[i:][0], int(s[:i])
+
 
 class OTPThrottle(BaseThrottle):
     cache = default_cache
@@ -14,15 +25,6 @@ class OTPThrottle(BaseThrottle):
     DAILY_SUFFIX = "_daily"
     INTERVAL_SUFFIX = "_interval"
     THROTTLE_RATES = api_settings.DEFAULT_THROTTLE_RATES
-
-    @staticmethod
-    def strip_unit_from_value(s):
-        i = len(s)
-        while i > 0 and s[i - 1].isalpha():
-            i -= 1
-        if i <= 0:
-            return s[0], int(1)
-        return s[i:][0], int(s[:i])
 
     def __init__(self):
         self.daily_rate = self.get_rate(self.DAILY_SUFFIX)
@@ -45,18 +47,28 @@ class OTPThrottle(BaseThrottle):
             return (None, None)
         num, period = rate.split("/")
         num_requests = int(num)
-        unit, value = self.strip_unit_from_value(period)
+        unit, value = strip_unit_from_value(period)
         duration = {"s": 1, "m": 60, "h": 3600, "d": 86400}[unit]
         return (num_requests, value * duration)
 
+    def get_ident(self, request):
+        phone = request.data.get("phone")
+        if not phone:
+            return super().get_ident(request)
+        try:
+            user = User.objects.not_deleted().get(phone=phone)
+            return user.id
+        except User.DoesNotExist:
+            return super().get_ident(request)
+
     def allow_request(self, request, view):
-        user_id = request.data.get("user_id")
-        if not user_id:
+        ident = self.get_ident(request)
+        if not ident:
             return True
 
-        daily_key = f"otp_daily_{user_id}"
-        interval_key = f"otp_interval_{user_id}"
-        
+        daily_key = f"{self.scope}{self.DAILY_SUFFIX}_{ident}"
+        interval_key = f"{self.scope}{self.INTERVAL_SUFFIX}_{ident}"
+
         self.now = self.timer()
 
         # Check daily throttle
@@ -96,3 +108,12 @@ class OTPThrottle(BaseThrottle):
             elapsed = self.now - self.throttle_timestamp
             return max(self.duration - elapsed, 0)
         return None
+
+
+class ChangePhoneOTPThrottle(OTPThrottle):
+
+    def get_ident(self, request):
+        user = request.user
+        if user is None:
+            return super().get_ident(request)
+        return user.id

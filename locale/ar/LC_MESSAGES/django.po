@@ -25,12 +25,6 @@ msgstr "معرف العنصر \"{pk_value}\" غير صالح - العنصر غي
 msgid "Ensure this field has no more than {max_length} elements."
 msgstr "تأكد من أن هذا الحقل لا يحتوي على أكثر من {max_length} عناصر."
 
-#, python-format
-msgid ""
-"🩺 Welcome to Oxytocin!\n"
-"Your sign-in code is %(otp)s.\n"
-"Don't share it with anyone."
-msgstr ""
-"🩺 مرحباً بك في أوكسيتوسين!\n"
-"رمز تسجيل الدخول الخاص بك هو %(otp)s.\n"
-"لا تشاركه مع أي أحد."
+#: validators.py:39
+msgid "This field must be unique."
+msgstr "يجب أن يكون هذا الحقل فريدًا."
