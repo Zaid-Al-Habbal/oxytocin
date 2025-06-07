@@ -87,7 +87,7 @@ class OTPService:
         
         hashed_otp = make_password("VERIFIED")
         # Store the hashed OTP in the cache with the user ID as the key
-        self.cache.set(key, hashed_otp)
+        self.cache.set(key, hashed_otp, timeout=300)
         
 
 
