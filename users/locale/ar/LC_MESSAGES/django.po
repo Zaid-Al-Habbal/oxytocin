@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-05 11:36+0300\n"
+"POT-Creation-Date: 2025-06-07 18:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,11 +73,16 @@ msgstr "كلمة السر القديمة غير صحيحة."
 msgid "Phone number is not verified."
 msgstr "لم يتم التحقق من رقم الهاتف."
 
-#: users/serializers.py:222 users/signals.py:18
+#: users/serializers.py:222 users/serializers.py:271 users/signals.py:18
 msgid "otp"
 msgstr ""
 
-#: users/services.py:57 users/services.py:62
+#: users/serializers.py:266 users/serializers.py:292
+msgid "Phone Number Not Found"
+msgstr "رقم الجوال غير موجود"
+
+#: users/services.py:57 users/services.py:62 users/services.py:81
+#: users/services.py:86
 msgid "Invalid OTP."
 msgstr "رمز التحقق غير صالح."
 
@@ -111,10 +116,14 @@ msgid ""
 "@#$%^&*()_-+=)."
 msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد الرموز التالية على أقل."
 
-#: users/views.py:88
+#: users/views.py:91
 msgid "Logout successful."
 msgstr "تم تسجيل الخروج."
 
-#: users/views.py:167
+#: users/views.py:170 users/views.py:191
 msgid "Your verification code has been sent. Please check your phone shortly."
 msgstr "تم إرسال رمز التحقق. يرجى التحقق من هاتفك قريبًا."
+
+#: users/views.py:212
+msgid "Password changed successfully"
+msgstr "تم تغيير كلمة السر بنجاح"
