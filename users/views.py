@@ -22,7 +22,8 @@ from .serializers import (
     UserPhoneVerificationSendSerializer,
     UserPhoneVerificationSerializer,
     ForgetPasswordOTPSendSerializer,
-    ForgetPasswordOTPVerificationSerializer
+    ForgetPasswordOTPVerificationSerializer,
+    AddNewPasswordSerializer
 )
 from .throttles import OTPThrottle
 
@@ -198,3 +199,14 @@ class ForgetPasswordOTPVerificationView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data)
+    
+    
+class AddNewPasswordView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = AddNewPasswordSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"detail": _("Password changed successfully")}) 

@@ -48,4 +48,9 @@ urlpatterns = [
         views.ForgetPasswordOTPVerificationView.as_view(),
         name="forget-password-verify-otp",
     ),
+    path(
+        "forget-password/add-new-password/",
+        views.AddNewPasswordView.as_view(),
+        name="forget-password-verify-otp",
+    ),
 ]

@@ -294,15 +294,11 @@ class ForgetPasswordOTPVerificationSerializer(serializers.Serializer):
         otp = data["verification_code"]
         
         userKey = f"{user.id}:forget-password"
-        otp_service.validate(userKey, otp)
+        otp_service.verify_and_mark_as_verified(userKey, otp)
         
         if not user.is_verified_phone:
             user.is_verified_phone = True
             user.save()
-        
-        if not settings.TESTING:
-            userKey = f"{user.id}:forget-password:verfied"
-            otp = otp_service.generate(userKey)
         
         refresh_token = RefreshToken.for_user(user)
         access_token = refresh_token.access_token
@@ -313,3 +309,21 @@ class ForgetPasswordOTPVerificationSerializer(serializers.Serializer):
             "refresh_token": str(refresh_token),
             "expires_in": expires_in,
         }
+
+
+class AddNewPasswordSerializer(serializers.Serializer):
+    new_password = serializers.CharField(
+        write_only=True,
+        validators=[validate_password],
+        style={"input_type": "password"},
+        help_text="Password must meet the validation rules (min length=8, has both lowercase and uppercase latters, number, special character, not common, not similar to user's attributes ).",
+    )
+        
+    def save(self, **kwargs):
+        user = self.context["request"].user
+        
+        userKey = f"{user.id}:forget-password"
+        otp_service.validate(userKey, "VERIFIED")
+        
+        user.set_password(self.validated_data["new_password"])
+        user.save()
