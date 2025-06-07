@@ -43,4 +43,9 @@ urlpatterns = [
         views.ForgetPasswordOTPSendView.as_view(),
         name="forget-password-send-otp",
     ),
+    path(
+        "forget-password/verify-otp/",
+        views.ForgetPasswordOTPVerificationView.as_view(),
+        name="forget-password-verify-otp",
+    ),
 ]

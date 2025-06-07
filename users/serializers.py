@@ -268,5 +268,48 @@ class ForgetPasswordOTPSendSerializer(serializers.Serializer):
         if not settings.TESTING:
             userKey = f"{user.id}:forget-password"
             otp = otp_service.generate(userKey)
-            message = _(settings.VERIFICATION_CODE_MESSAGE  % {"otp": otp})
+            message = _(settings.FORGET_PASSWORD_CODE  % {"otp": otp})
             send_sms.delay(user.id, message)
+            
+
+class ForgetPasswordOTPVerificationSerializer(serializers.Serializer):
+    phone = serializers.CharField(min_length=10, max_length=10, write_only=True)
+    
+    verification_code = serializers.CharField(
+        min_length=5,
+        max_length=5,
+        write_only=True,
+    )
+    access_token = serializers.CharField(read_only=True)
+    refresh_token = serializers.CharField(read_only=True)
+    expires_in = serializers.IntegerField(read_only=True)
+
+    def validate(self, data):
+        phone = data["phone"]
+        try:
+            user = User.objects.get(phone=phone)
+        except User.DoesNotExist:
+            raise serializers.ValidationError(_("Phone Number Not Found"))
+        
+        otp = data["verification_code"]
+        
+        userKey = f"{user.id}:forget-password"
+        otp_service.validate(userKey, otp)
+        
+        if not user.is_verified_phone:
+            user.is_verified_phone = True
+            user.save()
+        
+        if not settings.TESTING:
+            userKey = f"{user.id}:forget-password:verfied"
+            otp = otp_service.generate(userKey)
+        
+        refresh_token = RefreshToken.for_user(user)
+        access_token = refresh_token.access_token
+        expires_in = int(access_token.lifetime.total_seconds())
+        
+        return {
+            "access_token": str(access_token),
+            "refresh_token": str(refresh_token),
+            "expires_in": expires_in,
+        }

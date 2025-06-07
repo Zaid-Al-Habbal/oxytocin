@@ -22,6 +22,7 @@ from .serializers import (
     UserPhoneVerificationSendSerializer,
     UserPhoneVerificationSerializer,
     ForgetPasswordOTPSendSerializer,
+    ForgetPasswordOTPVerificationSerializer
 )
 from .throttles import OTPThrottle
 
@@ -188,3 +189,12 @@ class ForgetPasswordOTPSendView(generics.GenericAPIView):
         serializer.save()
         data = {"message": _("Your verification code has been sent. Please check your phone shortly.")}
         return Response(data)
+    
+    
+class ForgetPasswordOTPVerificationView(generics.GenericAPIView):
+    serializer_class = ForgetPasswordOTPVerificationSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data)
