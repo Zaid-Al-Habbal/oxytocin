@@ -10,12 +10,14 @@ from users.tasks import send_sms
 
 
 SIGNUP_KEY = "signup:user:%(user)s"
-SIGNUP_MESSAGE = "🩺 Welcome to Oxytocin!\nYour signup code is %(otp)s.\nDon't share it with anyone."
+SIGNUP_MESSAGE = (
+    "🩺 Welcome to Oxytocin!\nYour signup code is %(otp)s.\nDon't share it with anyone."
+)
 
 otp_service = OTPService()
 
 
-class SendSignUpOTPSerializer(serializers.Serializer):
+class SendSignupOTPSerializer(serializers.Serializer):
     phone = serializers.CharField(
         min_length=10,
         max_length=10,
@@ -32,7 +34,6 @@ class SendSignUpOTPSerializer(serializers.Serializer):
                 )
         if not value.startswith("09"):
             raise serializers.ValidationError(_("Phone number must start with '09'."))
-        value = "+963" + value[1:]
         try:
             user = User.objects.not_deleted().get(phone=value)
         except User.DoesNotExist:
@@ -54,12 +55,12 @@ class SendSignUpOTPSerializer(serializers.Serializer):
             send_sms.delay(user.phone, message)
         return {
             "message": _(
-                "Your sign-in code has been sent. Please check your phone shortly."
+                "Your signup code has been sent. Please check your phone shortly."
             )
         }
 
 
-class VerifySignUpOTPSerializer(serializers.Serializer):
+class VerifySignupOTPSerializer(serializers.Serializer):
     phone = serializers.CharField(
         min_length=10,
         max_length=10,
@@ -83,7 +84,6 @@ class VerifySignUpOTPSerializer(serializers.Serializer):
                 )
         if not value.startswith("09"):
             raise serializers.ValidationError(_("Phone number must start with '09'."))
-        value = "+963" + value[1:]
         try:
             user = User.objects.not_deleted().get(phone=value)
         except User.DoesNotExist:

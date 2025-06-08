@@ -22,8 +22,8 @@ from .serializers import (
     ForgetPasswordOTPVerificationSerializer,
     AddNewPasswordSerializer,
     ImageSerializer,
-    SendSignUpOTPSerializer,
-    VerifySignUpOTPSerializer,
+    SendSignupOTPSerializer,
+    VerifySignupOTPSerializer,
     SendChangePhoneOTPSerializer,
     VerifyChangePhoneOTPSerializer,
 )
@@ -171,7 +171,7 @@ class ImageView(generics.GenericAPIView):
 )
 class SendSignUpOTPView(generics.GenericAPIView):
     throttle_classes = [OTPThrottle]
-    serializer_class = SendSignUpOTPSerializer
+    serializer_class = SendSignupOTPSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -189,7 +189,7 @@ class SendSignUpOTPView(generics.GenericAPIView):
     tags=["User"],
 )
 class VerifySignUpOTPView(generics.GenericAPIView):
-    serializer_class = VerifySignUpOTPSerializer
+    serializer_class = VerifySignupOTPSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

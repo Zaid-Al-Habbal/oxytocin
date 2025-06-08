@@ -50,7 +50,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
                 )
         if not value.startswith("09"):
             raise serializers.ValidationError(_("Phone number must start with '09'."))
-        value = "+963" + value[1:]
         unique_validator = UniqueValidator(queryset=User.objects.all())
         unique_validator(value, self.fields["phone"])
         return value

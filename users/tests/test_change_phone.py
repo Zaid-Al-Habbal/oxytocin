@@ -19,7 +19,7 @@ class ChangePhoneOTPTests(APITestCase):
         user_data = {
             "first_name": "John",
             "last_name": "Doe",
-            "phone": f"+963{settings.SAFE_PHONE_NUMBERS[0][1:]}",
+            "phone": settings.SAFE_PHONE_NUMBERS[0],
             "password": "abcX123#",
             "is_verified_phone": False,
         }
@@ -38,8 +38,7 @@ class ChangePhoneOTPTests(APITestCase):
 
     def test_send_sms_fails_on_same_number(self):
         self.client.force_authenticate(self.user)
-        phone = f"0{self.user.phone[4:]}"
-        data = {"phone": phone}
+        data = {"phone": self.user.phone}
         response = self.client.post(self.send_path, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn(
@@ -52,13 +51,12 @@ class ChangePhoneOTPTests(APITestCase):
         user_data = {
             "first_name": "John",
             "last_name": "Doe",
-            "phone": f"+963{settings.SAFE_PHONE_NUMBERS[1][1:]}",
+            "phone": settings.SAFE_PHONE_NUMBERS[1],
             "password": "abcX123#",
             "is_verified_phone": False,
         }
         user = User.objects.create_user(**user_data)
-        phone = f"0{user.phone[4:]}"
-        data = {"phone": phone}
+        data = {"phone": user.phone}
         response = self.client.post(self.send_path, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("يجب أن يكون هذا الحقل فريدًا.", str(response.data))
@@ -68,7 +66,7 @@ class ChangePhoneOTPTests(APITestCase):
         key = CHANGE_PHONE_KEY % {"user": self.user.id}
         data = {"code": otp_service.generate(key)}
         key = NEW_PHONE_KEY % {"user": self.user.id}
-        phone = f"+963{settings.SAFE_PHONE_NUMBERS[1][1:]}"
+        phone = settings.SAFE_PHONE_NUMBERS[1]
         cache.set(key, phone, 360)
         response = self.client.post(self.path, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -86,7 +84,7 @@ class ChangePhoneOTPTests(APITestCase):
         key = CHANGE_PHONE_KEY % {"user": self.user.id}
         data = {"code": otp_service.generate(key)}
         key = NEW_PHONE_KEY % {"user": self.user.id}
-        phone = f"+963{settings.SAFE_PHONE_NUMBERS[1][1:]}"
+        phone = settings.SAFE_PHONE_NUMBERS[1]
         cache.set(key, phone, 360)
         response = self.client.post(self.path, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

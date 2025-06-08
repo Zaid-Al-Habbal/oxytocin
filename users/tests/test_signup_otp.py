@@ -18,19 +18,18 @@ class SignUpOTPTests(APITestCase):
         user_data = {
             "first_name": "John",
             "last_name": "Doe",
-            "phone": f"+963{settings.SAFE_PHONE_NUMBERS[0][1:]}",
+            "phone": settings.SAFE_PHONE_NUMBERS[0],
             "password": "abcX123#",
             "is_verified_phone": False,
         }
         self.user = User.objects.create_user(**user_data)
 
     def test_send_sms_successful(self):
-        phone = f"0{self.user.phone[4:]}"
-        data = {"phone": phone}
+        data = {"phone": self.user.phone}
         response = self.client.post(self.send_path, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn(
-            "تم إرسال رمز تسجيل الدخول إليك. يُرجى التحقق من هاتفك قريبًا.",
+            "تم إرسال رمز التسجيل الخاص بك. يُرجى التحقق من هاتفك قريبًا.",
             str(response.data),
         )
 
@@ -44,10 +43,9 @@ class SignUpOTPTests(APITestCase):
         )
 
     def test_verification_successful(self):
-        phone = f"0{self.user.phone[4:]}"
         key = SIGNUP_KEY % {"user": self.user.id}
         data = {
-            "phone": phone,
+            "phone": self.user.phone,
             "code": otp_service.generate(key),
         }
         response = self.client.post(self.path, data, format="json")
@@ -55,9 +53,8 @@ class SignUpOTPTests(APITestCase):
         self.assertIn("access_token", str(response.data))
 
     def test_verification_fails_on_invalid_code(self):
-        phone = f"0{self.user.phone[4:]}"
         data = {
-            "phone": phone,
+            "phone": self.user.phone,
             "code": 99999,
         }
         response = self.client.post(self.path, data, format="json")
@@ -68,14 +65,13 @@ class SignUpOTPTests(APITestCase):
         user = User.objects.create_user(
             first_name="Mary",
             last_name="Hart",
-            phone=f"+963{settings.SAFE_PHONE_NUMBERS[1][1:]}",
+            phone=settings.SAFE_PHONE_NUMBERS[1],
             password="abcX123#",
             is_verified_phone=False,
         )
-        phone = f"0{user.phone[4:]}"
         key = SIGNUP_KEY % {"user": self.user.id}
         data = {
-            "phone": phone,
+            "phone": user.phone,
             "code": otp_service.generate(key),
         }
         response = self.client.post(self.path, data, format="json")

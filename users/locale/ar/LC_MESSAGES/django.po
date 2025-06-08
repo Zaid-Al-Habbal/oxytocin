@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-08 00:42+0300\n"
+"POT-Creation-Date: 2025-06-08 10:07+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,7 +52,7 @@ msgstr "ملف المساعد او المساعدة غير مكتمل."
 msgid "must be in the past."
 msgstr "يجب أن يكون في الماضي."
 
-#: users/serializers/change_password.py:25 users/serializers/create.py:61
+#: users/serializers/change_password.py:25 users/serializers/create.py:60
 msgid "Passwords don't match!"
 msgstr "كلمات السر غير متطابقة."
 
@@ -60,26 +60,26 @@ msgstr "كلمات السر غير متطابقة."
 msgid "Old password is not correct."
 msgstr "كلمة السر القديمة غير صحيحة."
 
-#: users/serializers/change_phone.py:38 users/serializers/create.py:49
-#: users/serializers/sign_in_otp.py:31 users/serializers/sign_in_otp.py:82
+#: users/serializers/change_phone.py:44 users/serializers/create.py:49
+#: users/serializers/signup_otp.py:33 users/serializers/signup_otp.py:83
 msgid "This phone number is not allowed during development."
 msgstr "لا يُسمح باستخدام رقم الهاتف هذا أثناء التطوير."
 
-#: users/serializers/change_phone.py:41 users/serializers/create.py:52
-#: users/serializers/sign_in_otp.py:34 users/serializers/sign_in_otp.py:85
+#: users/serializers/change_phone.py:47 users/serializers/create.py:52
+#: users/serializers/signup_otp.py:36 users/serializers/signup_otp.py:86
 #, fuzzy
 msgid "Phone number must start with '09'."
 msgstr "يجب أن يبدأ رقم الهاتف بـ '09'."
 
-#: users/serializers/change_phone.py:46
+#: users/serializers/change_phone.py:51
 msgid "The new phone number must be different from your current phone number."
 msgstr "يجب أن يكون رقم الهاتف الجديد مختلفًا عن رقم هاتفك الحالي."
 
-#: users/serializers/change_phone.py:64
+#: users/serializers/change_phone.py:69
 msgid "Your change-phone code has been sent. Please check your phone shortly."
 msgstr "تم إرسال رمز تغيير رقم هاتفك. يُرجى التحقق من هاتفك قريبًا."
 
-#: users/serializers/change_phone.py:96
+#: users/serializers/change_phone.py:101
 msgid "Phone number updated successfully."
 msgstr "تم تحديث رقم الهاتف بنجاح."
 
@@ -96,17 +96,17 @@ msgstr ""
 msgid "Phone number is not verified."
 msgstr "لم يتم التحقق من رقم الهاتف."
 
-#: users/serializers/sign_in_otp.py:40 users/serializers/sign_in_otp.py:91
+#: users/serializers/signup_otp.py:41 users/serializers/signup_otp.py:91
 msgid "Please check the phone number and try again."
 msgstr "يرجى التحقق من رقم الهاتف والمحاولة مرة أخرى."
 
-#: users/serializers/sign_in_otp.py:44 users/serializers/sign_in_otp.py:95
+#: users/serializers/signup_otp.py:45 users/serializers/signup_otp.py:95
 msgid "This phone number is already verified."
 msgstr "تم التحقق من رقم الهاتف هذا بالفعل."
 
-#: users/serializers/sign_in_otp.py:57
-msgid "Your sign-in code has been sent. Please check your phone shortly."
-msgstr "تم إرسال رمز تسجيل الدخول إليك. يُرجى التحقق من هاتفك قريبًا."
+#: users/serializers/signup_otp.py:58
+msgid "Your signup code has been sent. Please check your phone shortly."
+msgstr "تم إرسال رمز التسجيل الخاص بك. يُرجى التحقق من هاتفك قريبًا."
 
 #: users/services.py:57 users/services.py:62 users/services.py:81
 #: users/services.py:86
@@ -147,11 +147,11 @@ msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد ا
 msgid "Logout successful."
 msgstr "تم تسجيل الخروج."
 
-#: users/views.py:216
+#: users/views.py:248
 msgid "Your verification code has been sent. Please check your phone shortly."
 msgstr "تم إرسال رمز التحقق. يرجى التحقق من هاتفك قريبًا."
 
-#: users/views.py:239
+#: users/views.py:271
 msgid "Password changed successfully"
 msgstr "تم تغيير كلمة السر بنجاح"
 

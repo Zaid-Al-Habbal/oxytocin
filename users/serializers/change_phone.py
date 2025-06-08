@@ -45,7 +45,6 @@ class SendChangePhoneOTPSerializer(serializers.Serializer):
                 )
         if not value.startswith("09"):
             raise serializers.ValidationError(_("Phone number must start with '09'."))
-        value = "+963" + value[1:]
         if self.user.phone == value:
             raise serializers.ValidationError(
                 _(
@@ -61,7 +60,7 @@ class SendChangePhoneOTPSerializer(serializers.Serializer):
         key = CHANGE_PHONE_KEY % {"user": self.user.id}
         otp = otp_service.generate(key)
         key = NEW_PHONE_KEY % {"user": self.user.id}
-        cache.set(key, phone, 360) # Give phone number more timeout for safety
+        cache.set(key, phone, 360)  # Give phone number more timeout for safety
         if not settings.TESTING:
             message = _(CHANGE_PHONE_MESSAGE) % {"otp": otp}
             send_sms.delay(phone, message)
