@@ -11,7 +11,7 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework.permissions import IsAuthenticated
 
-from drf_spectacular.utils import extend_schema, OpenApiExample
+from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
 
 from .models import CustomUser as User
 from .serializers import (
@@ -29,28 +29,34 @@ from .serializers import (
 )
 from .throttles import OTPThrottle, ChangePhoneOTPThrottle
 
-
-@extend_schema(
-    summary="Register a new user",
-    description="Creates a new user account. The password must satisfy the password policy.",
-    request=UserCreateSerializer,
-    responses={201: UserCreateSerializer},
-    examples=[
-        OpenApiExample(
-            name="User registration example",
-            value={
-                "first_name": "John",
-                "last_name": "Doe",
-                "phone": "0999888777",
-                "email": "john@example.com",
-                "gender": "male",
-                "birth_date": "1990-01-01",
-                "password": "abcX123#",
-                "password_confirm": "abcX123#",
-            },
-            request_only=True,
+@extend_schema_view(
+    post=extend_schema(
+        summary="Register a new user",
+        description="Creates a new user account. The password must satisfy the password policy.",
+        request=UserCreateSerializer,
+        responses={201: UserCreateSerializer},
+        examples=[
+            OpenApiExample(
+                name="User registration example",
+                value={
+                    "first_name": "John",
+                    "last_name": "Doe",
+                    "phone": "0999888777",
+                    "email": "john@example.com",
+                    "gender": "male",
+                    "birth_date": "1990-01-01",
+                    "password": "abcX123#",
+                    "password_confirm": "abcX123#",
+                },
+                request_only=True,
+            )
+        ],
+        tags=["User"],
+    ),
+    delete=extend_schema(
+            summary="Delete My Account",
+            tags=["User"],
         )
-    ],
 )
 class UserCreateDestroyView(generics.CreateAPIView, generics.DestroyAPIView):
     serializer_class = UserCreateSerializer
@@ -77,7 +83,10 @@ class UserCreateDestroyView(generics.CreateAPIView, generics.DestroyAPIView):
         else:
             instance.delete()
 
-
+@extend_schema(
+    summary="Logout",
+    tags=["User"],
+)
 class LogoutView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = LogoutSerializer
@@ -99,7 +108,10 @@ class LogoutView(generics.GenericAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-
+@extend_schema(
+    summary="Refresh Token",
+    tags=["User"],
+)
 class CustomTokenRefreshView(TokenRefreshView):
     """
     Custom view to refresh tokens with rotation and blacklist support.
@@ -118,7 +130,10 @@ class CustomTokenRefreshView(TokenRefreshView):
 
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
-
+@extend_schema(
+    summary="Change Password",
+    tags=["User"],
+)
 class ChangePasswordView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ChangePasswordSerializer
@@ -234,7 +249,14 @@ class VerifyChangePhoneOTPView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data)
 
-
+@extend_schema(
+    summary="Send OTP For (Forget Password)",
+    description=(
+        "Sends a one-time signup code (OTP) to verfy phone numberr.\n"
+        "This code is required to verify the user's phone number during the forget password process."
+    ),
+    tags=["User"],
+)
 class ForgetPasswordOTPSendView(generics.GenericAPIView):
     throttle_classes = [OTPThrottle]
     serializer_class = ForgetPasswordOTPSendSerializer
@@ -250,7 +272,14 @@ class ForgetPasswordOTPSendView(generics.GenericAPIView):
         }
         return Response(data)
 
-
+@extend_schema(
+    summary="Verify Phone Number For (Forget Password)",
+    description=(
+        "Verifies the one-time code (OTP) sent to the new phone number.\n"
+        "A successful verification confirms ownership and Now the user can add a new password"
+    ),
+    tags=["User"],
+)
 class ForgetPasswordOTPVerificationView(generics.GenericAPIView):
     serializer_class = ForgetPasswordOTPVerificationSerializer
 
@@ -259,7 +288,14 @@ class ForgetPasswordOTPVerificationView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data)
 
-
+@extend_schema(
+    summary="Add New Password",
+    description=(
+        "Add new Password (require access token).\n"
+        
+    ),
+    tags=["User"],
+)
 class AddNewPasswordView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = AddNewPasswordSerializer

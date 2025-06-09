@@ -12,7 +12,6 @@ from users.tasks import send_sms
 
 CHANGE_PHONE_KEY = "change_phone:user:%(user)s"
 NEW_PHONE_KEY = "new_phone:user:%(user)s"
-CHANGE_PHONE_MESSAGE = "🩺 Oxytocin:\nUse code %(otp)s to confirm your phone number change.\nDon't share this code with anyone."
 
 otp_service = OTPService()
 
@@ -62,7 +61,7 @@ class SendChangePhoneOTPSerializer(serializers.Serializer):
         key = NEW_PHONE_KEY % {"user": self.user.id}
         cache.set(key, phone, 360)  # Give phone number more timeout for safety
         if not settings.TESTING:
-            message = _(CHANGE_PHONE_MESSAGE) % {"otp": otp}
+            message = _("🩺 Oxytocin:\nUse code %(otp)s to confirm your phone number change.\nDon't share this code with anyone.") % {"otp": otp}
             send_sms.delay(phone, message)
         return {
             "message": _(

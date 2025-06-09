@@ -281,8 +281,6 @@ CELERY_TASK_SERIALIZER = "json"
 TEXTBEE_API_KEY = config("TEXTBEE_API_KEY")
 TEXTBEE_DEVICE_ID = config("TEXTBEE_DEVICE_ID")
 
-# Messages
-FORGET_PASSWORD_CODE = "To add a new password, please verify your phone number using this code: %(otp)s."
 
 # Safe phone numbers
 SAFE_PHONE_NUMBERS = config(

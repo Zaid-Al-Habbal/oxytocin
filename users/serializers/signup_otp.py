@@ -10,9 +10,6 @@ from users.tasks import send_sms
 
 
 SIGNUP_KEY = "signup:user:%(user)s"
-SIGNUP_MESSAGE = (
-    "🩺 Welcome to Oxytocin!\nYour signup code is %(otp)s.\nDon't share it with anyone."
-)
 
 otp_service = OTPService()
 
@@ -51,7 +48,7 @@ class SendSignupOTPSerializer(serializers.Serializer):
         key = SIGNUP_KEY % {"user": user.id}
         otp = otp_service.generate(key)
         if not settings.TESTING:
-            message = _(SIGNUP_MESSAGE) % {"otp": otp}
+            message = _("🩺 Welcome to Oxytocin!\nYour signup code is %(otp)s.\nDon't share it with anyone.") % {"otp": otp}
             send_sms.delay(user.phone, message)
         return {
             "message": _(

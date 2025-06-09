@@ -27,8 +27,8 @@ class ForgetPasswordOTPSendSerializer(serializers.Serializer):
         if not settings.TESTING:
             userKey = f"{user.id}:forget-password"
             otp = otp_service.generate(userKey)
-            message = _(settings.FORGET_PASSWORD_CODE % {"otp": otp})
-            send_sms.delay(user.id, message)
+            message = _("🩺 Oxytocin:\nUse code %(otp)s to reset your password.\nDon’t share this code with anyone.") % {"otp": otp}
+            send_sms.delay(phone, message)
 
 
 class ForgetPasswordOTPVerificationSerializer(serializers.Serializer):
