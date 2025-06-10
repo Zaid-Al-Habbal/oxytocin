@@ -12,6 +12,7 @@ class Clinic(models.Model):
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     phone = models.CharField(max_length=20, unique=True)
+    time_slot_per_patient = models.PositiveIntegerField(default=15, help_text="Length of each appointment slot in minutes")
 
     class Meta:
         pass

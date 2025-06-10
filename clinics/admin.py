@@ -12,6 +12,6 @@ class ClinicImageInline(nested.NestedTabularInline):
 
 @admin.register(Clinic)
 class ClinicAdmin(nested.NestedModelAdmin):
-    list_display = ["doctor", "location", "phone"]
+    list_display = ["doctor", "location", "phone", "time_slot_per_patient"]
     search_fields = ["phone"]
     inlines = [ClinicImageInline]
