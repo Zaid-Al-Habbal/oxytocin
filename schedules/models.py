@@ -42,3 +42,31 @@ class ClinicSchedule(models.Model):
             ]        
     def __str__(self):
         return f"{self.clinic} - {self.day_name} ({self.special_date if self.special_date else 'weekly'})"
+
+
+class AvailableHour(models.Model):
+    schedule = models.ForeignKey(
+        ClinicSchedule,
+        on_delete=models.CASCADE,
+        related_name="available_hours"
+    )
+    
+    start_hour = models.TimeField()
+    end_hour = models.TimeField()
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=models.Q(end_hour__gt=models.F('start_hour')),
+                name='check_start_before_end'
+            )
+        ]
+        indexes = [
+            models.Index(fields=['schedule', 'start_hour', 'end_hour']),
+        ]
+        
+    def __str__(self):
+        return f"{self.schedule} : {self.start_hour} - {self.end_hour}"
