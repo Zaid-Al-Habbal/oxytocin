@@ -24,14 +24,11 @@ class AppointmentAdmin(admin.ModelAdmin):
         'cancelled_by'
     )
     list_filter = ('visit_date', 'status', 'clinic')
-    search_fields = ('patient__first_name', 'patient__last_name', 'clinic__id')
     ordering = ('-visit_date', '-visit_time')
-    autocomplete_fields = ['patient', 'clinic', 'cancelled_by']
 
 
 @admin.register(Attachment)
 class AttachmentAdmin(admin.ModelAdmin):
     list_display = ('id', 'appointment', 'document', 'created_at')
     list_filter = ('created_at',)
-    search_fields = ('appointment__id',)
-    autocomplete_fields = ['appointment']
+    
