@@ -18,7 +18,7 @@ class IsAssistantWithClinic(BasePermission):
         if not hasattr(user, "assistant"):
             self.message = _("Please create an assistant profile first.")
             return False
-        if not hasattr(user.assistant, "clinic"):
+        if user.assistant.clinic is None:
             self.message = _("Please join a clinic first.")
             return False
         return True

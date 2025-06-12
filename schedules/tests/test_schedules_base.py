@@ -1,10 +1,10 @@
-from rest_framework.test import APITestCase
-from rest_framework import status
+from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta
-from django.urls import reverse
-
 from common.utils import generate_test_pdf
+
+from rest_framework.test import APITestCase
+from rest_framework import status
 
 from users.models import CustomUser as User
 from clinics.models import Clinic  
@@ -12,34 +12,15 @@ from assistants.models import Assistant
 from doctors.models import Doctor, Specialty, DoctorSpecialty
 
 
-class TestAssistantBase(APITestCase):
-    def setUp(self):
-        self.url = reverse("add-assistant")
-        self.list_url = reverse("list-clinic-assistants")
-        self.password = "abcX123#"
 
-        self.user = User.objects.create_user(
-            first_name="user",
-            last_name="without doctor profile",
-            phone="0934567890",
-            is_verified_phone=True,
-            password=self.password,
-            role=User.Role.DOCTOR,
-        )
+class ScheduleBaseTest(APITestCase):
+    def setUp(self):
+        self.password = "abcX123#"
 
         self.user_doctor_clinic = User.objects.create_user(
             first_name="doctor",
             last_name="clinic",
             phone="0934567891",
-            is_verified_phone=True,
-            password=self.password,
-            role=User.Role.DOCTOR,
-        )
-
-        self.user_doctor = User.objects.create_user(
-            first_name="no clinic",
-            last_name="doctor",
-            phone="0934567892",
             is_verified_phone=True,
             password=self.password,
             role=User.Role.DOCTOR,
@@ -56,11 +37,6 @@ class TestAssistantBase(APITestCase):
             user=self.user_doctor_clinic,
             **doctor_data,
         )
-        self.doctor_without_clinic = Doctor.objects.create(
-            user=self.user_doctor,
-            **doctor_data,
-        )
-
         
         self.main_specialty1 = Specialty.objects.create(
             name_en="Test1",
@@ -71,7 +47,6 @@ class TestAssistantBase(APITestCase):
             name_ar="تجريبي2",
             parent=self.main_specialty1,
         )
-        
         specialties = [
             DoctorSpecialty(
                 doctor=self.doctor_with_clinic,
@@ -94,7 +69,7 @@ class TestAssistantBase(APITestCase):
         }
         self.clinic =  Clinic.objects.create(doctor=self.doctor_with_clinic, **clinic_data)
 
-        self.user2 = User.objects.create_user(
+        self.assistantUser = User.objects.create_user(
             first_name="user",
             last_name="assistant",
             phone="0999888777",
@@ -104,12 +79,11 @@ class TestAssistantBase(APITestCase):
         )
         
         self.assistant = Assistant.objects.create(
-            user=self.user2,
+            user=self.assistantUser,
             education="bla bla bla",
-            start_work_date="2020-2-2"
+            start_work_date="2020-2-2",
+            clinic=self.clinic
         )
-        
-        self.remove_url = reverse("remove-clinic-assistant", kwargs={ "pk": self.user2.id})
-        self.bad_remove_url = reverse("remove-clinic-assistant", kwargs={ "pk": 10000})
-        self.view_url = reverse("view-clinic-assistant", kwargs={ "pk": self.user2.id})
     
+    
+        

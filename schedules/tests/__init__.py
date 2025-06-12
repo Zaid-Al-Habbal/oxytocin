@@ -1,0 +1,1 @@
+from .test_weekdays_schedules import *
