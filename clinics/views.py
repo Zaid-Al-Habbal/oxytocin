@@ -1,12 +1,12 @@
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
-from rest_framework import generics, mixins, status
+from rest_framework import generics, mixins, status, serializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiExample
+from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiExample, inline_serializer
 
 from .models import Clinic, ClinicImage
 from .serializers import (
@@ -219,6 +219,15 @@ class RetriveAssistantView(generics.RetrieveAPIView):
 @extend_schema(
     summary="Remove Assistant",
     description="Remove assistant that works in my clinic",
+    methods=["delete"],
+    responses={200},
+    examples=[
+        OpenApiExample(
+            name="Leave My clinic",
+            value={"detail": _("Assistant removed from clinic.")},
+            response_only=True
+        )
+    ],
     tags=["Assistant Management"],
 ) 
 class RemoveAssistantFromClinic(APIView):
