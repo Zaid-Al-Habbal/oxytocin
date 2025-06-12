@@ -66,3 +66,20 @@ class Appointment(models.Model):
         return f"Appointment for {self.patient} at {self.clinic} on {self.visit_date} {self.visit_time}"
     
     
+def appointment_attachment_path(instance, filename):
+    # Files will be uploaded to MEDIA_ROOT/appointments/<appointment_id>/<filename>
+    return f'appointments/{instance.appointment.id}/{filename}'
+
+class Attachment(models.Model):
+    document = models.FileField(upload_to=appointment_attachment_path)
+
+    appointment = models.ForeignKey(
+        Appointment,
+        on_delete=models.CASCADE,
+        related_name='attachments'
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Attachment for Appointment {self.appointment.id}"
