@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from assistants.permissions import IsAssistantWithClinic
@@ -13,4 +13,13 @@ class ListWeekDaysSchedulesView(ListAPIView):
         user = self.request.user
         clinic = user.assistant.clinic
         return ClinicSchedule.objects.filter(clinic=clinic).prefetch_related('available_hours')
+
+
+class ShowWeekDaySchedulesView(RetrieveAPIView):
+    serializer_class = ListWeekDaysSchedulesSerializer
+    permission_classes = [IsAuthenticated, IsAssistantWithClinic]
     
+    def get_queryset(self):
+        user = self.request.user
+        clinic = user.assistant.clinic
+        return ClinicSchedule.objects.filter(clinic=clinic).prefetch_related('available_hours')
