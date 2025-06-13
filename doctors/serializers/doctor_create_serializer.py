@@ -35,7 +35,7 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
 
     def validate_main_specialty(self, value):
         specialty = value["specialty"]
-        if specialty.parent is not None:
+        if specialty.main_specialties.exists():
             raise serializers.ValidationError(
                 _("Main specialty cannot be a subspecialty.")
             )
@@ -62,9 +62,7 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
         main_specialty_data = data["main_specialty"]
         subspecialties_data = data["subspecialties"]
         main_specialty = main_specialty_data["specialty"]
-        valid_subspecialties_for_main = set(
-            Specialty.objects.filter(parent=main_specialty)
-        )
+        valid_subspecialties_for_main = set(main_specialty.subspecialties.all())
         if len(subspecialties_data) > len(valid_subspecialties_for_main):
             raise serializers.ValidationError(
                 _(

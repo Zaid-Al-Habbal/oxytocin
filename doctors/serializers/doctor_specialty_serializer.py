@@ -9,7 +9,7 @@ from .specialty_serializer import SpecialtySerializer
 
 class DoctorSpecialtySerializer(serializers.ModelSerializer):
     specialty_id = serializers.PrimaryKeyRelatedField(
-        queryset=Specialty.objects.with_parent().all(),
+        queryset=Specialty.objects.with_main_specialties().all(),
         source="specialty",
         write_only=True,
     )

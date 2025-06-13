@@ -4,7 +4,7 @@ from rest_framework import serializers
 
 from users.serializers import UserUpdateSerializer
 
-from doctors.models import Doctor, Specialty, DoctorSpecialty
+from doctors.models import Doctor, DoctorSpecialty
 
 from .doctor_specialty_serializer import DoctorSpecialtySerializer
 
@@ -34,9 +34,7 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
     def validate_subspecialties(self, value):
         doctor = self.instance
         main_specialty = doctor.main_specialty[0].specialty
-        valid_subspecialties_for_main = set(
-            Specialty.objects.filter(parent=main_specialty)
-        )
+        valid_subspecialties_for_main = set(main_specialty.subspecialties.all())
         if len(value) > len(valid_subspecialties_for_main):
             raise serializers.ValidationError(
                 _(
@@ -49,10 +47,10 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
             if specialty.pk in seen_specialty_pks:
                 raise serializers.ValidationError(_("Duplicate is not allowed."))
             seen_specialty_pks.add(specialty.pk)
-            if specialty.parent is None:
+            if not specialty.main_specialties.exists():
                 msg = _('Specialty "%(value)s" - is not a subspecialty.')
                 raise serializers.ValidationError(_(msg % {"value": specialty.pk}))
-            if specialty.parent.pk != main_specialty.pk:
+            if not specialty.main_specialties.filter(pk=main_specialty.pk).exists():
                 msg = _(
                     'Subspecialty "%(value)s" - is not a branch of the main specialty.'
                 )

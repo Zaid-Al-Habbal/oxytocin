@@ -46,8 +46,8 @@ class ClinicTests(APITestCase):
         subspecialty1 = Specialty.objects.create(
             name_en="Test2",
             name_ar="تجريبي2",
-            parent=main_specialty1,
         )
+        subspecialty1.main_specialties.add(main_specialty1)
         specialties = [
             DoctorSpecialty(
                 doctor=self.doctor,

@@ -1,0 +1,1348 @@
+[
+    {
+        "model": "doctors.specialty",
+        "pk": 1,
+        "fields": {
+            "name_en": "Internal Medicine",
+            "name_ar": "الطب الباطني",
+            "subspecialties": [
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 2,
+        "fields": {
+            "name_en": "Family Medicine",
+            "name_ar": "طب الأسرة",
+            "subspecialties": [
+                31,
+                32,
+                33,
+                34,
+                35
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 3,
+        "fields": {
+            "name_en": "Pediatrics",
+            "name_ar": "طب الأطفال",
+            "subspecialties": [
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 4,
+        "fields": {
+            "name_en": "Obstetrics and Gynecology",
+            "name_ar": "التوليد وأمراض النساء",
+            "subspecialties": [
+                45,
+                46,
+                47,
+                48
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 5,
+        "fields": {
+            "name_en": "Surgery",
+            "name_ar": "الجراحة",
+            "subspecialties": [
+                49,
+                50,
+                51,
+                52,
+                53,
+                54,
+                55,
+                56
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 6,
+        "fields": {
+            "name_en": "Orthopedic Surgery",
+            "name_ar": "جراحة العظام",
+            "subspecialties": [
+                33,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 7,
+        "fields": {
+            "name_en": "Neurology",
+            "name_ar": "طب الأعصاب",
+            "subspecialties": [
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 8,
+        "fields": {
+            "name_en": "Neurosurgery",
+            "name_ar": "جراحة الأعصاب",
+            "subspecialties": [
+                57,
+                70,
+                71,
+                72,
+                73
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 9,
+        "fields": {
+            "name_en": "Psychiatry",
+            "name_ar": "الطب النفسي",
+            "subspecialties": [
+                74,
+                75,
+                76,
+                77,
+                78
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 10,
+        "fields": {
+            "name_en": "Dermatology",
+            "name_ar": "الأمراض الجلدية",
+            "subspecialties": [
+                79,
+                80,
+                81,
+                82
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 11,
+        "fields": {
+            "name_en": "Radiology",
+            "name_ar": "الأشعة",
+            "subspecialties": [
+                83,
+                84,
+                85,
+                86,
+                87,
+                88
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 12,
+        "fields": {
+            "name_en": "Anesthesiology",
+            "name_ar": "التخدير",
+            "subspecialties": [
+                89,
+                90,
+                91,
+                92,
+                93
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 13,
+        "fields": {
+            "name_en": "Emergency Medicine",
+            "name_ar": "طب الطوارئ",
+            "subspecialties": [
+                94,
+                95,
+                33,
+                96,
+                97
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 14,
+        "fields": {
+            "name_en": "Pathology",
+            "name_ar": "علم الأمراض",
+            "subspecialties": [
+                98,
+                99,
+                100,
+                101,
+                102,
+                103
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 15,
+        "fields": {
+            "name_en": "Ophthalmology",
+            "name_ar": "طب العيون",
+            "subspecialties": [
+                104,
+                105,
+                106,
+                107,
+                108,
+                109
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 16,
+        "fields": {
+            "name_en": "Otolaryngology (ENT)",
+            "name_ar": "طب الأنف والأذن والحنجرة",
+            "subspecialties": [
+                110,
+                111,
+                112,
+                113,
+                114,
+                115
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 17,
+        "fields": {
+            "name_en": "Urology",
+            "name_ar": "جراحة المسالك البولية",
+            "subspecialties": [
+                116,
+                117,
+                118,
+                119,
+                120,
+                121
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 18,
+        "fields": {
+            "name_en": "Physical Medicine and Rehabilitation",
+            "name_ar": "الطب الفيزيائي وإعادة التأهيل",
+            "subspecialties": [
+                33,
+                89,
+                122,
+                123,
+                124
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 19,
+        "fields": {
+            "name_en": "Allergy and Immunology",
+            "name_ar": "الحساسية والمناعة",
+            "subspecialties": [
+                125,
+                126,
+                127
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 20,
+        "fields": {
+            "name_en": "Occupational Medicine",
+            "name_ar": "الطب المهني",
+            "subspecialties": [
+                128,
+                129,
+                130
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 21,
+        "fields": {
+            "name_en": "Public Health and Preventive Medicine",
+            "name_ar": "الصحة العامة والطب الوقائي",
+            "subspecialties": [
+                131,
+                132,
+                133,
+                134
+            ]
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 22,
+        "fields": {
+            "name_en": "Cardiology",
+            "name_ar": "أمراض القلب",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 23,
+        "fields": {
+            "name_en": "Endocrinology",
+            "name_ar": "أمراض الغدد الصماء",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 24,
+        "fields": {
+            "name_en": "Gastroenterology",
+            "name_ar": "أمراض الجهاز الهضمي",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 25,
+        "fields": {
+            "name_en": "Hematology",
+            "name_ar": "أمراض الدم",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 26,
+        "fields": {
+            "name_en": "Infectious Diseases",
+            "name_ar": "الأمراض المعدية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 27,
+        "fields": {
+            "name_en": "Nephrology",
+            "name_ar": "أمراض الكلى",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 28,
+        "fields": {
+            "name_en": "Oncology",
+            "name_ar": "الأورام",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 29,
+        "fields": {
+            "name_en": "Pulmonology",
+            "name_ar": "أمراض الرئة",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 30,
+        "fields": {
+            "name_en": "Rheumatology",
+            "name_ar": "أمراض الروماتيزم",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 31,
+        "fields": {
+            "name_en": "Geriatrics",
+            "name_ar": "طب الشيخوخة",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 32,
+        "fields": {
+            "name_en": "Adolescent Medicine",
+            "name_ar": "طب المراهقين",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 33,
+        "fields": {
+            "name_en": "Sports Medicine",
+            "name_ar": "طب الرياضة",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 34,
+        "fields": {
+            "name_en": "Preventive Medicine",
+            "name_ar": "الطب الوقائي",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 35,
+        "fields": {
+            "name_en": "Women's Health",
+            "name_ar": "صحة المرأة",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 36,
+        "fields": {
+            "name_en": "Pediatric Cardiology",
+            "name_ar": "أمراض قلب الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 37,
+        "fields": {
+            "name_en": "Pediatric Endocrinology",
+            "name_ar": "أمراض الغدد الصماء لدى الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 38,
+        "fields": {
+            "name_en": "Pediatric Gastroenterology",
+            "name_ar": "أمراض الجهاز الهضمي لدى الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 39,
+        "fields": {
+            "name_en": "Pediatric Hematology-Oncology",
+            "name_ar": "أمراض الدم والأورام لدى الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 40,
+        "fields": {
+            "name_en": "Neonatology",
+            "name_ar": "طب حديثي الولادة",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 41,
+        "fields": {
+            "name_en": "Pediatric Nephrology",
+            "name_ar": "أمراض الكلى لدى الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 42,
+        "fields": {
+            "name_en": "Pediatric Pulmonology",
+            "name_ar": "أمراض الرئة لدى الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 43,
+        "fields": {
+            "name_en": "Pediatric Rheumatology",
+            "name_ar": "أمراض الروماتيزم لدى الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 44,
+        "fields": {
+            "name_en": "Pediatric Infectious Diseases",
+            "name_ar": "الأمراض المعدية لدى الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 45,
+        "fields": {
+            "name_en": "Maternal-Fetal Medicine",
+            "name_ar": "طب الأم والجنين",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 46,
+        "fields": {
+            "name_en": "Reproductive Endocrinology and Infertility",
+            "name_ar": "أمراض الغدد الصماء الإنجابية والعقم",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 47,
+        "fields": {
+            "name_en": "Gynecologic Oncology",
+            "name_ar": "أورام النساء",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 48,
+        "fields": {
+            "name_en": "Urogynecology",
+            "name_ar": "أمراض المسالك البولية النسائية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 49,
+        "fields": {
+            "name_en": "General Surgery",
+            "name_ar": "الجراحة العامة",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 50,
+        "fields": {
+            "name_en": "Cardiothoracic Surgery",
+            "name_ar": "جراحة القلب والصدر",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 51,
+        "fields": {
+            "name_en": "Vascular Surgery",
+            "name_ar": "جراحة الأوعية الدموية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 52,
+        "fields": {
+            "name_en": "Colorectal Surgery",
+            "name_ar": "جراحة القولون والمستقيم",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 53,
+        "fields": {
+            "name_en": "Endocrine Surgery",
+            "name_ar": "جراحة الغدد الصماء",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 54,
+        "fields": {
+            "name_en": "Transplant Surgery",
+            "name_ar": "جراحة زراعة الأعضاء",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 55,
+        "fields": {
+            "name_en": "Trauma Surgery",
+            "name_ar": "جراحة الإصابات",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 56,
+        "fields": {
+            "name_en": "Surgical Oncology",
+            "name_ar": "الجراحة الأورام",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 57,
+        "fields": {
+            "name_en": "Spine Surgery",
+            "name_ar": "جراحة العمود الفقري",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 58,
+        "fields": {
+            "name_en": "Joint Replacement",
+            "name_ar": "استبدال المفاصل",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 59,
+        "fields": {
+            "name_en": "Hand Surgery",
+            "name_ar": "جراحة اليد",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 60,
+        "fields": {
+            "name_en": "Foot and Ankle Surgery",
+            "name_ar": "جراحة القدم والكاحل",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 61,
+        "fields": {
+            "name_en": "Pediatric Orthopedics",
+            "name_ar": "جراحة العظام للأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 62,
+        "fields": {
+            "name_en": "Orthopedic Oncology",
+            "name_ar": "أورام العظام",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 63,
+        "fields": {
+            "name_en": "Epilepsy",
+            "name_ar": "الصرع",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 64,
+        "fields": {
+            "name_en": "Stroke",
+            "name_ar": "السكتة الدماغية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 65,
+        "fields": {
+            "name_en": "Neuromuscular Medicine",
+            "name_ar": "أمراض الأعصاب والعضلات",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 66,
+        "fields": {
+            "name_en": "Neurocritical Care",
+            "name_ar": "الرعاية العصبية الحرجة",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 67,
+        "fields": {
+            "name_en": "Headache Medicine",
+            "name_ar": "طب الصداع",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 68,
+        "fields": {
+            "name_en": "Movement Disorders",
+            "name_ar": "اضطرابات الحركة",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 69,
+        "fields": {
+            "name_en": "Sleep Medicine",
+            "name_ar": "طب النوم",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 70,
+        "fields": {
+            "name_en": "Pediatric Neurosurgery",
+            "name_ar": "جراحة الأعصاب للأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 71,
+        "fields": {
+            "name_en": "Functional Neurosurgery",
+            "name_ar": "الجراحة العصبية الوظيفية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 72,
+        "fields": {
+            "name_en": "Neuro-oncology",
+            "name_ar": "أورام الأعصاب",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 73,
+        "fields": {
+            "name_en": "Vascular Neurosurgery",
+            "name_ar": "جراحة الأوعية العصبية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 74,
+        "fields": {
+            "name_en": "Child and Adolescent Psychiatry",
+            "name_ar": "الطب النفسي للأطفال والمراهقين",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 75,
+        "fields": {
+            "name_en": "Forensic Psychiatry",
+            "name_ar": "الطب النفسي الجنائي",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 76,
+        "fields": {
+            "name_en": "Geriatric Psychiatry",
+            "name_ar": "الطب النفسي للمسنين",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 77,
+        "fields": {
+            "name_en": "Addiction Psychiatry",
+            "name_ar": "الطب النفسي للإدمان",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 78,
+        "fields": {
+            "name_en": "Psychosomatic Medicine",
+            "name_ar": "الطب النفسي الجسدي",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 79,
+        "fields": {
+            "name_en": "Pediatric Dermatology",
+            "name_ar": "أمراض جلدية للأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 80,
+        "fields": {
+            "name_en": "Dermatopathology",
+            "name_ar": "علم الأمراض الجلدية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 81,
+        "fields": {
+            "name_en": "Cosmetic Dermatology",
+            "name_ar": "الأمراض الجلدية التجميلية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 82,
+        "fields": {
+            "name_en": "Procedural Dermatology",
+            "name_ar": "الأمراض الجلدية الإجرائية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 83,
+        "fields": {
+            "name_en": "Diagnostic Radiology",
+            "name_ar": "الأشعة التشخيصية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 84,
+        "fields": {
+            "name_en": "Interventional Radiology",
+            "name_ar": "الأشعة التداخلية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 85,
+        "fields": {
+            "name_en": "Neuroradiology",
+            "name_ar": "أشعة الأعصاب",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 86,
+        "fields": {
+            "name_en": "Musculoskeletal Radiology",
+            "name_ar": "أشعة الجهاز العضلي الهيكلي",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 87,
+        "fields": {
+            "name_en": "Pediatric Radiology",
+            "name_ar": "أشعة الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 88,
+        "fields": {
+            "name_en": "Breast Imaging",
+            "name_ar": "تصوير الثدي",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 89,
+        "fields": {
+            "name_en": "Pain Medicine",
+            "name_ar": "طب الألم",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 90,
+        "fields": {
+            "name_en": "Critical Care Medicine",
+            "name_ar": "طب العناية المركزة",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 91,
+        "fields": {
+            "name_en": "Pediatric Anesthesiology",
+            "name_ar": "تخدير الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 92,
+        "fields": {
+            "name_en": "Cardiac Anesthesiology",
+            "name_ar": "تخدير القلب",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 93,
+        "fields": {
+            "name_en": "Neuroanesthesiology",
+            "name_ar": "تخدير الأعصاب",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 94,
+        "fields": {
+            "name_en": "Pediatric Emergency Medicine",
+            "name_ar": "طب طوارئ الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 95,
+        "fields": {
+            "name_en": "Toxicology",
+            "name_ar": "علم السموم",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 96,
+        "fields": {
+            "name_en": "Emergency Medical Services (EMS)",
+            "name_ar": "خدمات الطوارئ الطبية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 97,
+        "fields": {
+            "name_en": "Disaster Medicine",
+            "name_ar": "طب الكوارث",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 98,
+        "fields": {
+            "name_en": "Anatomic Pathology",
+            "name_ar": "علم الأمراض التشريحي",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 99,
+        "fields": {
+            "name_en": "Clinical Pathology",
+            "name_ar": "علم الأمراض السريري",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 100,
+        "fields": {
+            "name_en": "Forensic Pathology",
+            "name_ar": "علم الأمراض الجنائي",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 101,
+        "fields": {
+            "name_en": "Hematopathology",
+            "name_ar": "أمراض الدم المرضية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 102,
+        "fields": {
+            "name_en": "Cytopathology",
+            "name_ar": "علم الخلايا",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 103,
+        "fields": {
+            "name_en": "Molecular Genetic Pathology",
+            "name_ar": "علم الأمراض الوراثي الجزيئي",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 104,
+        "fields": {
+            "name_en": "Retina/Vitreous",
+            "name_ar": "الشبكية / الجسم الزجاجي",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 105,
+        "fields": {
+            "name_en": "Glaucoma",
+            "name_ar": "الجلوكوما",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 106,
+        "fields": {
+            "name_en": "Cornea/External Disease",
+            "name_ar": "القرنية / الأمراض الخارجية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 107,
+        "fields": {
+            "name_en": "Pediatric Ophthalmology",
+            "name_ar": "طب عيون الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 108,
+        "fields": {
+            "name_en": "Neuro-Ophthalmology",
+            "name_ar": "طب أعصاب العين",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 109,
+        "fields": {
+            "name_en": "Oculoplastic Surgery",
+            "name_ar": "جراحة تجميل العيون",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 110,
+        "fields": {
+            "name_en": "Head and Neck Surgery",
+            "name_ar": "جراحة الرأس والعنق",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 111,
+        "fields": {
+            "name_en": "Pediatric ENT",
+            "name_ar": "أنف وأذن وحنجرة للأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 112,
+        "fields": {
+            "name_en": "Facial Plastic and Reconstructive Surgery",
+            "name_ar": "جراحة التجميل وإعادة بناء الوجه",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 113,
+        "fields": {
+            "name_en": "Otology/Neurotology",
+            "name_ar": "أمراض الأذن / أعصاب الأذن",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 114,
+        "fields": {
+            "name_en": "Rhinology",
+            "name_ar": "أمراض الأنف",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 115,
+        "fields": {
+            "name_en": "Laryngology",
+            "name_ar": "أمراض الحنجرة",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 116,
+        "fields": {
+            "name_en": "Pediatric Urology",
+            "name_ar": "مسالك بولية للأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 117,
+        "fields": {
+            "name_en": "Urologic Oncology",
+            "name_ar": "أورام المسالك البولية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 118,
+        "fields": {
+            "name_en": "Female Pelvic Medicine",
+            "name_ar": "طب الحوض النسائي",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 119,
+        "fields": {
+            "name_en": "Male Infertility",
+            "name_ar": "عقم الذكور",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 120,
+        "fields": {
+            "name_en": "Endourology",
+            "name_ar": "جراحة المسالك البولية بالمنظار",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 121,
+        "fields": {
+            "name_en": "Neurourology",
+            "name_ar": "أعصاب المسالك البولية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 122,
+        "fields": {
+            "name_en": "Spinal Cord Injury Medicine",
+            "name_ar": "إصابات الحبل الشوكي",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 123,
+        "fields": {
+            "name_en": "Pediatric Rehabilitation",
+            "name_ar": "تأهيل الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 124,
+        "fields": {
+            "name_en": "Brain Injury Medicine",
+            "name_ar": "طب إصابات الدماغ",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 125,
+        "fields": {
+            "name_en": "Pediatric Allergy",
+            "name_ar": "حساسية الأطفال",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 126,
+        "fields": {
+            "name_en": "Clinical Immunology",
+            "name_ar": "علم المناعة السريري",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 127,
+        "fields": {
+            "name_en": "Asthma and Respiratory Allergy",
+            "name_ar": "الربو والحساسية التنفسية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 128,
+        "fields": {
+            "name_en": "Environmental Medicine",
+            "name_ar": "الطب البيئي",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 129,
+        "fields": {
+            "name_en": "Corporate Health",
+            "name_ar": "الصحة المؤسسية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 130,
+        "fields": {
+            "name_en": "Disability Evaluation",
+            "name_ar": "تقييم الإعاقة",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 131,
+        "fields": {
+            "name_en": "Occupational Health",
+            "name_ar": "الصحة المهنية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 132,
+        "fields": {
+            "name_en": "Epidemiology",
+            "name_ar": "علم الأوبئة",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 133,
+        "fields": {
+            "name_en": "Health Policy",
+            "name_ar": "السياسة الصحية",
+            "subspecialties": []
+        }
+    },
+    {
+        "model": "doctors.specialty",
+        "pk": 134,
+        "fields": {
+            "name_en": "Preventive Cardiology",
+            "name_ar": "الوقاية من أمراض القلب",
+            "subspecialties": []
+        }
+    }
+]

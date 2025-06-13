@@ -37,6 +37,22 @@ services:
       app:
         condition: service_completed_successfully
 
+  specialty-seeder:
+    extends:
+      service: app
+    command: python manage.py loaddata specialties
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  superuser-seeder:
+    extends:
+      service: app
+    command: python manage.py loaddata superusers
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
   server:
     extends:
       service: app

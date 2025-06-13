@@ -7,7 +7,7 @@ from django.urls import reverse
 from common.utils import generate_test_pdf
 
 from users.models import CustomUser as User
-from clinics.models import Clinic  
+from clinics.models import Clinic
 from assistants.models import Assistant
 from doctors.models import Doctor, Specialty, DoctorSpecialty
 
@@ -61,30 +61,34 @@ class TestAssistantBase(APITestCase):
             **doctor_data,
         )
 
-        
         self.main_specialty1 = Specialty.objects.create(
             name_en="Test1",
             name_ar="تجريبي1",
         )
+
         self.subspecialty1 = Specialty.objects.create(
             name_en="Test2",
             name_ar="تجريبي2",
-            parent=self.main_specialty1,
         )
+        self.subspecialty1.main_specialties.add(self.main_specialty1)
+
         self.subspecialty2 = Specialty.objects.create(
             name_en="Test3",
             name_ar="تجريبي3",
-            parent=self.main_specialty1,
         )
+        self.subspecialty2.main_specialties.add(self.main_specialty1)
+
         self.main_specialty2 = Specialty.objects.create(
             name_en="Test4",
             name_ar="تجريبي4",
         )
+
         self.subspecialty3 = Specialty.objects.create(
             name_en="Test5",
             name_ar="تجريبي5",
-            parent=self.main_specialty2,
         )
+        self.subspecialty3.main_specialties.add(self.main_specialty2)
+
         specialties = [
             DoctorSpecialty(
                 doctor=self.doctor_with_clinic,
@@ -98,14 +102,16 @@ class TestAssistantBase(APITestCase):
             ),
         ]
         DoctorSpecialty.objects.bulk_create(specialties)
-        
+
         clinic_data = {
             "location": "Test Street",
             "longitude": 44.2,
             "latitude": 32.1,
             "phone": "011 223 3333",
         }
-        self.clinic =  Clinic.objects.create(doctor=self.doctor_with_clinic, **clinic_data)
+        self.clinic = Clinic.objects.create(
+            doctor=self.doctor_with_clinic, **clinic_data
+        )
 
         self.data = {
             "location": "Test Street",
@@ -121,14 +127,16 @@ class TestAssistantBase(APITestCase):
             password=self.password,
             role=User.Role.ASSISTANT,
         )
-        
+
         self.assistant = Assistant.objects.create(
             user=self.user2,
             education="bla bla bla",
-            start_work_date="2020-2-2"
+            start_work_date="2020-2-2",
         )
-        
-        self.remove_url = reverse("remove-clinic-assistant", kwargs={ "pk": self.user2.id})
-        self.bad_remove_url = reverse("remove-clinic-assistant", kwargs={ "pk": 10000})
-        self.view_url = reverse("view-clinic-assistant", kwargs={ "pk": self.user2.id})
-    
+
+        self.remove_url = reverse(
+            "remove-clinic-assistant",
+            kwargs={"pk": self.user2.id},
+        )
+        self.bad_remove_url = reverse("remove-clinic-assistant", kwargs={"pk": 10000})
+        self.view_url = reverse("view-clinic-assistant", kwargs={"pk": self.user2.id})

@@ -34,10 +34,27 @@ class DoctorAdmin(nested.NestedModelAdmin):
     inlines = [DoctorSpecialtyInline, ClinicInline]
 
 
+class SpecialtyFilter(admin.SimpleListFilter):
+    title = "Main Specialty"
+    parameter_name = "main_specialty"
+
+    def lookups(self, request, model_admin):
+        main_specialties = Specialty.objects.main_specialties_only()
+        return [
+            (main_specialty.id, str(main_specialty))
+            for main_specialty in main_specialties
+        ]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(main_specialties__id=self.value())
+        return queryset
+
+
 @admin.register(Specialty)
 class SpecialtyAdmin(admin.ModelAdmin):
-    list_display = ["name_en", "name_ar", "parent"]
-    list_filter = ["parent"]
+    list_display = ["name_en", "name_ar"]
+    list_filter = [SpecialtyFilter]
     search_fields = ["name_en", "name_ar"]
 
 

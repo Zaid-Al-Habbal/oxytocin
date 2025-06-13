@@ -19,16 +19,16 @@ class DoctorQuerySet(models.QuerySet):
         return self.prefetch_related(
             models.Prefetch(
                 "doctor_specialties",
-                queryset=DoctorSpecialty.objects.select_related("specialty").filter(
-                    specialty__parent__isnull=True
-                ),
+                queryset=DoctorSpecialty.objects.select_related("specialty")
+                .filter(specialty__main_specialties__isnull=True)
+                .distinct(),
                 to_attr="main_specialty",
             ),
             models.Prefetch(
                 "doctor_specialties",
-                queryset=DoctorSpecialty.objects.select_related("specialty").filter(
-                    specialty__parent__isnull=False
-                ),
+                queryset=DoctorSpecialty.objects.select_related("specialty")
+                .filter(specialty__main_specialties__isnull=False)
+                .distinct(),
                 to_attr="subspecialties",
             ),
         )
@@ -54,7 +54,7 @@ class Doctor(models.Model):
     status = models.CharField(
         max_length=20,
         choices=Status.choices,
-        default=Status.APPROVED, #Just for now
+        default=Status.APPROVED,  # Just for now
     )
     specialties = models.ManyToManyField(
         "doctors.Specialty",
@@ -73,28 +73,28 @@ class Doctor(models.Model):
 
 
 class SpecialtyQuerySet(models.QuerySet):
-    def with_parent(self):
-        return self.select_related("parent")
+    def with_main_specialties(self):
+        return self.prefetch_related("main_specialties")
 
-    def main_specialties(self):
-        return self.filter(parent__isnull=True)
+    def main_specialties_only(self):
+        return self.filter(main_specialties__isnull=True).distinct()
 
-    def subspecialties(self):
-        return self.filter(parent__isnull=False)
+    def subspecialties_only(self):
+        return self.filter(main_specialties__isnull=False).distinct()
 
     def main_specialties_with_their_subspecialties(self):
-        return self.main_specialties().prefetch_related("subspecialties")
+        return self.main_specialties_only().prefetch_related("subspecialties")
 
 
 class Specialty(models.Model):
     name_en = models.CharField(max_length=100)
     name_ar = models.CharField(max_length=100)
-    parent = models.ForeignKey(
+    subspecialties = models.ManyToManyField(
         "self",
-        null=True,
+        related_name="main_specialties",
+        symmetrical=False,
         blank=True,
-        on_delete=models.SET_NULL,
-        related_name="subspecialties",
+        db_table="doctors_main_specialty_subspecialty",
     )
 
     objects = SpecialtyQuerySet.as_manager()
