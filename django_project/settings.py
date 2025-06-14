@@ -195,7 +195,7 @@ login_rate = "3/minute"
 otp_daily_rate = "3/day"
 otp_interval_rate = "1/15minute"
 
-if TESTING:
+if TESTING or DEBUG:
     anon_rate = "400/minute"
     user_rate = "400/minute"
     login_rate = "400/minute"
