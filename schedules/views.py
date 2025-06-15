@@ -1,6 +1,7 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework import status
 
 from assistants.permissions import IsAssistantWithClinic
 from .serializers import ListWeekDaysSchedulesSerializer, AddAvailableHoursSerializer
@@ -163,4 +164,4 @@ class AddAvailableHourView(CreateAPIView):
         serializer.save(schedule=schedule)
 
         full_schedule = ListWeekDaysSchedulesSerializer(schedule)
-        return Response(full_schedule.data)
+        return Response(full_schedule.data, status.HTTP_201_CREATED)

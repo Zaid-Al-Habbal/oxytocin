@@ -10,7 +10,7 @@ from users.models import CustomUser as User
 from clinics.models import Clinic  
 from assistants.models import Assistant
 from doctors.models import Doctor, Specialty, DoctorSpecialty
-
+from schedules.models import ClinicSchedule
 
 
 class ScheduleBaseTest(APITestCase):
@@ -84,6 +84,11 @@ class ScheduleBaseTest(APITestCase):
             start_work_date="2020-2-2",
             clinic=self.clinic
         )
-    
+
+        # weekdays = [day[0] for day in ClinicSchedule.Day.choices]
+        # ClinicSchedule.objects.bulk_create([
+        #     ClinicSchedule(clinic=self.clinic, day_name=day)
+        #     for day in weekdays
+        # ])
     
         

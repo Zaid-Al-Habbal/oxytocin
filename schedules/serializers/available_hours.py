@@ -30,7 +30,8 @@ class AddAvailableHoursSerializer(serializers.ModelSerializer):
         schedule = self.context['schedule']
         start = data['start_hour']
         end = data['end_hour']
-
+        
+        #start Should Before end:
         if start >= end:
             raise serializers.ValidationError(_("Start hour must be before end hour."))
 

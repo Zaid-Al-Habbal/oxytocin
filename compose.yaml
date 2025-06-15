@@ -47,15 +47,15 @@ services:
       migrate:
         condition: service_completed_successfully
 
-  # test:
-  #   extends:
-  #     service: app
-  #   command: python manage.py test --noinput
-  #   environment:
-  #     DJANGO_TESTING: True
-  #   depends_on:
-  #     migrate:
-  #       condition: service_completed_successfully
+  test:
+    extends:
+      service: app
+    command: python manage.py test schedules.tests --noinput
+    environment:
+      DJANGO_TESTING: True
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
 
   db:
     image: postgres:17.5
