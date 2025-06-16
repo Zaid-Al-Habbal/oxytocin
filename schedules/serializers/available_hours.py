@@ -2,7 +2,6 @@ from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers
 
-from .weekdays_schedules import ListWeekDaysSchedulesSerializer
 from schedules.models import AvailableHour
 
 
