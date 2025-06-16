@@ -1,11 +1,18 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, get_object_or_404
+from django.utils.translation import gettext_lazy as _
+from django.conf import settings
+
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
+from django.utils.timezone import now
 
 from assistants.permissions import IsAssistantWithClinic
-from .serializers import ListWeekDaysSchedulesSerializer, AddAvailableHoursSerializer
-from .models import ClinicSchedule
+from .serializers import ListWeekDaysSchedulesSerializer, AddAvailableHoursSerializer, UpdateAvailableHoursSerializer
+from .models import ClinicSchedule, AvailableHour
+from appointments.models import Appointment
+from users.tasks import send_sms
 
 from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view, inline_serializer
 
@@ -162,6 +169,108 @@ class AddAvailableHourView(CreateAPIView):
         serializer = self.get_serializer(data=request.data, context={'schedule': schedule})
         serializer.is_valid(raise_exception=True)
         serializer.save(schedule=schedule)
-
+        if schedule.is_available is False :
+            schedule.is_available = True
+            schedule.save()
         full_schedule = ListWeekDaysSchedulesSerializer(schedule)
         return Response(full_schedule.data, status.HTTP_201_CREATED)
+    
+    
+class UpdateAvailableHourView(UpdateAPIView):
+    serializer_class = UpdateAvailableHoursSerializer
+    permission_classes = [IsAuthenticated, IsAssistantWithClinic]
+    lookup_url_kwarg = 'hour_id'
+
+    def get_object(self):
+        user = self.request.user
+        clinic = user.assistant.clinic
+        hour_id = self.kwargs.get(self.lookup_url_kwarg)
+
+        # Ensure hour belongs to assistant's clinic
+        return get_object_or_404(
+            AvailableHour,
+            id=hour_id,
+            schedule__clinic=clinic
+        )
+
+    def perform_update(self, serializer):
+        instance = serializer.instance
+        updated_instance = serializer.save()
+
+        new_start = updated_instance.start_hour
+        new_end = updated_instance.end_hour
+
+        schedule = updated_instance.schedule
+        day_name = schedule.day_name
+
+        # Get other available hours for this weekday (excluding updated one)
+        other_hours = AvailableHour.objects.filter(
+            schedule=schedule
+        ).exclude(id=updated_instance.id)
+
+        # Appointments to check on this day of the week for this clinic
+        appointments_to_check = Appointment.objects.filter(
+            clinic=schedule.clinic,
+            visit_date__week_day=self._get_django_weekday(day_name)
+        )
+
+        appointments_to_cancel = []
+
+        for appt in appointments_to_check:
+            visit_date = appt.visit_date
+            visit_time = appt.visit_time
+
+            # Check if there's a special date schedule for this exact day
+            special_schedule_exists = ClinicSchedule.objects.filter(
+                clinic=schedule.clinic,
+                special_date=visit_date,
+                is_available=True
+            ).exists()
+
+            if special_schedule_exists:
+                # Skip this appointment, as it's governed by the special schedule
+                continue
+
+            # Else, apply normal weekday available hours check
+            in_updated_range = new_start <= visit_time < new_end
+
+            in_other_range = other_hours.filter(
+                start_hour__lte=visit_time,
+                end_hour__gt=visit_time
+            ).exists()
+            
+            if not in_updated_range and not in_other_range:
+                appointments_to_cancel.append(appt.id)
+                patient = appt.patient 
+                doctor = appt.clinic.doctor.user
+                if not settings.TESTING:
+                    message = _(
+                        "Dear {patient},\n your appointment on {date} at {time} with Dr. {doctor} has been cancelled due to clinic schedule changes.\n "
+                        "Please reschedule through our app. We apologize for any inconvenience."
+                    ).format(
+                        patient=patient.full_name,
+                        date=appt.visit_date.strftime('%Y-%m-%d'),
+                        time=appt.visit_time.strftime('%H:%M'),
+                        doctor=doctor.full_name
+                    )                
+                    send_sms.delay(patient.phone, message) 
+
+        # Cancel and notify
+        if appointments_to_cancel:
+            Appointment.objects.filter(id__in=appointments_to_cancel).update(
+                status=Appointment.Status.CANCELLED,
+                cancelled_at=now(),
+                cancelled_by=self.request.user
+            )
+            
+    def _get_django_weekday(self, day_name):
+        mapping = {
+            'sunday': 1,
+            'monday': 2,
+            'tuesday': 3,
+            'wednesday': 4,
+            'thursday': 5,
+            'friday': 6,
+            'saturday': 7,
+        }
+        return mapping[day_name]

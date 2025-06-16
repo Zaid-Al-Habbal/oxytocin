@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-15 09:17+0300\n"
+"POT-Creation-Date: 2025-06-16 19:15+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-#: schedules/serializers/available_hours.py:35
-msgid "Start hour must be before end hour."
-msgstr ""
 
-#: schedules/serializers/available_hours.py:44
+#: schedules/serializers/available_hours.py:36
+#: schedules/serializers/available_hours.py:62
+msgid "Start hour must be before end hour."
+msgstr "وقت البداية يجب أن يسبق وقت النهاية"
+
+#: schedules/serializers/available_hours.py:45
+#: schedules/serializers/available_hours.py:72
 msgid "This time slot overlaps with an existing one."
 msgstr "هذا المجال الزمني يتقاطع مع مجالات زمنية أحرى قد قمت بإنشائها"
+
+#: schedules/views.py:246
+#, python-brace-format
+msgid ""
+"Dear {patient},\n"
+" your appointment on {date} at {time} with Dr. {doctor} has been cancelled "
+"due to clinic schedule changes.\n"
+" Please reschedule through our app. We apologize for any inconvenience."
+msgstr ""
+"عزيزي/عزيزتي {patient}،\n\n"
+"نود إعلامك بأن موعدك المحدد في تاريخ {date} الساعة {time} "
+"مع الدكتور/ة {doctor} قد تم إلغاؤه بسبب تغييرات في جدول العيادة.\n"
+"نعتذر عن هذا الإزعاج، ونرجو منك إعادة حجز موعد جديد من خلال التطبيق\n"
+"شكرًا لتفهمك."
