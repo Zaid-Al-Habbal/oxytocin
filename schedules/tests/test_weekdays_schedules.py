@@ -5,15 +5,27 @@ from rest_framework import status
 from .test_schedules_base import ScheduleBaseTest
 
 from assistants.models import Assistant
+from appointments.models import Appointment
 from schedules.models import AvailableHour, ClinicSchedule
+from datetime import time, timedelta
+from django.utils import timezone
 
 class WeekdaysScheduleTest(ScheduleBaseTest):
     def setUp(self):
         super().setUp()
-        schedule = ClinicSchedule.objects.get(clinic=self.clinic, day_name="sunday")
+        self.schedule = ClinicSchedule.objects.get(clinic=self.clinic, day_name="sunday")
         self.list_url = reverse("list-weekdays-schedules")
-        self.add_url = reverse("add-available-hour-to-weekday", kwargs={"schedule_id": schedule.id})
+        self.add_url = reverse("add-available-hour-to-weekday", kwargs={"schedule_id": self.schedule.id})
         
+        self.available_hour = AvailableHour.objects.create(
+            schedule=self.schedule,
+            start_hour=time(8, 0),
+            end_hour=time(10, 0)
+        )
+        self.update_url = reverse("update-available-hour-to-weekday", kwargs={
+            'schedule_id': self.schedule.id,
+            'hour_id': self.available_hour.id
+        })
     
     def test_list_clinic_weekdays_schedules_successfully(self):
         self.client.force_authenticate(user=self.assistantUser)
@@ -104,3 +116,70 @@ class WeekdaysScheduleTest(ScheduleBaseTest):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         
         
+    def test_successful_update_available_hour(self):
+        self.client.force_authenticate(user=self.assistantUser)
+        
+        data = {
+            "start_hour": "06:00:00",
+            "end_hour": "08:00:00"
+        }
+
+        response = self.client.put(self.update_url, data, format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['start_hour'], "06:00:00")
+        self.assertEqual(response.data['end_hour'], "08:00:00")
+
+    
+    def test_update_fail_due_to_overlap(self):
+        self.client.force_authenticate(user=self.assistantUser)
+        
+        AvailableHour.objects.create(
+            schedule=self.schedule,
+            start_hour=time(7, 0),
+            end_hour=time(9, 0)
+        )
+
+        data = {
+            "start_hour": "08:00:00",
+            "end_hour": "10:00:00"
+        }
+
+        response = self.client.put(self.update_url, data, format='json')
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("هذا المجال الزمني يتقاطع مع مجالات زمنية أحرى قد قمت بإنشائها", str(response.data))
+        
+    
+    def test_appointments_cancelled_if_out_of_new_hours(self):
+        self.client.force_authenticate(user=self.assistantUser)
+        # Create an appointment in the range 08:30 (should be cancelled after update to 06-08)
+        appointment = Appointment.objects.create(
+            patient=self.patient_user,  # For simplicity, using assistant as fake patient
+            clinic=self.clinic,
+            visit_date="2025-06-15",
+            visit_time=time(8, 30),
+            status=Appointment.Status.WAITING
+        )
+
+        data = {
+            "start_hour": "06:00:00",
+            "end_hour": "08:00:00"
+        }
+
+        response = self.client.put(self.update_url, data, format='json')
+        self.assertEqual(response.status_code, 200)
+
+        # Refresh from DB
+        appointment.refresh_from_db()
+        self.assertEqual(appointment.status, Appointment.Status.CANCELLED)
+        
+    def test_update_fail_start_after_end(self):
+        self.client.force_authenticate(user=self.assistantUser)
+        
+        data = {
+            "start_hour": "09:00:00",
+            "end_hour": "08:00:00"
+        }
+
+        response = self.client.put(self.update_url, data, format='json')
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("وقت البداية يجب أن يسبق وقت النهاية", str(response.data))

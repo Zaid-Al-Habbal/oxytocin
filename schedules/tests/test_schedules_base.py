@@ -11,7 +11,7 @@ from clinics.models import Clinic
 from assistants.models import Assistant
 from doctors.models import Doctor, Specialty, DoctorSpecialty
 from schedules.models import ClinicSchedule
-
+from patients.models import Patient
 
 class ScheduleBaseTest(APITestCase):
     def setUp(self):
@@ -85,6 +85,32 @@ class ScheduleBaseTest(APITestCase):
             clinic=self.clinic
         )
 
+        self.patient_user = User.objects.create_user(
+            phone="0999111122",
+            password=self.password,
+            first_name="Patient",
+            last_name="User",
+            role="patient",
+            is_verified_phone=True,
+            gender="male",
+            birth_date="1995-05-01"
+        )
+
+        self.patient = Patient.objects.create(
+            user=self.patient_user,
+            location="Damascus",
+            longitude=36.29,
+            latitude=33.51,
+            job="Engineer",
+            blood_type="A+",
+            medical_history="",
+            surgical_history="",
+            allergies="",
+            medicines="",
+            is_smoker=False,
+            is_drinker=False,
+            is_married=False,
+        )
         # weekdays = [day[0] for day in ClinicSchedule.Day.choices]
         # ClinicSchedule.objects.bulk_create([
         #     ClinicSchedule(clinic=self.clinic, day_name=day)

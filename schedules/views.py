@@ -118,7 +118,7 @@ class ShowWeekDaySchedulesView(RetrieveAPIView):
 
 @extend_schema(
     summary="Add Available Hours To a Weekday",
-    description="Add pair of start and end hour to a weekday like Sunday, Be aware that this pair should not overlapp available hours on the same day",
+    description="Add pair of start and end hour to a weekday like Sunday.\n Be aware that this pair should not overlapp available hours on the same day.\n start_hour < end_hour.\n",
     request=AddAvailableHoursSerializer,
     responses={201: ListWeekDaysSchedulesSerializer},
     examples=[
@@ -175,7 +175,23 @@ class AddAvailableHourView(CreateAPIView):
         full_schedule = ListWeekDaysSchedulesSerializer(schedule)
         return Response(full_schedule.data, status.HTTP_201_CREATED)
     
-    
+@extend_schema(
+    summary="Update Available Hours To a Weekday",
+    description="Update pair of start and end hour to a weekday like Sunday.\n Be aware that this pair should not overlapp available hours on the same day.\n start_hour < end_hour.\n All appointments that are not available after update would be cancelled and patients will get a sms message",
+    request=UpdateAvailableHoursSerializer,
+    methods=['put'],
+    examples=[
+        OpenApiExample(
+            name="Update Available Hours example",
+            value={
+                "start_hour": "08:00:00",
+                "end_hour": "14:00:00"
+            },
+        
+        )
+    ],
+    tags=["Clinic Schedules"]
+)  
 class UpdateAvailableHourView(UpdateAPIView):
     serializer_class = UpdateAvailableHoursSerializer
     permission_classes = [IsAuthenticated, IsAssistantWithClinic]
