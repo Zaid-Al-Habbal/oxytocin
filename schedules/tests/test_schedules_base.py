@@ -111,10 +111,5 @@ class ScheduleBaseTest(APITestCase):
             is_drinker=False,
             is_married=False,
         )
-        # weekdays = [day[0] for day in ClinicSchedule.Day.choices]
-        # ClinicSchedule.objects.bulk_create([
-        #     ClinicSchedule(clinic=self.clinic, day_name=day)
-        #     for day in weekdays
-        # ])
     
         
