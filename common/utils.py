@@ -84,3 +84,16 @@ def generate_test_pdf(
     c.save()
     buffer.seek(0)
     return SimpleUploadedFile(name, buffer.read(), content_type="application/pdf")
+
+
+def _get_django_weekday(day_name):
+        mapping = {
+            'sunday': 1,
+            'monday': 2,
+            'tuesday': 3,
+            'wednesday': 4,
+            'thursday': 5,
+            'friday': 6,
+            'saturday': 7,
+        }
+        return mapping[day_name]
