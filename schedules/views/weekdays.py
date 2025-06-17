@@ -4,7 +4,7 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
 
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -15,7 +15,7 @@ from assistants.permissions import IsAssistantWithClinic
 from schedules.serializers import (
     ListWeekDaysSchedulesSerializer,
     AvailableHourItemSerializer,
-    ReplaceAvailableHoursSerializer
+    ReplaceAvailableHoursSerializer,
 )
 from schedules.models import ClinicSchedule, AvailableHour
 from appointments.models import Appointment
@@ -243,3 +243,81 @@ class ReplaceAvailableHoursView(APIView):
         response_serializer = ListWeekDaysSchedulesSerializer(schedule)
 
         return Response(response_serializer.data, status=status.HTTP_200_OK)
+
+@extend_schema(
+    summary="Mark Weekday Unavailable",
+    description="Delete All available hours for a weekday and mark it as unavailable.\n"
+                "Existing appointments on that day will be cancelled unless they have a special date schedule.",
+    responses={200: ListWeekDaysSchedulesSerializer},
+    methods=['patch'],
+    examples=[
+        OpenApiExample(
+            name="Add new Available Hours to a weekday example",
+            value=[
+                {
+                    "id": 3,
+                    "day_name_display": "Tuesday",
+                    "is_available": False,
+                    "created_at": "2025-06-10T15:18:02.495229+03:00",
+                    "updated_at": "2025-06-17T12:37:26.692140+03:00",
+                    "available_hours": []
+                }
+            ],
+            response_only=True
+        )
+    ],
+    tags=["Clinic Schedules: Weekdays"]
+)
+class MarkWeekdayUnavailableView(APIView):
+    permission_classes = [IsAuthenticated, IsAssistantWithClinic]
+
+    def get_schedule(self, schedule_id, clinic):
+        return get_object_or_404(ClinicSchedule, id=schedule_id, clinic=clinic)
+
+    @transaction.atomic
+    def patch(self, request, schedule_id):
+        """
+        Allows an assistant to mark a specific weekday schedule as unavailable.
+        All waiting appointments related to this weekday will be cancelled unless they are special dates.
+        """
+        user = request.user
+        clinic = user.assistant.clinic
+
+        schedule = self.get_schedule(schedule_id, clinic)
+
+        if not schedule.is_available:
+            return Response(
+                {"detail": _("This weekday schedule is already marked as unavailable.")},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        future_appointments = Appointment.objects.filter(
+            clinic=schedule.clinic,
+            visit_date__gte=now().date(),
+            visit_date__week_day=_get_django_weekday(schedule.day_name),
+            status=Appointment.Status.WAITING
+        )
+
+        appointments_to_cancel = []
+
+        for appointment in future_appointments:
+            special_schedule_exists = ClinicSchedule.objects.filter(
+                clinic=schedule.clinic,
+                special_date=appointment.visit_date
+            ).exists()
+
+            if not special_schedule_exists:
+                appointments_to_cancel.append(appointment)
+
+        cancel_appointments_with_notification(appointments_to_cancel, request.user)
+
+        schedule.is_available = False
+        schedule.updated_at = now()
+        schedule.save()
+
+        # Delete any available hours for this schedule
+        AvailableHour.objects.filter(schedule=schedule).delete()
+
+        schedule.refresh_from_db()
+        serializer = ListWeekDaysSchedulesSerializer(schedule)
+        return Response(serializer.data, status=status.HTTP_200_OK)
