@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from schedules.models import ClinicSchedule
-from .available_hours import AvailableHourSerializer, AddAvailableHoursSerializer
+from .available_hours import AvailableHourSerializer
 
 class ListWeekDaysSchedulesSerializer(serializers.ModelSerializer):
     available_hours = AvailableHourSerializer(many=True)

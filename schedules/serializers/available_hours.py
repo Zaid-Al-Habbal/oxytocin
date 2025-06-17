@@ -6,69 +6,37 @@ from schedules.models import AvailableHour
 
 
 class AvailableHourSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = AvailableHour
         fields = [
             "id",
             "start_hour",
             "end_hour",
-            "created_at",
-            "updated_at"
         ]
         
-
-class AddAvailableHoursSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AvailableHour
-        fields = [
-            "start_hour",
-            "end_hour",
-        ]
     
+class AvailableHourItemSerializer(serializers.Serializer):
+    start_hour = serializers.TimeField()
+    end_hour = serializers.TimeField()
+
     def validate(self, data):
-        schedule = self.context['schedule']
-        start = data['start_hour']
-        end = data['end_hour']
-        
-        #start Should Before end:
-        if start >= end:
+        if data['start_hour'] >= data['end_hour']:
             raise serializers.ValidationError(_("Start hour must be before end hour."))
-
-        # Check for overlap
-        overlapping_hours = AvailableHour.objects.filter(
-            schedule=schedule,
-            start_hour__lt=end,
-            end_hour__gt=start
-        )
-        if overlapping_hours.exists():
-            raise serializers.ValidationError(_("This time slot overlaps with an existing one."))
-
         return data
-    
 
-class UpdateAvailableHoursSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AvailableHour
-        fields = ["start_hour", "end_hour"]
+
+class ReplaceAvailableHoursSerializer(serializers.ListSerializer):
+    child = AvailableHourItemSerializer()
 
     def validate(self, data):
-        instance = self.instance 
-        schedule = instance.schedule
-        start = data.get('start_hour', instance.start_hour)
-        end = data.get('end_hour', instance.end_hour)
+        if not data:
+            raise serializers.ValidationError(_("At least one available hour must be provided."))
 
-        if start >= end:
-            raise serializers.ValidationError(_("Start hour must be before end hour."))
-
-        # Check for overlaps with other AvailableHours in the same schedule
-        overlaps = AvailableHour.objects.filter(
-            schedule=schedule
-        ).exclude(id=instance.id).filter(
-            start_hour__lt=end,
-            end_hour__gt=start
-        )
-        if overlaps.exists():
-            raise serializers.ValidationError(_("This time slot overlaps with an existing one."))
+        # Sort by start_hour to check for overlaps
+        sorted_hours = sorted(data, key=lambda x: x['start_hour'])
+        
+        for i in range(len(sorted_hours) - 1):
+            if sorted_hours[i]['end_hour'] > sorted_hours[i + 1]['start_hour']:
+                raise serializers.ValidationError(_("Available hours must not overlap."))
 
         return data
