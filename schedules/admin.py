@@ -12,18 +12,17 @@ class AvailableHourAdmin(admin.ModelAdmin):
     def clinic(self, obj):
         return obj.schedule.clinic      
     clinic.short_description = 'Clinic'
-    list_display = ('id', 'clinic', 'schedule', 'start_hour', 'end_hour', 'created_at', 'updated_at')
+    list_display = ('id', 'clinic', 'schedule', 'start_hour', 'end_hour', )
     list_filter = ('schedule__clinic', 'schedule__day_name')
     search_fields = ('schedule__clinic__id', 'schedule__clinic__location', 'schedule__day_name')
     ordering = ('schedule', 'start_hour')
-    readonly_fields = ('created_at', 'updated_at')
 
     fieldsets = (
         (None, {
             'fields': ('schedule', 'start_hour', 'end_hour')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
+            'fields': (),
             'classes': ('collapse',),
         }),
     )

@@ -54,9 +54,6 @@ class AvailableHour(models.Model):
     start_hour = models.TimeField()
     end_hour = models.TimeField()
     
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
     class Meta:
         constraints = [
             models.CheckConstraint(
