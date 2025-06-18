@@ -128,3 +128,101 @@ class DeleteWorkingHoursTestCase(ScheduleBaseTest):
         }
         response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        
+
+class ReplaceAvailabelHoursForSpecialDateTestCase(ScheduleBaseTest):
+    def setUp(self):
+        super().setUp()
+        self.client.force_authenticate(user=self.assistantUser)
+        self.url = reverse("replace-available-hours-of-special-date")
+        self.special_date = (timezone.now().date() + timedelta(days=2))
+
+    
+    
+    def test_replace_special_date_hours_success_when_the_special_date_not_exists(self):
+        data = {
+            "special_date": str(self.special_date),
+            "available_hours": [
+                {"start_hour": "14:00:00", "end_hour": "16:00:00"},
+                {"start_hour": "18:00:00", "end_hour": "20:00:00"}
+            ]
+        }
+        response = self.client.put(self.url, data=data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data['available_hours']), 2)
+        self.assertEqual(response.data['special_date'], str(self.special_date))
+        
+    def test_replace_special_date_hours_success_when_the_special_date_exists(self):
+        data = {
+            "special_date": str(self.special_date),
+            "available_hours": [
+                {"start_hour": "14:00:00", "end_hour": "16:00:00"},
+                {"start_hour": "18:00:00", "end_hour": "20:00:00"}
+            ]
+        }
+        ClinicSchedule.objects.create(
+            clinic=self.clinic,
+            special_date=self.special_date,
+            is_available=False
+        )
+        response = self.client.put(self.url, data=data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['is_available'], True)
+        self.assertEqual(len(response.data['available_hours']), 2)
+        self.assertEqual(response.data['special_date'], str(self.special_date))
+        
+    def test_replace_special_date_hours_fail_overlap(self):
+        data = {
+            "special_date": str(self.special_date),
+            "available_hours": [
+                {"start_hour": "14:00:00", "end_hour": "16:00:00"},
+                {"start_hour": "12:00:00", "end_hour": "20:00:00"}
+            ]
+        }
+        response = self.client.put(self.url, data=data, format='json')
+
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("أوقات العمل لا يمكن أن تكون متقاطعة", str(response.data))
+        
+    
+    def test_replace_special_date_hours_cancel_invalid_appointments(self):
+        schedule = ClinicSchedule.objects.create(clinic=self.clinic, special_date=self.special_date, is_available=True)
+        AvailableHour.objects.create(schedule=schedule, start_hour="08:00:00", end_hour="12:00:00")
+        
+        # Appointment that will be invalid after replacement
+        appointment = Appointment.objects.create(
+            clinic=self.clinic,
+            patient=self.patient_user,
+            visit_date=self.special_date,
+            visit_time="09:00:00",
+            status=Appointment.Status.WAITING
+        )
+        
+        data = {
+            "special_date": str(self.special_date),
+            "available_hours": [
+                {"start_hour": "14:00:00", "end_hour": "16:00:00"},
+                {"start_hour": "18:00:00", "end_hour": "20:00:00"}
+            ]
+        }
+        response = self.client.put(self.url, data=data, format='json')
+        
+        appointment.refresh_from_db()
+        self.assertEqual(appointment.status, Appointment.Status.CANCELLED)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        
+    def test_replace_special_date_hours_fail_past_date(self):
+        past_date = (timezone.now().date() - timedelta(days=1))
+        data = {
+            "special_date": str(past_date),
+            "available_hours": [
+                {"start_hour": "14:00:00", "end_hour": "16:00:00"},
+                {"start_hour": "18:00:00", "end_hour": "20:00:00"}
+            ]
+        }
+        response = self.client.put(self.url, data=data, format='json')
+        
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("التاريخ الخاص يجب أن يكون في المستقبل", str(response.data))
