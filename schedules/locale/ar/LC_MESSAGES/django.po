@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-17 15:21+0300\n"
+"POT-Creation-Date: 2025-06-18 11:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,3 +30,17 @@ msgstr "يجب أن ترسل زوج واحد من ساعات العمل على �
 #: schedules/serializers/available_hours.py:40
 msgid "Available hours must not overlap."
 msgstr "أوقات العمل لا يمكن أن تكون متقاطعة"
+
+#: schedules/serializers/working_hours.py:15
+#, fuzzy
+#| msgid "Start hour must be before end hour."
+msgid "Start time must be before end time."
+msgstr "وقت البداية يجب أن يسبق وقت النهاية"
+
+#: schedules/serializers/working_hours.py:17
+msgid "Special date should be in the future"
+msgstr "التاريخ الخاص يجب أن يكون في المستقبل"
+
+#: schedules/views/weekdays.py:298
+msgid "This weekday schedule is already marked as unavailable."
+msgstr "إن هذا اليوم غير متاح أصلا"
