@@ -14,5 +14,5 @@ class DeleteWorkingHourSerializer(serializers.Serializer):
         if data['start_working_hour'] >= data['end_working_hour']:
             raise serializers.ValidationError(_("Start hour must be before end hour."))
         if data['special_date'] < now().date() :
-            raise serializers.ValidationError(_("Special date should be in the future"))
+            raise serializers.ValidationError(_("Special date must be in the future."))
         return data

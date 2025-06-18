@@ -1,6 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.db import transaction
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
 
@@ -11,7 +12,7 @@ from rest_framework import status
 from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view, inline_serializer
 
 from assistants.permissions import IsAssistantWithClinic
-from schedules.serializers import DeleteWorkingHourSerializer, ListWeekDaysSchedulesSerializer
+from schedules.serializers import DeleteWorkingHourSerializer, ListWeekDaysSchedulesSerializer, ReplaceAvailableHoursSpecialDateSerializer
 from schedules.models import ClinicSchedule, AvailableHour
 from appointments.models import Appointment
 from users.tasks import send_sms
@@ -143,6 +144,61 @@ class DeleteWorkingHourView(APIView):
         cancel_appointments_with_notification(cancelled_appointments, self.request.user)
 
         schedule.updated_at = now()
+        schedule.save()
+
+        response_serializer = ListWeekDaysSchedulesSerializer(schedule)
+        return Response(response_serializer.data, status=status.HTTP_200_OK)
+
+
+
+class ReplaceAvailableHoursSpecialDatesView(APIView):
+    permission_classes = [IsAuthenticated, IsAssistantWithClinic]
+
+    @transaction.atomic
+    def put(self, request):
+        serializer = ReplaceAvailableHoursSpecialDateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        validated_data = serializer.validated_data
+
+        assistant = request.user.assistant
+        clinic = assistant.clinic
+        special_date = validated_data['special_date']
+        new_available_hours = validated_data['available_hours']
+
+        schedule, _ = ClinicSchedule.objects.get_or_create(
+            clinic=clinic,
+            special_date=special_date          
+        )
+
+        AvailableHour.objects.filter(schedule=schedule).delete()
+        AvailableHour.objects.bulk_create([
+            AvailableHour(
+                schedule=schedule,
+                start_hour=hour['start_hour'],
+                end_hour=hour['end_hour']
+            )
+            for hour in new_available_hours
+        ])
+
+        # Cancel invalid appointments
+        appointments_to_cancel = Appointment.objects.filter(
+            clinic=clinic,
+            visit_date=special_date,
+            status=Appointment.Status.WAITING
+        )
+
+        # Find appointments not fitting in new available_hours
+        valid_times = [(h['start_hour'], h['end_hour']) for h in new_available_hours]
+
+        to_cancel = []
+        for appt in appointments_to_cancel:
+            if not any(start <= appt.visit_time < end for start, end in valid_times):
+                to_cancel.append(appt)
+
+        cancel_appointments_with_notification(to_cancel, request.user)
+
+        schedule.updated_at = now()
+        schedule.is_available = True
         schedule.save()
 
         response_serializer = ListWeekDaysSchedulesSerializer(schedule)

@@ -3,6 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from schedules.models import AvailableHour
+from django.utils.timezone import now
+
 
 
 class AvailableHourSerializer(serializers.ModelSerializer):
@@ -40,3 +42,20 @@ class ReplaceAvailableHoursSerializer(serializers.ListSerializer):
                 raise serializers.ValidationError(_("Available hours must not overlap."))
 
         return data
+
+
+class ReplaceAvailableHoursSpecialDateSerializer(serializers.Serializer):
+    special_date = serializers.DateField()
+    available_hours = AvailableHourItemSerializer(many=True)
+
+    def validate_special_date(self, value):
+        if value < now().date():
+            raise serializers.ValidationError(_("Special date must be in the future."))
+        return value
+
+    def validate_available_hours(self, value):
+        sorted_hours = sorted(value, key=lambda x: x['start_hour'])
+        for i in range(1, len(sorted_hours)):
+            if sorted_hours[i-1]['end_hour'] > sorted_hours[i]['start_hour']:
+                raise serializers.ValidationError(_("Available hours must not overlap."))
+        return value
