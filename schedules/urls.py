@@ -8,5 +8,6 @@ urlpatterns = [
     path("weekdays/<int:schedule_id>/available-hours/", ReplaceAvailableHoursView.as_view(), name="replace-available-hours-to-weekday"),
     path("weekdays/<int:schedule_id>/unavailable/", MarkWeekdayUnavailableView.as_view(), name="mark-weekday-unavailable"),
     
+    path("delete-working-hour/", DeleteWorkingHourView.as_view(), name="delete-working-hour"),
 
 ]

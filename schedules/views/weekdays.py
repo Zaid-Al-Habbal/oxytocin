@@ -34,6 +34,7 @@ from appointments.services import cancel_appointments_with_notification
                     "id": 1,
                     "day_name_display": "Sunday",
                     "is_available": True,
+                    "special_date": None, 
                     "created_at": "2025-06-10T15:18:02.494716+03:00",
                     "updated_at": "2025-06-10T15:18:02.494832+03:00",
                     "available_hours": [
@@ -48,6 +49,7 @@ from appointments.services import cancel_appointments_with_notification
                     "id": 2,
                     "day_name_display": "Monday",
                     "is_available": False,
+                    "special_date": None,
                     "created_at": "2025-06-10T15:18:02.495096+03:00",
                     "updated_at": "2025-06-10T15:18:02.495127+03:00",
                     "available_hours": []
@@ -56,6 +58,7 @@ from appointments.services import cancel_appointments_with_notification
                     "id": 3,
                     "day_name_display": "Tuesday",
                     "is_available": False,
+                    "special_date": None,
                     "created_at": "2025-06-10T15:18:02.495229+03:00",
                     "updated_at": "2025-06-10T15:18:02.495264+03:00",
                     "available_hours": []
@@ -64,6 +67,7 @@ from appointments.services import cancel_appointments_with_notification
                     "id": 4,
                     "day_name_display": "Wednesday",
                     "is_available": False,
+                    "special_date": None,
                     "created_at": "2025-06-10T15:18:02.495355+03:00",
                     "updated_at": "2025-06-10T15:18:02.495384+03:00",
                     "available_hours": []
@@ -72,6 +76,7 @@ from appointments.services import cancel_appointments_with_notification
                     "id": 5,
                     "day_name_display": "Thursday",
                     "is_available": False,
+                    "special_date": None,
                     "created_at": "2025-06-10T15:18:02.495450+03:00",
                     "updated_at": "2025-06-10T15:18:02.495468+03:00",
                     "available_hours": []
@@ -80,6 +85,7 @@ from appointments.services import cancel_appointments_with_notification
                     "id": 6,
                     "day_name_display": "Friday",
                     "is_available": False,
+                    "special_date": None,
                     "created_at": "2025-06-10T15:18:02.495529+03:00",
                     "updated_at": "2025-06-10T15:18:02.495546+03:00",
                     "available_hours": []
@@ -88,6 +94,7 @@ from appointments.services import cancel_appointments_with_notification
                     "id": 7,
                     "day_name_display": "Saturday",
                     "is_available": False,
+                    "special_date": None,
                     "created_at": "2025-06-10T15:18:02.495596+03:00",
                     "updated_at": "2025-06-10T15:18:02.495615+03:00",
                     "available_hours": []
@@ -157,6 +164,7 @@ class ShowWeekDaySchedulesView(RetrieveAPIView):
                     "id": 3,
                     "day_name_display": "Tuesday",
                     "is_available": True,
+                    "special_date": None,
                     "created_at": "2025-06-10T15:18:02.495229+03:00",
                     "updated_at": "2025-06-17T12:37:26.692140+03:00",
                     "available_hours": [

@@ -20,7 +20,8 @@ class ClinicSchedule(models.Model):
     
     day_name = models.CharField(
         max_length=9,
-        choices=Day.choices
+        choices=Day.choices,
+        default="special"
     )
     special_date = models.DateField(null=True, blank=True, help_text="Overrides weekly schedule if set")
     

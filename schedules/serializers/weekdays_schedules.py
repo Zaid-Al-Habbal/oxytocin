@@ -15,6 +15,7 @@ class ListWeekDaysSchedulesSerializer(serializers.ModelSerializer):
             "id",
             "day_name_display", 
             "is_available",
+            "special_date",
             "created_at",
             "updated_at",
             "available_hours"
