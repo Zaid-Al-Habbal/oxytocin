@@ -12,7 +12,7 @@ from rest_framework import status
 from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view, inline_serializer
 
 from assistants.permissions import IsAssistantWithClinic
-from schedules.serializers import DeleteWorkingHourSerializer, ListWeekDaysSchedulesSerializer, ReplaceAvailableHoursSpecialDateSerializer
+from schedules.serializers import DeleteWorkingHourSerializer, ListWeekDaysSchedulesSerializer, ReplaceAvailableHoursSpecialDateSerializer, SpecialDateSerializer
 from schedules.models import ClinicSchedule, AvailableHour
 from appointments.models import Appointment
 from users.tasks import send_sms
@@ -150,7 +150,72 @@ class DeleteWorkingHourView(APIView):
         return Response(response_serializer.data, status=status.HTTP_200_OK)
 
 
-
+@extend_schema(
+    summary="Add new Available Hours to a special date (Replace the old ones)",
+    description="Replace All available hours for a special date with new ones.\n"
+                "Be aware that any pair of available hours should not overlapp available hours on the same day.\n"
+                "start_hour < end_hour.\n"
+                "Existing appointments outside the new available times will be cancelled.",
+    request=ReplaceAvailableHoursSpecialDateSerializer,
+    responses={200: ListWeekDaysSchedulesSerializer},
+    methods=['put'],
+    examples=[
+        OpenApiExample(
+            name="Add new Available Hours to a special date example",
+            value={
+                "special_date": "2025-08-08",
+                "available_hours": [    
+                    {
+                    "start_hour": "08:00:00",
+                    "end_hour": "14:00:00"
+                    },
+                    {
+                    "start_hour": "16:00:00",
+                    "end_hour": "18:00:00"
+                    },
+                    {
+                    "start_hour": "20:00:00",
+                    "end_hour": "22:00:00"
+                    },
+                ]
+                
+            },
+            request_only=True
+        ),
+        OpenApiExample(
+            name="Add new Available Hours to a special date example",
+            value=[
+                {
+                    "id": 14,
+                    "day_name_display": "special",
+                    "is_available": True,
+                    "special_date": "2025-08-08",
+                    "created_at": "2025-06-10T15:18:02.495229+03:00",
+                    "updated_at": "2025-06-17T12:37:26.692140+03:00",
+                    "available_hours": [
+                        {
+                            "id": 34,
+                            "start_hour": "08:00:00",
+                            "end_hour": "14:00:00",
+                        },
+                        {
+                            "id": 35,
+                            "start_hour": "16:00:00",
+                            "end_hour": "18:00:00",
+                        },
+                        {
+                            "id": 36,
+                            "start_hour": "20:00:00",
+                            "end_hour": "22:00:00",
+                        }
+                    ]
+                }
+            ],
+            response_only=True
+        )
+    ],
+    tags=["Clinic Schedules: Going Special"]
+)
 class ReplaceAvailableHoursSpecialDatesView(APIView):
     permission_classes = [IsAuthenticated, IsAssistantWithClinic]
 
@@ -203,3 +268,40 @@ class ReplaceAvailableHoursSpecialDatesView(APIView):
 
         response_serializer = ListWeekDaysSchedulesSerializer(schedule)
         return Response(response_serializer.data, status=status.HTTP_200_OK)
+
+
+class MarkSpecialDateUnavailableView(APIView):
+    permission_classes = [IsAuthenticated, IsAssistantWithClinic]
+
+    @transaction.atomic
+    def patch(self, request):
+        """
+        Allows an assistant to mark a specific special date  as unavailable.
+        All waiting appointments related to this weekday will be cancelled.
+        """
+        serializer = SpecialDateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        validated_data = serializer.validated_data
+        
+        special_date = validated_data['special_date']
+        user = request.user
+        clinic = user.assistant.clinic
+        schedule, _ = ClinicSchedule.objects.get_or_create(clinic=clinic, special_date=special_date)
+
+        future_appointments = Appointment.objects.filter(
+            clinic=schedule.clinic,
+            visit_date=special_date,
+            status=Appointment.Status.WAITING
+        )
+        cancel_appointments_with_notification(future_appointments, request.user)
+
+        schedule.is_available = False
+        schedule.updated_at = now()
+        schedule.save()
+
+        # Delete any available hours for this schedule
+        AvailableHour.objects.filter(schedule=schedule).delete()
+
+        schedule.refresh_from_db()
+        serializer = ListWeekDaysSchedulesSerializer(schedule)
+        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -4,6 +4,8 @@ from rest_framework import serializers
 
 from schedules.models import ClinicSchedule
 from .available_hours import AvailableHourSerializer
+from django.utils.timezone import now
+
 
 class ListWeekDaysSchedulesSerializer(serializers.ModelSerializer):
     available_hours = AvailableHourSerializer(many=True)
@@ -20,3 +22,11 @@ class ListWeekDaysSchedulesSerializer(serializers.ModelSerializer):
             "updated_at",
             "available_hours"
         ]
+        
+class SpecialDateSerializer(serializers.Serializer):
+    special_date = serializers.DateField()
+    
+    def validate_special_date(self, value):        
+        if value < now().date():
+            raise serializers.ValidationError(_("Special date must be in the future."))
+        return value
