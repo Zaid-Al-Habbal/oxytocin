@@ -1,5 +1,5 @@
 from rest_framework.test import APITestCase
-from rest_framework import status
+from django.contrib.gis.geos import Point
 from django.utils import timezone
 from datetime import timedelta
 from django.urls import reverse
@@ -104,9 +104,8 @@ class TestAssistantBase(APITestCase):
         DoctorSpecialty.objects.bulk_create(specialties)
 
         clinic_data = {
-            "location": "Test Street",
-            "longitude": 44.2,
-            "latitude": 32.1,
+            "address": "Test Street",
+            "location": Point(44.2, 32.1, srid=4326),
             "phone": "011 223 3333",
         }
         self.clinic = Clinic.objects.create(
@@ -114,7 +113,7 @@ class TestAssistantBase(APITestCase):
         )
 
         self.data = {
-            "location": "Test Street",
+            "address": "Test Street",
             "longitude": 39.1,
             "latitude": 55.5,
             "phone": "011 224 4531",

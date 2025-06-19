@@ -8,15 +8,19 @@ from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.parsers import MultiPartParser
 from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiExample
 
-from .models import Doctor, Specialty
-from .serializers import (
+from users.models import CustomUser as User
+from users.permissions import HasRole
+
+from doctors.models import Doctor, Specialty
+from doctors.serializers import (
     DoctorLoginSerializer,
     DoctorCreateSerializer,
     DoctorCertificateSerializer,
-    DoctorUpdateSerializer,
+    DoctorSerializer,
     SpecialtyListSerializer,
+    DoctorSummarySerializer,
 )
-from .permissions import IsDoctorWithClinic
+from doctors.permissions import IsDoctorWithClinic
 
 
 class DoctorLoginView(generics.GenericAPIView):
@@ -79,7 +83,7 @@ class DoctorCertificateView(generics.CreateAPIView):
     ),
 )
 class DoctorRetrieveUpdateView(generics.RetrieveUpdateAPIView):
-    serializer_class = DoctorUpdateSerializer
+    serializer_class = DoctorSerializer
     permission_classes = [IsAuthenticated, IsDoctorWithClinic]
     http_method_names = ["get", "put"]
 
@@ -102,3 +106,10 @@ class DoctorRetrieveUpdateView(generics.RetrieveUpdateAPIView):
 class SpecialtyListView(generics.ListAPIView):
     queryset = Specialty.objects.main_specialties_with_their_subspecialties()
     serializer_class = SpecialtyListSerializer
+
+
+class DoctorNewestListView(generics.ListAPIView):
+    queryset = Doctor.objects.not_deleted().approved().order_by("-user__created_at")[:7]
+    permission_classes = [IsAuthenticated, HasRole]
+    required_roles = [User.Role.PATIENT]
+    serializer_class = DoctorSummarySerializer

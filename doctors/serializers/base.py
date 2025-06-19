@@ -1,16 +1,47 @@
 from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers
+from drf_spectacular.utils import extend_schema_field
 
-from users.serializers import UserUpdateSerializer
+from doctors.models import Doctor, Specialty, DoctorSpecialty
+from users.serializers import (
+    UserSerializer,
+    UserSummarySerializer,
+    UserDetailSerializer,
+)
 
-from doctors.models import Doctor, DoctorSpecialty
-
-from .doctor_specialty_serializer import DoctorSpecialtySerializer
+from .specialty import SpecialtySerializer
 
 
-class DoctorUpdateSerializer(serializers.ModelSerializer):
-    user = UserUpdateSerializer()
+class DoctorSpecialtySerializer(serializers.ModelSerializer):
+    specialty_id = serializers.PrimaryKeyRelatedField(
+        queryset=Specialty.objects.with_main_specialties().all(),
+        source="specialty",
+        write_only=True,
+    )
+    specialty = SpecialtySerializer(read_only=True)
+
+    class Meta:
+        model = DoctorSpecialty
+        fields = ["specialty_id", "specialty", "university", "created_at", "updated_at"]
+        read_only_fields = ["created_at", "updated_at"]
+
+
+class DoctorSpecialtyDetailSerializer(serializers.ModelSerializer):
+    specialty_id = serializers.PrimaryKeyRelatedField(
+        queryset=Specialty.objects.with_main_specialties().all(),
+        source="specialty",
+        write_only=True,
+    )
+    specialty = SpecialtySerializer(read_only=True)
+
+    class Meta:
+        model = DoctorSpecialty
+        fields = ["specialty_id", "specialty", "university"]
+
+
+class DoctorSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     main_specialty = DoctorSpecialtySerializer(read_only=True)
     subspecialties = DoctorSpecialtySerializer(many=True)
 
@@ -33,7 +64,7 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
 
     def validate_subspecialties(self, value):
         doctor = self.instance
-        main_specialty = doctor.main_specialty[0].specialty
+        main_specialty = doctor.main_specialties[0].specialty
         valid_subspecialties_for_main = set(main_specialty.subspecialties.all())
         if len(value) > len(valid_subspecialties_for_main):
             raise serializers.ValidationError(
@@ -58,27 +89,15 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
         return value
 
     def to_representation(self, instance):
-        main_specialty_data = DoctorSpecialtySerializer(instance.main_specialty[0]).data
-        subspecialties_data = DoctorSpecialtySerializer(
-            instance.subspecialties,
-            many=True,
-        ).data
-        return {
-            "user": UserUpdateSerializer(instance.user).data,
-            "about": instance.about,
-            "education": instance.education,
-            "start_work_date": instance.start_work_date,
-            "status": instance.status,
-            "main_specialty": main_specialty_data,
-            "subspecialties": subspecialties_data,
-        }
+        instance.main_specialty = instance.main_specialties[0]
+        return super().to_representation(instance)
 
     def update(self, instance, validated_data):
         user_data = validated_data.pop("user")
         subspecialties_data = validated_data.pop("subspecialties")
 
         user = instance.user
-        user_serializer = UserUpdateSerializer(
+        user_serializer = UserSerializer(
             instance=user,
             data=user_data,
             partial=True,
@@ -124,3 +143,42 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
 
         instance = Doctor.objects.with_categorized_specialties().get(pk=instance.pk)
         return instance
+
+
+class DoctorSummarySerializer(serializers.ModelSerializer):
+    user = UserSummarySerializer()
+    main_specialty = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Doctor
+        fields = [
+            "user",
+            "about",
+            "main_specialty",
+        ]
+
+    @extend_schema_field(SpecialtySerializer)
+    def get_main_specialty(self, obj):
+        main_specialty = obj.specialties.main_specialties_only()[0]
+        serializer = SpecialtySerializer(main_specialty)
+        return serializer.data
+
+
+class DoctorDetailSerializer(serializers.ModelSerializer):
+    user = UserDetailSerializer()
+    main_specialty = DoctorSpecialtyDetailSerializer()
+    subspecialties = DoctorSpecialtyDetailSerializer(many=True)
+
+    class Meta:
+        model = Doctor
+        fields = [
+            "user",
+            "about",
+            "education",
+            "main_specialty",
+            "subspecialties",
+        ]
+
+    def to_representation(self, instance):
+        instance.main_specialty = instance.main_specialties[0]
+        return super().to_representation(instance)

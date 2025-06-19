@@ -1,4 +1,3 @@
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.throttling import ScopedRateThrottle
@@ -6,10 +5,15 @@ from rest_framework import generics, permissions
 
 from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
 
-from .serializers import LoginPatientSerializer, PatientProfileSerializer, CompletePatientRegistrationSerializer
+from .serializers import (
+    LoginPatientSerializer,
+    PatientProfileSerializer,
+    CompletePatientRegistrationSerializer,
+)
 from .models import Patient
 from users.permissions import HasRole
 from users.models import CustomUser as User
+
 
 @extend_schema(
     summary="Patient Login",
@@ -18,7 +22,7 @@ from users.models import CustomUser as User
 )
 class LoginPatientView(generics.GenericAPIView):
     throttle_classes = [ScopedRateThrottle]
-    throttle_scope = 'login'
+    throttle_scope = "login"
     serializer_class = LoginPatientSerializer
 
     def post(self, request):
@@ -35,12 +39,8 @@ class LoginPatientView(generics.GenericAPIView):
     examples=[
         OpenApiExample(
             name="Complete Patient registeration example",
-            value={   
-                "user": {
-                    "gender": "male",
-                    "birth_date": "2004-9-30"
-                },
-
+            value={
+                "user": {"gender": "male", "birth_date": "2004-9-30"},
                 "location": "Maysaat",
                 "longitude": 123.42423,
                 "latitude": 234.32423,
@@ -52,20 +52,21 @@ class LoginPatientView(generics.GenericAPIView):
                 "allergies": "",
                 "is_drinker": False,
                 "is_married": False,
-                "is_smoker": True
+                "is_smoker": True,
             },
             request_only=True,
         )
     ],
-    tags=["Patient"]
+    tags=["Patient"],
 )
 class CompletePatientRegistrationView(generics.CreateAPIView):
     serializer_class = CompletePatientRegistrationSerializer
     permission_classes = [permissions.IsAuthenticated]
-    
+
     def get_queryset(self):
         return Patient.objects.none()
-    
+
+
 @extend_schema_view(
     get=extend_schema(
         summary="Retrieve Patient Profile",
@@ -76,7 +77,7 @@ class CompletePatientRegistrationView(generics.CreateAPIView):
         summary="Update Patient Profile",
         description="Updates the profile data of the currently authenticated Patient.",
         tags=["Patient"],
-    )
+    ),
 )
 class PatientProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = PatientProfileSerializer

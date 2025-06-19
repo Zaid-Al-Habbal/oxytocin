@@ -2,7 +2,6 @@ from rest_framework.test import APITestCase
 from django.urls import reverse
 from users.models import CustomUser as User
 from rest_framework import status
-from django.test import override_settings
 
 
 class LoginAssistantTestCase(APITestCase):

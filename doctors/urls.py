@@ -6,10 +6,11 @@ from .views import (
     DoctorCertificateView,
     DoctorRetrieveUpdateView,
     SpecialtyListView,
+    DoctorNewestListView,
 )
 
 urlpatterns = [
-    path("", include("clinics.urls")),
+    path("clinics/", include("clinics.urls")),
     path("login/", DoctorLoginView.as_view(), name="doctor-login"),
     path("", DoctorCreateView.as_view(), name="doctor-create"),
     path("certificates/", DoctorCertificateView.as_view(), name="doctor-certificate"),
@@ -19,4 +20,5 @@ urlpatterns = [
         name="doctor-retrieve-update",
     ),
     path("specialties/", SpecialtyListView.as_view(), name="specialty-list"),
+    path("newest/", DoctorNewestListView.as_view(), name="doctor-newest-list"),
 ]

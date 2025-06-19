@@ -3,6 +3,8 @@ from django.conf import settings
 
 
 class DoctorQuerySet(models.QuerySet):
+    def approved(self):
+        return self.filter(status=Doctor.Status.APPROVED)
 
     def not_deleted(self):
         return self.filter(user__deleted_at__isnull=True)
@@ -22,7 +24,7 @@ class DoctorQuerySet(models.QuerySet):
                 queryset=DoctorSpecialty.objects.select_related("specialty")
                 .filter(specialty__main_specialties__isnull=True)
                 .distinct(),
-                to_attr="main_specialty",
+                to_attr="main_specialties",
             ),
             models.Prefetch(
                 "doctor_specialties",

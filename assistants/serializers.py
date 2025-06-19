@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from users.serializers import UserUpdateSerializer, UserNestedSerializer
+from users.serializers import UserSerializer, UserNestedSerializer
 from users.models import CustomUser as User
 
 from .models import Assistant
@@ -81,7 +81,7 @@ class CompleteAssistantRegistrationSerializer(serializers.ModelSerializer):
     
     
 class AssistantProfileSerializer(serializers.ModelSerializer):
-    user = UserUpdateSerializer()
+    user = UserSerializer()
     class Meta:
         model = Assistant
         fields = [
@@ -100,7 +100,7 @@ class AssistantProfileSerializer(serializers.ModelSerializer):
 
         user = instance.user
         
-        user_serializer = UserUpdateSerializer(user, data=user_data, partial=True)
+        user_serializer = UserSerializer(user, data=user_data, partial=True)
         user_serializer.is_valid(raise_exception=True)
         user_serializer.save()
 

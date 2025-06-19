@@ -13,19 +13,6 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    # Comment out any environment variable to use its default value
-    environment:
-      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
-      DEBUG: ${DEBUG}
-      DJANGO_LOGLEVEL: ${DJANGO_LOGLEVEL}
-      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
-      DATABASE_ENGINE: ${DATABASE_ENGINE}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      DATABASE_HOST: ${DATABASE_HOST}
-      DATABASE_PORT: ${DATABASE_PORT}
-      SAFE_PHONE_NUMBERS: ${SAFE_PHONE_NUMBERS}
     env_file:
       - .env
 
@@ -74,7 +61,7 @@ services:
         condition: service_completed_successfully
 
   db:
-    image: postgres:17.5
+    image: postgis/postgis:17-3.5
     ports:
       - 5432:5432
     user: postgres

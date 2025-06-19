@@ -3,6 +3,7 @@ from rest_framework import status
 from django.utils import timezone
 from datetime import timedelta
 from django.urls import reverse
+from django.contrib.gis.geos import Point
 
 from common.utils import generate_test_pdf
 
@@ -102,20 +103,18 @@ class AddAssistantToClinicTest(APITestCase):
         ]
         DoctorSpecialty.objects.bulk_create(specialties)
         clinic_data = {
-            "location": "Test Street",
-            "longitude": 44.2,
-            "latitude": 32.1,
-            "phone": "011 223 3333",
+            "address": "Test Street 3",
+            "location": Point(24.2, 32.1, srid=4326),
+            "phone": "011 223 4444",
         }
         self.clinic = Clinic.objects.create(
             doctor=self.doctor_with_clinic, **clinic_data
         )
 
         self.data = {
-            "location": "Test Street",
-            "longitude": 39.1,
-            "latitude": 55.5,
-            "phone": "011 224 4531",
+            "address": "Test Street 4",
+            "location": Point(25.2, 52.1, srid=4326),
+            "phone": "011 223 1231",
         }
         self.user2 = User.objects.create_user(
             first_name="user",

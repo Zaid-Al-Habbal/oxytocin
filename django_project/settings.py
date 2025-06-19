@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.gis",
     # 3rd party
     "corsheaders",
     "rest_framework",
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     "drf_spectacular_sidecar",  # required for Django collectstatic discovery
     "nested_admin",
     "file_validator",
+    "mapwidgets",
     # project apps
     "users",
     "patients",
@@ -95,9 +97,7 @@ WSGI_APPLICATION = "django_project.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.{}".format(
-            config("DATABASE_ENGINE", "postgresql")
-        ),
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
         "NAME": config("DATABASE_NAME", "oxytocinDB"),
         "USER": config("DATABASE_USERNAME", "postgres"),
         "PASSWORD": config("DATABASE_PASSWORD", "12345678"),
@@ -215,6 +215,8 @@ REST_FRAMEWORK = {
         "otp_interval": otp_interval_rate,
     },
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DATETIME_FORMAT": "%Y-%m-%d %H:%M:%S",
+    "DATE_FORMAT": "%Y-%m-%d",
 }
 
 # JWT
@@ -262,7 +264,17 @@ CACHES = {
             "PASSWORD": REDIS_PASSWORD,
         },
         "KEY_PREFIX": "otp",
-        "TIMEOUT": 300,
+        "TIMEOUT": 300,  # 5 minutes
+    },
+    "google_maps": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/3",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": REDIS_PASSWORD,
+        },
+        "KEY_PREFIX": "google:maps",
+        "TIMEOUT": 86400,  # 24 hours
     },
 }
 
@@ -281,6 +293,27 @@ CELERY_TASK_SERIALIZER = "json"
 TEXTBEE_API_KEY = config("TEXTBEE_API_KEY")
 TEXTBEE_DEVICE_ID = config("TEXTBEE_DEVICE_ID")
 
+# Google Maps
+GOOGLE_MAPS_API_KEY = config("GOOGLE_MAPS_API_KEY")
+
+MAP_WIDGETS = {
+    "GoogleMap": {
+        "apiKey": GOOGLE_MAPS_API_KEY,
+        "PointField": {
+            "interactive": {
+                "mapOptions": {
+                    "zoom": 15,  # set initial zoom
+                    "scrollwheel": True,
+                    "streetViewControl": False,
+                },
+                "GooglePlaceAutocompleteOptions": {
+                    "componentRestrictions": {"country": "sy"}
+                },
+                "mapCenterLocationName": "Damascus",
+            }
+        },
+    },
+}
 
 # Safe phone numbers
 SAFE_PHONE_NUMBERS = config(

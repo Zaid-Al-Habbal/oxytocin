@@ -6,9 +6,9 @@ from rest_framework.exceptions import PermissionDenied
 from users.models import CustomUser as User
 from users.serializers import UserNestedSerializer
 
-from doctors.models import Doctor, Specialty, DoctorSpecialty
+from doctors.models import Doctor, DoctorSpecialty
 
-from .doctor_specialty_serializer import DoctorSpecialtySerializer
+from .base import DoctorSpecialtySerializer
 
 
 class DoctorCreateSerializer(serializers.ModelSerializer):
@@ -79,20 +79,8 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
         return data
 
     def to_representation(self, instance):
-        main_specialty_data = DoctorSpecialtySerializer(instance.main_specialty[0]).data
-        subspecialties_data = DoctorSpecialtySerializer(
-            instance.subspecialties,
-            many=True,
-        ).data
-        return {
-            "user": UserNestedSerializer(instance.user).data,
-            "about": instance.about,
-            "education": instance.education,
-            "start_work_date": instance.start_work_date,
-            "status": instance.status,
-            "main_specialty": main_specialty_data,
-            "subspecialties": subspecialties_data,
-        }
+        instance.main_specialty = instance.main_specialties[0]
+        return super().to_representation(instance)
 
     def create(self, validated_data):
         user_data = validated_data.pop("user")
