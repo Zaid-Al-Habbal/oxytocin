@@ -1,5 +1,10 @@
 from django.db import models
 from django.conf import settings
+from django.db.models import Value, TextField
+from django.db.models.functions import Cast, Concat, Greatest
+from django.contrib.postgres.search import TrigramSimilarity
+
+from common.utils import years_since
 
 
 class DoctorQuerySet(models.QuerySet):
@@ -8,6 +13,12 @@ class DoctorQuerySet(models.QuerySet):
 
     def not_deleted(self):
         return self.filter(user__deleted_at__isnull=True)
+
+    def with_user(self):
+        return self.select_related("user")
+
+    def with_clinic(self):
+        return self.select_related("clinic")
 
     def with_specialties(self):
         return self.prefetch_related(
@@ -33,6 +44,11 @@ class DoctorQuerySet(models.QuerySet):
                 .distinct(),
                 to_attr="subspecialties",
             ),
+        )
+
+    def with_full_profile(self):
+        return (
+            self.with_clinic().not_deleted().approved().with_categorized_specialties()
         )
 
 
@@ -65,6 +81,10 @@ class Doctor(models.Model):
     )
 
     objects = DoctorQuerySet.as_manager()
+
+    @property
+    def experience(self):
+        return years_since(self.start_work_date)
 
     class Meta:
         indexes = [models.Index(fields=["start_work_date"])]

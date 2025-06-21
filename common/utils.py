@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from PIL import Image
@@ -84,3 +86,16 @@ def generate_test_pdf(
     c.save()
     buffer.seek(0)
     return SimpleUploadedFile(name, buffer.read(), content_type="application/pdf")
+
+
+def years_since(date_from):
+    if date_from is None:
+        return None
+    today = date.today()
+    if date_from > today:
+        return 0
+    return (
+        today.year
+        - date_from.year
+        - ((today.month, today.day) < (date_from.month, date_from.day))
+    )

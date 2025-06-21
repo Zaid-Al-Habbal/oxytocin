@@ -19,6 +19,7 @@ from doctors.serializers import (
     DoctorSerializer,
     SpecialtyListSerializer,
     DoctorSummarySerializer,
+    DoctorDetailSerializer,
 )
 from doctors.permissions import IsDoctorWithClinic
 
@@ -110,6 +111,9 @@ class SpecialtyListView(generics.ListAPIView):
 
 class DoctorNewestListView(generics.ListAPIView):
     queryset = Doctor.objects.not_deleted().approved().order_by("-user__created_at")[:7]
-    permission_classes = [IsAuthenticated, HasRole]
-    required_roles = [User.Role.PATIENT]
     serializer_class = DoctorSummarySerializer
+
+
+class DoctorDetailRetrieveView(generics.RetrieveAPIView):
+    queryset = Doctor.objects.with_full_profile()
+    serializer_class = DoctorDetailSerializer

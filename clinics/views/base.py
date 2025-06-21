@@ -5,10 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema, extend_schema_view
 
 from clinics.models import Clinic
-from clinics.serializers import ClinicSerializer, ClinicDetailSerializer
+from clinics.serializers import ClinicSerializer
 from doctors.permissions import IsDoctorWithClinic
-from users.permissions import HasRole
-from users.models import CustomUser as User
 
 
 @extend_schema(
@@ -45,10 +43,3 @@ class ClinicRetrieveUpdateView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user.doctor.clinic
-
-
-class ClinicDetailRetrieveView(generics.RetrieveAPIView):
-    queryset = Clinic.objects.with_active_doctor_details()
-    permission_classes = [IsAuthenticated, HasRole]
-    required_roles = [User.Role.PATIENT]
-    serializer_class = ClinicDetailSerializer

@@ -5,7 +5,6 @@ from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 
 from users.models import CustomUser as User
-from doctors.serializers import DoctorSummarySerializer, DoctorDetailSerializer
 
 from clinics.models import Clinic
 
@@ -66,19 +65,3 @@ class ClinicSerializer(ClinicMixin, serializers.ModelSerializer):
             setattr(instance, attr, value)
         instance.save()
         return instance
-
-
-class ClinicSummarySerializer(serializers.ModelSerializer):
-    doctor = DoctorSummarySerializer()
-
-    class Meta:
-        model = Clinic
-        fields = ["doctor", "address"]
-
-
-class ClinicDetailSerializer(serializers.ModelSerializer):
-    doctor = DoctorDetailSerializer()
-
-    class Meta:
-        model = Clinic
-        fields = ["doctor", "address", "longitude", "latitude", "phone"]

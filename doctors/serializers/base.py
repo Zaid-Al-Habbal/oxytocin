@@ -7,7 +7,6 @@ from doctors.models import Doctor, Specialty, DoctorSpecialty
 from users.serializers import (
     UserSerializer,
     UserSummarySerializer,
-    UserDetailSerializer,
 )
 
 from .specialty import SpecialtySerializer
@@ -25,19 +24,6 @@ class DoctorSpecialtySerializer(serializers.ModelSerializer):
         model = DoctorSpecialty
         fields = ["specialty_id", "specialty", "university", "created_at", "updated_at"]
         read_only_fields = ["created_at", "updated_at"]
-
-
-class DoctorSpecialtyDetailSerializer(serializers.ModelSerializer):
-    specialty_id = serializers.PrimaryKeyRelatedField(
-        queryset=Specialty.objects.with_main_specialties().all(),
-        source="specialty",
-        write_only=True,
-    )
-    specialty = SpecialtySerializer(read_only=True)
-
-    class Meta:
-        model = DoctorSpecialty
-        fields = ["specialty_id", "specialty", "university"]
 
 
 class DoctorSerializer(serializers.ModelSerializer):
@@ -162,23 +148,3 @@ class DoctorSummarySerializer(serializers.ModelSerializer):
         main_specialty = obj.specialties.main_specialties_only()[0]
         serializer = SpecialtySerializer(main_specialty)
         return serializer.data
-
-
-class DoctorDetailSerializer(serializers.ModelSerializer):
-    user = UserDetailSerializer()
-    main_specialty = DoctorSpecialtyDetailSerializer()
-    subspecialties = DoctorSpecialtyDetailSerializer(many=True)
-
-    class Meta:
-        model = Doctor
-        fields = [
-            "user",
-            "about",
-            "education",
-            "main_specialty",
-            "subspecialties",
-        ]
-
-    def to_representation(self, instance):
-        instance.main_specialty = instance.main_specialties[0]
-        return super().to_representation(instance)

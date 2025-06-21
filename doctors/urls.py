@@ -7,6 +7,9 @@ from .views import (
     DoctorRetrieveUpdateView,
     SpecialtyListView,
     DoctorNewestListView,
+    DoctorSearchListView,
+    DoctorMultiSearchListView,
+    DoctorDetailRetrieveView,
 )
 
 urlpatterns = [
@@ -21,4 +24,7 @@ urlpatterns = [
     ),
     path("specialties/", SpecialtyListView.as_view(), name="specialty-list"),
     path("newest/", DoctorNewestListView.as_view(), name="doctor-newest-list"),
+    path("search/", DoctorSearchListView.as_view(), name="doctor-search"),
+    path("multi-search/", DoctorMultiSearchListView.as_view(), name="doctor-multi-search"),
+    path("<int:pk>/", DoctorDetailRetrieveView.as_view(), name="doctor-detail-retrieve"),
 ]

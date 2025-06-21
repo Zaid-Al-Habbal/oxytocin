@@ -6,11 +6,13 @@ from django.contrib.auth.models import (
 from django.db import models
 from django.utils import timezone
 
+from common.utils import years_since
+
 
 class CustomUserQuerySet(models.QuerySet):
     def verified_phone(self):
         return self.filter(is_verified_phone=True)
-    
+
     def not_verified_phone(self):
         return self.filter(is_verified_phone=False)
 
@@ -79,6 +81,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
+    @property
+    def age(self):
+        return years_since(self.birth_date)
+
     USERNAME_FIELD = "phone"
     REQUIRED_FIELDS = []
 
@@ -92,7 +98,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.phone})"
-    
+
     @property
     def full_name(self):
         "Returns the person's full name."

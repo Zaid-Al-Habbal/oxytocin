@@ -9,8 +9,6 @@ from .views import (
     ListAssistantView,
     RetrieveAssistantView,
     RemoveAssistantFromClinic,
-    ClinicSearchListView,
-    ClinicDetailRetrieveView,
 )
 
 urlpatterns = [
@@ -22,6 +20,4 @@ urlpatterns = [
     path("my-clinic/assistants/", ListAssistantView.as_view(), name="list-clinic-assistants"),
     path("my-clinic/assistants/<int:pk>/", RetrieveAssistantView.as_view(), name="view-clinic-assistant"),
     path("my-clinic/assistants/<int:pk>/remove/", RemoveAssistantFromClinic.as_view(), name="remove-clinic-assistant"),
-    path("search/", ClinicSearchListView.as_view(), name="clinic-search-list"),
-    path("<int:pk>/", ClinicDetailRetrieveView.as_view(), name="clinic-detail-retrieve"),
 ]

@@ -9,43 +9,46 @@ from google.maps.routing_v2.types import (
 
 from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import ValidationError
 from services.googlemaps import GoogleMapsService, X_GOOG_FIELDMASK
 
 from clinics.models import Clinic
-from patients.serializers import LocationQuerySerializer
-from users.models import CustomUser as User
-from users.permissions import HasRole
-
 from clinics.serializers import ClinicSummarySerializer
+from patients.serializers import LocationQuerySerializer
+
 
 googlemaps_service = GoogleMapsService()
 
 
 class ClinicNearestListView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated, HasRole]
     serializer_class = ClinicSummarySerializer
-    required_roles = [User.Role.PATIENT]
 
     def get(self, request, *args, **kwargs):
         serializer = LocationQuerySerializer(data=request.query_params)
-        if serializer.is_valid():
+        try:
+            serializer.is_valid(raise_exception=True)
             origins = [serializer.validated_data]
-        else:
-            patient = request.user.patient
-            origins = [{"longitude": patient.longitude, "latitude": patient.latitude}]
+        except ValidationError as e:
+            if hasattr(request.user, "patient"):
+                patient = request.user.patient
+                origins = [
+                    {"longitude": patient.longitude, "latitude": patient.latitude}
+                ]
+            else:
+                raise e
         location = Point(origins[0]["longitude"], origins[0]["latitude"], srid=4326)
         clinics = (
-            Clinic.objects.not_deleted_doctor()
+            Clinic.objects.with_doctor_user()
+            .not_deleted_doctor()
             .with_approved_doctor()
             .annotate(distance=Distance("location", location))
-            .order_by("distance")[:14]
+            .order_by("distance")[:10]
         )
         destinations = [
             {"longitude": clinic.longitude, "latitude": clinic.latitude}
             for clinic in clinics
         ]
-        if not origins or not destinations:
+        if not destinations:
             return Response([])
         route_matrix_elements = googlemaps_service.route_matrix(
             origins,

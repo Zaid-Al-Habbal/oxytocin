@@ -28,6 +28,9 @@ class ClinicQuerySet(models.QuerySet):
                 to_attr="subspecialties",
             ),
         )
+    
+    def with_doctor(self):
+        return self.select_related("doctor")
 
     def with_doctor_user(self):
         return self.select_related("doctor__user")
