@@ -13,7 +13,7 @@ from rest_framework.exceptions import ValidationError
 from services.googlemaps import GoogleMapsService, X_GOOG_FIELDMASK
 
 from clinics.models import Clinic
-from clinics.serializers import ClinicSummarySerializer
+from clinics.serializers import ClinicNearestSerializer
 from patients.serializers import LocationQuerySerializer
 
 
@@ -21,7 +21,7 @@ googlemaps_service = GoogleMapsService()
 
 
 class ClinicNearestListView(generics.GenericAPIView):
-    serializer_class = ClinicSummarySerializer
+    serializer_class = ClinicNearestSerializer
 
     def get(self, request, *args, **kwargs):
         serializer = LocationQuerySerializer(data=request.query_params)
@@ -71,9 +71,10 @@ class ClinicNearestListView(generics.GenericAPIView):
             == RouteMatrixElementCondition.ROUTE_EXISTS
         ]
         valid_route_matrix_elements.sort(key=lambda route: route.duration.seconds)
-        data = [
-            clinics[route_matrix_element.destination_index]
-            for route_matrix_element in valid_route_matrix_elements[:7]
-        ]
+        data = []
+        for route_matrix_element in valid_route_matrix_elements[:7]:
+            clinic = clinics[route_matrix_element.destination_index]
+            clinic.distance = route_matrix_element.distance_meters
+            data.append(clinic)
         serializer = self.get_serializer(data, many=True)
         return Response(serializer.data)

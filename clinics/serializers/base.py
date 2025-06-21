@@ -4,8 +4,9 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 
-from users.models import CustomUser as User
+from doctors.serializers import DoctorSummarySerializer
 
+from users.models import CustomUser as User
 from clinics.models import Clinic
 
 
@@ -65,3 +66,12 @@ class ClinicSerializer(ClinicMixin, serializers.ModelSerializer):
             setattr(instance, attr, value)
         instance.save()
         return instance
+
+
+class ClinicNearestSerializer(serializers.ModelSerializer):
+    doctor = DoctorSummarySerializer()
+    distance = serializers.IntegerField()
+
+    class Meta:
+        model = Clinic
+        fields = ["doctor", "address", "distance"]
