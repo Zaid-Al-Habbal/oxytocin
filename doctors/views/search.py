@@ -28,6 +28,7 @@ from doctors.serializers import (
     DoctorSummarySerializer,
     DoctorFilterQuerySerializer,
     DoctorMultiSearchResultSerializer,
+    SpecialtySerializer,
 )
 from patients.serializers import LocationQuerySerializer
 
@@ -246,6 +247,23 @@ class DoctorMultiSearchListView(generics.ListAPIView):
             "doctors": doctors,
             "specialties": specialties,
         }
-        
+
         serializer = self.get_serializer(data)
         return Response(serializer.data)
+
+
+class SubspecialtySearchListView(generics.ListAPIView):
+    serializer_class = SpecialtySerializer
+    filter_backends = [TrigramSearchFilter]
+    search_fields = ["name_en", "name_ar"]
+
+    def get_queryset(self):
+        pk = self.kwargs["pk"]
+        main_specialty = (
+            Specialty.objects.main_specialties_with_their_subspecialties()
+            .filter(pk=pk)
+            .first()
+        )
+        if main_specialty:
+            return main_specialty.subspecialties.all()
+        return Specialty.objects.none()
