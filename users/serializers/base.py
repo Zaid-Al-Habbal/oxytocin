@@ -74,6 +74,7 @@ class UserSummarySerializer(serializers.ModelSerializer):
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
+    age = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = User

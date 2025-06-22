@@ -9,10 +9,6 @@ from clinics.models import Clinic
 
 
 class ClinicMixin:
-    """
-    Mixin providing convenient access to the current request and user objects
-    from the serializer context.
-    """
 
     @property
     def request(self):

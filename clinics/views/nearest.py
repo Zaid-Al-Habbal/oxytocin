@@ -10,6 +10,7 @@ from google.maps.routing_v2.types import (
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes
 from services.googlemaps import GoogleMapsService, X_GOOG_FIELDMASK
 
 from clinics.models import Clinic
@@ -20,6 +21,26 @@ from patients.serializers import LocationQuerySerializer
 googlemaps_service = GoogleMapsService()
 
 
+@extend_schema(
+    summary="Nearest Clinic",
+    description="Returns up to 7 nearest clinics based on user location. "
+    "Authenticated patients use their saved location; guests must provide `latitude` and `longitude`.",
+    parameters=[
+        OpenApiParameter(
+            name="latitude",
+            type=OpenApiTypes.FLOAT,
+            location=OpenApiParameter.QUERY,
+            description="Required for guests, optional for authenticated users.",
+        ),
+        OpenApiParameter(
+            name="longitude",
+            type=OpenApiTypes.FLOAT,
+            location=OpenApiParameter.QUERY,
+            description="Required for guests, optional for authenticated users.",
+        ),
+    ],
+    tags=["Clinic"],
+)
 class ClinicNearestListView(generics.GenericAPIView):
     serializer_class = ClinicNearestSerializer
 

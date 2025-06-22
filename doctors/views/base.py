@@ -109,11 +109,21 @@ class SpecialtyListView(generics.ListAPIView):
     serializer_class = SpecialtyListSerializer
 
 
+@extend_schema(
+    summary="List Newest Doctors",
+    description="Retrieve a list of the 7 most recently registered and approved doctors.",
+    tags=["Doctor"],
+)
 class DoctorNewestListView(generics.ListAPIView):
     queryset = Doctor.objects.not_deleted().approved().order_by("-user__created_at")[:7]
     serializer_class = DoctorSummarySerializer
 
 
+@extend_schema(
+    summary="Retrieve Doctor Detailed Profile",
+    description="Fetch the full profile of a specific doctor by ID.",
+    tags=["Doctor"],
+)
 class DoctorDetailRetrieveView(generics.RetrieveAPIView):
     queryset = Doctor.objects.with_full_profile()
     serializer_class = DoctorDetailSerializer

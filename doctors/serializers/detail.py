@@ -22,6 +22,7 @@ class DoctorSpecialtyDetailSerializer(serializers.ModelSerializer):
 
 class DoctorDetailSerializer(serializers.ModelSerializer):
     user = UserDetailSerializer()
+    experience = serializers.IntegerField(read_only=True)
     main_specialty = DoctorSpecialtyDetailSerializer()
     subspecialties = DoctorSpecialtyDetailSerializer(many=True)
     clinic = ClinicSerializer()
