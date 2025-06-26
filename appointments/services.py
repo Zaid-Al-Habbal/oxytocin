@@ -41,15 +41,15 @@ def cancel_appointments_with_notification(appointments, cancelled_by_user):
 
 
 
-def get_split_start_times(available_hours, time_slot):
+def get_split_visit_times(available_hours, time_slot):
     """
-    Converts available hours into discrete start times based on the time slot.
+    Converts available hours into discrete visit times based on the time slot.
     """
-    start_times = []
+    visit_times = []
     for hour in available_hours:
         current = datetime.combine(datetime.today(), hour.start_hour)
         end = datetime.combine(datetime.today(), hour.end_hour)
         while current + timedelta(minutes=time_slot) <= end:
-            start_times.append(current.time())
+            visit_times.append(current.time())
             current += timedelta(minutes=time_slot)
-    return start_times
+    return visit_times
