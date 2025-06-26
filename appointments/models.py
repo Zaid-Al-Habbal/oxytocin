@@ -56,7 +56,7 @@ class Appointment(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=["clinic", "visit_date", "visit_time"],
-                condition=~Q(status=Appointment.Status.CANCELLED),
+                condition=~Q(status='cancelled'),
                 name="unique_clinic_visit_datetime_if_not_cancelled"
             )
         ]
