@@ -3,6 +3,8 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from .models import Appointment
 from users.tasks import send_sms
+from datetime import datetime, timedelta, time
+from typing import List, Dict
 
 def cancel_appointments_with_notification(appointments, cancelled_by_user):
     """
@@ -36,3 +38,26 @@ def cancel_appointments_with_notification(appointments, cancelled_by_user):
         cancelled_at=now(),
         cancelled_by=cancelled_by_user
     )
+
+
+
+def generate_start_times(available_hours: List[Dict[str, time]], time_slot_per_patient: int) -> List[time]:
+    """
+    Generate start times from available hour blocks and time slot duration.
+
+    :param available_hours: List of dicts with 'start_hour' and 'end_hour' as datetime.time
+    :param time_slot_per_patient: Slot duration in minutes
+    :return: List of datetime.time objects for start times
+    """
+    all_start_times = []
+
+    for hour_block in available_hours:
+        start = datetime.combine(datetime.today(), hour_block["start_hour"])
+        end = datetime.combine(datetime.today(), hour_block["end_hour"])
+        delta = timedelta(minutes=time_slot_per_patient)
+
+        while start + delta <= end:
+            all_start_times.append(start.time())
+            start += delta
+
+    return all_start_times

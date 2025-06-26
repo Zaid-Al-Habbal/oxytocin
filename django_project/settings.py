@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "drf_spectacular_sidecar",  # required for Django collectstatic discovery
     "nested_admin",
     "file_validator",
+    "django_filters",
     # project apps
     "users",
     "patients",
