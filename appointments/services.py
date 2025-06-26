@@ -41,23 +41,15 @@ def cancel_appointments_with_notification(appointments, cancelled_by_user):
 
 
 
-def generate_start_times(available_hours: List[Dict[str, time]], time_slot_per_patient: int) -> List[time]:
+def get_split_start_times(available_hours, time_slot):
     """
-    Generate start times from available hour blocks and time slot duration.
-
-    :param available_hours: List of dicts with 'start_hour' and 'end_hour' as datetime.time
-    :param time_slot_per_patient: Slot duration in minutes
-    :return: List of datetime.time objects for start times
+    Converts available hours into discrete start times based on the time slot.
     """
-    all_start_times = []
-
-    for hour_block in available_hours:
-        start = datetime.combine(datetime.today(), hour_block["start_hour"])
-        end = datetime.combine(datetime.today(), hour_block["end_hour"])
-        delta = timedelta(minutes=time_slot_per_patient)
-
-        while start + delta <= end:
-            all_start_times.append(start.time())
-            start += delta
-
-    return all_start_times
+    start_times = []
+    for hour in available_hours:
+        current = datetime.combine(datetime.today(), hour.start_hour)
+        end = datetime.combine(datetime.today(), hour.end_hour)
+        while current + timedelta(minutes=time_slot) <= end:
+            start_times.append(current.time())
+            current += timedelta(minutes=time_slot)
+    return start_times
