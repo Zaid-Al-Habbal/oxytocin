@@ -50,7 +50,7 @@ services:
   test:
     extends:
       service: app
-    command: python manage.py test schedules.tests.test_special_dates.ReplaceAvailabelHoursForSpecialDateTestCase --noinput
+    command: python manage.py test appointments --noinput
     environment:
       DJANGO_TESTING: True
     depends_on:
