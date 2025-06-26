@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from .test_appointments_base import AppointmentBaseTest
 
-class ListClinicVisitTimes(AppointmentBaseTest):
+class ListClinicVisitTimesTests(AppointmentBaseTest):
     def setUp(self):
         super().setUp()
         self.url = reverse('list-clinic-visit-times', kwargs={'clinic_id': self.clinic.pk},  )

@@ -119,7 +119,7 @@ class AppointmentBaseTest(APITestCase):
             AvailableHour(schedule=self.weekday_schedule, start_hour=time(14, 0), end_hour=time(18, 0)),
         ])
         
-        self.special_date = (timezone.now() + timedelta(days=3)).date()
+        self.special_date = timezone.now().date() + timedelta(days=(1+ 15 - (timezone.now().weekday() + 2) % 7 or 7))
         
         self.special_schedule = ClinicSchedule.objects.create(clinic=self.clinic, special_date=self.special_date, is_available=True)
         AvailableHour.objects.bulk_create([
