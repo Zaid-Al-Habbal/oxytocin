@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 from users.models import CustomUser as User
 from clinics.models import Clinic
@@ -35,9 +36,9 @@ class Appointment(models.Model):
     actual_start_time = models.TimeField(blank=True, null=True)
     actual_end_time = models.TimeField(blank=True, null=True)
     
-    status = models.CharField(max_length=20, choices=Status.choices)
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.WAITING)
     
-    notes = models.TextField()
+    notes = models.TextField(blank=True, null=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -54,8 +55,9 @@ class Appointment(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['clinic', 'visit_date', 'visit_time'],
-                name='unique_clinic_visit_datetime'
+                fields=["clinic", "visit_date", "visit_time"],
+                condition=~Q(status=Appointment.Status.CANCELLED),
+                name="unique_clinic_visit_datetime_if_not_cancelled"
             )
         ]
         indexes = [
