@@ -269,7 +269,31 @@ class ReplaceAvailableHoursSpecialDatesView(APIView):
         response_serializer = ListWeekDaysSchedulesSerializer(schedule)
         return Response(response_serializer.data, status=status.HTTP_200_OK)
 
-
+@extend_schema(
+    summary="Mark Special Date Unavailable",
+    description="Delete All available hours for that special date and mark it as unavailable.\n"
+                "Existing appointments on that day will be cancelled",
+    request=SpecialDateSerializer,
+    responses={200: ListWeekDaysSchedulesSerializer},
+    methods=['patch'],
+    examples=[
+        OpenApiExample(
+            name="Mark Special Date Unavailable example",
+            value=[
+                {
+                    "id": 3,
+                    "day_name_display": "special",
+                    "is_available": False,
+                    "created_at": "2025-06-10T15:18:02.495229+03:00",
+                    "updated_at": "2025-06-17T12:37:26.692140+03:00",
+                    "available_hours": []
+                }
+            ],
+            response_only=True
+        )
+    ],
+    tags=["Clinic Schedules: Going Special"]
+)
 class MarkSpecialDateUnavailableView(APIView):
     permission_classes = [IsAuthenticated, IsAssistantWithClinic]
 

@@ -260,7 +260,7 @@ class ReplaceAvailableHoursView(APIView):
     methods=['patch'],
     examples=[
         OpenApiExample(
-            name="Add new Available Hours to a weekday example",
+            name="Mark Weekday Unavailable example",
             value=[
                 {
                     "id": 3,
