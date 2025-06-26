@@ -23,6 +23,11 @@ class AppointmentBookingSerializer(serializers.ModelSerializer):
             'notes',
             'created_at',            
         ]
+        read_only_fields = [
+            'id', 
+            'status',
+            'created_at'
+        ]
 
     def validate_visit_date(self, value):
         if value < now().date():
