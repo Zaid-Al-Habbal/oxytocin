@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-26 18:06+0300\n"
+"POT-Creation-Date: 2025-06-27 17:43+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: appointments/serializers/book_appointment.py:29
+#: appointments/serializers/book_appointment.py:34
 msgid "Visit date must be in the future."
 msgstr "تاريخ الزيارة يحب أن يكون في المستقبل"
 
-#: appointments/serializers/book_appointment.py:54
+#: appointments/serializers/book_appointment.py:59
 msgid "This time slot is already booked."
 msgstr "هذا الوقت محجوز من قبل مريض آخر"
 
@@ -41,3 +41,12 @@ msgstr ""
 "{doctor} قد تم إلغاؤه بسبب تغييرات في جدول العيادة.\n"
 "نعتذر عن هذا الإزعاج، ونرجو منك إعادة حجز موعد جديد من خلال التطبيق\n"
 "شكرًا لتفهمك."
+
+#: appointments/views/cancel_appointment.py:34
+msgid ""
+"Cannot cancel an appointment less than 24 hours before the scheduled time."
+msgstr "لا يمكنك إلغاء موعد قبل أقل من 24 ساعة من ميعاده"
+
+#: appointments/views/cancel_appointment.py:41
+msgid "Appointment has been cancelled successfully"
+msgstr "تم إلغاء الموعد بنجاح"
