@@ -133,9 +133,9 @@ class GoogleMapsService:
                 if hit is not None:
                     self._cached[(i, j)] = hit
                 else:
-                    uncached_origins.add(origin)
-                    uncached_destinations.add(destination)
-        return list(uncached_origins), list(uncached_destinations)
+                    uncached_origins.add(i)
+                    uncached_destinations.add(j)
+        return [origins[i] for i in uncached_origins], [destinations[i] for i in uncached_destinations]
 
     def store_cache(
         self,
