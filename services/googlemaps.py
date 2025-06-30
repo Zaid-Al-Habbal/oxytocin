@@ -50,15 +50,15 @@ class GoogleMapsService:
         origin: dict,
         destination: dict,
         field_mask: str,
-        travel_mode: RouteTravelMode,
-        routing_preference: RoutingPreference,
-        departure_time: Timestamp,
-        arrival_time: Timestamp,
-        language_code: str,
-        region_code: str,
-        units: Units,
-        traffic_model: TrafficModel,
-        transit_preferences: TransitPreferences,
+        travel_mode: RouteTravelMode | None,
+        routing_preference: RoutingPreference | None,
+        departure_time: Timestamp | None,
+        arrival_time: Timestamp | None,
+        language_code: str | None,
+        region_code: str | None,
+        units: Units | None,
+        traffic_model: TrafficModel | None,
+        transit_preferences: TransitPreferences | None,
     ):
         if not travel_mode:
             travel_mode = RouteTravelMode.DRIVE
@@ -100,15 +100,15 @@ class GoogleMapsService:
         origins: list[dict],
         destinations: list[dict],
         field_mask: str,
-        travel_mode: RouteTravelMode,
-        routing_preference: RoutingPreference,
-        departure_time: Timestamp,
-        arrival_time: Timestamp,
-        language_code: str,
-        region_code: str,
-        units: Units,
-        traffic_model: TrafficModel,
-        transit_preferences: TransitPreferences,
+        travel_mode: RouteTravelMode | None,
+        routing_preference: RoutingPreference | None,
+        departure_time: Timestamp | None,
+        arrival_time: Timestamp | None,
+        language_code: str | None,
+        region_code: str | None,
+        units: Units | None,
+        traffic_model: TrafficModel | None,
+        transit_preferences: TransitPreferences | None,
     ):
         self._cached = {}
         uncached_origins = set()
@@ -135,7 +135,9 @@ class GoogleMapsService:
                 else:
                     uncached_origins.add(i)
                     uncached_destinations.add(j)
-        return [origins[i] for i in uncached_origins], [destinations[i] for i in uncached_destinations]
+        return [origins[i] for i in uncached_origins], [
+            destinations[i] for i in uncached_destinations
+        ]
 
     def store_cache(
         self,
@@ -143,16 +145,17 @@ class GoogleMapsService:
         origins: list[dict],
         destinations: list[dict],
         field_mask: str,
-        travel_mode: RouteTravelMode,
-        routing_preference: RoutingPreference,
-        departure_time: Timestamp,
-        arrival_time: Timestamp,
-        language_code: str,
-        region_code: str,
-        units: Units,
-        traffic_model: TrafficModel,
-        transit_preferences: TransitPreferences,
+        travel_mode: RouteTravelMode | None,
+        routing_preference: RoutingPreference | None,
+        departure_time: Timestamp | None,
+        arrival_time: Timestamp | None,
+        language_code: str | None,
+        region_code: str | None,
+        units: Units | None,
+        traffic_model: TrafficModel | None,
+        transit_preferences: TransitPreferences | None,
     ):
+        cached_data = {}
         for route_matrix_element in route_matrix_elements:
             origin_index = route_matrix_element.origin_index
             destination_index = route_matrix_element.destination_index
@@ -172,25 +175,26 @@ class GoogleMapsService:
                 traffic_model,
                 transit_preferences,
             )
-            self.cache.set(cache_key, route_matrix_element)
+            cached_data[cache_key] = route_matrix_element
+        self.cache.set_many(cached_data)
 
     def route_matrix(
         self,
         origins: list[dict],
         destinations: list[dict],
         field_mask_list: list[X_GOOG_FIELDMASK],
-        travel_mode: RouteTravelMode = None,
-        routing_preference: RoutingPreference = None,
-        departure_time: Timestamp = None,
-        arrival_time: Timestamp = None,
-        language_code: str = None,
-        region_code: str = None,
-        units: Units = None,
-        traffic_model: TrafficModel = None,
-        transit_preferences: TransitPreferences = None,
+        travel_mode: RouteTravelMode | None = None,
+        routing_preference: RoutingPreference | None = None,
+        departure_time: Timestamp | None = None,
+        arrival_time: Timestamp | None = None,
+        language_code: str | None = None,
+        region_code: str | None = None,
+        units: Units | None = None,
+        traffic_model: TrafficModel | None = None,
+        transit_preferences: TransitPreferences | None = None,
     ):
         field_mask = ",".join(item.value for item in field_mask_list)
-        origins, destinations = self.remove_cached(
+        uncached_origins, uncached_destinations = self.remove_cached(
             origins,
             destinations,
             field_mask,
@@ -204,51 +208,71 @@ class GoogleMapsService:
             traffic_model,
             transit_preferences,
         )
-        origins = [
-            RouteMatrixOrigin(
-                waypoint=Waypoint(
-                    location=Location(
-                        lat_lng=LatLng(
-                            latitude=origin["latitude"],
-                            longitude=origin["longitude"],
+
+        results = list(self._cached.values())
+
+        if uncached_origins and uncached_destinations:
+            route_origins = [
+                RouteMatrixOrigin(
+                    waypoint=Waypoint(
+                        location=Location(
+                            lat_lng=LatLng(
+                                latitude=origin["latitude"],
+                                longitude=origin["longitude"],
+                            )
                         )
                     )
                 )
-            )
-            for origin in origins
-        ]
-        destinations = [
-            RouteMatrixDestination(
-                waypoint=Waypoint(
-                    location=Location(
-                        lat_lng=LatLng(
-                            latitude=destination["latitude"],
-                            longitude=destination["longitude"],
+                for origin in uncached_origins
+            ]
+            route_destinations = [
+                RouteMatrixDestination(
+                    waypoint=Waypoint(
+                        location=Location(
+                            lat_lng=LatLng(
+                                latitude=destination["latitude"],
+                                longitude=destination["longitude"],
+                            )
                         )
                     )
                 )
+                for destination in uncached_destinations
+            ]
+            request = ComputeRouteMatrixRequest(
+                origins=route_origins,
+                destinations=route_destinations,
+                travel_mode=travel_mode,
+                routing_preference=routing_preference,
+                departure_time=departure_time,
+                arrival_time=arrival_time,
+                language_code=language_code,
+                region_code=region_code,
+                units=units,
+                traffic_model=traffic_model,
+                transit_preferences=transit_preferences,
             )
-            for destination in destinations
-        ]
-        request = ComputeRouteMatrixRequest(
-            origins=origins,
-            destinations=destinations,
-            travel_mode=travel_mode,
-            routing_preference=routing_preference,
-            departure_time=departure_time,
-            arrival_time=arrival_time,
-            language_code=language_code,
-            region_code=region_code,
-            units=units,
-            traffic_model=traffic_model,
-            transit_preferences=transit_preferences,
-        )
-        headers = [("x-goog-fieldmask", field_mask)]
-        route_matrix_elements = list(
-            self.client.compute_route_matrix(request, metadata=headers)
-        )
-        self.store_cache(route_matrix_elements)
-        return route_matrix_elements
+            headers = [("x-goog-fieldmask", field_mask)]
+            route_matrix_elements = list(
+                self.client.compute_route_matrix(request, metadata=headers)
+            )
+            self.store_cache(
+                route_matrix_elements,
+                uncached_origins,
+                uncached_destinations,
+                field_mask,
+                travel_mode,
+                routing_preference,
+                departure_time,
+                arrival_time,
+                language_code,
+                region_code,
+                units,
+                traffic_model,
+                transit_preferences,
+            )
+            results.extend(route_matrix_elements)
+
+        return results
 
     def serializer(self, d: dict):
         return RouteMatrixElement(
@@ -267,7 +291,7 @@ class GoogleMapsService:
         )
 
     def deserializer(self, route_matrix_element: RouteMatrixElement):
-        serializable_response = {
+        serializable_response: dict = {
             "origin_index": route_matrix_element.origin_index,
             "destination_index": route_matrix_element.destination_index,
         }
@@ -348,3 +372,6 @@ class GoogleMapsService:
                 serializable_response["localized_values"] = localized_values
 
         return serializable_response
+
+    def clear_cache(self):
+        self.cache.clear()
