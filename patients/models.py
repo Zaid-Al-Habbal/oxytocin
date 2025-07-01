@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.gis.db import models as gis_models
 
 from users.models import CustomUser
+from doctors.models import Specialty
 
 
 class Patient(models.Model):
@@ -46,3 +47,34 @@ class Patient(models.Model):
 
     def __str__(self):
         return f"Patient Profile: {self.user.phone}"
+
+
+class PatientSpecialtyAccess(models.Model):
+
+    class Visibility(models.TextChoices):
+        PUBLIC = "public", "Public"
+        RESTRICTED = "restricted", "Restricted"
+
+    patient = models.ForeignKey(
+        Patient,
+        on_delete=models.CASCADE,
+        related_name="patient_specialty_accesses",
+    )
+    specialty = models.ForeignKey(
+        Specialty,
+        on_delete=models.CASCADE,
+        related_name="patient_specialty_accesses",
+    )
+    visibility = models.CharField(max_length=15, choices=Visibility)
+
+    class Meta:
+        db_table = "patients_patient_specialty_access"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["patient", "specialty"],
+                name="unique_patients_patient_specialty_access_patient_id_specialty_id",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{str(self.patient)} - {str(self.specialty)} - {self.visibility}"

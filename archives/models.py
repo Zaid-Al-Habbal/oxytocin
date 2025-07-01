@@ -1,0 +1,80 @@
+from django.db import models
+
+from patients.models import Patient
+from doctors.models import Doctor, Specialty
+from appointments.models import Appointment
+
+
+class Archive(models.Model):
+    patient = models.ForeignKey(
+        Patient,
+        on_delete=models.CASCADE,
+        related_name="archives",
+    )
+    doctor = models.ForeignKey(
+        Doctor,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="archives",
+    )
+    appointment = models.OneToOneField(
+        Appointment,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="archives",
+    )
+    specialty = models.ForeignKey(
+        Specialty,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="archives",
+    )
+    main_complaint = models.TextField()
+    case_history = models.TextField()
+    vital_signs = models.JSONField()
+    recommendations = models.TextField()
+    cost = models.FloatField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["patient", "doctor", "appointment", "specialty"],
+                name="unique_archives_archive_patient_doctor_appointment_specialty",
+            ),
+        ]
+        indexes = [models.Index(fields=["-created_at"])]
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{str(self.patient)} - {self.main_complaint}"
+
+
+class ArchiveAccessPermission(models.Model):
+    patient = models.ForeignKey(
+        Patient,
+        on_delete=models.CASCADE,
+        related_name="archive_access_permissions",
+    )
+    doctor = models.ForeignKey(
+        Doctor,
+        on_delete=models.CASCADE,
+        related_name="archive_access_permissions",
+    )
+    specialty = models.ForeignKey(
+        Specialty,
+        on_delete=models.CASCADE,
+        related_name="archive_access_permissions",
+    )
+
+    class Meta:
+        db_table = "archives_archive_access_permission"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["patient", "doctor", "specialty"],
+                name="unique_archives_archive_access_permission_patient_id_doctor_id_specialty_id",
+            ),
+        ]
