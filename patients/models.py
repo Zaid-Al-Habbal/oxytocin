@@ -66,6 +66,7 @@ class PatientSpecialtyAccess(models.Model):
         related_name="patient_specialty_accesses",
     )
     visibility = models.CharField(max_length=15, choices=Visibility)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = "patients_patient_specialty_access"
@@ -75,6 +76,8 @@ class PatientSpecialtyAccess(models.Model):
                 name="unique_patients_patient_specialty_access_patient_id_specialty_id",
             ),
         ]
+        indexes = [models.Index(fields=["-created_at"])]
+        ordering = ["-created_at"]
 
     def __str__(self):
         return f"{str(self.patient)} - {str(self.specialty)} - {self.visibility}"

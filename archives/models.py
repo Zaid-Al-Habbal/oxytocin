@@ -34,8 +34,8 @@ class Archive(models.Model):
     )
     main_complaint = models.TextField()
     case_history = models.TextField()
-    vital_signs = models.JSONField()
-    recommendations = models.TextField()
+    vital_signs = models.JSONField(null=True, blank=True)
+    recommendations = models.TextField(null=True, blank=True)
     cost = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -69,6 +69,7 @@ class ArchiveAccessPermission(models.Model):
         on_delete=models.CASCADE,
         related_name="archive_access_permissions",
     )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = "archives_archive_access_permission"
@@ -78,3 +79,8 @@ class ArchiveAccessPermission(models.Model):
                 name="unique_archives_archive_access_permission_patient_id_doctor_id_specialty_id",
             ),
         ]
+        indexes = [models.Index(fields=["created_at"])]
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{str(self.patient)} - {str(self.doctor)} - {str(self.specialty)}"

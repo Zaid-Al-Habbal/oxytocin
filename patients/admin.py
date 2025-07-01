@@ -3,7 +3,7 @@ from django.contrib.gis.db import models
 
 import mapwidgets
 
-from .models import Patient
+from .models import Patient, PatientSpecialtyAccess
 
 
 @admin.register(Patient)
@@ -14,3 +14,22 @@ class PatientAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.PointField: {"widget": mapwidgets.GoogleMapPointFieldWidget}
     }
+
+
+@admin.register(PatientSpecialtyAccess)
+class PatientSpecialtyAccessAdmin(admin.ModelAdmin):
+    list_display = ["patient", "specialty", "visibility"]
+    list_filter = [
+        ("patient__user", admin.RelatedOnlyFieldListFilter),
+        ("specialty", admin.RelatedOnlyFieldListFilter),
+        "visibility",
+    ]
+    search_fields = [
+        "patient__user__first_name",
+        "patient__user__last_name",
+        "specialty__name_en",
+        "specialty__name_ar",
+        "visibility",
+    ]
+    readonly_fields = ["created_at"]
+    edit_fields = ["visibility"]
