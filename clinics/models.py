@@ -1,4 +1,47 @@
 from django.db import models
+from django.contrib.gis.db import models as gis_models
+
+from doctors.models import Doctor, DoctorSpecialty
+
+
+class ClinicQuerySet(models.QuerySet):
+    def not_deleted_doctor(self):
+        return self.filter(doctor__user__deleted_at__isnull=True)
+
+    def with_approved_doctor(self):
+        return self.filter(doctor__status=Doctor.Status.APPROVED)
+
+    def with_doctor_categorized_specialties(self):
+        return self.prefetch_related(
+            models.Prefetch(
+                "doctor__doctor_specialties",
+                queryset=DoctorSpecialty.objects.select_related("specialty")
+                .filter(specialty__main_specialties__isnull=True)
+                .distinct(),
+                to_attr="main_specialties",
+            ),
+            models.Prefetch(
+                "doctor__doctor_specialties",
+                queryset=DoctorSpecialty.objects.select_related("specialty")
+                .filter(specialty__main_specialties__isnull=False)
+                .distinct(),
+                to_attr="subspecialties",
+            ),
+        )
+    
+    def with_doctor(self):
+        return self.select_related("doctor")
+
+    def with_doctor_user(self):
+        return self.select_related("doctor__user")
+
+    def with_active_doctor_details(self):
+        return (
+            self.not_deleted_doctor()
+            .with_approved_doctor()
+            .with_doctor_categorized_specialties()
+            .with_doctor_user()
+        )
 
 
 class Clinic(models.Model):
@@ -8,11 +51,20 @@ class Clinic(models.Model):
         primary_key=True,
         related_name="clinic",
     )
-    location = models.CharField(max_length=255)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6)
+    address = models.CharField(max_length=255)
+    location = gis_models.PointField()
     phone = models.CharField(max_length=20, unique=True)
     time_slot_per_patient = models.PositiveIntegerField(default=15, help_text="Length of each appointment slot in minutes")
+
+    objects = ClinicQuerySet.as_manager()
+
+    @property
+    def longitude(self):
+        return self.location.x
+
+    @property
+    def latitude(self):
+        return self.location.y
 
     class Meta:
         pass
@@ -27,7 +79,9 @@ class ClinicImage(models.Model):
         on_delete=models.CASCADE,
         related_name="images",
     )
-    image = models.ImageField(upload_to="images/clinics/%Y/%m/%d/", null=True, blank=True)
+    image = models.ImageField(
+        upload_to="images/clinics/%Y/%m/%d/", null=True, blank=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

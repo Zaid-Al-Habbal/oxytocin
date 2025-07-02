@@ -3,6 +3,7 @@ asgiref==3.8.1
 attrs==25.3.0
 billiard==4.2.1
 black==25.1.0
+cachetools==5.5.2
 celery==5.5.3
 certifi==2025.4.26
 chardet==5.2.0
@@ -13,6 +14,7 @@ click-plugins==1.1.1
 click-repl==0.3.0
 Django==5.2.1
 django-cors-headers==4.7.0
+django-map-widgets==0.5.1
 django-nested-admin==4.1.1
 django-redis==5.4.0
 django-rest-framework==0.1.0
@@ -23,6 +25,13 @@ drf-spectacular-sidecar==2025.5.1
 file-validator==1.0.9
 filetype==1.1.0
 flower==2.0.1
+google-api-core==2.25.0
+google-auth==2.40.3
+google-geo-type==0.3.13
+google-maps-routing==0.6.16
+googleapis-common-protos==1.70.0
+grpcio==1.73.0
+grpcio-status==1.73.0
 gunicorn==23.0.0
 humanize==4.4.0
 idna==3.10
@@ -37,9 +46,13 @@ pillow==11.2.1
 platformdirs==4.3.8
 prometheus_client==0.22.0
 prompt_toolkit==3.0.51
+proto-plus==1.26.1
+protobuf==6.31.1
 psycopg==3.2.7
 psycopg-binary==3.2.7
 puremagic==1.14
+pyasn1==0.6.1
+pyasn1_modules==0.4.2
 PyJWT==2.9.0
 python-dateutil==2.9.0.post0
 python-decouple==3.8
@@ -53,6 +66,7 @@ referencing==0.36.2
 reportlab==4.4.1
 requests==2.32.3
 rpds-py==0.24.0
+rsa==4.9.1
 six==1.17.0
 sqlparse==0.5.3
 termcolor==1.1.0

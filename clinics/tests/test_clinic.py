@@ -1,5 +1,6 @@
 from django.urls import reverse
 from django.utils import timezone
+from django.contrib.gis.geos import Point
 
 from datetime import timedelta
 from rest_framework import status
@@ -46,8 +47,8 @@ class ClinicTests(APITestCase):
         subspecialty1 = Specialty.objects.create(
             name_en="Test2",
             name_ar="تجريبي2",
-            parent=main_specialty1,
         )
+        subspecialty1.main_specialties.add(main_specialty1)
         specialties = [
             DoctorSpecialty(
                 doctor=self.doctor,
@@ -63,9 +64,8 @@ class ClinicTests(APITestCase):
         DoctorSpecialty.objects.bulk_create(specialties)
 
         clinic_data = {
-            "location": "Test Street",
-            "longitude": 44.2,
-            "latitude": 32.1,
+            "address": "Test Street",
+            "location": Point(27.2, 36.1, srid=4326),
             "phone": "011 223 3333",
         }
         self.clinic = Clinic.objects.create(doctor=self.doctor, **clinic_data)
@@ -80,15 +80,15 @@ class ClinicTests(APITestCase):
         )
 
         self.data = {
-            "location": "Test Street",
+            "address": "Test Street",
             "longitude": 39.1,
-            "latitude": 55.5,
+            "latitude": 32.1,
             "phone": "011 224 4531",
         }
         self.update_data = {
-            "location": "Test Update Street",
-            "longitude": 66.1,
-            "latitude": 32.5,
+            "address": "Test Update Street",
+            "longitude": 55.1,
+            "latitude": 52.1,
             "phone": "011 224 4533",
         }
 
@@ -98,14 +98,13 @@ class ClinicTests(APITestCase):
         self.client.force_authenticate(self.user)
         response = self.client.post(self.create_path, self.data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertIn("location", str(response.data))
+        self.assertIn("address", str(response.data))
         self.assertIn("longitude", str(response.data))
         self.assertIn("latitude", str(response.data))
         self.assertIn("phone", str(response.data))
         exists = Clinic.objects.filter(
-            location=self.data["location"],
-            longitude=self.data["longitude"],
-            latitude=self.data["latitude"],
+            address=self.data["address"],
+            location=Point(self.data["longitude"], self.data["latitude"], srid=4326),
             phone=self.data["phone"],
         ).exists()
         self.assertTrue(exists)
@@ -114,7 +113,7 @@ class ClinicTests(APITestCase):
         self.client.force_authenticate(self.user)
         response = self.client.get(self.retrieve_update_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("location", str(response.data))
+        self.assertIn("address", str(response.data))
         self.assertIn("longitude", str(response.data))
         self.assertIn("latitude", str(response.data))
         self.assertIn("phone", str(response.data))
@@ -127,14 +126,13 @@ class ClinicTests(APITestCase):
             format="json",
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("location", str(response.data))
+        self.assertIn("address", str(response.data))
         self.assertIn("longitude", str(response.data))
         self.assertIn("latitude", str(response.data))
         self.assertIn("phone", str(response.data))
         exists = Clinic.objects.filter(
-            location=self.update_data["location"],
-            longitude=self.update_data["longitude"],
-            latitude=self.update_data["latitude"],
+            address=self.update_data["address"],
+            location=Point(self.update_data["longitude"], self.update_data["latitude"], srid=4326),
             phone=self.update_data["phone"],
         ).exists()
         self.assertTrue(exists)

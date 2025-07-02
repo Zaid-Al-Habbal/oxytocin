@@ -1,11 +1,24 @@
 from django.db import models
 from django.conf import settings
+from django.db.models import Value, TextField
+from django.db.models.functions import Cast, Concat, Greatest
+from django.contrib.postgres.search import TrigramSimilarity
+
+from common.utils import years_since
 
 
 class DoctorQuerySet(models.QuerySet):
+    def approved(self):
+        return self.filter(status=Doctor.Status.APPROVED)
 
     def not_deleted(self):
         return self.filter(user__deleted_at__isnull=True)
+
+    def with_user(self):
+        return self.select_related("user")
+
+    def with_clinic(self):
+        return self.select_related("clinic")
 
     def with_specialties(self):
         return self.prefetch_related(
@@ -19,18 +32,23 @@ class DoctorQuerySet(models.QuerySet):
         return self.prefetch_related(
             models.Prefetch(
                 "doctor_specialties",
-                queryset=DoctorSpecialty.objects.select_related("specialty").filter(
-                    specialty__parent__isnull=True
-                ),
-                to_attr="main_specialty",
+                queryset=DoctorSpecialty.objects.select_related("specialty")
+                .filter(specialty__main_specialties__isnull=True)
+                .distinct(),
+                to_attr="main_specialties",
             ),
             models.Prefetch(
                 "doctor_specialties",
-                queryset=DoctorSpecialty.objects.select_related("specialty").filter(
-                    specialty__parent__isnull=False
-                ),
+                queryset=DoctorSpecialty.objects.select_related("specialty")
+                .filter(specialty__main_specialties__isnull=False)
+                .distinct(),
                 to_attr="subspecialties",
             ),
+        )
+
+    def with_full_profile(self):
+        return (
+            self.with_clinic().not_deleted().approved().with_categorized_specialties()
         )
 
 
@@ -54,7 +72,7 @@ class Doctor(models.Model):
     status = models.CharField(
         max_length=20,
         choices=Status.choices,
-        default=Status.APPROVED, #Just for now
+        default=Status.APPROVED,  # Just for now
     )
     specialties = models.ManyToManyField(
         "doctors.Specialty",
@@ -63,6 +81,10 @@ class Doctor(models.Model):
     )
 
     objects = DoctorQuerySet.as_manager()
+
+    @property
+    def experience(self):
+        return years_since(self.start_work_date)
 
     class Meta:
         indexes = [models.Index(fields=["start_work_date"])]
@@ -73,28 +95,28 @@ class Doctor(models.Model):
 
 
 class SpecialtyQuerySet(models.QuerySet):
-    def with_parent(self):
-        return self.select_related("parent")
+    def with_main_specialties(self):
+        return self.prefetch_related("main_specialties")
 
-    def main_specialties(self):
-        return self.filter(parent__isnull=True)
+    def main_specialties_only(self):
+        return self.filter(main_specialties__isnull=True).distinct()
 
-    def subspecialties(self):
-        return self.filter(parent__isnull=False)
+    def subspecialties_only(self):
+        return self.filter(main_specialties__isnull=False).distinct()
 
     def main_specialties_with_their_subspecialties(self):
-        return self.main_specialties().prefetch_related("subspecialties")
+        return self.main_specialties_only().prefetch_related("subspecialties")
 
 
 class Specialty(models.Model):
     name_en = models.CharField(max_length=100)
     name_ar = models.CharField(max_length=100)
-    parent = models.ForeignKey(
+    subspecialties = models.ManyToManyField(
         "self",
-        null=True,
+        related_name="main_specialties",
+        symmetrical=False,
         blank=True,
-        on_delete=models.SET_NULL,
-        related_name="subspecialties",
+        db_table="doctors_main_specialty_subspecialty",
     )
 
     objects = SpecialtyQuerySet.as_manager()

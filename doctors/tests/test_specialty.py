@@ -21,23 +21,25 @@ class SpecialtyTests(APITestCase):
                 name_ar="تجريبي4",
             ),
         ]
-        self.subspecialties = [
-            Specialty.objects.create(
-                name_en="Test2",
-                name_ar="تجريبي2",
-                parent=self.main_specialties[0],
-            ),
-            Specialty.objects.create(
-                name_en="Test3",
-                name_ar="تجريبي3",
-                parent=self.main_specialties[0],
-            ),
-            Specialty.objects.create(
-                name_en="Test5",
-                name_ar="تجريبي5",
-                parent=self.main_specialties[1],
-            ),
-        ]
+        subspecialty1 = Specialty.objects.create(
+            name_en="Test2",
+            name_ar="تجريبي2",
+        )
+        subspecialty1.main_specialties.add(self.main_specialties[0])
+
+        subspecialty2 = Specialty.objects.create(
+            name_en="Test3",
+            name_ar="تجريبي3",
+        )
+        subspecialty2.main_specialties.add(self.main_specialties[0])
+
+        subspecialty3 = Specialty.objects.create(
+            name_en="Test5",
+            name_ar="تجريبي5",
+        )
+        subspecialty3.main_specialties.add(self.main_specialties[1])
+
+        self.subspecialties = [subspecialty1, subspecialty2, subspecialty3]
 
     def test_list_specialties_success(self):
         response = self.client.get(self.path)

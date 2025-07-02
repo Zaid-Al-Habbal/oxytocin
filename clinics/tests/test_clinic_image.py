@@ -1,5 +1,6 @@
 from django.urls import reverse
 from django.utils import timezone
+from django.contrib.gis.geos import Point
 
 from datetime import timedelta
 from rest_framework import status
@@ -41,8 +42,8 @@ class ClinicImageTests(APITestCase):
         subspecialty1 = Specialty.objects.create(
             name_en="Test2",
             name_ar="تجريبي2",
-            parent=main_specialty1,
         )
+        subspecialty1.main_specialties.add(main_specialty1)
         specialties = [
             DoctorSpecialty(
                 doctor=self.doctor,
@@ -58,9 +59,8 @@ class ClinicImageTests(APITestCase):
         DoctorSpecialty.objects.bulk_create(specialties)
 
         clinic_data = {
-            "location": "Test Street",
-            "longitude": 44.2,
-            "latitude": 32.1,
+            "address": "Test Street",
+            "location": Point(44.2, 32.1, srid=4326),
             "phone": "011 223 3333",
         }
         self.clinic = Clinic.objects.create(doctor=self.doctor, **clinic_data)
@@ -160,9 +160,8 @@ class ClinicImageTests(APITestCase):
         }
         doctor = Doctor.objects.create(user=user, **doctor_data)
         clinic_data = {
-            "location": "Test Street 3",
-            "longitude": 74.2,
-            "latitude": 92.1,
+            "address": "Test Street 3",
+            "location": Point(24.2, 32.1, srid=4326),
             "phone": "011 223 4444",
         }
         clinic = Clinic.objects.create(doctor=doctor, **clinic_data)
@@ -204,9 +203,8 @@ class ClinicImageTests(APITestCase):
         }
         doctor = Doctor.objects.create(user=user, **doctor_data)
         clinic_data = {
-            "location": "Test Street 3",
-            "longitude": 74.2,
-            "latitude": 92.1,
+            "address": "Test Street 3",
+            "location": Point(24.2, 32.1, srid=4326),
             "phone": "011 223 4444",
         }
         clinic = Clinic.objects.create(doctor=doctor, **clinic_data)

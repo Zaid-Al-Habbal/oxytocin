@@ -1,5 +1,6 @@
 from django.urls import reverse
 from django.utils import timezone
+from django.contrib.gis.geos import Point
 
 from datetime import timedelta
 from rest_framework import status
@@ -43,25 +44,29 @@ class DoctorRetrieveTests(APITestCase):
             name_en="Test1",
             name_ar="تجريبي1",
         )
+
         self.subspecialty1 = Specialty.objects.create(
             name_en="Test2",
             name_ar="تجريبي2",
-            parent=self.main_specialty1,
         )
+        self.subspecialty1.main_specialties.add(self.main_specialty1)
+
         self.subspecialty2 = Specialty.objects.create(
             name_en="Test3",
             name_ar="تجريبي3",
-            parent=self.main_specialty1,
         )
+        self.subspecialty2.main_specialties.add(self.main_specialty1)
+
         self.main_specialty2 = Specialty.objects.create(
             name_en="Test4",
             name_ar="تجريبي4",
         )
+
         self.subspecialty3 = Specialty.objects.create(
             name_en="Test5",
             name_ar="تجريبي5",
-            parent=self.main_specialty2,
         )
+        self.subspecialty3.main_specialties.add(self.main_specialty2)
         specialties = [
             DoctorSpecialty(
                 doctor=self.doctor,
@@ -77,9 +82,8 @@ class DoctorRetrieveTests(APITestCase):
         DoctorSpecialty.objects.bulk_create(specialties)
 
         clinic_data = {
-            "location": "Test Street",
-            "longitude": 44.2,
-            "latitude": 32.1,
+            "address": "Test Street",
+            "location": Point(44.2, 32.1, srid=4326),
             "phone": "011 223 3333",
         }
         self.clinic = Clinic.objects.create(doctor=self.doctor, **clinic_data)
