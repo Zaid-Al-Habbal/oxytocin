@@ -8,4 +8,6 @@ urlpatterns = [
     path('<int:appointment_id>/cancel/', CancelAppointmentView.as_view(), name='cancel-appointment'),
     path('', ShowMyAppointmentsView.as_view(), name='show-my-appointments'),
     path('<int:appointment_id>/rebook/', RebookAppointmentView.as_view(), name='rebook-appointment'),
+    path('<int:appointment_id>/update/', UpdateAppointmentView.as_view(), name='update-appointment'),
+    
 ]

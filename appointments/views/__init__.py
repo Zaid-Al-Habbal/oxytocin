@@ -3,3 +3,4 @@ from .book_appointment import *
 from .cancel_appointment import *
 from .show_my_appointments import *
 from .rebook_appointment import *
+from .update_appointment import *
