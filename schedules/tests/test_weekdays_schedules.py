@@ -13,6 +13,7 @@ from users.models import CustomUser as User
 from doctors.models import Doctor, Specialty, DoctorSpecialty
 from clinics.models import Clinic  
 from common.utils import generate_test_pdf
+from django.contrib.gis.geos import Point
 
 
 class WeekdaysScheduleTest(ScheduleBaseTest):
@@ -20,7 +21,7 @@ class WeekdaysScheduleTest(ScheduleBaseTest):
         super().setUp()
         self.schedule = ClinicSchedule.objects.get(clinic=self.clinic, day_name="sunday")
         self.list_url = reverse("list-weekdays-schedules")
-        self.replace_url = reverse("replace-available-hours-to-weekday", kwargs={'schedule_id': self.schedule.id})
+        self.replace_url = reverse("replace-available-hours-of-weekday", kwargs={'schedule_id': self.schedule.id})
         
         self.client.force_authenticate(user=self.assistantUser)
     
@@ -150,9 +151,8 @@ class WeekdaysScheduleTest(ScheduleBaseTest):
         })
         other_clinic = Clinic.objects.create(
             doctor=other_doctor,
-            location="Other Street",
-            longitude=55.5,
-            latitude=44.4,
+            address= "Test Street",
+            location=  Point(44.2, 32.1, srid=4326),
             phone="011 555 5555"
         )
         other_schedule = ClinicSchedule.objects.create(
@@ -160,7 +160,7 @@ class WeekdaysScheduleTest(ScheduleBaseTest):
             day_name='saturday'
         )
 
-        fake_replace_url = reverse("replace-available-hours-to-weekday", kwargs={'schedule_id': other_schedule.id})
+        fake_replace_url = reverse("replace-available-hours-of-weekday", kwargs={'schedule_id': other_schedule.id})
         valid_data = [
             {"start_hour": "09:00:00", "end_hour": "11:00:00"},
         ]

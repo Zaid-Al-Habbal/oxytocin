@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("clinics", "0002_alter_clinicimage_image"),
+        ("clinics", "0002_trigram_ext"),
     ]
 
     operations = [

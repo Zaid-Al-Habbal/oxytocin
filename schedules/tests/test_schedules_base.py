@@ -12,6 +12,8 @@ from assistants.models import Assistant
 from doctors.models import Doctor, Specialty, DoctorSpecialty
 from schedules.models import ClinicSchedule
 from patients.models import Patient
+from django.contrib.gis.geos import Point
+
 
 class ScheduleBaseTest(APITestCase):
     def setUp(self):
@@ -37,16 +39,34 @@ class ScheduleBaseTest(APITestCase):
             user=self.user_doctor_clinic,
             **doctor_data,
         )
-        
         self.main_specialty1 = Specialty.objects.create(
             name_en="Test1",
             name_ar="تجريبي1",
         )
+
         self.subspecialty1 = Specialty.objects.create(
             name_en="Test2",
             name_ar="تجريبي2",
-            parent=self.main_specialty1,
         )
+        self.subspecialty1.main_specialties.add(self.main_specialty1)
+
+        self.subspecialty2 = Specialty.objects.create(
+            name_en="Test3",
+            name_ar="تجريبي3",
+        )
+        self.subspecialty2.main_specialties.add(self.main_specialty1)
+
+        self.main_specialty2 = Specialty.objects.create(
+            name_en="Test4",
+            name_ar="تجريبي4",
+        )
+
+        self.subspecialty3 = Specialty.objects.create(
+            name_en="Test5",
+            name_ar="تجريبي5",
+        )
+        self.subspecialty3.main_specialties.add(self.main_specialty2)
+
         specialties = [
             DoctorSpecialty(
                 doctor=self.doctor_with_clinic,
@@ -62,9 +82,8 @@ class ScheduleBaseTest(APITestCase):
         DoctorSpecialty.objects.bulk_create(specialties)
         
         clinic_data = {
-            "location": "Test Street",
-            "longitude": 44.2,
-            "latitude": 32.1,
+            "address": "Test Street",
+            "location": Point(44.2, 32.1, srid=4326),
             "phone": "011 223 3333",
         }
         self.clinic =  Clinic.objects.create(doctor=self.doctor_with_clinic, **clinic_data)
@@ -98,9 +117,8 @@ class ScheduleBaseTest(APITestCase):
 
         self.patient = Patient.objects.create(
             user=self.patient_user,
-            location="Damascus",
-            longitude=36.29,
-            latitude=33.51,
+            address= "Test Street",
+            location=  Point(44.2, 32.1, srid=4326),
             job="Engineer",
             blood_type="A+",
             medical_history="",

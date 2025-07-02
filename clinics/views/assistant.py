@@ -19,6 +19,9 @@ from users.models import CustomUser as User
 from users.permissions import HasRole
 
 
+from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
+
+
 @extend_schema(
     summary="Add Assistant to Clinic",
     description="Add an Assistant by its phone number to clinic if she is not connected to a clinic.",
