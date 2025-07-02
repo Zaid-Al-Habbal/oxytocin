@@ -3,7 +3,7 @@ from .models import ClinicSchedule, AvailableHour
 
 @admin.register(ClinicSchedule)
 class ClinicScheduleAdmin(admin.ModelAdmin):
-    list_display = ('clinic', 'day_name', 'special_date', 'is_available')
+    list_display = ('id', 'clinic', 'day_name', 'special_date', 'is_available')
     list_filter = ('day_name', 'is_available', 'special_date')
     
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-27 17:43+0300\n"
+"POT-Creation-Date: 2025-07-02 15:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,11 +42,33 @@ msgstr ""
 "نعتذر عن هذا الإزعاج، ونرجو منك إعادة حجز موعد جديد من خلال التطبيق\n"
 "شكرًا لتفهمك."
 
-#: appointments/views/cancel_appointment.py:34
+#: appointments/views/cancel_appointment.py:54
 msgid ""
 "Cannot cancel an appointment less than 24 hours before the scheduled time."
 msgstr "لا يمكنك إلغاء موعد قبل أقل من 24 ساعة من ميعاده"
 
-#: appointments/views/cancel_appointment.py:41
+#: appointments/views/cancel_appointment.py:62
 msgid "Appointment has been cancelled successfully"
 msgstr "تم إلغاء الموعد بنجاح"
+
+#: appointments/views/rebook_appointment.py:56
+msgid "Cannot rebook this appointment because its time is passed"
+msgstr "لا يمكنك إعادة حجز هذا الموعد لأن ميعاده أصبح في الماضي"
+
+#: appointments/views/rebook_appointment.py:65
+msgid ""
+"You can not rebook this appointment because its booked by another patient"
+msgstr "لا يمكنك إعادة حجز هذا الموعد لأنه أصبح محجوز من قبل مريض آخر"
+
+#: appointments/views/rebook_appointment.py:78
+#, fuzzy
+#| msgid ""
+#| "You can not rebook this appointment because its booked by another patient"
+msgid ""
+"You can not rebook this appointment because its time slot is not available "
+"anymore"
+msgstr "لا يمكنك إعادة حجز هذا الموعد لأن ميعاده أصبح غير متاح"
+
+#: appointments/views/rebook_appointment.py:86
+msgid "Appointment has been rebooked successfully"
+msgstr "تم إعادة الموعد بنجاح"
