@@ -78,6 +78,15 @@ class RetrieveAssistantView(generics.RetrieveAPIView):
 @extend_schema(
     summary="Remove Assistant",
     description="Remove assistant that works in my clinic",
+    methods=["delete"],
+    responses={200},
+    examples=[
+        OpenApiExample(
+            name="Remove Assistant",
+            value={"detail": _("Assistant removed from clinic.")},
+            response_only=True
+        )
+    ],
     tags=["Assistant Management"],
 )
 class RemoveAssistantFromClinic(APIView):
