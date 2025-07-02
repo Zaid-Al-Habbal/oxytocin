@@ -34,7 +34,7 @@ class ForgetPasswordOTPSendSerializer(serializers.Serializer):
 class ForgetPasswordOTPVerificationSerializer(serializers.Serializer):
     phone = serializers.CharField(min_length=10, max_length=10, write_only=True)
 
-    verification_code = serializers.CharField(
+    code = serializers.CharField(
         min_length=5,
         max_length=5,
         write_only=True,
@@ -50,7 +50,7 @@ class ForgetPasswordOTPVerificationSerializer(serializers.Serializer):
         except User.DoesNotExist:
             raise serializers.ValidationError(_("Phone Number Not Found"))
 
-        otp = data["verification_code"]
+        otp = data["code"]
 
         userKey = f"{user.id}:forget-password"
         otp_service.verify_and_mark_as_verified(userKey, otp)

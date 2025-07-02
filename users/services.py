@@ -74,20 +74,8 @@ class OTPService:
         Raises:
             AuthenticationFailed: If the OTP is invalid or missing.
         """
-        # Retrieve the hashed OTP from the cache
-        hashed_otp = self.cache.get(key)
-        # If no OTP is found for the user, raise an authentication error
-        if not hashed_otp:
-            raise AuthenticationFailed(_("Invalid OTP."))
-        # Compare the provided OTP against the stored hash
-        is_valid = check_password(otp, hashed_otp)
-        # Raise an exception if the OTP is invalid
-        if not is_valid:
-            raise AuthenticationFailed(_("Invalid OTP."))
-        
-        hashed_otp = make_password("VERIFIED")
-        # Store the hashed OTP in the cache with the user ID as the key
-        self.cache.set(key, hashed_otp, timeout=300)
+        self.validate(key, otp)
+        self.cache.set(key, make_password("VERIFIED"), timeout=300)
         
 
 

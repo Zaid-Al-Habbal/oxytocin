@@ -42,7 +42,7 @@ class ForgetPasswordTests(APITestCase):
     def test_verification_successful(self):
         data = {
             "phone": self.user.phone,
-            "verification_code": otp_service.generate(
+            "code": otp_service.generate(
                 f"{self.user.id}:forget-password"
             ),
         }
@@ -54,7 +54,7 @@ class ForgetPasswordTests(APITestCase):
     def test_verification_fails_on_invalid_code(self):
         data = {
             "phone": self.user.phone,
-            "verification_code": 99999,
+            "code": 99999,
         }
         response = self.client.post(self.path, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
