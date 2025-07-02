@@ -55,6 +55,7 @@ class CancelAppointmentView(APIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
         appointment.status = Appointment.Status.CANCELLED
+        appointment.cancelled_at = now()
         appointment.cancelled_by = request.user
         appointment.save()
 
