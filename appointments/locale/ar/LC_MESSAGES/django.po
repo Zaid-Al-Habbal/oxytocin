@@ -71,4 +71,4 @@ msgstr "لا يمكنك إعادة حجز هذا الموعد لأن ميعاد�
 
 #: appointments/views/rebook_appointment.py:86
 msgid "Appointment has been rebooked successfully"
-msgstr "تم إعادة الموعد بنجاح"
+msgstr "تم إعادة حجز الموعد بنجاح"

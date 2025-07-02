@@ -6,27 +6,34 @@ from rest_framework import serializers
 from appointments.models import Appointment
 from schedules.models import AvailableHour, ClinicSchedule
 from appointments.services import get_split_visit_times
+from clinics.serializers import ClinicSummarySerializer
+
 
 class AppointmentBookingSerializer(serializers.ModelSerializer):
-    doctor_id = serializers.IntegerField(source="clinic.pk", read_only=True)
-    doctor_full_name = serializers.CharField(source="clinic.doctor.user.full_name", read_only=True)
+    clinic = ClinicSummarySerializer(read_only=True)
     
     class Meta:
         model = Appointment
         fields = [
             'id',
-            'doctor_id',
-            'doctor_full_name',
             'visit_date', 
             'visit_time',
             'status',
             'notes',
-            'created_at',            
+            'created_at',
+            'updated_at',
+            'cancelled_at',
+            'cancelled_by',            
+            'clinic',
         ]
         read_only_fields = [
             'id', 
             'status',
-            'created_at'
+            'created_at',
+            'updated_at',
+            'cancelled_at',
+            'cancelled_by'
+            
         ]
 
     def validate_visit_date(self, value):

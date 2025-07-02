@@ -20,15 +20,15 @@ from common.utils import _get_django_weekday
 from appointments.services import cancel_appointments_with_notification
 
 @extend_schema(
-    summary="Delete A working Hour Pair",
-    description="Delete a working-hour pair that exist in one of the available-hours pairs.\n"
+    summary="Cancel A working Hour Pair",
+    description="Cancel a working-hour pair that exist in one of the available-hours pairs.\n"
                 "if the date given is not special it will be special after this Change, because this CHANGE is temporerly",
     request=DeleteWorkingHourSerializer,
     responses={200: ListWeekDaysSchedulesSerializer},
     methods=['post'],
     examples=[
         OpenApiExample(
-            name="Delete A working Hour Pair example",
+            name="Cancel A working Hour Pair example",
             value={
                 "special_date": "2025-06-22",
                 "start_working_hour": "11:00:00",
@@ -37,7 +37,7 @@ from appointments.services import cancel_appointments_with_notification
             request_only=True
         ),
         OpenApiExample(
-            name="Delete A working Hour Pair example",
+            name="Cancel A working Hour Pair example",
             value=[
                 {
                     "id": 3,
