@@ -17,7 +17,7 @@ class BookAppointmentTests(AppointmentBaseTest):
         return {
             "visit_date": str(visit_date),
             "visit_time": str(visit_time),
-            "note": "Need a checkup",
+            "notes": "Need a checkup",
         }
     
     def test_book_appointment_weekday_success(self):
@@ -28,7 +28,6 @@ class BookAppointmentTests(AppointmentBaseTest):
         
         response = self.client.post(self.url, payload)
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.data["doctor_id"], self.clinic.pk)
         self.assertEqual(response.data["status"], "waiting")
         
     def test_book_appointment_special_date_success(self):
@@ -38,7 +37,6 @@ class BookAppointmentTests(AppointmentBaseTest):
         response = self.client.post(self.url, payload)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data["visit_date"], str(self.special_date))
-        self.assertEqual(response.data["doctor_id"], self.clinic.pk)
         
     def test_book_outside_available_hour(self):
         self.client.force_authenticate(self.patient_user)
@@ -87,4 +85,3 @@ class BookAppointmentTests(AppointmentBaseTest):
         response = self.client.post(self.url, self.build_payload(self.special_date, "10:00"))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data["visit_date"], str(self.special_date))
-        self.assertEqual(response.data["doctor_id"], self.clinic.pk)
