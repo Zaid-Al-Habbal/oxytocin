@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from rest_framework.generics import RetrieveAPIView
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -14,9 +15,13 @@ from doctors.permissions import IsDoctorWithClinic
 from assistants.permissions import IsAssistantWithClinic
 from users.models import CustomUser as User
 from clinics.models import Clinic
+from doctors.models import Doctor
+from assistants.models import Assistant
 from schedules.models import AvailableHour, ClinicSchedule
-from appointments.serializers import DateDetailsSerializer
+from appointments.serializers import DateDetailsSerializer, AppointmentDetailSerializer
 from appointments.models import Appointment
+from rest_framework.exceptions import PermissionDenied
+
 
 @extend_schema(
     summary="List My Clinic Appointments",
@@ -166,5 +171,72 @@ class MyClinicAppointmentsView(APIView):
         
         serializer = DateDetailsSerializer(output, many=True)
         return Response(serializer.data)
-            
-            
+
+@extend_schema(
+    summary="Show Appointment in detail",
+    description="Show all info about the appointment can be requested from Doctor or assistant",
+    responses={200: AppointmentDetailSerializer},
+    examples=[
+        OpenApiExample(
+            name="Appointment details",
+            value={
+                "id": 2,
+                "patient": {
+                    "user": {
+                        "first_name": "Zaid",
+                        "last_name": "Al Habbal",
+                        "phone": "0957443652",
+                        "image": None,
+                        "gender": "male",
+                        "birth_date": "2004-09-30"
+                    },
+                    "address": "Maysaat",
+                    "longitude": 123.42423,
+                    "latitude": 33.32423,
+                    "job": "Engineer",
+                    "blood_type": "B+",
+                    "medical_history": "",
+                    "surgical_history": "",
+                    "allergies": "",
+                    "medicines": "",
+                    "is_smoker": True,
+                    "is_drinker": False,
+                    "is_married": False
+                },
+                "visit_date": "2025-07-28",
+                "visit_time": "17:00:00",
+                "status": "waiting",
+                "notes": "good job",
+                "actual_start_time": None,
+                "actual_end_time": None,
+                "created_at": "2025-07-02 21:59:22",
+                "updated_at": "2025-07-02 22:00:12",
+                "cancelled_at": None,
+                "cancelled_by": None
+            },
+            response_only=True
+        )   
+    ],
+    tags=["Appointments (Dashboard)"]
+)
+class AppointmentDetailView(RetrieveAPIView):
+    serializer_class = AppointmentDetailSerializer
+    permission_classes = [IsAuthenticated & (IsDoctorWithClinic | IsAssistantWithClinic)]
+    lookup_url_kwarg = 'appointment_id'
+
+    def get_queryset(self):
+        return Appointment.objects.select_related('patient', 'clinic')
+
+    def get_object(self):
+        appointment = get_object_or_404(self.get_queryset(), id=self.kwargs['appointment_id'])
+        user = self.request.user
+
+        clinic = appointment.clinic
+
+        is_doctor = Doctor.objects.filter(user=user, clinic=clinic).exists()
+        is_assistant = Assistant.objects.filter(user=user, clinic=clinic).exists()
+
+        if not (is_doctor or is_assistant):
+            raise PermissionDenied("You do not have access to this appointment.")
+
+        return appointment
