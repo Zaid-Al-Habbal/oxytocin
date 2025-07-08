@@ -1,3 +1,4 @@
 from .book_appointment import *
 from .show_my_appointment import *
 from .update_appointment import *
+from .get_clinic_appointments import *

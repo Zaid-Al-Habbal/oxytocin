@@ -84,7 +84,7 @@ class ClinicVisitTimesView(APIView):
             weekday = visit_date.strftime('%A').lower() 
             schedule = ClinicSchedule.objects.get(clinic=clinic, day_name=weekday)
 
-        available_hours = AvailableHour.objects.filter(schedule=schedule)
+        available_hours = AvailableHour.objects.filter(schedule=schedule).order_by("start_hour")
         if not available_hours.exists():
             return Response([], status=200)
 
