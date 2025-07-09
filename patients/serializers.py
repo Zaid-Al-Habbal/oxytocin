@@ -6,7 +6,11 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Patient
-from users.serializers import UserSerializer, UserNestedSerializer
+from users.serializers import (
+    UserSerializer,
+    UserNestedSerializer,
+    UserSummarySerializer,
+)
 from users.models import CustomUser as User
 
 
@@ -131,6 +135,23 @@ class PatientProfileSerializer(serializers.ModelSerializer):
         user_serializer.save()
 
         return instance
+
+
+class PatientSummarySerializer(serializers.ModelSerializer):
+    user = UserSummarySerializer()
+    longitude = serializers.FloatField(min_value=-180.0, max_value=180.0)
+    latitude = serializers.FloatField(min_value=-90.0, max_value=90.0)
+
+    class Meta:
+        model = Patient
+        fields = [
+            "user",
+            "address",
+            "longitude",
+            "latitude",
+            "job",
+            "blood_type",
+        ]
 
 
 class LocationQuerySerializer(serializers.Serializer):

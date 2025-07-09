@@ -5,6 +5,24 @@ from doctors.models import Doctor, Specialty
 from appointments.models import Appointment
 
 
+class ArchiveQuerySet(models.QuerySet):
+
+    def with_patient(self):
+        return self.select_related("patient")
+
+    def with_doctor(self):
+        return self.select_related("doctor")
+
+    def with_appointment(self):
+        return self.select_related("appointment")
+
+    def with_specialty(self):
+        return self.select_related("specialty")
+
+    def with_full_relations(self):
+        return self.with_patient().with_doctor().with_appointment().with_specialty()
+
+
 class Archive(models.Model):
     patient = models.ForeignKey(
         Patient,
@@ -38,6 +56,9 @@ class Archive(models.Model):
     recommendations = models.TextField(null=True, blank=True)
     cost = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    objects = ArchiveQuerySet.as_manager()
 
     class Meta:
         constraints = [
@@ -46,7 +67,10 @@ class Archive(models.Model):
                 name="unique_archives_archive_patient_doctor_appointment_specialty",
             ),
         ]
-        indexes = [models.Index(fields=["-created_at"])]
+        indexes = [
+            models.Index(fields=["-created_at"]),
+            models.Index(fields=["-updated_at"]),
+        ]
         ordering = ["-created_at"]
 
     def __str__(self):

@@ -15,9 +15,15 @@ class HasRole(permissions.BasePermission):
     setting it to a list or iterable of allowed roles (e.g., `[User.Role.PATIENT, User.Role.DOCTOR]`).
     """
 
+    def _get_required_roles(self, view):
+        if hasattr(view, "required_roles"):
+            return view.required_roles
+        return view.get_required_roles()
+
+
     def has_permission(self, request, view):
         user = request.user
-        required_roles = view.required_roles
+        required_roles = self._get_required_roles(view)
 
         if user.role not in required_roles:
             self.message = _("You don't have the required role.")

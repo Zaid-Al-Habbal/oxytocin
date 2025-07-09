@@ -1,8 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.db.models import Value, TextField
-from django.db.models.functions import Cast, Concat, Greatest
-from django.contrib.postgres.search import TrigramSimilarity
+from django.apps import apps
 
 from common.utils import years_since
 
@@ -51,6 +49,15 @@ class DoctorQuerySet(models.QuerySet):
             self.with_clinic().not_deleted().approved().with_categorized_specialties()
         )
 
+    def with_clinic_appointments(self):
+        Appointment = apps.get_model("appointments", "Appointment")
+        return self.with_clinic().prefetch_related(
+            models.Prefetch(
+                "clinic__appointments",
+                queryset=Appointment.objects.filter(clinic__doctor=self),
+            )
+        )
+
 
 class Doctor(models.Model):
 
@@ -85,6 +92,18 @@ class Doctor(models.Model):
     @property
     def experience(self):
         return years_since(self.start_work_date)
+
+    @property
+    def main_specialty(self) -> "DoctorSpecialty":
+        if hasattr(self, "main_specialties"):
+            return self.main_specialties[0]
+
+        return (
+            DoctorSpecialty.objects.select_related("specialty")
+            .filter(doctor_id=self.pk)
+            .filter(specialty__main_specialties__isnull=True)
+            .first()
+        )
 
     class Meta:
         indexes = [models.Index(fields=["start_work_date"])]

@@ -49,8 +49,8 @@ class DoctorSerializer(serializers.ModelSerializer):
         return self.context.get("request")
 
     def validate_subspecialties(self, value):
-        doctor = self.instance
-        main_specialty = doctor.main_specialties[0].specialty
+        doctor: Doctor = self.instance
+        main_specialty = doctor.main_specialty.specialty
         valid_subspecialties_for_main = set(main_specialty.subspecialties.all())
         if len(value) > len(valid_subspecialties_for_main):
             raise serializers.ValidationError(
@@ -73,10 +73,6 @@ class DoctorSerializer(serializers.ModelSerializer):
                 )
                 raise serializers.ValidationError(_(msg % {"value": specialty.pk}))
         return value
-
-    def to_representation(self, instance):
-        instance.main_specialty = instance.main_specialties[0]
-        return super().to_representation(instance)
 
     def update(self, instance, validated_data):
         user_data = validated_data.pop("user")

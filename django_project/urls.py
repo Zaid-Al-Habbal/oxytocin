@@ -27,6 +27,7 @@ urlpatterns = [
     path("_nested_admin/", include("nested_admin.urls")),
     path("api/users/", include("users.urls")),
     path("api/patients/", include("patients.urls")),
+    path("api/archives/", include("archives.urls")),
     
     path("api/doctors/", include("doctors.urls")),
     
