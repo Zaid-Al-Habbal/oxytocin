@@ -53,7 +53,7 @@ services:
   test:
     extends:
       service: app
-    command: python manage.py test appointments.tests.test_update_appointment --noinput
+    command: python manage.py test appointments.tests.test_change_appointment_status --noinput
     environment:
       DJANGO_TESTING: True
     depends_on:
