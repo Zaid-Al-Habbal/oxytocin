@@ -7,12 +7,42 @@ from django.utils.timezone import now
 from appointments.models import Appointment
 from assistants.permissions import IsAssistantWithClinic
 from appointments.serializers import ChangeAppointmentStatusSerializer
+from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
+
+
+
+@extend_schema(
+    summary="Change Appointment Status",
+    description="Assistants can Change an appointment's status from in_consultation to completed, from waiting to absent, from waiting to in_consultation",
+    methods=['patch'],
+    request=ChangeAppointmentStatusSerializer,
+    responses={200: ChangeAppointmentStatusSerializer},
+    examples=[
+        OpenApiExample(
+            name="Change Appointment Status",
+            value={
+                "status": "in_consultation",
+            },
+            request_only=True
+        ),
+        OpenApiExample(
+            name="Change Appointment Status",
+            value={
+                "detail": "Appointment's status changed successfully"
+            },
+            response_only=True
+        ),
+           
+    ],
+    tags=["Appointments (Assistant Dashboard)"]
+)
 
 class ChangeAppointmentStatusView(UpdateAPIView):
     serializer_class = ChangeAppointmentStatusSerializer
     permission_classes = [IsAuthenticated, IsAssistantWithClinic]
     lookup_url_kwarg = 'appointment_id'
     queryset = Appointment.objects.select_related('clinic')
+    allowed_methods = ['patch']
 
     def get_object(self):
         appointment = super().get_object()
