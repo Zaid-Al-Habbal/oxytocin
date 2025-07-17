@@ -6,3 +6,4 @@ from .rebook_appointment import *
 from .update_appointment import *
 from .list_date_appointments import *
 from .change_appointment_status import *
+from .upload_attachments import *
