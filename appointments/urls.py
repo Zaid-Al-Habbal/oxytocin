@@ -11,5 +11,6 @@ urlpatterns = [
     path('<int:appointment_id>/update/', UpdateAppointmentView.as_view(), name='update-appointment'),
     path('my-clinic/', MyClinicAppointmentsView.as_view(), name='list-my-clinic-appointments'),
     path('my-clinic/<int:appointment_id>/', AppointmentDetailView.as_view(), name='show-my-clinic-appointment-in-detail'),
+    path('my-clinic/<int:appointment_id>/change-status/', ChangeAppointmentStatusView.as_view(), name='change-appointment-status'),
     
 ]
