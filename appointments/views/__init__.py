@@ -8,3 +8,4 @@ from .list_date_appointments import *
 from .change_appointment_status import *
 from .upload_attachments import *
 from .delete_attachment import *
+from .list_attachments import *

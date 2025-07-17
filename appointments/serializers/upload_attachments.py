@@ -33,3 +33,9 @@ class AttachmentUploadSerializer(serializers.Serializer):
         for file in files:
             Attachment.objects.create(appointment=appointment, document=file)
         return {"details": "Attachments uploaded successfully"}
+
+
+class AttachmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attachment
+        fields = ['id', 'document', 'created_at']  # Add any other fields if needed
