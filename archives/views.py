@@ -1,4 +1,5 @@
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import (
     ListAPIView,
     CreateAPIView,
@@ -14,6 +15,7 @@ from doctors.models import Doctor
 
 from archives.models import Archive
 from archives.serializers import ArchiveSerializer
+from archives.filters import ArchiveSpecialtyFilter
 from archives.permissions import (
     ArchiveListPermission,
     ArchiveCreatePermission,
@@ -23,10 +25,18 @@ from archives.permissions import (
 )
 
 
+class ArchivePagination(PageNumberPagination):
+    page_size = 30
+    page_size_query_param = "page_size"
+    max_page_size = 50
+
+
 class ArchiveListView(ListAPIView):
     serializer_class = ArchiveSerializer
     permission_classes = [IsAuthenticated, HasRole, ArchiveListPermission]
+    filter_backends = [ArchiveSpecialtyFilter]
     required_roles = [User.Role.DOCTOR]
+    pagination_class = ArchivePagination
 
     def get_queryset(self):
         return Archive.objects.with_full_relations().filter(
@@ -37,7 +47,9 @@ class ArchiveListView(ListAPIView):
 class ArchivePatientListView(ListAPIView):
     serializer_class = ArchiveSerializer
     permission_classes = [IsAuthenticated, HasRole]
+    filter_backends = [ArchiveSpecialtyFilter]
     required_roles = [User.Role.PATIENT]
+    pagination_class = ArchivePagination
 
     def get_queryset(self):
         return Archive.objects.with_full_relations().filter(
