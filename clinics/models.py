@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.gis.db import models as gis_models
+from django.utils import timezone
 
 from doctors.models import Doctor, DoctorSpecialty
+from patients.models import Patient
 
 
 class ClinicQuerySet(models.QuerySet):
@@ -91,3 +93,16 @@ class ClinicImage(models.Model):
             models.Index(fields=["-updated_at"]),
         ]
         ordering = ["-created_at"]
+
+
+
+class BannedPatient(models.Model):
+    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE, related_name='banned_patients')
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='banned_from')
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        unique_together = ('clinic', 'patient')
+
+    def __str__(self):
+        return f"{self.patient} banned from {self.clinic}"
