@@ -38,3 +38,26 @@ class ArchiveSerializer(serializers.ModelSerializer):
             "updated_at",
         ]
         read_only_fields = ["id", "created_at", "updated_at"]
+
+
+class ArchiveUpdateSerializer(serializers.ModelSerializer):
+    patient = PatientSummarySerializer(read_only=True)
+    doctor = DoctorSummarySerializer(read_only=True)
+    appointment = AppointmentSummarySerializer(read_only=True)
+
+    class Meta:
+        model = Archive
+        fields = [
+            "id",
+            "patient",
+            "doctor",
+            "appointment",
+            "main_complaint",
+            "case_history",
+            "vital_signs",
+            "recommendations",
+            "cost",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "created_at", "updated_at"]

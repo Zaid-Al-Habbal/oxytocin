@@ -14,7 +14,7 @@ from users.permissions import HasRole
 from doctors.models import Doctor
 
 from archives.models import Archive
-from archives.serializers import ArchiveSerializer
+from archives.serializers import ArchiveSerializer, ArchiveUpdateSerializer
 from archives.filters import ArchiveSpecialtyFilter
 from archives.permissions import (
     ArchiveListPermission,
@@ -79,7 +79,7 @@ class ArchiveRetrieveView(RetrieveAPIView):
 
 
 class ArchiveUpdateView(UpdateAPIView):
-    serializer_class = ArchiveSerializer
+    serializer_class = ArchiveUpdateSerializer
     queryset = Archive.objects.with_full_relations().all()
     permission_classes = [IsAuthenticated, HasRole, ArchiveUpdatePermission]
     required_roles = [User.Role.DOCTOR]
