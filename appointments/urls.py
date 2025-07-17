@@ -13,5 +13,6 @@ urlpatterns = [
     path('my-clinic/<int:appointment_id>/', AppointmentDetailView.as_view(), name='show-my-clinic-appointment-in-detail'),
     path('my-clinic/<int:appointment_id>/change-status/', ChangeAppointmentStatusView.as_view(), name='change-appointment-status'),
     path('<int:appointment_id>/upload-attachments/', AppointmentAttachmentUploadView.as_view(), name='upload-attachments'),
+    path('<int:appointment_id>/attachments/<int:attachment_id>/delete/', DeleteAttachmentView.as_view(), name='delete-attachment'),
     
 ]
