@@ -14,6 +14,7 @@ from clinics.models import Clinic
 
 from appointments.serializers import AppointmentBookingSerializer
 from appointments.models import Appointment
+from patients.permissions import NotBannedPatient
 
 @extend_schema(
     summary="Book an Appointment",
@@ -53,7 +54,7 @@ from appointments.models import Appointment
 class BookAppointmentView(APIView):
     required_roles = [User.Role.PATIENT]
     
-    permission_classes = [IsAuthenticated, HasRole]
+    permission_classes = [IsAuthenticated, HasRole, NotBannedPatient]
 
     def post(self, request, clinic_id):
         clinic = get_object_or_404(Clinic, pk=clinic_id)
