@@ -10,6 +10,18 @@ from appointments.serializers import AttachmentUploadSerializer
 from users.permissions import HasRole
 from users.models import CustomUser as User
 
+from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
+
+
+
+@extend_schema(
+    summary="Upload Attachments to an appointment",
+    description="Patients can upload up to 5 pdf files to an appontment after they book it (max size = 7MB)",
+    methods=['post'],
+    request=AttachmentUploadSerializer,
+    tags=["Appointments (Mobile App)"]
+)
+
 
 class AppointmentAttachmentUploadView(APIView):
     required_roles = [User.Role.PATIENT]

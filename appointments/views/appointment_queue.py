@@ -11,6 +11,38 @@ from users.permissions import HasRole
 from users.models import CustomUser as User
 from django.utils.timezone import make_aware
 
+from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
+
+@extend_schema(
+    summary="Get Appointment Queue",
+    description="Patients can see the appointment queue details for previous appointments and the estimated_wait_minutes",
+    methods=['get'],
+    responses={200, AppointmentQueueSerializer},
+    examples=[
+        OpenApiExample(
+            name="List Uploaded Attachments to an appointment",
+            value={
+                "estimated_wait_minutes": 321,
+                "queue": [
+                    {
+                        "status": "waiting",
+                        "visit_time": "13:00:00",
+                        "actual_start_time": None,
+                        "actual_end_time": None
+                    },
+                    {
+                        "status": "completed",
+                        "visit_time": "11:45:00",
+                        "actual_start_time": "11:45:14.209980",
+                        "actual_end_time": "12:00:41.789885"
+                    }
+                ]
+            },
+            response_only=True
+        ),
+    ],
+    tags=["Appointments (Mobile App)"]
+)
 
 class AppointmentQueueView(RetrieveAPIView):
     required_roles = [User.Role.PATIENT]

@@ -10,6 +10,23 @@ from patients.models import Patient
 from assistants.models import Assistant
 from assistants.permissions import IsAssistantWithClinic
 from clinics.models import BannedPatient
+from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
+
+
+
+@extend_schema(
+    summary="Ban Patient",
+    description="Assistants can ban any patient that visit the clinic",
+    methods=['post'],
+    examples=[
+        OpenApiExample(
+            name="List Uploaded Attachments to an appointment",
+            value={"detail": "Patient has been banned successfully."},
+            response_only=True
+        ),
+    ],
+    tags=["Patients Management"]
+)
 
 class BanPatientView(APIView):
     permission_classes = [IsAuthenticated, IsAssistantWithClinic]

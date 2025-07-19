@@ -10,6 +10,15 @@ from appointments.serializers import AttachmentUploadSerializer
 from users.permissions import HasRole
 from users.models import CustomUser as User
 
+from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
+
+@extend_schema(
+    summary="Delete Attachment to an appointment",
+    description="Patients can delete any attachment after they upload it",
+    methods=['delete'],
+    tags=["Appointments (Mobile App)"]
+)
+
 class DeleteAttachmentView(APIView):
     required_roles = [User.Role.PATIENT]
     permission_classes = [IsAuthenticated, HasRole]

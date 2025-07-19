@@ -37,7 +37,7 @@ class CancelAppointmentTests(AppointmentBaseTest):
             patient = self.patient_user,
             clinic= self.clinic,
             visit_date=timezone.now().date() + timedelta(days=1),
-            visit_time="11:30"
+            visit_time=timezone.now().time()
         )
         
         self.valid_url = reverse('cancel-appointment', kwargs={'appointment_id': self.appointment.id})
