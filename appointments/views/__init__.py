@@ -9,3 +9,4 @@ from .change_appointment_status import *
 from .upload_attachments import *
 from .delete_attachment import *
 from .list_attachments import *
+from .appointment_queue import *
