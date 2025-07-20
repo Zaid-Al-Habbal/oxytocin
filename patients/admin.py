@@ -24,6 +24,7 @@ class PatientSpecialtyAccessAdmin(admin.ModelAdmin):
         ("specialty", admin.RelatedOnlyFieldListFilter),
         "visibility",
     ]
+    list_editable = ["visibility"]
     search_fields = [
         "patient__user__first_name",
         "patient__user__last_name",
@@ -32,4 +33,3 @@ class PatientSpecialtyAccessAdmin(admin.ModelAdmin):
         "visibility",
     ]
     readonly_fields = ["created_at"]
-    edit_fields = ["visibility"]
