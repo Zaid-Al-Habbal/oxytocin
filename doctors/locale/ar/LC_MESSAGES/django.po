@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-30 15:06+0300\n"
+"POT-Creation-Date: 2025-07-20 21:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,14 +19,12 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: doctors/permissions.py:16
-#: doctors/serializers/doctor_certificate_serializer.py:43
-#: doctors/serializers/doctor_create_serializer.py:56
+#: doctors/permissions.py:16 doctors/serializers/certificate.py:43
+#: doctors/serializers/create.py:56
 msgid "You don't have the required role."
 msgstr "ليس لديك الدور المطلوب."
 
-#: doctors/permissions.py:19
-#: doctors/serializers/doctor_certificate_serializer.py:46
+#: doctors/permissions.py:19 doctors/serializers/certificate.py:46
 msgid "Please create a doctor profile first."
 msgstr "الرجاء إنشاء حساب طبيب أولاً."
 
@@ -39,59 +37,55 @@ msgstr "يرجى رفع الشهادة اولاً."
 msgid "Please create a clinic first."
 msgstr "الرجاء إنشاء عيادة أولاً."
 
-#: doctors/serializers/doctor_certificate_serializer.py:51
-msgid "A certificate has already been uploaded for this doctor profile."
-msgstr "لقد تم بالفعل رفع شهادة لملف هذا الطبيب."
-
-#: doctors/serializers/doctor_certificate_serializer.py:60
-msgid "Doctor's certificate uploaded successfully."
-msgstr "تم رفع شهادة الطبيب بنجاح."
-
-#: doctors/serializers/doctor_create_serializer.py:40
-msgid "Main specialty cannot be a subspecialty."
-msgstr "لا يمكن أن يكون التخصص الرئيسي تخصصاً فرعياً."
-
-#: doctors/serializers/doctor_create_serializer.py:49
-#: doctors/serializers/doctor_update_serializer.py:50
-msgid "Duplicate is not allowed."
-msgstr "التكرار غير مسموح به."
-
-#: doctors/serializers/doctor_create_serializer.py:58
-msgid "Phone number is not verified."
-msgstr "لم يتم التحقق من رقم الهاتف."
-
-#: doctors/serializers/doctor_create_serializer.py:60
-msgid "You already have a doctor profile."
-msgstr "لديك حساب طبيب بالفعل."
-
-#: doctors/serializers/doctor_create_serializer.py:71
-#: doctors/serializers/doctor_update_serializer.py:43
+#: doctors/serializers/base.py:58 doctors/serializers/create.py:69
 msgid ""
 "You cannot provide more subspecialties than the ones available for the main "
 "specialty."
 msgstr "لا يمكنك توفير تخصصات فرعية أكثر من تلك المتوفرة للتخصص الرئيسي."
 
-#: doctors/serializers/doctor_create_serializer.py:78
-#: doctors/serializers/doctor_update_serializer.py:57
+#: doctors/serializers/base.py:65 doctors/serializers/create.py:49
+msgid "Duplicate is not allowed."
+msgstr "التكرار غير مسموح به."
+
+#: doctors/serializers/base.py:68
+#, python-format
+msgid "Specialty \"%(value)s\" - is not a subspecialty."
+msgstr "التخصص \"%(value)s\" - ليس تخصصاً فرعياً."
+
+#: doctors/serializers/base.py:69 doctors/serializers/base.py:74
+#: doctors/serializers/create.py:78
+msgid "value"
+msgstr ""
+
+#: doctors/serializers/base.py:72 doctors/serializers/create.py:76
 #, python-format
 msgid "Subspecialty \"%(value)s\" - is not a branch of the main specialty."
 msgstr "التخصص الفرعي \"%(value)s\" - ليس فرعاً من التخصص الرئيسي."
 
-#: doctors/serializers/doctor_create_serializer.py:80
-#: doctors/serializers/doctor_update_serializer.py:54
-#: doctors/serializers/doctor_update_serializer.py:59
-msgid "value"
-msgstr ""
+#: doctors/serializers/certificate.py:51
+msgid "A certificate has already been uploaded for this doctor profile."
+msgstr "لقد تم بالفعل رفع شهادة لملف هذا الطبيب."
 
-#: doctors/serializers/doctor_login_serializer.py:26
+#: doctors/serializers/certificate.py:60
+msgid "Doctor's certificate uploaded successfully."
+msgstr "تم رفع شهادة الطبيب بنجاح."
+
+#: doctors/serializers/create.py:40
+msgid "Main specialty cannot be a subspecialty."
+msgstr "لا يمكن أن يكون التخصص الرئيسي تخصصاً فرعياً."
+
+#: doctors/serializers/create.py:58
+msgid "Phone number is not verified."
+msgstr "لم يتم التحقق من رقم الهاتف."
+
+#: doctors/serializers/create.py:60
+msgid "You already have a doctor profile."
+msgstr "لديك حساب طبيب بالفعل."
+
+#: doctors/serializers/login.py:26
 msgid "Invalid credentials!"
 msgstr "بيانات اعتماد خاطئة!"
 
-#: doctors/serializers/doctor_login_serializer.py:29
+#: doctors/serializers/login.py:29
 msgid "Please, verify your phone number first"
 msgstr "الرجاء التحقق من رقم هاتفك أولاً."
-
-#: doctors/serializers/doctor_update_serializer.py:53
-#, python-format
-msgid "Specialty \"%(value)s\" - is not a subspecialty."
-msgstr "التخصص \"%(value)s\" - ليس تخصصاً فرعياً."

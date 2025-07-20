@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-06 16:35+0300\n"
+"POT-Creation-Date: 2025-07-20 21:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,59 +19,60 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: clinics/serializers.py:41
+#: clinics/serializers.py:41 clinics/serializers/base.py:37
 msgid "You don't have the required role."
 msgstr "ليس لديك الدور المطلوب."
 
-#: clinics/serializers.py:44
+#: clinics/serializers.py:44 clinics/serializers/base.py:39
 msgid "Please create a doctor profile first."
 msgstr "الرجاء إنشاء حساب طبيب أولاً."
 
-#: clinics/serializers.py:48
+#: clinics/serializers.py:48 clinics/serializers/base.py:42
 msgid "Please upload a certificate first."
 msgstr "يرجى رفع الشهادة اولاً."
 
-#: clinics/serializers.py:50
+#: clinics/serializers.py:50 clinics/serializers/base.py:44
 msgid "You already have a clinic."
 msgstr "لديك عيادة بالفعل."
 
 #: clinics/serializers.py:101 clinics/serializers.py:103
+#: clinics/serializers/image.py:47 clinics/serializers/image.py:49
 msgid "This field is required."
 msgstr "هذا الحقل مطلوب."
 
-#: clinics/serializers.py:137
+#: clinics/serializers.py:137 clinics/serializers/image.py:83
 msgid "You can upload a maximum of 8 images."
 msgstr "يمكنك رفع مايصل الى 8 صور كحد أقصى."
 
-#: clinics/serializers.py:192
+#: clinics/serializers.py:192 clinics/serializers/image.py:138
 msgid "Duplicate is not allowed."
 msgstr "التكرار غير مسموح به."
 
-#: clinics/serializers.py:195
+#: clinics/serializers.py:195 clinics/serializers/image.py:141
 #, python-format
 msgid "Invalid pk \"%(value)s\" - object does not exist."
 msgstr "معرف العنصر \"%(value)s\" غير صالح - العنصر غير موجود."
 
-#: clinics/serializers.py:196
+#: clinics/serializers.py:196 clinics/serializers/image.py:142
 msgid "value"
 msgstr ""
 
-#: clinics/serializers.py:207
+#: clinics/serializers.py:207 clinics/serializers/assistant.py:16
 msgid "There is no assistant with this phone number!"
 msgstr "ليس هناك مساعدة بهذا الرقم"
 
-#: clinics/serializers.py:210
+#: clinics/serializers.py:210 clinics/serializers/assistant.py:21
 msgid "This assistant is already connected to a clinic."
 msgstr "المساعدة مرتبطة بعيادة أخرى"
 
-#: clinics/views.py:191
+#: clinics/views/assistant.py:46
 msgid "Assistant added successfully!"
 msgstr "تمت إضافة المساعدة بنجاح"
 
-#: clinics/views.py:233
+#: clinics/views/assistant.py:93
 msgid "Assistant not found or not in your clinic."
 msgstr "المساعدة غير موجودة"
 
-#: clinics/views.py:239
+#: clinics/views/assistant.py:101
 msgid "Assistant removed from clinic."
 msgstr "تمت إزالة المساعدة من العيادة"

@@ -9,8 +9,10 @@ from .serializers import (
     LoginPatientSerializer,
     PatientProfileSerializer,
     CompletePatientRegistrationSerializer,
+    PatientSpecialtyAccessListCreateSerializer,
+    PatientSpecialtyAccessSerializer,
 )
-from .models import Patient
+from .models import Patient, PatientSpecialtyAccess
 from users.permissions import HasRole
 from users.models import CustomUser as User
 
@@ -87,3 +89,26 @@ class PatientProfileView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user.patient
+
+
+class PatientSpecialtyAccessListCreateView(generics.ListCreateAPIView):
+    serializer_class = PatientSpecialtyAccessListCreateSerializer
+    permission_classes = [permissions.IsAuthenticated, HasRole]
+    required_roles = [User.Role.PATIENT]
+
+    def get_queryset(self):
+        patient: Patient = self.request.user.patient
+        return PatientSpecialtyAccess.objects.filter(patient__pk=patient.pk)
+
+    def perform_create(self, serializer):
+        patient: Patient = self.request.user.patient
+        serializer.save(patient_id=patient.pk)
+
+
+class PatientSpecialtyAccessRetrieveUpdateDestroyView(
+    generics.RetrieveUpdateDestroyAPIView
+):
+    queryset = PatientSpecialtyAccess.objects.all()
+    serializer_class = PatientSpecialtyAccessSerializer
+    permission_classes = [permissions.IsAuthenticated, HasRole]
+    required_roles = [User.Role.PATIENT]
