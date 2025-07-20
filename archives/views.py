@@ -8,6 +8,8 @@ from rest_framework.generics import (
     DestroyAPIView,
 )
 
+from drf_spectacular.utils import extend_schema, OpenApiParameter
+
 from users.models import CustomUser as User
 from users.permissions import HasRole
 
@@ -31,6 +33,34 @@ class ArchivePagination(PageNumberPagination):
     max_page_size = 50
 
 
+@extend_schema(
+    summary="List archives for a patient (doctor only)",
+    description="Returns a paginated list of all archives for a specific patient. Only accessible by users with the DOCTOR role.",
+    parameters=[
+        OpenApiParameter(
+            name="specialties",
+            required=False,
+            type=str,
+            location=OpenApiParameter.QUERY,
+            description="Comma-separated list of specialty IDs to filter archives by specialty.",
+        ),
+        OpenApiParameter(
+            name="page",
+            required=False,
+            type=int,
+            location=OpenApiParameter.QUERY,
+            description="Page number for pagination.",
+        ),
+        OpenApiParameter(
+            name="page_size",
+            required=False,
+            type=int,
+            location=OpenApiParameter.QUERY,
+            description="Number of items per page.",
+        ),
+    ],
+    responses=ArchiveSerializer(many=True),
+)
 class ArchiveListView(ListAPIView):
     serializer_class = ArchiveSerializer
     permission_classes = [IsAuthenticated, HasRole, ArchiveListPermission]
@@ -44,6 +74,34 @@ class ArchiveListView(ListAPIView):
         )
 
 
+@extend_schema(
+    summary="List archives for the current patient",
+    description="Returns a paginated list of all archives for the currently authenticated patient. Only accessible by users with the PATIENT role.",
+    parameters=[
+        OpenApiParameter(
+            name="specialties",
+            required=False,
+            type=str,
+            location=OpenApiParameter.QUERY,
+            description="Comma-separated list of specialty IDs to filter archives by specialty.",
+        ),
+        OpenApiParameter(
+            name="page",
+            required=False,
+            type=int,
+            location=OpenApiParameter.QUERY,
+            description="Page number for pagination.",
+        ),
+        OpenApiParameter(
+            name="page_size",
+            required=False,
+            type=int,
+            location=OpenApiParameter.QUERY,
+            description="Number of items per page.",
+        ),
+    ],
+    responses=ArchiveSerializer(many=True),
+)
 class ArchivePatientListView(ListAPIView):
     serializer_class = ArchiveSerializer
     permission_classes = [IsAuthenticated, HasRole]
@@ -57,6 +115,12 @@ class ArchivePatientListView(ListAPIView):
         )
 
 
+@extend_schema(
+    summary="Create a new archive (doctor only)",
+    description="Creates a new archive for the specified patient. Only accessible by users with the DOCTOR role.",
+    request=ArchiveSerializer,
+    responses=ArchiveSerializer,
+)
 class ArchiveCreateView(CreateAPIView):
     serializer_class = ArchiveSerializer
     permission_classes = [IsAuthenticated, HasRole, ArchiveCreatePermission]
@@ -71,6 +135,11 @@ class ArchiveCreateView(CreateAPIView):
         )
 
 
+@extend_schema(
+    summary="Retrieve archive details",
+    description="Retrieves detailed information about a specific archive. Accessible by both PATIENT and DOCTOR roles.",
+    responses=ArchiveSerializer,
+)
 class ArchiveRetrieveView(RetrieveAPIView):
     serializer_class = ArchiveSerializer
     queryset = Archive.objects.with_full_relations().all()
@@ -78,6 +147,12 @@ class ArchiveRetrieveView(RetrieveAPIView):
     required_roles = [User.Role.PATIENT, User.Role.DOCTOR]
 
 
+@extend_schema(
+    summary="Update an archive (doctor only)",
+    description="Updates an existing archive. Only accessible by users with the DOCTOR role.",
+    request=ArchiveUpdateSerializer,
+    responses=ArchiveUpdateSerializer,
+)
 class ArchiveUpdateView(UpdateAPIView):
     serializer_class = ArchiveUpdateSerializer
     queryset = Archive.objects.with_full_relations().all()
@@ -85,6 +160,11 @@ class ArchiveUpdateView(UpdateAPIView):
     required_roles = [User.Role.DOCTOR]
 
 
+@extend_schema(
+    summary="Delete an archive (patient only)",
+    description="Deletes a specific archive. Only accessible by users with the PATIENT role.",
+    responses={204: None},
+)
 class ArchiveDestroyView(DestroyAPIView):
     serializer_class = ArchiveSerializer
     queryset = Archive.objects.with_full_relations().all()
