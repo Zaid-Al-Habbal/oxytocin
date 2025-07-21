@@ -9,6 +9,7 @@ from .views import (
     ListAssistantView,
     RetrieveAssistantView,
     RemoveAssistantFromClinic,
+    BanPatientView,
 )
 
 urlpatterns = [
@@ -20,4 +21,5 @@ urlpatterns = [
     path("my-clinic/assistants/", ListAssistantView.as_view(), name="list-clinic-assistants"),
     path("my-clinic/assistants/<int:pk>/", RetrieveAssistantView.as_view(), name="view-clinic-assistant"),
     path("my-clinic/assistants/<int:pk>/remove/", RemoveAssistantFromClinic.as_view(), name="remove-clinic-assistant"),
+    path("my-clinic/patients/<int:patient_id>/ban/", BanPatientView.as_view(), name="ban-patient")
 ]

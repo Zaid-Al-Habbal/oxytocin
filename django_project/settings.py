@@ -153,6 +153,8 @@ LOCALE_PATHS = [
     BASE_DIR / "doctors/locale",
     BASE_DIR / "clinics/locale",
     BASE_DIR / "assistants/locale",
+    BASE_DIR / "schedules/locale",
+    BASE_DIR / "appointments/locale",
 ]
 
 # Static files (CSS, JavaScript, Images)

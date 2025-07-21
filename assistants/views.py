@@ -1,12 +1,12 @@
 from django.utils.translation import gettext_lazy as _
-
+from rest_framework import serializers
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework import generics, permissions
 
-from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
+from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view, inline_serializer
 
 from .serializers import LoginAssistantSerializer, CompleteAssistantRegistrationSerializer, AssistantProfileSerializer
 from .models import Assistant
@@ -84,6 +84,15 @@ class AssistantProfileView(generics.RetrieveUpdateAPIView):
 @extend_schema(
     summary="Assistant leave his/her clinic",
     description="Assitant can use this endpoint to leave its clinic if he/she is connected to one",
+    methods=["delete"],
+    responses={200},
+    examples=[
+        OpenApiExample(
+            name="Leave My clinic",
+            value={"detail": _("You leaved your clinic.")},
+            response_only=True
+        )
+    ],
     tags=["Assistant"]
 )
 class LeaveMyClinicView(APIView):

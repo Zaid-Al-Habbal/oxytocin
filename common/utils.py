@@ -99,3 +99,16 @@ def years_since(date_from):
         - date_from.year
         - ((today.month, today.day) < (date_from.month, date_from.day))
     )
+
+
+def _get_django_weekday(day_name):
+        mapping = {
+            'sunday': 1,
+            'monday': 2,
+            'tuesday': 3,
+            'wednesday': 4,
+            'thursday': 5,
+            'friday': 6,
+            'saturday': 7,
+        }
+        return mapping[day_name]

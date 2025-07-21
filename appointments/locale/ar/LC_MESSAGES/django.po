@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-02 15:45+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: appointments/serializers/book_appointment.py:34
+msgid "Visit date must be in the future."
+msgstr "تاريخ الزيارة يحب أن يكون في المستقبل"
+
+#: appointments/serializers/book_appointment.py:59
+msgid "This time slot is already booked."
+msgstr "هذا الوقت محجوز من قبل مريض آخر"
+
+#: appointments/services.py:26
+#, python-brace-format
+msgid ""
+"Dear {patient},\n"
+" your appointment on {date} at {time} with Dr. {doctor} has been cancelled "
+"due to clinic schedule changes.\n"
+"Please reschedule through our app. We apologize for any inconvenience."
+msgstr ""
+"عزيزي/عزيزتي {patient}،\n"
+"\n"
+"نود إعلامك بأن موعدك المحدد في تاريخ {date} الساعة {time} مع الدكتور/ة "
+"{doctor} قد تم إلغاؤه بسبب تغييرات في جدول العيادة.\n"
+"نعتذر عن هذا الإزعاج، ونرجو منك إعادة حجز موعد جديد من خلال التطبيق\n"
+"شكرًا لتفهمك."
+
+#: appointments/views/cancel_appointment.py:54
+msgid ""
+"Cannot cancel an appointment less than 24 hours before the scheduled time."
+msgstr "لا يمكنك إلغاء موعد قبل أقل من 24 ساعة من ميعاده"
+
+#: appointments/views/cancel_appointment.py:62
+msgid "Appointment has been cancelled successfully"
+msgstr "تم إلغاء الموعد بنجاح"
+
+#: appointments/views/rebook_appointment.py:56
+msgid "Cannot rebook this appointment because its time is passed"
+msgstr "لا يمكنك إعادة حجز هذا الموعد لأن ميعاده أصبح في الماضي"
+
+#: appointments/views/rebook_appointment.py:65
+msgid ""
+"You can not rebook this appointment because its booked by another patient"
+msgstr "لا يمكنك إعادة حجز هذا الموعد لأنه أصبح محجوز من قبل مريض آخر"
+
+#: appointments/views/rebook_appointment.py:78
+#, fuzzy
+#| msgid ""
+#| "You can not rebook this appointment because its booked by another patient"
+msgid ""
+"You can not rebook this appointment because its time slot is not available "
+"anymore"
+msgstr "لا يمكنك إعادة حجز هذا الموعد لأن ميعاده أصبح غير متاح"
+
+#: appointments/views/rebook_appointment.py:86
+msgid "Appointment has been rebooked successfully"
+msgstr "تم إعادة حجز الموعد بنجاح"
