@@ -4,7 +4,7 @@ from clinics.models import ClinicPatient
 from clinics.serializers.summary import ClinicSummarySerializer
 
 
-class ClinicPatientSerializer(serializers.ModelSerializer):
+class PatientClinicSerializer(serializers.ModelSerializer):
     clinic = ClinicSummarySerializer(read_only=True)
 
     class Meta:

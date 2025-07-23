@@ -12,7 +12,7 @@ from .serializers import (
     CompletePatientRegistrationSerializer,
     PatientSpecialtyAccessListCreateSerializer,
     PatientSpecialtyAccessSerializer,
-    ClinicPatientSerializer,
+    PatientClinicSerializer,
 )
 from .models import Patient, PatientSpecialtyAccess
 from users.permissions import HasRole
@@ -127,7 +127,7 @@ class PatientSpecialtyAccessRetrieveUpdateDestroyView(
 
 
 class ClinicPatientListView(generics.ListAPIView):
-    serializer_class = ClinicPatientSerializer
+    serializer_class = PatientClinicSerializer
     permission_classes = [permissions.IsAuthenticated, HasRole]
     required_roles = [User.Role.PATIENT]
     pagination_class = PatientPagination
@@ -138,7 +138,7 @@ class ClinicPatientListView(generics.ListAPIView):
 
 
 class ClinicPatientRetrieveView(generics.RetrieveAPIView):
-    serializer_class = ClinicPatientSerializer
+    serializer_class = PatientClinicSerializer
     permission_classes = [permissions.IsAuthenticated, HasRole]
     required_roles = [User.Role.PATIENT]
 
