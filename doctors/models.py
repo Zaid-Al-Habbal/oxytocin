@@ -94,7 +94,7 @@ class Doctor(models.Model):
         return years_since(self.start_work_date)
 
     @property
-    def main_specialty(self) -> "DoctorSpecialty":
+    def main_specialty(self) -> "DoctorSpecialty|None":
         if hasattr(self, "main_specialties"):
             return self.main_specialties[0]
 

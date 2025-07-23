@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.gis.db import models as gis_models
 
 from doctors.models import Doctor, DoctorSpecialty
+from patients.models import Patient
 
 
 class ClinicQuerySet(models.QuerySet):
@@ -28,7 +29,7 @@ class ClinicQuerySet(models.QuerySet):
                 to_attr="subspecialties",
             ),
         )
-    
+
     def with_doctor(self):
         return self.select_related("doctor")
 
@@ -81,6 +82,30 @@ class ClinicImage(models.Model):
     image = models.ImageField(
         upload_to="images/clinics/%Y/%m/%d/", null=True, blank=True
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["-created_at"]),
+            models.Index(fields=["-updated_at"]),
+        ]
+        ordering = ["-created_at"]
+
+
+class ClinicPatient(models.Model):
+    clinic = models.ForeignKey(
+        Clinic,
+        on_delete=models.CASCADE,
+        related_name="clinics",
+    )
+    patient = models.ForeignKey(
+        Patient,
+        on_delete=models.CASCADE,
+        related_name="patients",
+    )
+    cost = models.FloatField()
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

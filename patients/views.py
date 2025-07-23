@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework import generics, permissions
+from rest_framework.pagination import PageNumberPagination
 
 from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
 
@@ -11,10 +12,18 @@ from .serializers import (
     CompletePatientRegistrationSerializer,
     PatientSpecialtyAccessListCreateSerializer,
     PatientSpecialtyAccessSerializer,
+    ClinicPatientSerializer,
 )
 from .models import Patient, PatientSpecialtyAccess
 from users.permissions import HasRole
 from users.models import CustomUser as User
+from clinics.models import ClinicPatient
+
+
+class PatientPagination(PageNumberPagination):
+    page_size = 30
+    page_size_query_param = "page_size"
+    max_page_size = 50
 
 
 @extend_schema(
@@ -108,7 +117,31 @@ class PatientSpecialtyAccessListCreateView(generics.ListCreateAPIView):
 class PatientSpecialtyAccessRetrieveUpdateDestroyView(
     generics.RetrieveUpdateDestroyAPIView
 ):
-    queryset = PatientSpecialtyAccess.objects.all()
     serializer_class = PatientSpecialtyAccessSerializer
     permission_classes = [permissions.IsAuthenticated, HasRole]
     required_roles = [User.Role.PATIENT]
+
+    def get_queryset(self):
+        patient: Patient = self.request.user.patient
+        return PatientSpecialtyAccess.objects.filter(patient__pk=patient.pk)
+
+
+class ClinicPatientListView(generics.ListAPIView):
+    serializer_class = ClinicPatientSerializer
+    permission_classes = [permissions.IsAuthenticated, HasRole]
+    required_roles = [User.Role.PATIENT]
+    pagination_class = PatientPagination
+
+    def get_queryset(self):
+        patient: Patient = self.request.user.patient
+        return ClinicPatient.objects.filter(patient__pk=patient.pk)
+
+
+class ClinicPatientRetrieveView(generics.RetrieveAPIView):
+    serializer_class = ClinicPatientSerializer
+    permission_classes = [permissions.IsAuthenticated, HasRole]
+    required_roles = [User.Role.PATIENT]
+
+    def get_queryset(self):
+        patient: Patient = self.request.user.patient
+        return ClinicPatient.objects.filter(patient__pk=patient.pk)

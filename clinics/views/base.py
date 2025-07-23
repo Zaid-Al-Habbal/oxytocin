@@ -4,9 +4,13 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema, extend_schema_view
 
-from clinics.models import Clinic
-from clinics.serializers import ClinicSerializer
+from clinics.models import Clinic, ClinicPatient
+from clinics.serializers import ClinicSerializer, ClinicPatientSerializer
 from doctors.permissions import IsDoctorWithClinic
+from users.models import CustomUser as User
+from users.permissions import HasRole
+from assistants.models import Assistant
+from assistants.permissions import IsAssistantAssociatedWithClinic
 
 
 @extend_schema(
@@ -43,3 +47,23 @@ class ClinicRetrieveUpdateView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user.doctor.clinic
+
+
+class ClinicPatientListView(generics.ListAPIView):
+    serializer_class = ClinicPatientSerializer
+    permission_classes = [IsAuthenticated, HasRole, IsAssistantAssociatedWithClinic]
+    required_roles = [User.Role.ASSISTANT]
+
+    def get_queryset(self):
+        assistant: Assistant = self.request.user.assistant
+        return ClinicPatient.objects.filter(clinic__pk=assistant.clinic.pk)
+
+
+class ClinicPatientRetrieveUpdateView(generics.RetrieveUpdateAPIView):
+    serializer_class = ClinicPatientSerializer
+    permission_classes = [IsAuthenticated, HasRole, IsAssistantAssociatedWithClinic]
+    required_roles = [User.Role.ASSISTANT]
+
+    def get_queryset(self):
+        assistant: Assistant = self.request.user.assistant
+        return ClinicPatient.objects.filter(clinic__pk=assistant.clinic.pk)
