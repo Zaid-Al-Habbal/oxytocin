@@ -2,7 +2,7 @@ from django.utils.translation import gettext_lazy as _
 
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from drf_spectacular.utils import extend_schema, extend_schema_view
+from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiExample
 
 from clinics.models import Clinic, ClinicPatient
 from clinics.serializers import ClinicSerializer, ClinicPatientSerializer
@@ -49,6 +49,11 @@ class ClinicRetrieveUpdateView(generics.RetrieveUpdateAPIView):
         return self.request.user.doctor.clinic
 
 
+@extend_schema(
+    summary="List patients who owe the clinic",
+    description="Returns a list of patients associated with the authenticated assistant's clinic who still have outstanding payments.",
+    tags=["Clinic"],
+)
 class ClinicPatientListView(generics.ListAPIView):
     serializer_class = ClinicPatientSerializer
     permission_classes = [IsAuthenticated, HasRole, IsAssistantAssociatedWithClinic]
@@ -56,14 +61,34 @@ class ClinicPatientListView(generics.ListAPIView):
 
     def get_queryset(self):
         assistant: Assistant = self.request.user.assistant
-        return ClinicPatient.objects.filter(clinic__pk=assistant.clinic.pk)
+        return ClinicPatient.objects.with_positive_cost().filter(
+            clinic__pk=assistant.clinic.pk
+        )
 
 
+@extend_schema_view(
+    get=extend_schema(
+        summary="Retrieve clinic patient details",
+        description="Returns the billing information for a specific patient who still owes money to the clinic. Only accessible by assistants associated with the clinic.",
+        tags=["Clinic"],
+    ),
+    put=extend_schema(
+        summary="Update clinic patient's remaining bill",
+        description=(
+            "Updates the remaining bill for a patient associated with the assistant's clinic. "
+            "The cost can only be decreased (e.g., after a payment)."
+        ),
+        tags=["Clinic"],
+    ),
+)
 class ClinicPatientRetrieveUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = ClinicPatientSerializer
     permission_classes = [IsAuthenticated, HasRole, IsAssistantAssociatedWithClinic]
     required_roles = [User.Role.ASSISTANT]
+    http_method_names = ["get", "put"]
 
     def get_queryset(self):
         assistant: Assistant = self.request.user.assistant
-        return ClinicPatient.objects.filter(clinic__pk=assistant.clinic.pk)
+        return ClinicPatient.objects.with_positive_cost().filter(
+            clinic__pk=assistant.clinic.pk
+        )

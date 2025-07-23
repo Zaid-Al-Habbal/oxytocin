@@ -1,3 +1,4 @@
+from turtle import mode
 from django.db import models
 from django.contrib.gis.db import models as gis_models
 
@@ -93,6 +94,11 @@ class ClinicImage(models.Model):
         ordering = ["-created_at"]
 
 
+class ClinicPatientQuerySet(models.QuerySet):
+    def with_positive_cost(self):
+        return self.filter(cost__gt=0)
+
+
 class ClinicPatient(models.Model):
     clinic = models.ForeignKey(
         Clinic,
@@ -108,6 +114,8 @@ class ClinicPatient(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    objects = ClinicPatientQuerySet.as_manager()
 
     class Meta:
         indexes = [
