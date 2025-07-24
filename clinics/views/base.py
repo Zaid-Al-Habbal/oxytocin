@@ -4,6 +4,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema, extend_schema_view
 
+from rest_framework.pagination import PageNumberPagination
 from clinics.models import Clinic, ClinicPatient
 from clinics.serializers import ClinicSerializer, ClinicPatientSerializer
 from doctors.permissions import IsDoctorWithClinic
@@ -11,6 +12,12 @@ from users.models import CustomUser as User
 from users.permissions import HasRole
 from assistants.models import Assistant
 from assistants.permissions import IsAssistantAssociatedWithClinic
+
+
+class ClinicPagination(PageNumberPagination):
+    page_size = 30
+    page_size_query_param = "page_size"
+    max_page_size = 50
 
 
 @extend_schema(
@@ -58,6 +65,7 @@ class ClinicPatientListView(generics.ListAPIView):
     serializer_class = ClinicPatientSerializer
     permission_classes = [IsAuthenticated, HasRole, IsAssistantAssociatedWithClinic]
     required_roles = [User.Role.ASSISTANT]
+    pagination_class = ClinicPagination
 
     def get_queryset(self):
         assistant: Assistant = self.request.user.assistant
