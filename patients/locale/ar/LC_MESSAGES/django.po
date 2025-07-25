@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-20 21:56+0300\n"
+"POT-Creation-Date: 2025-07-25 21:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,31 +19,31 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: patients/serializers.py:38
-msgid "Invalid credentials"
-msgstr ""
-
-#: patients/serializers.py:41
-msgid "Only patients can log in here."
-msgstr "فقط المرضى يستطيعون تسجيل الدحول هنا"
-
-#: patients/serializers.py:45
-msgid "Please, verify your phone number first"
-msgstr "الرجاء التحقق من رقم هاتفك أولاً."
-
-#: patients/serializers.py:82
+#: patients/serializers/base.py:41
 msgid "Phone number is not verified."
 msgstr "لم يتم التحقق من رقم الهاتف."
 
-#: patients/serializers.py:84
+#: patients/serializers/base.py:43
 msgid "Patient profile already exists."
 msgstr "لقد قمت بإنشاء ملف شخصي سابقا"
 
-#: patients/serializers.py:87
+#: patients/serializers/base.py:46
 msgid "You have no access to complete this registration"
 msgstr "ليس لديك الصلاحيات لإكمال هذه العملية"
 
-#: patients/serializers.py:197
+#: patients/serializers/login.py:25
+msgid "Invalid credentials"
+msgstr "بيانات اعتماد غير صالحة"
+
+#: patients/serializers/login.py:28
+msgid "Only patients can log in here."
+msgstr "فقط المرضى يستطيعون تسجيل الدحول هنا"
+
+#: patients/serializers/login.py:32
+msgid "Please, verify your phone number first"
+msgstr "الرجاء التحقق من رقم هاتفك أولاً."
+
+#: patients/serializers/specialty.py:47
 #, python-format
 msgid "Invalid pk \"%(value)s\" - object already attached with patient."
 msgstr "معرف العنصر \"%(value)s\" - العنصر مرتبط بالفعل مع المريض."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-20 21:56+0300\n"
+"POT-Creation-Date: 2025-07-25 21:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,27 +37,27 @@ msgstr "يرجى رفع الشهادة اولاً."
 msgid "Please create a clinic first."
 msgstr "الرجاء إنشاء عيادة أولاً."
 
-#: doctors/serializers/base.py:58 doctors/serializers/create.py:69
+#: doctors/serializers/base.py:54 doctors/serializers/create.py:69
 msgid ""
 "You cannot provide more subspecialties than the ones available for the main "
 "specialty."
 msgstr "لا يمكنك توفير تخصصات فرعية أكثر من تلك المتوفرة للتخصص الرئيسي."
 
-#: doctors/serializers/base.py:65 doctors/serializers/create.py:49
+#: doctors/serializers/base.py:61 doctors/serializers/create.py:49
 msgid "Duplicate is not allowed."
 msgstr "التكرار غير مسموح به."
 
-#: doctors/serializers/base.py:68
+#: doctors/serializers/base.py:64
 #, python-format
 msgid "Specialty \"%(value)s\" - is not a subspecialty."
 msgstr "التخصص \"%(value)s\" - ليس تخصصاً فرعياً."
 
-#: doctors/serializers/base.py:69 doctors/serializers/base.py:74
+#: doctors/serializers/base.py:65 doctors/serializers/base.py:70
 #: doctors/serializers/create.py:78
 msgid "value"
 msgstr ""
 
-#: doctors/serializers/base.py:72 doctors/serializers/create.py:76
+#: doctors/serializers/base.py:68 doctors/serializers/create.py:76
 #, python-format
 msgid "Subspecialty \"%(value)s\" - is not a branch of the main specialty."
 msgstr "التخصص الفرعي \"%(value)s\" - ليس فرعاً من التخصص الرئيسي."
