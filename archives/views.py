@@ -1,3 +1,5 @@
+from django.db.models import Q
+
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import (
@@ -10,12 +12,13 @@ from rest_framework.generics import (
 
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 
+from patients.models import PatientSpecialtyAccess
 from users.models import CustomUser as User
 from users.permissions import HasRole
 
 from doctors.models import Doctor
 
-from archives.models import Archive
+from archives.models import Archive, ArchiveAccessPermission
 from archives.serializers import ArchiveSerializer, ArchiveUpdateSerializer
 from archives.filters import ArchiveSpecialtyFilter
 from archives.permissions import (
@@ -71,8 +74,21 @@ class ArchiveListView(ListAPIView):
     pagination_class = ArchivePagination
 
     def get_queryset(self):
+        patient_pk = self.kwargs["patient_pk"]
+        doctor: Doctor = self.request.user.doctor
+
+        query1 = ArchiveAccessPermission.objects.filter(
+            patient_id=patient_pk, doctor_id=doctor.pk
+        ).values_list("specialty_id", flat=True)
+
+        query2 = PatientSpecialtyAccess.objects.public_only().values_list(
+            "specialty_id", flat=True
+        )
+
+        specialty_ids = set(query1.union(query2))
+
         return Archive.objects.with_full_relations().filter(
-            patient__pk=self.kwargs["patient_pk"]
+            Q(specialty_id__in=specialty_ids) | Q(doctor_id=doctor.pk)
         )
 
 
@@ -177,7 +193,7 @@ class ArchiveUpdateView(UpdateAPIView):
         old_archive = self.get_object()
         old_cost = old_archive.cost
         new_cost = serializer.validated_data.get("cost")
-        cost = new_cost - old_cost 
+        cost = new_cost - old_cost
         archive: Archive = serializer.save()
         doctor = archive.doctor
         patient = archive.patient
@@ -187,7 +203,6 @@ class ArchiveUpdateView(UpdateAPIView):
         if not created:
             clinic_patient.cost += cost
             clinic_patient.save()
-
 
 
 @extend_schema(

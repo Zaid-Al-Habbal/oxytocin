@@ -91,7 +91,7 @@ class PatientClinicListTestCase(PatientClinicBaseTestCase):
         response = self.client.get(self.path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.data
-        self.assertIn("result", str(data))
+        self.assertIn("results", str(data))
         self.assertIn("clinic", str(data))
 
     def test_view_rejects_unauthenticated_users(self):

@@ -3,6 +3,7 @@ from rest_framework.permissions import BasePermission
 from archives.models import Archive
 from archives.models import ArchiveAccessPermission
 
+from patients.models import PatientSpecialtyAccess
 from users.models import CustomUser as User
 
 from appointments.models import Appointment
@@ -14,15 +15,10 @@ class ArchiveListPermission(BasePermission):
         if not patient_pk:
             return False
 
-        return (
-            ArchiveAccessPermission.objects.filter(
-                patient__pk=patient_pk,
-                doctor__pk=request.user.pk,
-            ).exists()
-            or Archive.objects.filter(
-                doctor_id=request.user.pk, patient_id=patient_pk
-            ).exists()
-        )
+        return Appointment.objects.filter(
+            patient_id=patient_pk,
+            clinic_id=request.user.pk,
+        ).exists()
 
 
 class ArchiveCreatePermission(BasePermission):
@@ -55,6 +51,9 @@ class ArchiveRetrievePermission(BasePermission):
                     patient__pk=patient.pk,
                     doctor__pk=user.pk,
                     specialty__pk=specialty.pk,
+                ).exists()
+                or PatientSpecialtyAccess.objects.public_only().filter(
+                    patient_id=patient.pk
                 ).exists()
             )
         else:

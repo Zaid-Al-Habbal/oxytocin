@@ -49,6 +49,12 @@ class Patient(models.Model):
         return f"Patient Profile: {self.user.phone}"
 
 
+class PatientSpecialtyAccessQuerySet(models.QuerySet):
+
+    def public_only(self):
+        return self.filter(visibility=PatientSpecialtyAccess.Visibility.PUBLIC.value)
+
+
 class PatientSpecialtyAccess(models.Model):
 
     class Visibility(models.TextChoices):
@@ -69,6 +75,8 @@ class PatientSpecialtyAccess(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    objects = PatientSpecialtyAccessQuerySet.as_manager()
+
     class Meta:
         db_table = "patients_patient_specialty_access"
         constraints = [
@@ -77,7 +85,10 @@ class PatientSpecialtyAccess(models.Model):
                 name="unique_patients_patient_specialty_access_patient_id_specialty_id",
             ),
         ]
-        indexes = [models.Index(fields=["-created_at"]), models.Index(fields=["-updated_at"])]
+        indexes = [
+            models.Index(fields=["-created_at"]),
+            models.Index(fields=["-updated_at"]),
+        ]
         ordering = ["-created_at"]
 
     def __str__(self):
