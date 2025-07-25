@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from doctors.serializers import DoctorSummarySerializer
+from doctors.serializers.summary import DoctorSummarySerializer
 
 from clinics.models import Clinic
 

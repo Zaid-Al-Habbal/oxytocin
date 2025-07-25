@@ -1,5 +1,4 @@
-from django.utils.translation import gettext_lazy as _
-from doctors.serializers import DoctorSummarySerializer
+from doctors.serializers.summary import DoctorSummarySerializer
 
 from rest_framework import serializers
 from clinics.models import Clinic

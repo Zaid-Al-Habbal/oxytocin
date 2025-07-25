@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-02 15:45+0300\n"
+"POT-Creation-Date: 2025-07-25 21:32+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,13 +19,19 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: appointments/serializers/book_appointment.py:34
+#: appointments/serializers/book_appointment.py:41
+#: appointments/serializers/update_appointment.py:41
 msgid "Visit date must be in the future."
 msgstr "تاريخ الزيارة يحب أن يكون في المستقبل"
 
-#: appointments/serializers/book_appointment.py:59
+#: appointments/serializers/book_appointment.py:66
+#: appointments/serializers/update_appointment.py:71
 msgid "This time slot is already booked."
 msgstr "هذا الوقت محجوز من قبل مريض آخر"
+
+#: appointments/serializers/update_appointment.py:62
+msgid "Invalid visit time. Must match available hours."
+msgstr "وقت الزيارة غير صحيح. يجب أن يتطابق مع الساعات المتاحة."
 
 #: appointments/services.py:26
 #, python-brace-format
@@ -50,6 +56,12 @@ msgstr "لا يمكنك إلغاء موعد قبل أقل من 24 ساعة من 
 #: appointments/views/cancel_appointment.py:62
 msgid "Appointment has been cancelled successfully"
 msgstr "تم إلغاء الموعد بنجاح"
+
+#: appointments/views/delete_attachment.py:37
+#, fuzzy
+#| msgid "Appointment has been rebooked successfully"
+msgid "Attachment deleted successfully."
+msgstr "تم إعادة حجز الموعد بنجاح"
 
 #: appointments/views/rebook_appointment.py:56
 msgid "Cannot rebook this appointment because its time is passed"

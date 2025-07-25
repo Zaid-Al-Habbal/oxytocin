@@ -1,8 +1,9 @@
 from rest_framework import serializers
 
 from users.models import CustomUser as User
-from doctors.models import Doctor, Specialty
-from .base import DoctorSummarySerializer, SpecialtySerializer
+from doctors.models import Specialty
+from .base import SpecialtySerializer
+from .summary import DoctorSummarySerializer
 
 
 class DoctorFilterQuerySerializer(serializers.Serializer):

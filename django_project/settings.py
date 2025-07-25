@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "assistants",
     "schedules",
     "appointments",
+    "archives",
 ]
 
 MIDDLEWARE = [
@@ -156,6 +157,7 @@ LOCALE_PATHS = [
     BASE_DIR / "assistants/locale",
     BASE_DIR / "schedules/locale",
     BASE_DIR / "appointments/locale",
+    BASE_DIR / "archives/locale",
 ]
 
 # Static files (CSS, JavaScript, Images)

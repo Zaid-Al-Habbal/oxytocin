@@ -5,3 +5,4 @@ from .get_clinic_appointments import *
 from .change_appointment_status import *
 from .upload_attachments import *
 from .appointment_queue import *
+from .summary import *

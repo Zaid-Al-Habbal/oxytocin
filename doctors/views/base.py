@@ -8,9 +8,6 @@ from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.parsers import MultiPartParser
 from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiExample
 
-from users.models import CustomUser as User
-from users.permissions import HasRole
-
 from doctors.models import Doctor, Specialty
 from doctors.serializers import (
     DoctorLoginSerializer,

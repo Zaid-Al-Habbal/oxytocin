@@ -30,7 +30,7 @@ class ClinicQuerySet(models.QuerySet):
                 to_attr="subspecialties",
             ),
         )
-    
+
     def with_doctor(self):
         return self.select_related("doctor")
 
@@ -106,3 +106,32 @@ class BannedPatient(models.Model):
 
     def __str__(self):
         return f"{self.patient} banned from {self.clinic}"
+class ClinicPatientQuerySet(models.QuerySet):
+    def with_positive_cost(self):
+        return self.filter(cost__gt=0)
+
+
+class ClinicPatient(models.Model):
+    clinic = models.ForeignKey(
+        Clinic,
+        on_delete=models.CASCADE,
+        related_name="clinics",
+    )
+    patient = models.ForeignKey(
+        Patient,
+        on_delete=models.CASCADE,
+        related_name="patients",
+    )
+    cost = models.FloatField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    objects = ClinicPatientQuerySet.as_manager()
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["-created_at"]),
+            models.Index(fields=["-updated_at"]),
+        ]
+        ordering = ["-created_at"]

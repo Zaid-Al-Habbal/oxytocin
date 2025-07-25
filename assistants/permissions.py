@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework.permissions import BasePermission
 
 from users.models import CustomUser as User
+from assistants.models import Assistant
 
 
 class IsAssistantWithClinic(BasePermission):
@@ -22,3 +23,9 @@ class IsAssistantWithClinic(BasePermission):
             self.message = _("Please join a clinic first.")
             return False
         return True
+
+
+class IsAssistantAssociatedWithClinic(BasePermission):
+    def has_permission(self, request, view):
+        assistant: Assistant = request.user.assistant
+        return hasattr(assistant, "clinic") and assistant.clinic

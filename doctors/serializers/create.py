@@ -78,10 +78,6 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError(_(msg % {"value": specialty.pk}))
         return data
 
-    def to_representation(self, instance):
-        instance.main_specialty = instance.main_specialties[0]
-        return super().to_representation(instance)
-
     def create(self, validated_data):
         user_data = validated_data.pop("user")
         main_specialty_data = validated_data.pop("main_specialty")

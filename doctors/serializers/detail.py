@@ -38,7 +38,3 @@ class DoctorDetailSerializer(serializers.ModelSerializer):
             "subspecialties",
             "clinic",
         ]
-
-    def to_representation(self, instance):
-        instance.main_specialty = instance.main_specialties[0]
-        return super().to_representation(instance)
