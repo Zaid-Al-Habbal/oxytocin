@@ -21,22 +21,6 @@ class ArchiveListPermission(BasePermission):
         ).exists()
 
 
-class ArchiveCreatePermission(BasePermission):
-    def has_permission(self, request, view):
-        patient_pk = view.kwargs.get("patient_pk")
-        if not patient_pk:
-            return False
-
-        appointment = Appointment.objects.filter(
-            clinic__pk=request.user.pk,
-            patient__pk=patient_pk,
-            status=Appointment.Status.IN_CONSULTATION,
-        ).first()
-        if not appointment:
-            return False
-        return not Archive.objects.filter(appointment__pk=appointment.pk).exists()
-
-
 class ArchiveRetrievePermission(BasePermission):
     def has_object_permission(self, request, view, obj):
         user: User = request.user
@@ -45,16 +29,19 @@ class ArchiveRetrievePermission(BasePermission):
         if user.role == User.Role.DOCTOR:
             specialty = archive.specialty
             patient = archive.patient
-            return (
+            return Appointment.objects.filter(
+                patient_id=patient.pk,
+                clinic_id=user.pk,
+            ).exists() and (
                 archive.doctor.pk == user.pk
                 or ArchiveAccessPermission.objects.filter(
-                    patient__pk=patient.pk,
-                    doctor__pk=user.pk,
-                    specialty__pk=specialty.pk,
+                    patient_id=patient.pk,
+                    doctor_id=user.pk,
+                    specialty_id=specialty.pk,
                 ).exists()
-                or PatientSpecialtyAccess.objects.public_only().filter(
-                    patient_id=patient.pk
-                ).exists()
+                or PatientSpecialtyAccess.objects.public_only()
+                .filter(patient_id=patient.pk)
+                .exists()
             )
         else:
             return archive.patient.pk == user.pk

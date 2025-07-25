@@ -23,7 +23,6 @@ from archives.serializers import ArchiveSerializer, ArchiveUpdateSerializer
 from archives.filters import ArchiveSpecialtyFilter
 from archives.permissions import (
     ArchiveListPermission,
-    ArchiveCreatePermission,
     ArchiveRetrievePermission,
     ArchiveUpdatePermission,
     ArchiveDestroyPermission,
@@ -142,7 +141,7 @@ class ArchivePatientListView(ListAPIView):
 )
 class ArchiveCreateView(CreateAPIView):
     serializer_class = ArchiveSerializer
-    permission_classes = [IsAuthenticated, HasRole, ArchiveCreatePermission]
+    permission_classes = [IsAuthenticated, HasRole]
     required_roles = [User.Role.DOCTOR]
 
     def perform_create(self, serializer):
@@ -193,16 +192,17 @@ class ArchiveUpdateView(UpdateAPIView):
         old_archive = self.get_object()
         old_cost = old_archive.cost
         new_cost = serializer.validated_data.get("cost")
-        cost = new_cost - old_cost
-        archive: Archive = serializer.save()
-        doctor = archive.doctor
-        patient = archive.patient
-        clinic_patient, created = ClinicPatient.objects.get_or_create(
-            clinic__pk=doctor.pk, patient__pk=patient.pk, defaults={"cost": cost}
-        )
-        if not created:
-            clinic_patient.cost += cost
-            clinic_patient.save()
+        if new_cost:
+            cost = new_cost - old_cost
+            archive: Archive = serializer.save()
+            doctor = archive.doctor
+            patient = archive.patient
+            clinic_patient, created = ClinicPatient.objects.get_or_create(
+                clinic__pk=doctor.pk, patient__pk=patient.pk, defaults={"cost": cost}
+            )
+            if not created:
+                clinic_patient.cost += cost
+                clinic_patient.save()
 
 
 @extend_schema(
