@@ -11,7 +11,7 @@ from doctors.models import Doctor, DoctorSpecialty, Specialty
 from users.models import CustomUser as User
 from patients.models import Patient, PatientSpecialtyAccess
 
-from .test_base import ArchiveBaseTestCase
+from .base import ArchiveBaseTestCase
 
 
 class ArchiveRetrieveTestCase(ArchiveBaseTestCase):

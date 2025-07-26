@@ -5,7 +5,7 @@ from archives.models import Archive
 from users.models import CustomUser as User
 from patients.models import Patient
 
-from .test_base import ArchiveBaseTestCase
+from .base import ArchiveBaseTestCase
 
 
 class ArchiveDestroyTestCase(ArchiveBaseTestCase):

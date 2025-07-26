@@ -10,7 +10,7 @@ from users.models import CustomUser as User
 from patients.models import Patient
 from rest_framework import status
 
-from .test_base import ArchiveBaseTestCase
+from .base import ArchiveBaseTestCase
 
 
 class ArchiveListTestCase(ArchiveBaseTestCase):
