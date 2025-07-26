@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 21:20+0300\n"
+"POT-Creation-Date: 2025-07-26 18:40+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-#: archives/serializers.py:56
+#: favorites/serializers.py:39
 #, python-format
-msgid "Invalid pk \"%(value)s\" - appointment does not belong to the clinic."
-msgstr "معرف العنصر \"%(value)s\" - الموعد لا ينتمي للعيادة."
-
-#: archives/serializers.py:61
-#, python-format
-msgid ""
-"Invalid pk \"%(value)s\" - an archive already exists for this appointment."
-msgstr "معرف العنصر \"%(value)s\" غير صالح - يوجد أرشيف بالفعل لهذا الموعد."
+msgid "Invalid pk \"%(value)s\" - doctor already in favorite."
+msgstr "معرف العنصر \"%(value)s\" غير صالح - الطبيب موجود بالفعل في المفضلة."
