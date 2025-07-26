@@ -62,7 +62,6 @@ class ArchivePagination(PageNumberPagination):
             description="Number of items per page.",
         ),
     ],
-    responses=ArchiveSerializer(many=True),
     tags=["Archive"],
 )
 class ArchiveListView(ListAPIView):
@@ -117,7 +116,6 @@ class ArchiveListView(ListAPIView):
             description="Number of items per page.",
         ),
     ],
-    responses=ArchiveSerializer(many=True),
     tags=["Archive"],
 )
 class ArchivePatientListView(ListAPIView):
@@ -136,8 +134,7 @@ class ArchivePatientListView(ListAPIView):
 @extend_schema(
     summary="Create a new archive (doctor only)",
     description="Creates a new archive for the specified patient. Only accessible by users with the DOCTOR role.",
-    request=ArchiveSerializer,
-    responses=ArchiveSerializer,
+    tags=["Archive"],
 )
 class ArchiveCreateView(CreateAPIView):
     serializer_class = ArchiveSerializer
@@ -166,7 +163,6 @@ class ArchiveCreateView(CreateAPIView):
 @extend_schema(
     summary="Retrieve archive details",
     description="Retrieves detailed information about a specific archive. Accessible by both PATIENT and DOCTOR roles.",
-    responses=ArchiveSerializer,
     tags=["Archive"],
 )
 class ArchiveRetrieveView(RetrieveAPIView):
@@ -179,8 +175,7 @@ class ArchiveRetrieveView(RetrieveAPIView):
 @extend_schema(
     summary="Update an archive (doctor only)",
     description="Updates an existing archive. Only accessible by users with the DOCTOR role.",
-    request=ArchiveUpdateSerializer,
-    responses=ArchiveUpdateSerializer,
+    tags=["Archive"],
 )
 class ArchiveUpdateView(UpdateAPIView):
     serializer_class = ArchiveUpdateSerializer
@@ -208,7 +203,6 @@ class ArchiveUpdateView(UpdateAPIView):
 @extend_schema(
     summary="Delete an archive (patient only)",
     description="Deletes a specific archive. Only accessible by users with the PATIENT role.",
-    responses={204: None},
     tags=["Archive"],
 )
 class ArchiveDestroyView(DestroyAPIView):
