@@ -9,7 +9,7 @@ from common.utils import generate_test_pdf
 from doctors.models import Doctor, DoctorSpecialty
 from users.models import CustomUser as User
 
-from .test_base import ArchiveBaseTestCase
+from .base import ArchiveBaseTestCase
 
 
 class ArchiveUpdateTestCase(ArchiveBaseTestCase):

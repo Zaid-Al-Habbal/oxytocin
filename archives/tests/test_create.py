@@ -3,7 +3,7 @@ from django.urls import reverse
 from appointments.models import Appointment
 from rest_framework import status
 
-from .test_base import ArchiveBaseTestCase
+from .base import ArchiveBaseTestCase
 
 
 class ArchiveCreateTestCase(ArchiveBaseTestCase):

@@ -1,4 +1,3 @@
-from .test_base import *
 from .test_create import *
 from .test_destroy import *
 from .test_list_patient import *

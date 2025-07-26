@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework import status
 
-from .test_base import ArchiveBaseTestCase
+from .base import ArchiveBaseTestCase
 
 
 class ArchivePatientListTestCase(ArchiveBaseTestCase):

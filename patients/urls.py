@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from .views import (
     LoginPatientView,
@@ -11,6 +11,7 @@ from .views import (
 )
 
 urlpatterns = [
+    path("favorites/", include("favorites.urls")),
     path("login/", LoginPatientView.as_view(), name="login-patient"),
     path(
         "complete-register/",
@@ -29,5 +30,9 @@ urlpatterns = [
         name="patient-specialty-access-retrieve-update-destroy",
     ),
     path("clinics/", ClinicPatientListView.as_view(), name="patient-clinic-list"),
-    path("clinics/<int:pk>", ClinicPatientRetrieveView.as_view(), name="patient-clinic-retrieve"),
+    path(
+        "clinics/<int:pk>",
+        ClinicPatientRetrieveView.as_view(),
+        name="patient-clinic-retrieve",
+    ),
 ]
