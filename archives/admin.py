@@ -6,6 +6,7 @@ from .models import Archive, ArchiveAccessPermission
 @admin.register(Archive)
 class ArchiveAdmin(admin.ModelAdmin):
     list_display = [
+        "id",
         "main_complaint",
         "patient",
         "doctor",
@@ -33,7 +34,7 @@ class ArchiveAdmin(admin.ModelAdmin):
 
 @admin.register(ArchiveAccessPermission)
 class ArchiveAccessPermissionAdmin(admin.ModelAdmin):
-    list_display = ["patient", "doctor", "specialty"]
+    list_display = ["id", "patient", "doctor", "specialty"]
     list_filter = [
         ("patient__user", admin.RelatedOnlyFieldListFilter),
         ("doctor__user", admin.RelatedOnlyFieldListFilter),

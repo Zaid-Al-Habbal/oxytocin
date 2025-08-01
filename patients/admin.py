@@ -8,7 +8,7 @@ from .models import Patient, PatientSpecialtyAccess
 
 @admin.register(Patient)
 class PatientAdmin(admin.ModelAdmin):
-    list_display = ["job", "address", "blood_type"]
+    list_display = ["user_id", "job", "address", "blood_type"]
     list_filter = ["blood_type"]
     search_fields = ["job"]
     formfield_overrides = {
@@ -18,7 +18,7 @@ class PatientAdmin(admin.ModelAdmin):
 
 @admin.register(PatientSpecialtyAccess)
 class PatientSpecialtyAccessAdmin(admin.ModelAdmin):
-    list_display = ["patient", "specialty", "visibility"]
+    list_display = ["id", "patient", "specialty", "visibility"]
     list_filter = [
         ("patient__user", admin.RelatedOnlyFieldListFilter),
         ("specialty", admin.RelatedOnlyFieldListFilter),

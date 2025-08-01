@@ -14,7 +14,7 @@ class ClinicImageInline(nested.NestedTabularInline):
 
 @admin.register(Clinic)
 class ClinicAdmin(nested.NestedModelAdmin):
-    list_display = ["doctor", "address", "phone"]
+    list_display = ["doctor_id", "doctor", "address", "phone"]
     search_fields = ["phone"]
     inlines = [ClinicImageInline]
     formfield_overrides = {
@@ -24,6 +24,6 @@ class ClinicAdmin(nested.NestedModelAdmin):
 
 @admin.register(ClinicPatient)
 class ClinicPatientAdmin(admin.ModelAdmin):
-    list_display = ["clinic", "patient", "cost", "created_at", "updated_at"]
+    list_display = ["id", "clinic", "patient", "cost", "created_at", "updated_at"]
     readonly_fields = ["created_at", "updated_at"]
-    search_fields = ["phone"]
+    search_fields = ["clinic__phone", "patient__first_name", "patient__last_name"]
