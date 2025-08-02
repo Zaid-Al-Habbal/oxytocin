@@ -3,11 +3,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 
 from evaluations.models import Evaluation
-from evaluations.serializers import EvaluationSerializer
+from evaluations.serializers import EvaluationSerializer, EvaluationUpdateSerializer
 
 from patients.models import Patient
 from users.models import CustomUser as User
 from users.permissions import HasRole
+
 
 class EvaluationPagination(PageNumberPagination):
     page_size = 30
@@ -18,7 +19,7 @@ class EvaluationPagination(PageNumberPagination):
 class EvaluationListCreateView(generics.ListCreateAPIView):
     serializer_class = EvaluationSerializer
     pagination_class = EvaluationPagination
-    
+
     def get_permissions(self):
         if self.request.method == "POST":
             return [IsAuthenticated(), HasRole()]
@@ -30,9 +31,9 @@ class EvaluationListCreateView(generics.ListCreateAPIView):
         return [User.Role.DOCTOR, User.Role.PATIENT, User.Role.ASSISTANT]
 
     def get_queryset(self):
-        doctor_id = self.request.query_params.get("doctor_id")
-        if doctor_id:
-            return Evaluation.objects.filter(doctor_id=doctor_id)
+        clinic_id = self.request.query_params.get("clinic_id")
+        if clinic_id:
+            return Evaluation.objects.latest_per_patient_by_clinic(clinic_id)
         return Evaluation.objects.none()
 
     def perform_create(self, serializer):
@@ -40,10 +41,14 @@ class EvaluationListCreateView(generics.ListCreateAPIView):
         serializer.save(patient_id=patient.pk)
 
 
-class EvaluationDestroyView(generics.DestroyAPIView):
-    serializer_class = EvaluationSerializer
+class EvaluationRetrieveUpdateView(generics.RetrieveUpdateAPIView):
+    serializer_class = EvaluationUpdateSerializer
     permission_classes = [IsAuthenticated, HasRole]
     required_roles = [User.Role.PATIENT]
 
     def get_queryset(self):
-        return Evaluation.objects.filter(patient_id=self.request.user.pk)
+        patient: Patient = self.request.user.patient
+        qs = Evaluation.objects.filter(patient_id=patient.pk)
+        if self.request.method != "GET":
+            return qs.within_24_hours()
+        return qs

@@ -12,7 +12,7 @@ urlpatterns = [
     ),
     path(
         "<int:pk>/",
-        views.EvaluationDestroyView.as_view(),
-        name="evaluation-destroy",
+        views.EvaluationRetrieveUpdateView.as_view(),
+        name="evaluation-retrieve-update",
     ),
 ]

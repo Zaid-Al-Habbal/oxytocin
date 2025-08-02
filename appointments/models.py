@@ -10,6 +10,12 @@ class AppointmentQuerySet(models.QuerySet):
     def in_consultation_only(self):
         return self.filter(status=Appointment.Status.IN_CONSULTATION.value)
 
+    def completed_only(self):
+        return self.filter(status=Appointment.Status.COMPLETED.value)
+
+    def not_evaluated(self):
+        return self.filter(evaluation__isnull=True)
+
 
 class Appointment(models.Model):
 
