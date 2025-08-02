@@ -1,6 +1,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
+from django.contrib.auth.models import AnonymousUser
 
 from assistants.models import Assistant
 from evaluations.models import Evaluation
@@ -33,15 +34,15 @@ class EvaluationListCreateView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user: User = self.request.user
+        if isinstance(user, AnonymousUser) or user.role == User.Role.PATIENT:
+            clinic_id = self.request.query_params.get("clinic_id")
+            if clinic_id:
+                return Evaluation.objects.latest_per_patient_by_clinic(clinic_id)
         if user.role == User.Role.DOCTOR:
             return Evaluation.objects.by_clinic(user.pk)
         if user.role == User.Role.ASSISTANT:
             assistant: Assistant = Assistant.objects.with_clinic().get(user=user)
             return Evaluation.objects.by_clinic(assistant.clinic.pk)
-        if user.role == User.Role.PATIENT:
-            clinic_id = self.request.query_params.get("clinic_id")
-            if clinic_id:
-                return Evaluation.objects.latest_per_patient_by_clinic(clinic_id)
         return Evaluation.objects.none()
 
     def perform_create(self, serializer):
