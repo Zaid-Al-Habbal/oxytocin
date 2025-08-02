@@ -2,6 +2,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 
+from assistants.models import Assistant
 from evaluations.models import Evaluation
 from evaluations.serializers import EvaluationSerializer, EvaluationUpdateSerializer
 
@@ -31,9 +32,16 @@ class EvaluationListCreateView(generics.ListCreateAPIView):
         return [User.Role.DOCTOR, User.Role.PATIENT, User.Role.ASSISTANT]
 
     def get_queryset(self):
-        clinic_id = self.request.query_params.get("clinic_id")
-        if clinic_id:
-            return Evaluation.objects.latest_per_patient_by_clinic(clinic_id)
+        user: User = self.request.user
+        if user.role == User.Role.DOCTOR:
+            return Evaluation.objects.by_clinic(user.pk)
+        if user.role == User.Role.ASSISTANT:
+            assistant: Assistant = Assistant.objects.with_clinic().get(user=user)
+            return Evaluation.objects.by_clinic(assistant.clinic.pk)
+        if user.role == User.Role.PATIENT:
+            clinic_id = self.request.query_params.get("clinic_id")
+            if clinic_id:
+                return Evaluation.objects.latest_per_patient_by_clinic(clinic_id)
         return Evaluation.objects.none()
 
     def perform_create(self, serializer):

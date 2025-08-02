@@ -20,9 +20,8 @@ class HasRole(permissions.BasePermission):
             return view.required_roles
         return view.get_required_roles()
 
-
     def has_permission(self, request, view):
-        user = request.user
+        user: User = request.user
         required_roles = self._get_required_roles(view)
 
         if user.role not in required_roles:
