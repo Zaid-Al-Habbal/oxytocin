@@ -38,9 +38,9 @@ class EvaluationListCreateView(generics.ListCreateAPIView):
             clinic_id = self.request.query_params.get("clinic_id")
             if clinic_id:
                 return Evaluation.objects.latest_per_patient_by_clinic(clinic_id)
-        if user.role == User.Role.DOCTOR:
+        elif user.role == User.Role.DOCTOR:
             return Evaluation.objects.by_clinic(user.pk)
-        if user.role == User.Role.ASSISTANT:
+        elif user.role == User.Role.ASSISTANT:
             assistant: Assistant = Assistant.objects.with_clinic().get(user=user)
             return Evaluation.objects.by_clinic(assistant.clinic.pk)
         return Evaluation.objects.none()
