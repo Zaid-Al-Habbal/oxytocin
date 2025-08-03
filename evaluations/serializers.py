@@ -15,7 +15,7 @@ class EvaluationSerializer(serializers.ModelSerializer):
     )
     appointment = AppointmentSummarySerializer(read_only=True)
     editable = serializers.BooleanField(read_only=True)
-    
+
     def validate_comment(self, value):
         value = value.strip()
         if not value:
@@ -62,3 +62,10 @@ class EvaluationUpdateSerializer(serializers.ModelSerializer):
             "updated_at",
         ]
         read_only_fields = ["id", "created_at", "updated_at"]
+
+
+class EvaluationSummarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Evaluation
+        fields = ["id", "rate", "comment", "created_at", "updated_at"]
+        read_only_fields = ["id", "rate", "comment", "created_at", "updated_at"]
