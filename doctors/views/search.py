@@ -8,7 +8,12 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes
 from common.filters import TrigramSearchFilter
 
 from doctors.models import Doctor, Specialty
-from doctors.filters import DoctorFilter, DoctorOrdering
+from doctors.filters import (
+    DoctorSpecialtyFilter,
+    DoctorGenderFilter,
+    DoctorDistanceFilter,
+    DoctorOrdering,
+)
 from doctors.serializers import (
     DoctorSummarySerializer,
     DoctorMultiSearchResultSerializer,
@@ -98,7 +103,13 @@ class DoctorSearchListView(generics.ListAPIView):
     queryset = Doctor.objects.distinct().with_full_profile()
     serializer_class = DoctorSummarySerializer
     pagination_class = DoctorSearchPagination
-    filter_backends = [TrigramSearchFilter, DoctorFilter, DoctorOrdering]
+    filter_backends = [
+        TrigramSearchFilter,
+        DoctorSpecialtyFilter,
+        DoctorGenderFilter,
+        DoctorDistanceFilter,
+        DoctorOrdering,
+    ]
     search_fields = ["user__first_name", "user__last_name"]
 
 
@@ -157,7 +168,12 @@ class DoctorMultiSearchListView(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         self.queryset = Doctor.objects.distinct().with_full_profile()
-        self.filter_backends = [TrigramSearchFilter, DoctorFilter]
+        self.filter_backends = [
+            TrigramSearchFilter,
+            DoctorSpecialtyFilter,
+            DoctorGenderFilter,
+            DoctorDistanceFilter,
+        ]
         self.search_fields = ["user__first_name", "user__last_name"]
         doctor_qs = self.filter_queryset(self.get_queryset())
         self.queryset = Specialty.objects.distinct().main_specialties_only()

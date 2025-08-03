@@ -61,7 +61,7 @@ class ClinicNearestListView(generics.GenericAPIView):
         clinics = (
             Clinic.objects.with_doctor_user()
             .not_deleted_doctor()
-            .with_approved_doctor()
+            .approved_doctor_only()
             .annotate(distance=Distance("location", location))
             .order_by("distance")[:10]
         )

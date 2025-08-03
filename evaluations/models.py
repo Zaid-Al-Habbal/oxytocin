@@ -4,6 +4,7 @@ from django.utils import timezone
 from datetime import timedelta
 
 from appointments.models import Appointment
+from clinics.models import Clinic
 from patients.models import Patient
 
 
@@ -60,6 +61,10 @@ class Evaluation(models.Model):
     @property
     def editable(self):
         return self.created_at + timedelta(hours=24) > timezone.now()
+
+    @property
+    def clinic(self) -> Clinic:
+        return self.appointment.clinic
 
     def __str__(self):
         return f"{str(self.patient)} - {self.rate}"

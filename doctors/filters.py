@@ -30,7 +30,7 @@ class DescStr(str):
         return str.__gt__(self, other)
 
 
-class DoctorFilter(BaseFilterBackend):
+class DoctorSpecialtyFilter(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         filter_serializer = DoctorFilterQuerySerializer(data=request.query_params)
         filter_serializer.is_valid()
@@ -38,8 +38,26 @@ class DoctorFilter(BaseFilterBackend):
 
         if "specialties" in filter:
             queryset = queryset.filter(specialties__pk__in=filter["specialties"])
+        return queryset
+
+
+class DoctorGenderFilter(BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        filter_serializer = DoctorFilterQuerySerializer(data=request.query_params)
+        filter_serializer.is_valid()
+        filter = filter_serializer.validated_data
+
         if "gender" in filter:
             queryset = queryset.filter(user__gender=filter["gender"])
+        return queryset
+
+
+class DoctorDistanceFilter(BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        filter_serializer = DoctorFilterQuerySerializer(data=request.query_params)
+        filter_serializer.is_valid()
+        filter = filter_serializer.validated_data
+
         if "distance" in filter:
             queryset, _ = annotate_and_filter_by_distance(request, queryset, filter)
         return queryset
