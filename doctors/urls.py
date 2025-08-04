@@ -11,6 +11,7 @@ from .views import (
     DoctorSearchListView,
     DoctorMultiSearchListView,
     DoctorDetailRetrieveView,
+    NumOfAppointmentsView
 )
 
 urlpatterns = [
@@ -29,4 +30,5 @@ urlpatterns = [
     path("search/", DoctorSearchListView.as_view(), name="doctor-search"),
     path("multi-search/", DoctorMultiSearchListView.as_view(), name="doctor-multi-search"),
     path("<int:pk>/", DoctorDetailRetrieveView.as_view(), name="doctor-detail-retrieve"),
+    path("home/num-of-appointments", NumOfAppointmentsView.as_view(), name="num-of-appointment-diagram"),
 ]

@@ -6,3 +6,4 @@ from .login import *
 from .search import *
 from .specialty import *
 from .summary import *
+from .home import *
