@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 21:32+0300\n"
+"POT-Creation-Date: 2025-08-04 22:15+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,32 +19,32 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: users/permissions.py:29
+#: users/permissions.py:28
 msgid "You don't have the required role."
 msgstr "ليس لديك الدور المطلوب."
 
-#: users/permissions.py:33
+#: users/permissions.py:32
 msgid "Patient profile incomplete."
 msgstr "ملف المريض غير مكتمل."
 
-#: users/permissions.py:38
+#: users/permissions.py:37
 msgid "Doctor profile incomplete."
 msgstr "ملف الطبيب غير مكتمل."
 
-#: users/permissions.py:42
+#: users/permissions.py:41
 msgid "Doctor clinic incomplete."
 msgstr "عيادة الطبيب غير مكتملة."
 
-#: users/permissions.py:46
+#: users/permissions.py:45
 msgid "Your account is under review. Please wait for approval."
 msgstr "حسابك قيد المراجعة. يُرجى انتظار الموافقة."
 
-#: users/permissions.py:51
+#: users/permissions.py:50
 msgid ""
 "Your account has been declined. Please contact support for more information."
 msgstr "تم رفض حسابك. يُرجى التواصل مع الدعم لمزيد من المعلومات."
 
-#: users/permissions.py:56
+#: users/permissions.py:55
 msgid "Assistant profile incomplete."
 msgstr "ملف المساعد او المساعدة غير مكتمل."
 

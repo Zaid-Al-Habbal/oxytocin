@@ -1,3 +1,5 @@
+from django.utils.translation import gettext_lazy as _
+
 from rest_framework import serializers
 
 from evaluations.models import Evaluation
@@ -16,10 +18,26 @@ class EvaluationSerializer(serializers.ModelSerializer):
     appointment = AppointmentSummarySerializer(read_only=True)
     editable = serializers.BooleanField(read_only=True)
 
+    @property
+    def request(self):
+        return self.context.get("request")
+
+    @property
+    def user(self):
+        return self.request.user
+
     def validate_comment(self, value):
         value = value.strip()
         if not value:
             return None
+        return value
+
+    def validate_appointment_id(self, value):
+        appointment: Appointment = value
+        if appointment.patient.pk != self.user.pk:
+            raise serializers.ValidationError(
+                _("You are not allowed to evaluate this appointment.")
+            )
         return value
 
     class Meta:
