@@ -1,4 +1,4 @@
-from django.utils.timezone import datetime, timedelta
+from django.utils.timezone import datetime, timedelta, now
 from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
 
 
@@ -9,7 +9,7 @@ from rest_framework import status
 
 
 from doctors.permissions import IsDoctorWithClinic
-from doctors.serializers import NumOfAppointmentsSerializer
+from doctors.serializers import NumOfAppointmentsSerializer, BasicStatisticsSerializer
 from appointments.models import Appointment
 
 
@@ -84,5 +84,39 @@ class NumOfAppointmentsView(APIView):
             current_date += timedelta(days=1)
         
         serializer = NumOfAppointmentsSerializer(output, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
+            
+            
+
+class BasicStatisticsView(APIView):
+    permission_classes = [IsAuthenticated, IsDoctorWithClinic]
+    
+    def get(self, request):
+        user = request.user
+        clinic = getattr(user.doctor, "clinic", None)
+        
+        appointments = Appointment.objects.filter(
+            clinic=clinic,
+            visit_date__year=now().year,
+            visit_date__month=now().month
+        ).exclude(
+            status=Appointment.Status.CANCELLED
+        )
+        
+        num_of_absent_patients_this_month = appointments.filter(
+            status=Appointment.Status.ABSENT
+        ).count()
+        
+        num_of_booked_appointment_this_month = appointments.count()
+        
+        num_of_registered_patients = appointments.values("patient").distinct().count()
+        
+        data = {
+            "num_of_absent_patients_this_month": num_of_absent_patients_this_month,
+            "num_of_booked_appointment_this_month": num_of_booked_appointment_this_month,
+            "num_of_registered_patients": num_of_registered_patients
+        }
+        
+        serializer = BasicStatisticsSerializer(data)
         return Response(serializer.data, status.HTTP_200_OK)
             

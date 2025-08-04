@@ -11,7 +11,8 @@ from .views import (
     DoctorSearchListView,
     DoctorMultiSearchListView,
     DoctorDetailRetrieveView,
-    NumOfAppointmentsView
+    NumOfAppointmentsView,
+    BasicStatisticsView,
 )
 
 urlpatterns = [
@@ -31,4 +32,5 @@ urlpatterns = [
     path("multi-search/", DoctorMultiSearchListView.as_view(), name="doctor-multi-search"),
     path("<int:pk>/", DoctorDetailRetrieveView.as_view(), name="doctor-detail-retrieve"),
     path("home/num-of-appointments", NumOfAppointmentsView.as_view(), name="num-of-appointment-diagram"),
+    path("home/basic-statistics/", BasicStatisticsView.as_view(), name="basic-statistics"),
 ]
