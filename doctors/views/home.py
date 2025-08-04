@@ -86,7 +86,23 @@ class NumOfAppointmentsView(APIView):
         serializer = NumOfAppointmentsSerializer(output, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
             
-            
+@extend_schema(
+    summary="Basic Statistics",
+    description="Count num_of_absent_patients_this_month, num_of_booked_appointment_this_month, num_of_registered_patients",
+    responses={200: BasicStatisticsSerializer},
+    examples=[
+        OpenApiExample(
+            name="Basic Statistics",
+            value={
+                "num_of_absent_patients_this_month": 2,
+                "num_of_booked_appointment_this_month": 12,
+                "num_of_registered_patients": 1
+            },  
+            response_only=True
+        )   
+    ],
+    tags=["Doctor Home Page"]
+)          
 
 class BasicStatisticsView(APIView):
     permission_classes = [IsAuthenticated, IsDoctorWithClinic]
