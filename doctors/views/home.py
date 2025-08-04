@@ -12,6 +12,41 @@ from doctors.permissions import IsDoctorWithClinic
 from doctors.serializers import NumOfAppointmentsSerializer
 from appointments.models import Appointment
 
+
+@extend_schema(
+    summary="Number Of Appointments Diagram",
+    description="Count the number of booked appointments for every day betweent start-date & end-date",
+    responses={200: NumOfAppointmentsSerializer},
+    examples=[
+        OpenApiExample(
+            name="Number Of Appointments Diagram",
+            value=[
+                {
+                    "date": "2025-08-01",
+                    "num_of_appointments": 2
+                },
+                {
+                    "date": "2025-08-02",
+                    "num_of_appointments": 2
+                },
+                {
+                    "date": "2025-08-03",
+                    "num_of_appointments": 10
+                },
+                {
+                    "date": "2025-08-04",
+                    "num_of_appointments": 20
+                },
+                {
+                    "date": "2025-08-05",
+                    "num_of_appointments": 7
+                },
+            ],
+            response_only=True
+        )   
+    ],
+    tags=["Doctor Home Page"]
+)
 class NumOfAppointmentsView(APIView):
     permission_classes = [IsAuthenticated, IsDoctorWithClinic]
     
