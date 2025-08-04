@@ -2,6 +2,12 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from django.contrib.auth.models import AnonymousUser
+from drf_spectacular.utils import (
+    extend_schema,
+    extend_schema_view,
+    OpenApiParameter,
+)
+from drf_spectacular.types import OpenApiTypes
 
 from assistants.models import Assistant
 from evaluations.models import Evaluation
@@ -18,6 +24,68 @@ class EvaluationPagination(PageNumberPagination):
     max_page_size = 50
 
 
+@extend_schema_view(
+    get=extend_schema(
+        summary="List evaluations",
+        description="""
+        Retrieve a paginated list of evaluations based on user role and permissions.
+        
+        Role-based access:
+        - Patients: Can view evaluations for a specific clinic (requires clinic_id parameter)
+        - Doctors: Can view all evaluations for their clinic
+        - Assistants: Can view all evaluations for their assigned clinic
+        
+        Query Parameters:
+        - clinic_id (required for patients): Filter evaluations by clinic ID
+        - page: Page number for pagination
+        - page_size: Number of items per page (max 50)
+        """,
+        tags=["Evaluations"],
+        parameters=[
+            OpenApiParameter(
+                name="clinic_id",
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.QUERY,
+                description="Clinic ID to filter evaluations (required for patients)",
+                required=False,
+            ),
+            OpenApiParameter(
+                name="page",
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.QUERY,
+                description="Page number for pagination",
+                required=False,
+            ),
+            OpenApiParameter(
+                name="page_size",
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.QUERY,
+                description="Number of items per page (max 50)",
+                required=False,
+            ),
+        ],
+    ),
+    post=extend_schema(
+        summary="Create evaluation",
+        description="""
+        Create a new evaluation for a completed appointment.
+        
+        Requirements:
+        - User must be authenticated and have PATIENT role
+        - Appointment must be completed and not already evaluated
+        - Rate must be between 1-5
+        - Comment is optional but recommended
+        
+        Rate Scale:
+        - 1: Very Poor
+        - 2: Poor
+        - 3: Average
+        - 4: Good
+        - 5: Excellent
+        """,
+        tags=["Evaluations"],
+    ),
+)
 class EvaluationListCreateView(generics.ListCreateAPIView):
     serializer_class = EvaluationSerializer
     pagination_class = EvaluationPagination
@@ -50,6 +118,56 @@ class EvaluationListCreateView(generics.ListCreateAPIView):
         serializer.save(patient_id=patient.pk)
 
 
+@extend_schema_view(
+    get=extend_schema(
+        summary="Retrieve evaluation",
+        description="""
+        Retrieve a specific evaluation by ID.
+        
+        Requirements:
+        - User must be authenticated and have PATIENT role
+        - User can only view their own evaluations
+        """,
+        tags=["Evaluations"],
+    ),
+    patch=extend_schema(
+        summary="Update evaluation",
+        description="""
+        Update an existing evaluation.
+        
+        Requirements:
+        - User must be authenticated and have PATIENT role
+        - User can only update their own evaluations
+        - Evaluation must be within 24 hours of creation to be editable
+        - Rate must be between 1-5
+        - Comment is optional but recommended
+        
+        Rate Scale:
+        - 1: Very Poor
+        - 2: Poor
+        - 3: Average
+        - 4: Good
+        - 5: Excellent
+        """,
+        tags=["Evaluations"],
+    ),
+    put=extend_schema(
+        summary="Update evaluation (PUT)",
+        description="""
+        Update an existing evaluation using PUT method.
+        
+        Requirements:
+        - User must be authenticated and have PATIENT role
+        - User can only update their own evaluations
+        - Evaluation must be within 24 hours of creation to be editable
+        - Rate must be between 1-5
+        - Comment is optional but recommended
+        
+        Note: PUT requires all fields to be provided, while PATCH allows partial updates.
+        """,
+        tags=["Evaluations"],
+    ),
+)
 class EvaluationRetrieveUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = EvaluationUpdateSerializer
     permission_classes = [IsAuthenticated, HasRole]
