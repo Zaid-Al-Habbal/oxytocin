@@ -1,11 +1,14 @@
 from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta
+from django.contrib.gis.geos import Point
 
 from appointments.models import Appointment
 from evaluations.models import Evaluation
 from evaluations.tests.base import EvaluationBaseTestCase
 from rest_framework import status
+from users.models import CustomUser as User
+from patients.models import Patient
 
 
 class EvaluationUpdateTests(EvaluationBaseTestCase):
@@ -13,6 +16,30 @@ class EvaluationUpdateTests(EvaluationBaseTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
+        cls.patient_user_2 = User.objects.create_user(
+            phone="0999111232",
+            password="abcX123!",
+            first_name="Julius",
+            last_name="Novachrono",
+            role=User.Role.PATIENT.value,
+            is_verified_phone=True,
+            gender="male",
+            birth_date="1995-05-01",
+        )
+        Patient.objects.create(
+            user=cls.patient_user_2,
+            address="Damascus",
+            location=Point(36.29, 33.51, srid=4326),
+            job="Engineer",
+            blood_type="A+",
+            medical_history="",
+            surgical_history="",
+            allergies="",
+            medicines="",
+            is_smoker=False,
+            is_drinker=False,
+            is_married=False,
+        )
         cls.evaluation = Evaluation.objects.create(
             patient=cls.patient,
             appointment=cls.completed_appointment,
@@ -35,6 +62,11 @@ class EvaluationUpdateTests(EvaluationBaseTestCase):
         self.client.force_authenticate(user=self.patient_user)
         path = reverse("evaluation-retrieve-update", kwargs={"pk": 999999999999})
         response = self.client.patch(path, data={"rate": 4})
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_failed_update_evaluation_using_other_patient_evaluation(self):
+        self.client.force_authenticate(user=self.patient_user_2)
+        response = self.client.patch(self.path, data={"rate": 4})
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_failed_update_evaluation_after_24_hours(self):
