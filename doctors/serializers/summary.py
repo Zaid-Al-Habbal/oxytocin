@@ -17,7 +17,9 @@ class DoctorSummarySerializer(serializers.ModelSerializer):
             "user",
             "about",
             "main_specialty",
+            "rate",
         ]
+        read_only_fields = ["rate"]
 
     @extend_schema_field(SpecialtySerializer)
     def get_main_specialty(self, obj):

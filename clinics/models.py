@@ -10,7 +10,7 @@ class ClinicQuerySet(models.QuerySet):
     def not_deleted_doctor(self):
         return self.filter(doctor__user__deleted_at__isnull=True)
 
-    def with_approved_doctor(self):
+    def approved_doctor_only(self):
         return self.filter(doctor__status=Doctor.Status.APPROVED)
 
     def with_doctor_categorized_specialties(self):
@@ -40,7 +40,7 @@ class ClinicQuerySet(models.QuerySet):
     def with_active_doctor_details(self):
         return (
             self.not_deleted_doctor()
-            .with_approved_doctor()
+            .approved_doctor_only()
             .with_doctor_categorized_specialties()
             .with_doctor_user()
         )

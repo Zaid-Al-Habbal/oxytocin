@@ -86,6 +86,7 @@ class Doctor(models.Model):
         through="doctors.DoctorSpecialty",
         related_name="doctors",
     )
+    rate = models.FloatField(default=0.0)
 
     objects = DoctorQuerySet.as_manager()
 
@@ -98,12 +99,16 @@ class Doctor(models.Model):
         if hasattr(self, "main_specialties"):
             return self.main_specialties[0]
 
-        return (
-            DoctorSpecialty.objects.select_related("specialty")
+        if hasattr(self, "_main_specialty"):
+            return self._main_specialty
+
+        self._main_specialty = (
+            DoctorSpecialty.objects.with_specialty()
+            .main_specialties_only()
             .filter(doctor_id=self.pk)
-            .filter(specialty__main_specialties__isnull=True)
             .first()
         )
+        return self._main_specialty
 
     class Meta:
         indexes = [models.Index(fields=["start_work_date"])]
@@ -151,6 +156,20 @@ class Specialty(models.Model):
         return f"{self.name_en} - {self.name_ar}"
 
 
+class DoctorSpecialtyQuerySet(models.QuerySet):
+    def with_specialty(self):
+        return self.select_related("specialty")
+
+    def main_specialties_only(self):
+        return self.filter(specialty__main_specialties__isnull=True)
+
+    def subspecialties_only(self):
+        return self.filter(specialty__main_specialties__isnull=False)
+
+    def with_doctor(self):
+        return self.select_related("doctor")
+
+
 class DoctorSpecialty(models.Model):
     doctor = models.ForeignKey(
         Doctor,
@@ -161,6 +180,8 @@ class DoctorSpecialty(models.Model):
     university = models.CharField(max_length=150)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    objects = DoctorSpecialtyQuerySet.as_manager()
 
     class Meta:
         constraints = [

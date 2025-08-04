@@ -34,7 +34,9 @@ class DoctorDetailSerializer(serializers.ModelSerializer):
             "about",
             "education",
             "experience",
+            "rate",
             "main_specialty",
             "subspecialties",
             "clinic",
         ]
+        read_only_fields = ["rate"]

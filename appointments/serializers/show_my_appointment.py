@@ -7,11 +7,13 @@ from appointments.models import Appointment
 from schedules.models import AvailableHour, ClinicSchedule
 from appointments.services import get_split_visit_times
 
-from clinics.serializers import ClinicSummarySerializer
+from clinics.serializers.summary import ClinicSummarySerializer
+from evaluations.serializers import EvaluationSummarySerializer
 
 
 class MyAppointmentSerializer(serializers.ModelSerializer):
     clinic = ClinicSummarySerializer(read_only=True)
+    evaluation = EvaluationSummarySerializer(read_only=True)
     
     class Meta:
         model = Appointment
@@ -26,6 +28,7 @@ class MyAppointmentSerializer(serializers.ModelSerializer):
             'cancelled_at',
             'cancelled_by',            
             'clinic',
+            'evaluation',
         ]
         read_only_fields = [
             'id', 

@@ -13,6 +13,7 @@ class DoctorSpecialtyInline(nested.NestedTabularInline):
 @admin.register(Doctor)
 class DoctorAdmin(nested.NestedModelAdmin):
     list_display = [
+        "user_id",
         "user",
         "about",
         "education",
@@ -44,12 +45,14 @@ class SpecialtyFilter(admin.SimpleListFilter):
 
 @admin.register(Specialty)
 class SpecialtyAdmin(admin.ModelAdmin):
-    list_display = ["name_en", "name_ar"]
+    list_display = ["id", "name_en", "name_ar"]
     list_filter = [SpecialtyFilter]
     search_fields = ["name_en", "name_ar"]
 
 
 @admin.register(Achievement)
 class AchievementAdmin(admin.ModelAdmin):
-    list_display = ["title", "description", "doctor", "created_at", "updated_at"]
+    list_display = ["id", "title", "description", "doctor", "created_at", "updated_at"]
     list_filter = ["doctor", "created_at", "updated_at"]
+    search_fields = ["title", "description"]
+    readonly_fields = ["created_at", "updated_at"]
