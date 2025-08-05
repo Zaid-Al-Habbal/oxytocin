@@ -12,6 +12,25 @@ from doctors.permissions import IsDoctorWithClinic
 from .serializers import *
 from evaluations.models import Evaluation
 
+@extend_schema(
+    summary="Number Of Stars Diagram",
+    description="Count number of one,two,three,four,five start rates between start-date and end-date",
+    responses={200: NumOfStarsSerializer},
+    examples=[
+        OpenApiExample(
+            name="Basic Statistics",
+            value={
+                "num_of_one_stars": 10,
+                "num_of_two_stars": 40,
+                "num_of_three_stars": 91,
+                "num_of_four_stars": 110,
+                "num_of_five_stars": 221
+            },  
+            response_only=True
+        )   
+    ],
+    tags=["Clinic Statistics"]
+)      
 class NumOfStarsView(APIView):
     permission_classes = [IsAuthenticated, IsDoctorWithClinic]
 
