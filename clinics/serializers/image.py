@@ -50,6 +50,13 @@ class NestedClinicImageSerializer(ClinicMixin, serializers.ModelSerializer):
         return super().validate(data)
 
 
+class ClinicImageSerializer(ClinicMixin, serializers.ModelSerializer):
+    class Meta:
+        model = ClinicImage
+        fields = ["id", "image", "created_at", "updated_at"]
+        read_only_fields = ["id", "image", "created_at", "updated_at"]
+
+
 class ClinicImageCreateSerializer(ClinicMixin, serializers.Serializer):
     images = serializers.ListField(
         child=serializers.ImageField(

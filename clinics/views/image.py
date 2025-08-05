@@ -7,12 +7,25 @@ from drf_spectacular.utils import extend_schema, OpenApiExample
 
 from clinics.models import ClinicImage
 from clinics.serializers import (
+    ClinicImageSerializer,
     ClinicImageCreateSerializer,
     ClinicImagesUpdateSerializer,
     ClinicImageDeleteSerializer,
 )
 from doctors.permissions import IsDoctorWithClinic
 
+
+@extend_schema(
+    summary="List all clinic images",
+    description="Retrieve all images associated with a specific clinic.",
+    tags=["Clinic Images"],
+)
+class ClinicImageListView(generics.ListAPIView):
+    serializer_class = ClinicImageSerializer
+
+    def get_queryset(self):
+        clinic_id = self.kwargs.get("pk")
+        return ClinicImage.objects.filter(clinic_id=clinic_id)
 
 class ClinicImageView(
     mixins.CreateModelMixin,

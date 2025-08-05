@@ -80,6 +80,13 @@ class ClinicImageTests(APITestCase):
         )
         return clinic_image
 
+    def test_successful_image_list(self):
+        self.client.force_authenticate(self.user)
+        self.create_clinic_image(self.clinic)
+        path = reverse("list-clinic-images", kwargs={"pk": self.clinic.pk})
+        response = self.client.get(path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
     def test_successful_image_creation(self):
         self.client.force_authenticate(self.user)
         data = {"images": [generate_test_image(), generate_test_image()]}
