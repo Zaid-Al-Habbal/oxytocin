@@ -7,3 +7,8 @@ class NumOfStarsSerializer(serializers.Serializer):
     num_of_three_stars = serializers.IntegerField()
     num_of_four_stars = serializers.IntegerField()
     num_of_five_stars = serializers.IntegerField()
+    
+
+class IncomesDetailSerializer(serializers.Serializer):
+    date = serializers.DateField()
+    income_value = serializers.FloatField()
