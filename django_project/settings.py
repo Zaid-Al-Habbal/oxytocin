@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "archives",
     "favorites",
     "evaluations",
+    "clinic_statistics",
 ]
 
 MIDDLEWARE = [
