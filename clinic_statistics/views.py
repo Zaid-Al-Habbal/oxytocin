@@ -172,7 +172,31 @@ class IncomesDetailView(APIView):
         serializer = IncomesDetailSerializer(output, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
     
-
+@extend_schema(
+    summary="Other Statistics",
+    description="Count Patients' ages, new patient this month, total dept, number of patients that indepted for the clinic, and most commont visit time this month.\n for age_groups: baby(0-2), child(3-12), teenager(13-19), young_adult(20-35), adult(36-60), elderly(+60)",
+    responses={200: IncomesDetailSerializer},
+    examples=[
+        OpenApiExample(
+            name="Other Statistics",
+            value={
+                "age_groups": {
+                    "baby": 0,
+                    "child":10,
+                    "young_adult": 100,
+                    "adult": 20,
+                    "elderly": 30
+                },
+                "most_common_visit_time_this_month": "09:30:00",
+                "num_of_new_patients_this_month": 10,
+                "num_of_indebted_patients": 5,
+                "total_dept": 1000.5
+            },  
+            response_only=True
+        )   
+    ],
+    tags=["Clinic Statistics"]
+) 
 class CalculateStatisticsView(APIView):
     def get(self, request):
         
