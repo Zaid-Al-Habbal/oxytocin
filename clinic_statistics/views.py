@@ -1,18 +1,35 @@
 from django.utils.timezone import datetime, timedelta, now
-from django.db.models import Sum
-from django.db.models.functions import TruncDate
+from django.db.models import (
+    F,
+    Count,
+    ExpressionWrapper,
+    IntegerField,
+    Sum,
+    When,
+    DurationField,
+    Case,
+    Value,
+    CharField,
+    FloatField,
+    Q
+)
+from django.db.models.functions import ExtractYear, TruncDate, Now, ExtractMonth
+from datetime import date
 from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
-
+from collections import Counter
 
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 
+from users.models import CustomUser
 from doctors.permissions import IsDoctorWithClinic
 from .serializers import *
 from evaluations.models import Evaluation
 from clinics.models import ClinicPatient
+from appointments.models import Appointment
+
 
 @extend_schema(
     summary="Number Of Stars Diagram",
@@ -153,4 +170,68 @@ class IncomesDetailView(APIView):
         
         
         serializer = IncomesDetailSerializer(output, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
+    
+
+class CalculateStatisticsView(APIView):
+    def get(self, request):
+        
+        user = request.user
+        clinic = getattr(user.doctor, "clinic", None)
+        
+        patients_qs = ClinicPatient.objects.filter(clinic=clinic).select_related('patient__user')
+
+        # Annotate age using extract and arithmetic
+        age_annotation = (ExtractYear(now()) - ExtractYear(F('patient__user__birth_date')) +
+                          (ExtractMonth(now()) - ExtractMonth(F('patient__user__birth_date'))) / 12.0)
+
+        patients_with_age = patients_qs.annotate(age=age_annotation)
+        
+        data = {}
+
+        age_groups = patients_with_age.aggregate(
+            baby=Count(Case(When(age__lte=2, then=1))),
+            child=Count(Case(When(age__gt=2, age__lte=12, then=1))),
+            teenager=Count(Case(When(age__gt=12, age__lte=19, then=1))),
+            young_adult=Count(Case(When(age__gt=19, age__lte=35, then=1))),
+            adult=Count(Case(When(age__gt=35, age__lte=64, then=1))),
+            elderly=Count(Case(When(age__gt=64, then=1))),
+        )
+
+        data["age_groups"] = age_groups
+        # Get current year/month
+        current_year = now().year
+        current_month = now().month
+
+        new_patients_count = patients_qs.filter(
+            created_at__year=current_year,
+            created_at__month=current_month
+        ).values('patient_id').count()
+
+        # Add new patient count to response
+        data["num_of_new_patients_this_month"] = new_patients_count
+        
+        data["num_of_indebted_patients"] = patients_qs.filter(~Q(cost=0.0)).count()
+        
+        data["total_dept"] = patients_qs.filter(~Q(cost=0.0)).aggregate(
+                                        total_debt=Sum("cost", output_field=FloatField())
+                                    )["total_debt"] or 0.0
+
+        # Most common visit time (excluding cancelled)
+        visit_time_counts = (
+            Appointment.objects
+            .filter(
+                clinic=clinic,
+                visit_date__year=current_year,
+                visit_date__month=current_month
+                )
+            .exclude(status=Appointment.Status.CANCELLED)
+            .values("visit_time")
+            .annotate(count=Count("id"))
+            .order_by("-count")
+        )
+
+        data["most_common_visit_time_this_month"] = visit_time_counts[0]["visit_time"] if visit_time_counts else None
+
+        serializer = StatisticsSerializer(data)
         return Response(serializer.data, status.HTTP_200_OK)
