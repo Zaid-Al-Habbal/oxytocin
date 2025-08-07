@@ -32,12 +32,58 @@ services:
       migrate:
         condition: service_completed_successfully
 
-  superuser-seeder:
+  user-seeder:
     extends:
       service: app
-    command: python manage.py loaddata superusers
+    command: python manage.py loaddata users
     depends_on:
       migrate:
+        condition: service_completed_successfully
+
+  patient-seeder:
+    extends:
+      service: app
+    command: python manage.py loaddata patients
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      user-seeder:
+        condition: service_completed_successfully
+
+  doctor-seeder:
+    extends:
+      service: app
+    command: python manage.py loaddata doctors
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      user-seeder:
+        condition: service_completed_successfully
+      specialty-seeder:
+        condition: service_completed_successfully
+
+  clinic-seeder:
+    extends:
+      service: app
+    command: python manage.py loaddata clinics
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      doctor-seeder:
+        condition: service_completed_successfully
+
+  assistant-seeder:
+    extends:
+      service: app
+    command: python manage.py loaddata assistants
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      user-seeder:
+        condition: service_completed_successfully
+      doctor-seeder:
+        condition: service_completed_successfully
+      clinic-seeder:
         condition: service_completed_successfully
 
   server:

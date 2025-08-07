@@ -1,0 +1,35 @@
+[
+    {
+        "model": "clinics.clinic",
+        "pk": 5,
+        "fields": {
+            "doctor": 5,
+            "address": "Al-Mezzeh, Damascus, Syria",
+            "location": "POINT(36.2765 33.5138)",
+            "phone": "+963-11-234-5678",
+            "time_slot_per_patient": 30
+        }
+    },
+    {
+        "model": "clinics.clinic",
+        "pk": 6,
+        "fields": {
+            "doctor": 6,
+            "address": "Abu Rummaneh, Damascus, Syria",
+            "location": "POINT(36.2765 33.5138)",
+            "phone": "+963-11-345-6789",
+            "time_slot_per_patient": 25
+        }
+    },
+    {
+        "model": "clinics.clinic",
+        "pk": 7,
+        "fields": {
+            "doctor": 7,
+            "address": "Bab Touma, Damascus, Syria",
+            "location": "POINT(36.2765 33.5138)",
+            "phone": "+963-11-456-7890",
+            "time_slot_per_patient": 45
+        }
+    }
+]

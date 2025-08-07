@@ -1,0 +1,35 @@
+[
+    {
+        "model": "patients.patient",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "address": "Al-Hamidiyah Souq, Old City, Damascus, Syria",
+            "location": "POINT(36.2765 33.5138)",
+            "job": "Software Engineer",
+            "blood_type": "A+"
+        }
+    },
+    {
+        "model": "patients.patient",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "address": "Bab Touma, Damascus, Syria",
+            "location": "POINT(36.2765 33.5138)",
+            "job": "Software Engineer",
+            "blood_type": "A+"
+        }
+    },
+    {
+        "model": "patients.patient",
+        "pk": 4,
+        "fields": {
+            "user": 4,
+            "address": "Abu Rummaneh, Damascus, Syria",
+            "location": "POINT(36.2765 33.5138)",
+            "job": "Software Engineer",
+            "blood_type": "A+"
+        }
+    }
+]

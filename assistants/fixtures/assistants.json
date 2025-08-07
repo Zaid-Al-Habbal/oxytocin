@@ -1,0 +1,38 @@
+[
+    {
+        "model": "assistants.assistant",
+        "pk": 8,
+        "fields": {
+            "user": 8,
+            "clinic": 5,
+            "joined_clinic_at": "2024-03-15",
+            "about": "Experienced medical assistant with expertise in patient care coordination and administrative tasks. Fluent in Arabic and English, with strong organizational skills.",
+            "education": "Medical Assistant Certificate - Damascus Medical Institute (2020)\nHealthcare Administration Diploma - Syrian Virtual University (2021)\nCPR and First Aid Certification - Red Crescent Society (2022)",
+            "start_work_date": "2020-06-01"
+        }
+    },
+    {
+        "model": "assistants.assistant",
+        "pk": 9,
+        "fields": {
+            "user": 9,
+            "clinic": 6,
+            "joined_clinic_at": "2024-07-20",
+            "about": "Dedicated pediatric medical assistant with special training in child care and family communication. Experienced in managing pediatric appointments and patient records.",
+            "education": "Pediatric Medical Assistant - Children's Hospital Damascus (2021)\nChild Development Certificate - Damascus University (2022)\nMedical Records Management - Syrian Medical Association (2023)",
+            "start_work_date": "2021-09-15"
+        }
+    },
+    {
+        "model": "assistants.assistant",
+        "pk": 10,
+        "fields": {
+            "user": 10,
+            "clinic": 7,
+            "joined_clinic_at": "2024-11-10",
+            "about": "Skilled orthopedic medical assistant with experience in surgical coordination and post-operative care. Proficient in medical terminology and patient education.",
+            "education": "Surgical Medical Assistant - Al-Assad University Hospital (2019)\nOrthopedic Care Specialist - Jordan Medical Council (2020)\nPatient Education Certificate - World Health Organization (2021)",
+            "start_work_date": "2019-03-01"
+        }
+    }
+]

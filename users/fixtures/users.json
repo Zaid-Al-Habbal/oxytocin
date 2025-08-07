@@ -1,0 +1,201 @@
+[
+    {
+        "model": "users.customuser",
+        "pk": 1,
+        "fields": {
+            "first_name": "Admin",
+            "last_name": "User",
+            "phone": "0000",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "admin@example.com",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": true,
+            "is_staff": true,
+            "is_active": true,
+            "role": "admin",
+            "created_at": "2025-06-13T00:00:00Z",
+            "updated_at": "2025-06-13T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 2,
+        "fields": {
+            "first_name": "Mayuri",
+            "last_name": "Shiina",
+            "phone": "0987654321",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "mayuri@example.com",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "patient",
+            "gender": "female",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 3,
+        "fields": {
+            "first_name": "Hashida",
+            "last_name": "Itaru",
+            "phone": "0987654322",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "hashida@example.com",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "patient",
+            "gender": "male",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 4,
+        "fields": {
+            "first_name": "Suzuha",
+            "last_name": "Amane",
+            "phone": "0987654323",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "suzuh@example.com",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "patient",
+            "gender": "female",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 5,
+        "fields": {
+            "first_name": "Rintarou",
+            "last_name": "Okabe",
+            "phone": "0987654324",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "rintarou@example.com",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "doctor",
+            "gender": "male",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 6,
+        "fields": {
+            "first_name": "Kurisu",
+            "last_name": "Makise",
+            "phone": "0987654325",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "kurisu@example.com",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "doctor",
+            "gender": "female",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 7,
+        "fields": {
+            "first_name": "Moeka",
+            "last_name": "Kiryuu",
+            "phone": "0987654326",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "moeka@example.com",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "doctor",
+            "gender": "female",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 8,
+        "fields": {
+            "first_name": "Miyamizu",
+            "last_name": "Mitsuha",
+            "phone": "0987654327",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "miyamizu@example.com",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "assistant",
+            "gender": "female",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 9,
+        "fields": {
+            "first_name": "Suzume",
+            "last_name": "Iwato",
+            "phone": "0987654328",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "suzume@example.com",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "assistant",
+            "gender": "female",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 10,
+        "fields": {
+            "first_name": "Ling",
+            "last_name": "Qiao",
+            "phone": "0987654329",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "ling@example.com",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "assistant",
+            "gender": "female",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    }
+]

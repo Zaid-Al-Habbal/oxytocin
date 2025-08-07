@@ -1,0 +1,41 @@
+[
+    {
+        "model": "doctors.doctor",
+        "pk": 5,
+        "fields": {
+            "user": 5,
+            "about": "Experienced cardiologist with over 15 years of practice in Damascus. Specialized in interventional cardiology and preventive heart care. Fluent in Arabic and English.",
+            "education": "MD in Cardiology - Damascus University (2008)\nResidency in Internal Medicine - Al-Mouwasat University Hospital (2009-2012)\nFellowship in Interventional Cardiology - American University of Beirut (2013-2015)",
+            "start_work_date": "2015-03-15",
+            "certificate": "documents/certificates/2025/01/15/cardiology_cert_okabe.pdf",
+            "status": "approved",
+            "rate": 4.8
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 6,
+        "fields": {
+            "user": 6,
+            "about": "Dedicated pediatrician with expertise in child development and immunology. Committed to providing compassionate care for children from birth through adolescence.",
+            "education": "MD in Pediatrics - Damascus University (2010)\nResidency in Pediatrics - Children's Hospital Damascus (2011-2014)\nSpecialization in Pediatric Immunology - Cairo University (2015-2016)",
+            "start_work_date": "2016-06-20",
+            "certificate": "documents/certificates/2025/01/15/pediatrics_cert_makise.pdf",
+            "status": "approved",
+            "rate": 4.9
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 7,
+        "fields": {
+            "user": 7,
+            "about": "Skilled orthopedic surgeon specializing in sports medicine and joint replacement. Experienced in both traditional and minimally invasive surgical techniques.",
+            "education": "MD in Orthopedic Surgery - Damascus University (2009)\nResidency in Orthopedics - Al-Assad University Hospital (2010-2013)\nFellowship in Sports Medicine - Jordan University Hospital (2014-2015)",
+            "start_work_date": "2015-09-10",
+            "certificate": "documents/certificates/2025/01/15/orthopedics_cert_kiryuu.pdf",
+            "status": "approved",
+            "rate": 4.7
+        }
+    }
+]
