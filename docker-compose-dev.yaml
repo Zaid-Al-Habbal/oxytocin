@@ -63,6 +63,18 @@ services:
       specialty-seeder:
         condition: service_completed_successfully
 
+  doctor-specialty-seeder:
+    extends:
+      service: app
+    command: python manage.py loaddata doctor_specialties
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      doctor-seeder:
+        condition: service_completed_successfully
+      specialty-seeder:
+        condition: service_completed_successfully
+
   clinic-seeder:
     extends:
       service: app

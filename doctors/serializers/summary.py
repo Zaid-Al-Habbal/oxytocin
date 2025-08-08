@@ -23,6 +23,7 @@ class DoctorSummarySerializer(serializers.ModelSerializer):
 
     @extend_schema_field(SpecialtySerializer)
     def get_main_specialty(self, obj):
-        main_specialty = obj.specialties.main_specialties_only()[0]
+        doctor: Doctor = obj
+        main_specialty = doctor.main_specialty.specialty
         serializer = SpecialtySerializer(main_specialty)
         return serializer.data
