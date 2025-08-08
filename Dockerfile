@@ -48,6 +48,8 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 # Copy and make entrypoint executable
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
+COPY seed.sh .
+RUN chmod +x seed.sh
 
 # Copy the source code into the container.
 COPY . .
