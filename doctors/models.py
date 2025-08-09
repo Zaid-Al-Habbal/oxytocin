@@ -168,16 +168,57 @@ class SpecialtyQuerySet(models.QuerySet):
         return self.main_specialties_only().prefetch_related("subspecialties")
 
 
+class MainSpecialtySubspecialty(models.Model):
+    main_specialty = models.ForeignKey(
+        "Specialty",
+        on_delete=models.CASCADE,
+        related_name="subspecialty_relations",
+        verbose_name="Main Specialty",
+    )
+    subspecialty = models.ForeignKey(
+        "Specialty",
+        on_delete=models.CASCADE,
+        related_name="main_specialty_relations",
+        verbose_name="Subspecialty",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    history = HistoricalRecords()
+
+    class Meta:
+        db_table = "doctors_main_specialty_subspecialty"
+        verbose_name = "Main Specialty Subspecialty"
+        verbose_name_plural = "Main Specialty Subspecialties"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["main_specialty", "subspecialty"],
+                name="unique_main_subspecialty",
+            ),
+        ]
+        indexes = [
+            models.Index(fields=["-created_at"]),
+            models.Index(fields=["-updated_at"]),
+        ]
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.main_specialty.name_en} -> {self.subspecialty.name_en}"
+
+    def get_inline_title(self):
+        return "Subspecialties"
+
+
 class Specialty(models.Model):
     name_en = models.CharField(max_length=100)
     name_ar = models.CharField(max_length=100)
     image = models.ImageField(upload_to="specialties/images/", null=True, blank=True)
     subspecialties = models.ManyToManyField(
         "self",
+        through="MainSpecialtySubspecialty",
         related_name="main_specialties",
         symmetrical=False,
         blank=True,
-        db_table="doctors_main_specialty_subspecialty",
     )
 
     history = HistoricalRecords()

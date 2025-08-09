@@ -3,10 +3,15 @@ from unfold.admin import ModelAdmin, TabularInline
 from unfold.contrib.filters.admin import (
     MultipleDropdownFilter,
     ChoicesCheckboxFilter,
-    DropdownFilter,
 )
 
-from .models import Doctor, Specialty, DoctorSpecialty, Achievement
+from .models import (
+    Doctor,
+    Specialty,
+    DoctorSpecialty,
+    Achievement,
+    MainSpecialtySubspecialty,
+)
 
 
 class DoctorSpecialtyInline(TabularInline):
@@ -49,12 +54,20 @@ class SpecialtyFilter(MultipleDropdownFilter):
         return queryset
 
 
+class SpecialtyInline(TabularInline):
+    fk_name = "main_specialty"
+    model = MainSpecialtySubspecialty
+    autocomplete_fields = ["subspecialty"]
+    tab = True
+
+
 @admin.register(Specialty)
 class SpecialtyAdmin(ModelAdmin):
     list_display = ["id", "name_en", "name_ar"]
     list_filter_submit = True
     list_filter = [SpecialtyFilter]
     search_fields = ["name_en", "name_ar"]
+    inlines = [SpecialtyInline]
 
 
 class AchievementDoctorFilter(admin.SimpleListFilter):

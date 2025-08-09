@@ -1,0 +1,1192 @@
+[
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 1,
+        "fields": {
+            "main_specialty": 1,
+            "subspecialty": 22,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 2,
+        "fields": {
+            "main_specialty": 1,
+            "subspecialty": 23,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 3,
+        "fields": {
+            "main_specialty": 1,
+            "subspecialty": 24,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 4,
+        "fields": {
+            "main_specialty": 1,
+            "subspecialty": 25,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 5,
+        "fields": {
+            "main_specialty": 1,
+            "subspecialty": 26,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 6,
+        "fields": {
+            "main_specialty": 1,
+            "subspecialty": 27,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 7,
+        "fields": {
+            "main_specialty": 1,
+            "subspecialty": 28,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 8,
+        "fields": {
+            "main_specialty": 1,
+            "subspecialty": 29,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 9,
+        "fields": {
+            "main_specialty": 1,
+            "subspecialty": 30,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 10,
+        "fields": {
+            "main_specialty": 1,
+            "subspecialty": 31,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 11,
+        "fields": {
+            "main_specialty": 2,
+            "subspecialty": 31,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 12,
+        "fields": {
+            "main_specialty": 2,
+            "subspecialty": 32,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 13,
+        "fields": {
+            "main_specialty": 2,
+            "subspecialty": 33,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 14,
+        "fields": {
+            "main_specialty": 2,
+            "subspecialty": 34,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 15,
+        "fields": {
+            "main_specialty": 2,
+            "subspecialty": 35,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 16,
+        "fields": {
+            "main_specialty": 3,
+            "subspecialty": 36,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 17,
+        "fields": {
+            "main_specialty": 3,
+            "subspecialty": 37,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 18,
+        "fields": {
+            "main_specialty": 3,
+            "subspecialty": 38,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 19,
+        "fields": {
+            "main_specialty": 3,
+            "subspecialty": 39,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 20,
+        "fields": {
+            "main_specialty": 3,
+            "subspecialty": 40,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 21,
+        "fields": {
+            "main_specialty": 3,
+            "subspecialty": 41,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 22,
+        "fields": {
+            "main_specialty": 3,
+            "subspecialty": 42,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 23,
+        "fields": {
+            "main_specialty": 3,
+            "subspecialty": 43,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 24,
+        "fields": {
+            "main_specialty": 3,
+            "subspecialty": 44,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 25,
+        "fields": {
+            "main_specialty": 4,
+            "subspecialty": 45,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 26,
+        "fields": {
+            "main_specialty": 4,
+            "subspecialty": 46,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 27,
+        "fields": {
+            "main_specialty": 4,
+            "subspecialty": 47,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 28,
+        "fields": {
+            "main_specialty": 4,
+            "subspecialty": 48,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 29,
+        "fields": {
+            "main_specialty": 5,
+            "subspecialty": 49,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 30,
+        "fields": {
+            "main_specialty": 5,
+            "subspecialty": 50,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 31,
+        "fields": {
+            "main_specialty": 5,
+            "subspecialty": 51,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 32,
+        "fields": {
+            "main_specialty": 5,
+            "subspecialty": 52,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 33,
+        "fields": {
+            "main_specialty": 5,
+            "subspecialty": 53,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 34,
+        "fields": {
+            "main_specialty": 5,
+            "subspecialty": 54,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 35,
+        "fields": {
+            "main_specialty": 5,
+            "subspecialty": 55,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 36,
+        "fields": {
+            "main_specialty": 5,
+            "subspecialty": 56,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 37,
+        "fields": {
+            "main_specialty": 6,
+            "subspecialty": 33,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 38,
+        "fields": {
+            "main_specialty": 6,
+            "subspecialty": 57,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 39,
+        "fields": {
+            "main_specialty": 6,
+            "subspecialty": 58,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 40,
+        "fields": {
+            "main_specialty": 6,
+            "subspecialty": 59,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 41,
+        "fields": {
+            "main_specialty": 6,
+            "subspecialty": 60,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 42,
+        "fields": {
+            "main_specialty": 6,
+            "subspecialty": 61,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 43,
+        "fields": {
+            "main_specialty": 6,
+            "subspecialty": 62,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 44,
+        "fields": {
+            "main_specialty": 7,
+            "subspecialty": 63,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 45,
+        "fields": {
+            "main_specialty": 7,
+            "subspecialty": 64,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 46,
+        "fields": {
+            "main_specialty": 7,
+            "subspecialty": 65,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 47,
+        "fields": {
+            "main_specialty": 7,
+            "subspecialty": 66,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 48,
+        "fields": {
+            "main_specialty": 7,
+            "subspecialty": 67,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 49,
+        "fields": {
+            "main_specialty": 7,
+            "subspecialty": 68,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 50,
+        "fields": {
+            "main_specialty": 7,
+            "subspecialty": 69,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 51,
+        "fields": {
+            "main_specialty": 8,
+            "subspecialty": 57,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 52,
+        "fields": {
+            "main_specialty": 8,
+            "subspecialty": 70,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 53,
+        "fields": {
+            "main_specialty": 8,
+            "subspecialty": 71,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 54,
+        "fields": {
+            "main_specialty": 8,
+            "subspecialty": 72,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 55,
+        "fields": {
+            "main_specialty": 8,
+            "subspecialty": 73,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 56,
+        "fields": {
+            "main_specialty": 9,
+            "subspecialty": 74,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 57,
+        "fields": {
+            "main_specialty": 9,
+            "subspecialty": 75,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 58,
+        "fields": {
+            "main_specialty": 9,
+            "subspecialty": 76,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 59,
+        "fields": {
+            "main_specialty": 9,
+            "subspecialty": 77,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 60,
+        "fields": {
+            "main_specialty": 9,
+            "subspecialty": 78,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 61,
+        "fields": {
+            "main_specialty": 10,
+            "subspecialty": 79,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 62,
+        "fields": {
+            "main_specialty": 10,
+            "subspecialty": 80,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 63,
+        "fields": {
+            "main_specialty": 10,
+            "subspecialty": 81,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 64,
+        "fields": {
+            "main_specialty": 10,
+            "subspecialty": 82,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 65,
+        "fields": {
+            "main_specialty": 11,
+            "subspecialty": 83,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 66,
+        "fields": {
+            "main_specialty": 11,
+            "subspecialty": 84,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 67,
+        "fields": {
+            "main_specialty": 11,
+            "subspecialty": 85,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 68,
+        "fields": {
+            "main_specialty": 11,
+            "subspecialty": 86,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 69,
+        "fields": {
+            "main_specialty": 11,
+            "subspecialty": 87,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 70,
+        "fields": {
+            "main_specialty": 11,
+            "subspecialty": 88,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 71,
+        "fields": {
+            "main_specialty": 12,
+            "subspecialty": 89,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 72,
+        "fields": {
+            "main_specialty": 12,
+            "subspecialty": 90,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 73,
+        "fields": {
+            "main_specialty": 12,
+            "subspecialty": 91,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 74,
+        "fields": {
+            "main_specialty": 12,
+            "subspecialty": 92,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 75,
+        "fields": {
+            "main_specialty": 12,
+            "subspecialty": 93,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 76,
+        "fields": {
+            "main_specialty": 13,
+            "subspecialty": 94,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 77,
+        "fields": {
+            "main_specialty": 13,
+            "subspecialty": 95,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 78,
+        "fields": {
+            "main_specialty": 13,
+            "subspecialty": 33,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 79,
+        "fields": {
+            "main_specialty": 13,
+            "subspecialty": 96,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 80,
+        "fields": {
+            "main_specialty": 13,
+            "subspecialty": 97,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 81,
+        "fields": {
+            "main_specialty": 14,
+            "subspecialty": 98,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 82,
+        "fields": {
+            "main_specialty": 14,
+            "subspecialty": 99,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 83,
+        "fields": {
+            "main_specialty": 14,
+            "subspecialty": 100,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 84,
+        "fields": {
+            "main_specialty": 14,
+            "subspecialty": 101,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 85,
+        "fields": {
+            "main_specialty": 14,
+            "subspecialty": 102,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 86,
+        "fields": {
+            "main_specialty": 14,
+            "subspecialty": 103,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 87,
+        "fields": {
+            "main_specialty": 15,
+            "subspecialty": 104,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 88,
+        "fields": {
+            "main_specialty": 15,
+            "subspecialty": 105,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 89,
+        "fields": {
+            "main_specialty": 15,
+            "subspecialty": 106,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 90,
+        "fields": {
+            "main_specialty": 15,
+            "subspecialty": 107,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 91,
+        "fields": {
+            "main_specialty": 15,
+            "subspecialty": 108,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 92,
+        "fields": {
+            "main_specialty": 15,
+            "subspecialty": 109,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 93,
+        "fields": {
+            "main_specialty": 16,
+            "subspecialty": 110,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 94,
+        "fields": {
+            "main_specialty": 16,
+            "subspecialty": 111,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 95,
+        "fields": {
+            "main_specialty": 16,
+            "subspecialty": 112,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 96,
+        "fields": {
+            "main_specialty": 16,
+            "subspecialty": 113,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 97,
+        "fields": {
+            "main_specialty": 16,
+            "subspecialty": 114,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 98,
+        "fields": {
+            "main_specialty": 16,
+            "subspecialty": 115,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 99,
+        "fields": {
+            "main_specialty": 17,
+            "subspecialty": 116,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 100,
+        "fields": {
+            "main_specialty": 17,
+            "subspecialty": 117,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 101,
+        "fields": {
+            "main_specialty": 17,
+            "subspecialty": 118,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 102,
+        "fields": {
+            "main_specialty": 17,
+            "subspecialty": 119,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 103,
+        "fields": {
+            "main_specialty": 17,
+            "subspecialty": 120,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 104,
+        "fields": {
+            "main_specialty": 17,
+            "subspecialty": 121,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 105,
+        "fields": {
+            "main_specialty": 18,
+            "subspecialty": 33,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 106,
+        "fields": {
+            "main_specialty": 18,
+            "subspecialty": 89,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 107,
+        "fields": {
+            "main_specialty": 18,
+            "subspecialty": 122,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 108,
+        "fields": {
+            "main_specialty": 18,
+            "subspecialty": 123,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 109,
+        "fields": {
+            "main_specialty": 18,
+            "subspecialty": 124,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 110,
+        "fields": {
+            "main_specialty": 19,
+            "subspecialty": 125,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 111,
+        "fields": {
+            "main_specialty": 19,
+            "subspecialty": 126,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 112,
+        "fields": {
+            "main_specialty": 19,
+            "subspecialty": 127,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 113,
+        "fields": {
+            "main_specialty": 20,
+            "subspecialty": 128,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 114,
+        "fields": {
+            "main_specialty": 20,
+            "subspecialty": 129,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 115,
+        "fields": {
+            "main_specialty": 20,
+            "subspecialty": 130,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 116,
+        "fields": {
+            "main_specialty": 21,
+            "subspecialty": 131,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 117,
+        "fields": {
+            "main_specialty": 21,
+            "subspecialty": 132,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 118,
+        "fields": {
+            "main_specialty": 21,
+            "subspecialty": 133,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.mainspecialtysubspecialty",
+        "pk": 119,
+        "fields": {
+            "main_specialty": 21,
+            "subspecialty": 134,
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+        }
+    }
+]

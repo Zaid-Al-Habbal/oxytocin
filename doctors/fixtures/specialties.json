@@ -4,19 +4,7 @@
         "pk": 1,
         "fields": {
             "name_en": "Internal Medicine",
-            "name_ar": "الطب الباطني",
-            "subspecialties": [
-                22,
-                23,
-                24,
-                25,
-                26,
-                27,
-                28,
-                29,
-                30,
-                31
-            ]
+            "name_ar": "الطب الباطني"
         }
     },
     {
@@ -24,14 +12,7 @@
         "pk": 2,
         "fields": {
             "name_en": "Family Medicine",
-            "name_ar": "طب الأسرة",
-            "subspecialties": [
-                31,
-                32,
-                33,
-                34,
-                35
-            ]
+            "name_ar": "طب الأسرة"
         }
     },
     {
@@ -39,18 +20,7 @@
         "pk": 3,
         "fields": {
             "name_en": "Pediatrics",
-            "name_ar": "طب الأطفال",
-            "subspecialties": [
-                36,
-                37,
-                38,
-                39,
-                40,
-                41,
-                42,
-                43,
-                44
-            ]
+            "name_ar": "طب الأطفال"
         }
     },
     {
@@ -58,13 +28,7 @@
         "pk": 4,
         "fields": {
             "name_en": "Obstetrics and Gynecology",
-            "name_ar": "التوليد وأمراض النساء",
-            "subspecialties": [
-                45,
-                46,
-                47,
-                48
-            ]
+            "name_ar": "التوليد وأمراض النساء"
         }
     },
     {
@@ -72,17 +36,7 @@
         "pk": 5,
         "fields": {
             "name_en": "Surgery",
-            "name_ar": "الجراحة",
-            "subspecialties": [
-                49,
-                50,
-                51,
-                52,
-                53,
-                54,
-                55,
-                56
-            ]
+            "name_ar": "الجراحة"
         }
     },
     {
@@ -90,16 +44,7 @@
         "pk": 6,
         "fields": {
             "name_en": "Orthopedic Surgery",
-            "name_ar": "جراحة العظام",
-            "subspecialties": [
-                33,
-                57,
-                58,
-                59,
-                60,
-                61,
-                62
-            ]
+            "name_ar": "جراحة العظام"
         }
     },
     {
@@ -107,16 +52,7 @@
         "pk": 7,
         "fields": {
             "name_en": "Neurology",
-            "name_ar": "طب الأعصاب",
-            "subspecialties": [
-                63,
-                64,
-                65,
-                66,
-                67,
-                68,
-                69
-            ]
+            "name_ar": "طب الأعصاب"
         }
     },
     {
@@ -124,14 +60,7 @@
         "pk": 8,
         "fields": {
             "name_en": "Neurosurgery",
-            "name_ar": "جراحة الأعصاب",
-            "subspecialties": [
-                57,
-                70,
-                71,
-                72,
-                73
-            ]
+            "name_ar": "جراحة الأعصاب"
         }
     },
     {
@@ -139,14 +68,7 @@
         "pk": 9,
         "fields": {
             "name_en": "Psychiatry",
-            "name_ar": "الطب النفسي",
-            "subspecialties": [
-                74,
-                75,
-                76,
-                77,
-                78
-            ]
+            "name_ar": "الطب النفسي"
         }
     },
     {
@@ -154,13 +76,7 @@
         "pk": 10,
         "fields": {
             "name_en": "Dermatology",
-            "name_ar": "الأمراض الجلدية",
-            "subspecialties": [
-                79,
-                80,
-                81,
-                82
-            ]
+            "name_ar": "الأمراض الجلدية"
         }
     },
     {
@@ -168,15 +84,7 @@
         "pk": 11,
         "fields": {
             "name_en": "Radiology",
-            "name_ar": "الأشعة",
-            "subspecialties": [
-                83,
-                84,
-                85,
-                86,
-                87,
-                88
-            ]
+            "name_ar": "الأشعة"
         }
     },
     {
@@ -184,14 +92,7 @@
         "pk": 12,
         "fields": {
             "name_en": "Anesthesiology",
-            "name_ar": "التخدير",
-            "subspecialties": [
-                89,
-                90,
-                91,
-                92,
-                93
-            ]
+            "name_ar": "التخدير"
         }
     },
     {
@@ -199,14 +100,7 @@
         "pk": 13,
         "fields": {
             "name_en": "Emergency Medicine",
-            "name_ar": "طب الطوارئ",
-            "subspecialties": [
-                94,
-                95,
-                33,
-                96,
-                97
-            ]
+            "name_ar": "طب الطوارئ"
         }
     },
     {
@@ -214,15 +108,7 @@
         "pk": 14,
         "fields": {
             "name_en": "Pathology",
-            "name_ar": "علم الأمراض",
-            "subspecialties": [
-                98,
-                99,
-                100,
-                101,
-                102,
-                103
-            ]
+            "name_ar": "علم الأمراض"
         }
     },
     {
@@ -230,15 +116,7 @@
         "pk": 15,
         "fields": {
             "name_en": "Ophthalmology",
-            "name_ar": "طب العيون",
-            "subspecialties": [
-                104,
-                105,
-                106,
-                107,
-                108,
-                109
-            ]
+            "name_ar": "طب العيون"
         }
     },
     {
@@ -246,15 +124,7 @@
         "pk": 16,
         "fields": {
             "name_en": "Otolaryngology (ENT)",
-            "name_ar": "طب الأنف والأذن والحنجرة",
-            "subspecialties": [
-                110,
-                111,
-                112,
-                113,
-                114,
-                115
-            ]
+            "name_ar": "طب الأنف والأذن والحنجرة"
         }
     },
     {
@@ -262,15 +132,7 @@
         "pk": 17,
         "fields": {
             "name_en": "Urology",
-            "name_ar": "جراحة المسالك البولية",
-            "subspecialties": [
-                116,
-                117,
-                118,
-                119,
-                120,
-                121
-            ]
+            "name_ar": "جراحة المسالك البولية"
         }
     },
     {
@@ -278,14 +140,7 @@
         "pk": 18,
         "fields": {
             "name_en": "Physical Medicine and Rehabilitation",
-            "name_ar": "الطب الفيزيائي وإعادة التأهيل",
-            "subspecialties": [
-                33,
-                89,
-                122,
-                123,
-                124
-            ]
+            "name_ar": "الطب الفيزيائي وإعادة التأهيل"
         }
     },
     {
@@ -293,12 +148,7 @@
         "pk": 19,
         "fields": {
             "name_en": "Allergy and Immunology",
-            "name_ar": "الحساسية والمناعة",
-            "subspecialties": [
-                125,
-                126,
-                127
-            ]
+            "name_ar": "الحساسية والمناعة"
         }
     },
     {
@@ -306,12 +156,7 @@
         "pk": 20,
         "fields": {
             "name_en": "Occupational Medicine",
-            "name_ar": "الطب المهني",
-            "subspecialties": [
-                128,
-                129,
-                130
-            ]
+            "name_ar": "الطب المهني"
         }
     },
     {
@@ -319,13 +164,7 @@
         "pk": 21,
         "fields": {
             "name_en": "Public Health and Preventive Medicine",
-            "name_ar": "الصحة العامة والطب الوقائي",
-            "subspecialties": [
-                131,
-                132,
-                133,
-                134
-            ]
+            "name_ar": "الصحة العامة والطب الوقائي"
         }
     },
     {
@@ -333,8 +172,7 @@
         "pk": 22,
         "fields": {
             "name_en": "Cardiology",
-            "name_ar": "أمراض القلب",
-            "subspecialties": []
+            "name_ar": "أمراض القلب"
         }
     },
     {
@@ -342,8 +180,7 @@
         "pk": 23,
         "fields": {
             "name_en": "Endocrinology",
-            "name_ar": "أمراض الغدد الصماء",
-            "subspecialties": []
+            "name_ar": "أمراض الغدد الصماء"
         }
     },
     {
@@ -351,8 +188,7 @@
         "pk": 24,
         "fields": {
             "name_en": "Gastroenterology",
-            "name_ar": "أمراض الجهاز الهضمي",
-            "subspecialties": []
+            "name_ar": "أمراض الجهاز الهضمي"
         }
     },
     {
@@ -360,8 +196,7 @@
         "pk": 25,
         "fields": {
             "name_en": "Hematology",
-            "name_ar": "أمراض الدم",
-            "subspecialties": []
+            "name_ar": "أمراض الدم"
         }
     },
     {
@@ -369,8 +204,7 @@
         "pk": 26,
         "fields": {
             "name_en": "Infectious Diseases",
-            "name_ar": "الأمراض المعدية",
-            "subspecialties": []
+            "name_ar": "الأمراض المعدية"
         }
     },
     {
@@ -378,8 +212,7 @@
         "pk": 27,
         "fields": {
             "name_en": "Nephrology",
-            "name_ar": "أمراض الكلى",
-            "subspecialties": []
+            "name_ar": "أمراض الكلى"
         }
     },
     {
@@ -387,8 +220,7 @@
         "pk": 28,
         "fields": {
             "name_en": "Oncology",
-            "name_ar": "الأورام",
-            "subspecialties": []
+            "name_ar": "الأورام"
         }
     },
     {
@@ -396,8 +228,7 @@
         "pk": 29,
         "fields": {
             "name_en": "Pulmonology",
-            "name_ar": "أمراض الرئة",
-            "subspecialties": []
+            "name_ar": "أمراض الرئة"
         }
     },
     {
@@ -405,8 +236,7 @@
         "pk": 30,
         "fields": {
             "name_en": "Rheumatology",
-            "name_ar": "أمراض الروماتيزم",
-            "subspecialties": []
+            "name_ar": "أمراض الروماتيزم"
         }
     },
     {
@@ -414,8 +244,7 @@
         "pk": 31,
         "fields": {
             "name_en": "Geriatrics",
-            "name_ar": "طب الشيخوخة",
-            "subspecialties": []
+            "name_ar": "طب الشيخوخة"
         }
     },
     {
@@ -423,8 +252,7 @@
         "pk": 32,
         "fields": {
             "name_en": "Adolescent Medicine",
-            "name_ar": "طب المراهقين",
-            "subspecialties": []
+            "name_ar": "طب المراهقين"
         }
     },
     {
@@ -432,8 +260,7 @@
         "pk": 33,
         "fields": {
             "name_en": "Sports Medicine",
-            "name_ar": "طب الرياضة",
-            "subspecialties": []
+            "name_ar": "طب الرياضة"
         }
     },
     {
@@ -441,8 +268,7 @@
         "pk": 34,
         "fields": {
             "name_en": "Preventive Medicine",
-            "name_ar": "الطب الوقائي",
-            "subspecialties": []
+            "name_ar": "الطب الوقائي"
         }
     },
     {
@@ -450,8 +276,7 @@
         "pk": 35,
         "fields": {
             "name_en": "Women's Health",
-            "name_ar": "صحة المرأة",
-            "subspecialties": []
+            "name_ar": "صحة المرأة"
         }
     },
     {
@@ -459,8 +284,7 @@
         "pk": 36,
         "fields": {
             "name_en": "Pediatric Cardiology",
-            "name_ar": "أمراض قلب الأطفال",
-            "subspecialties": []
+            "name_ar": "أمراض قلب الأطفال"
         }
     },
     {
@@ -468,8 +292,7 @@
         "pk": 37,
         "fields": {
             "name_en": "Pediatric Endocrinology",
-            "name_ar": "أمراض الغدد الصماء لدى الأطفال",
-            "subspecialties": []
+            "name_ar": "أمراض الغدد الصماء لدى الأطفال"
         }
     },
     {
@@ -477,8 +300,7 @@
         "pk": 38,
         "fields": {
             "name_en": "Pediatric Gastroenterology",
-            "name_ar": "أمراض الجهاز الهضمي لدى الأطفال",
-            "subspecialties": []
+            "name_ar": "أمراض الجهاز الهضمي لدى الأطفال"
         }
     },
     {
@@ -486,8 +308,7 @@
         "pk": 39,
         "fields": {
             "name_en": "Pediatric Hematology-Oncology",
-            "name_ar": "أمراض الدم والأورام لدى الأطفال",
-            "subspecialties": []
+            "name_ar": "أمراض الدم والأورام لدى الأطفال"
         }
     },
     {
@@ -495,8 +316,7 @@
         "pk": 40,
         "fields": {
             "name_en": "Neonatology",
-            "name_ar": "طب حديثي الولادة",
-            "subspecialties": []
+            "name_ar": "طب حديثي الولادة"
         }
     },
     {
@@ -504,8 +324,7 @@
         "pk": 41,
         "fields": {
             "name_en": "Pediatric Nephrology",
-            "name_ar": "أمراض الكلى لدى الأطفال",
-            "subspecialties": []
+            "name_ar": "أمراض الكلى لدى الأطفال"
         }
     },
     {
@@ -513,8 +332,7 @@
         "pk": 42,
         "fields": {
             "name_en": "Pediatric Pulmonology",
-            "name_ar": "أمراض الرئة لدى الأطفال",
-            "subspecialties": []
+            "name_ar": "أمراض الرئة لدى الأطفال"
         }
     },
     {
@@ -522,8 +340,7 @@
         "pk": 43,
         "fields": {
             "name_en": "Pediatric Rheumatology",
-            "name_ar": "أمراض الروماتيزم لدى الأطفال",
-            "subspecialties": []
+            "name_ar": "أمراض الروماتيزم لدى الأطفال"
         }
     },
     {
@@ -531,8 +348,7 @@
         "pk": 44,
         "fields": {
             "name_en": "Pediatric Infectious Diseases",
-            "name_ar": "الأمراض المعدية لدى الأطفال",
-            "subspecialties": []
+            "name_ar": "الأمراض المعدية لدى الأطفال"
         }
     },
     {
@@ -540,8 +356,7 @@
         "pk": 45,
         "fields": {
             "name_en": "Maternal-Fetal Medicine",
-            "name_ar": "طب الأم والجنين",
-            "subspecialties": []
+            "name_ar": "طب الأم والجنين"
         }
     },
     {
@@ -549,8 +364,7 @@
         "pk": 46,
         "fields": {
             "name_en": "Reproductive Endocrinology and Infertility",
-            "name_ar": "أمراض الغدد الصماء الإنجابية والعقم",
-            "subspecialties": []
+            "name_ar": "أمراض الغدد الصماء الإنجابية والعقم"
         }
     },
     {
@@ -558,8 +372,7 @@
         "pk": 47,
         "fields": {
             "name_en": "Gynecologic Oncology",
-            "name_ar": "أورام النساء",
-            "subspecialties": []
+            "name_ar": "أورام النساء"
         }
     },
     {
@@ -567,8 +380,7 @@
         "pk": 48,
         "fields": {
             "name_en": "Urogynecology",
-            "name_ar": "أمراض المسالك البولية النسائية",
-            "subspecialties": []
+            "name_ar": "أمراض المسالك البولية النسائية"
         }
     },
     {
@@ -576,8 +388,7 @@
         "pk": 49,
         "fields": {
             "name_en": "General Surgery",
-            "name_ar": "الجراحة العامة",
-            "subspecialties": []
+            "name_ar": "الجراحة العامة"
         }
     },
     {
@@ -585,8 +396,7 @@
         "pk": 50,
         "fields": {
             "name_en": "Cardiothoracic Surgery",
-            "name_ar": "جراحة القلب والصدر",
-            "subspecialties": []
+            "name_ar": "جراحة القلب والصدر"
         }
     },
     {
@@ -594,8 +404,7 @@
         "pk": 51,
         "fields": {
             "name_en": "Vascular Surgery",
-            "name_ar": "جراحة الأوعية الدموية",
-            "subspecialties": []
+            "name_ar": "جراحة الأوعية الدموية"
         }
     },
     {
@@ -603,8 +412,7 @@
         "pk": 52,
         "fields": {
             "name_en": "Colorectal Surgery",
-            "name_ar": "جراحة القولون والمستقيم",
-            "subspecialties": []
+            "name_ar": "جراحة القولون والمستقيم"
         }
     },
     {
@@ -612,8 +420,7 @@
         "pk": 53,
         "fields": {
             "name_en": "Endocrine Surgery",
-            "name_ar": "جراحة الغدد الصماء",
-            "subspecialties": []
+            "name_ar": "جراحة الغدد الصماء"
         }
     },
     {
@@ -621,8 +428,7 @@
         "pk": 54,
         "fields": {
             "name_en": "Transplant Surgery",
-            "name_ar": "جراحة زراعة الأعضاء",
-            "subspecialties": []
+            "name_ar": "جراحة زراعة الأعضاء"
         }
     },
     {
@@ -630,8 +436,7 @@
         "pk": 55,
         "fields": {
             "name_en": "Trauma Surgery",
-            "name_ar": "جراحة الإصابات",
-            "subspecialties": []
+            "name_ar": "جراحة الإصابات"
         }
     },
     {
@@ -639,8 +444,7 @@
         "pk": 56,
         "fields": {
             "name_en": "Surgical Oncology",
-            "name_ar": "الجراحة الأورام",
-            "subspecialties": []
+            "name_ar": "الجراحة الأورام"
         }
     },
     {
@@ -648,8 +452,7 @@
         "pk": 57,
         "fields": {
             "name_en": "Spine Surgery",
-            "name_ar": "جراحة العمود الفقري",
-            "subspecialties": []
+            "name_ar": "جراحة العمود الفقري"
         }
     },
     {
@@ -657,8 +460,7 @@
         "pk": 58,
         "fields": {
             "name_en": "Joint Replacement",
-            "name_ar": "استبدال المفاصل",
-            "subspecialties": []
+            "name_ar": "استبدال المفاصل"
         }
     },
     {
@@ -666,8 +468,7 @@
         "pk": 59,
         "fields": {
             "name_en": "Hand Surgery",
-            "name_ar": "جراحة اليد",
-            "subspecialties": []
+            "name_ar": "جراحة اليد"
         }
     },
     {
@@ -675,8 +476,7 @@
         "pk": 60,
         "fields": {
             "name_en": "Foot and Ankle Surgery",
-            "name_ar": "جراحة القدم والكاحل",
-            "subspecialties": []
+            "name_ar": "جراحة القدم والكاحل"
         }
     },
     {
@@ -684,8 +484,7 @@
         "pk": 61,
         "fields": {
             "name_en": "Pediatric Orthopedics",
-            "name_ar": "جراحة العظام للأطفال",
-            "subspecialties": []
+            "name_ar": "جراحة العظام للأطفال"
         }
     },
     {
@@ -693,8 +492,7 @@
         "pk": 62,
         "fields": {
             "name_en": "Orthopedic Oncology",
-            "name_ar": "أورام العظام",
-            "subspecialties": []
+            "name_ar": "أورام العظام"
         }
     },
     {
@@ -702,8 +500,7 @@
         "pk": 63,
         "fields": {
             "name_en": "Epilepsy",
-            "name_ar": "الصرع",
-            "subspecialties": []
+            "name_ar": "الصرع"
         }
     },
     {
@@ -711,8 +508,7 @@
         "pk": 64,
         "fields": {
             "name_en": "Stroke",
-            "name_ar": "السكتة الدماغية",
-            "subspecialties": []
+            "name_ar": "السكتة الدماغية"
         }
     },
     {
@@ -720,8 +516,7 @@
         "pk": 65,
         "fields": {
             "name_en": "Neuromuscular Medicine",
-            "name_ar": "أمراض الأعصاب والعضلات",
-            "subspecialties": []
+            "name_ar": "أمراض الأعصاب والعضلات"
         }
     },
     {
@@ -729,8 +524,7 @@
         "pk": 66,
         "fields": {
             "name_en": "Neurocritical Care",
-            "name_ar": "الرعاية العصبية الحرجة",
-            "subspecialties": []
+            "name_ar": "الرعاية العصبية الحرجة"
         }
     },
     {
@@ -738,8 +532,7 @@
         "pk": 67,
         "fields": {
             "name_en": "Headache Medicine",
-            "name_ar": "طب الصداع",
-            "subspecialties": []
+            "name_ar": "طب الصداع"
         }
     },
     {
@@ -747,8 +540,7 @@
         "pk": 68,
         "fields": {
             "name_en": "Movement Disorders",
-            "name_ar": "اضطرابات الحركة",
-            "subspecialties": []
+            "name_ar": "اضطرابات الحركة"
         }
     },
     {
@@ -756,8 +548,7 @@
         "pk": 69,
         "fields": {
             "name_en": "Sleep Medicine",
-            "name_ar": "طب النوم",
-            "subspecialties": []
+            "name_ar": "طب النوم"
         }
     },
     {
@@ -765,8 +556,7 @@
         "pk": 70,
         "fields": {
             "name_en": "Pediatric Neurosurgery",
-            "name_ar": "جراحة الأعصاب للأطفال",
-            "subspecialties": []
+            "name_ar": "جراحة الأعصاب للأطفال"
         }
     },
     {
@@ -774,8 +564,7 @@
         "pk": 71,
         "fields": {
             "name_en": "Functional Neurosurgery",
-            "name_ar": "الجراحة العصبية الوظيفية",
-            "subspecialties": []
+            "name_ar": "الجراحة العصبية الوظيفية"
         }
     },
     {
@@ -783,8 +572,7 @@
         "pk": 72,
         "fields": {
             "name_en": "Neuro-oncology",
-            "name_ar": "أورام الأعصاب",
-            "subspecialties": []
+            "name_ar": "أورام الأعصاب"
         }
     },
     {
@@ -792,8 +580,7 @@
         "pk": 73,
         "fields": {
             "name_en": "Vascular Neurosurgery",
-            "name_ar": "جراحة الأوعية العصبية",
-            "subspecialties": []
+            "name_ar": "جراحة الأوعية العصبية"
         }
     },
     {
@@ -801,8 +588,7 @@
         "pk": 74,
         "fields": {
             "name_en": "Child and Adolescent Psychiatry",
-            "name_ar": "الطب النفسي للأطفال والمراهقين",
-            "subspecialties": []
+            "name_ar": "الطب النفسي للأطفال والمراهقين"
         }
     },
     {
@@ -810,8 +596,7 @@
         "pk": 75,
         "fields": {
             "name_en": "Forensic Psychiatry",
-            "name_ar": "الطب النفسي الجنائي",
-            "subspecialties": []
+            "name_ar": "الطب النفسي الجنائي"
         }
     },
     {
@@ -819,8 +604,7 @@
         "pk": 76,
         "fields": {
             "name_en": "Geriatric Psychiatry",
-            "name_ar": "الطب النفسي للمسنين",
-            "subspecialties": []
+            "name_ar": "الطب النفسي للمسنين"
         }
     },
     {
@@ -828,8 +612,7 @@
         "pk": 77,
         "fields": {
             "name_en": "Addiction Psychiatry",
-            "name_ar": "الطب النفسي للإدمان",
-            "subspecialties": []
+            "name_ar": "الطب النفسي للإدمان"
         }
     },
     {
@@ -837,8 +620,7 @@
         "pk": 78,
         "fields": {
             "name_en": "Psychosomatic Medicine",
-            "name_ar": "الطب النفسي الجسدي",
-            "subspecialties": []
+            "name_ar": "الطب النفسي الجسدي"
         }
     },
     {
@@ -846,8 +628,7 @@
         "pk": 79,
         "fields": {
             "name_en": "Pediatric Dermatology",
-            "name_ar": "أمراض جلدية للأطفال",
-            "subspecialties": []
+            "name_ar": "أمراض جلدية للأطفال"
         }
     },
     {
@@ -855,8 +636,7 @@
         "pk": 80,
         "fields": {
             "name_en": "Dermatopathology",
-            "name_ar": "علم الأمراض الجلدية",
-            "subspecialties": []
+            "name_ar": "علم الأمراض الجلدية"
         }
     },
     {
@@ -864,8 +644,7 @@
         "pk": 81,
         "fields": {
             "name_en": "Cosmetic Dermatology",
-            "name_ar": "الأمراض الجلدية التجميلية",
-            "subspecialties": []
+            "name_ar": "الأمراض الجلدية التجميلية"
         }
     },
     {
@@ -873,8 +652,7 @@
         "pk": 82,
         "fields": {
             "name_en": "Procedural Dermatology",
-            "name_ar": "الأمراض الجلدية الإجرائية",
-            "subspecialties": []
+            "name_ar": "الأمراض الجلدية الإجرائية"
         }
     },
     {
@@ -882,8 +660,7 @@
         "pk": 83,
         "fields": {
             "name_en": "Diagnostic Radiology",
-            "name_ar": "الأشعة التشخيصية",
-            "subspecialties": []
+            "name_ar": "الأشعة التشخيصية"
         }
     },
     {
@@ -891,8 +668,7 @@
         "pk": 84,
         "fields": {
             "name_en": "Interventional Radiology",
-            "name_ar": "الأشعة التداخلية",
-            "subspecialties": []
+            "name_ar": "الأشعة التداخلية"
         }
     },
     {
@@ -900,8 +676,7 @@
         "pk": 85,
         "fields": {
             "name_en": "Neuroradiology",
-            "name_ar": "أشعة الأعصاب",
-            "subspecialties": []
+            "name_ar": "أشعة الأعصاب"
         }
     },
     {
@@ -909,8 +684,7 @@
         "pk": 86,
         "fields": {
             "name_en": "Musculoskeletal Radiology",
-            "name_ar": "أشعة الجهاز العضلي الهيكلي",
-            "subspecialties": []
+            "name_ar": "أشعة الجهاز العضلي الهيكلي"
         }
     },
     {
@@ -918,8 +692,7 @@
         "pk": 87,
         "fields": {
             "name_en": "Pediatric Radiology",
-            "name_ar": "أشعة الأطفال",
-            "subspecialties": []
+            "name_ar": "أشعة الأطفال"
         }
     },
     {
@@ -927,8 +700,7 @@
         "pk": 88,
         "fields": {
             "name_en": "Breast Imaging",
-            "name_ar": "تصوير الثدي",
-            "subspecialties": []
+            "name_ar": "تصوير الثدي"
         }
     },
     {
@@ -936,8 +708,7 @@
         "pk": 89,
         "fields": {
             "name_en": "Pain Medicine",
-            "name_ar": "طب الألم",
-            "subspecialties": []
+            "name_ar": "طب الألم"
         }
     },
     {
@@ -945,8 +716,7 @@
         "pk": 90,
         "fields": {
             "name_en": "Critical Care Medicine",
-            "name_ar": "طب العناية المركزة",
-            "subspecialties": []
+            "name_ar": "طب العناية المركزة"
         }
     },
     {
@@ -954,8 +724,7 @@
         "pk": 91,
         "fields": {
             "name_en": "Pediatric Anesthesiology",
-            "name_ar": "تخدير الأطفال",
-            "subspecialties": []
+            "name_ar": "تخدير الأطفال"
         }
     },
     {
@@ -963,8 +732,7 @@
         "pk": 92,
         "fields": {
             "name_en": "Cardiac Anesthesiology",
-            "name_ar": "تخدير القلب",
-            "subspecialties": []
+            "name_ar": "تخدير القلب"
         }
     },
     {
@@ -972,8 +740,7 @@
         "pk": 93,
         "fields": {
             "name_en": "Neuroanesthesiology",
-            "name_ar": "تخدير الأعصاب",
-            "subspecialties": []
+            "name_ar": "تخدير الأعصاب"
         }
     },
     {
@@ -981,8 +748,7 @@
         "pk": 94,
         "fields": {
             "name_en": "Pediatric Emergency Medicine",
-            "name_ar": "طب طوارئ الأطفال",
-            "subspecialties": []
+            "name_ar": "طب طوارئ الأطفال"
         }
     },
     {
@@ -990,8 +756,7 @@
         "pk": 95,
         "fields": {
             "name_en": "Toxicology",
-            "name_ar": "علم السموم",
-            "subspecialties": []
+            "name_ar": "علم السموم"
         }
     },
     {
@@ -999,8 +764,7 @@
         "pk": 96,
         "fields": {
             "name_en": "Emergency Medical Services (EMS)",
-            "name_ar": "خدمات الطوارئ الطبية",
-            "subspecialties": []
+            "name_ar": "خدمات الطوارئ الطبية"
         }
     },
     {
@@ -1008,8 +772,7 @@
         "pk": 97,
         "fields": {
             "name_en": "Disaster Medicine",
-            "name_ar": "طب الكوارث",
-            "subspecialties": []
+            "name_ar": "طب الكوارث"
         }
     },
     {
@@ -1017,8 +780,7 @@
         "pk": 98,
         "fields": {
             "name_en": "Anatomic Pathology",
-            "name_ar": "علم الأمراض التشريحي",
-            "subspecialties": []
+            "name_ar": "علم الأمراض التشريحي"
         }
     },
     {
@@ -1026,8 +788,7 @@
         "pk": 99,
         "fields": {
             "name_en": "Clinical Pathology",
-            "name_ar": "علم الأمراض السريري",
-            "subspecialties": []
+            "name_ar": "علم الأمراض السريري"
         }
     },
     {
@@ -1035,8 +796,7 @@
         "pk": 100,
         "fields": {
             "name_en": "Forensic Pathology",
-            "name_ar": "علم الأمراض الجنائي",
-            "subspecialties": []
+            "name_ar": "علم الأمراض الجنائي"
         }
     },
     {
@@ -1044,8 +804,7 @@
         "pk": 101,
         "fields": {
             "name_en": "Hematopathology",
-            "name_ar": "أمراض الدم المرضية",
-            "subspecialties": []
+            "name_ar": "أمراض الدم المرضية"
         }
     },
     {
@@ -1053,8 +812,7 @@
         "pk": 102,
         "fields": {
             "name_en": "Cytopathology",
-            "name_ar": "علم الخلايا",
-            "subspecialties": []
+            "name_ar": "علم الخلايا"
         }
     },
     {
@@ -1062,8 +820,7 @@
         "pk": 103,
         "fields": {
             "name_en": "Molecular Genetic Pathology",
-            "name_ar": "علم الأمراض الوراثي الجزيئي",
-            "subspecialties": []
+            "name_ar": "علم الأمراض الوراثي الجزيئي"
         }
     },
     {
@@ -1071,8 +828,7 @@
         "pk": 104,
         "fields": {
             "name_en": "Retina/Vitreous",
-            "name_ar": "الشبكية / الجسم الزجاجي",
-            "subspecialties": []
+            "name_ar": "الشبكية / الجسم الزجاجي"
         }
     },
     {
@@ -1080,8 +836,7 @@
         "pk": 105,
         "fields": {
             "name_en": "Glaucoma",
-            "name_ar": "الجلوكوما",
-            "subspecialties": []
+            "name_ar": "الجلوكوما"
         }
     },
     {
@@ -1089,8 +844,7 @@
         "pk": 106,
         "fields": {
             "name_en": "Cornea/External Disease",
-            "name_ar": "القرنية / الأمراض الخارجية",
-            "subspecialties": []
+            "name_ar": "القرنية / الأمراض الخارجية"
         }
     },
     {
@@ -1098,8 +852,7 @@
         "pk": 107,
         "fields": {
             "name_en": "Pediatric Ophthalmology",
-            "name_ar": "طب عيون الأطفال",
-            "subspecialties": []
+            "name_ar": "طب عيون الأطفال"
         }
     },
     {
@@ -1107,8 +860,7 @@
         "pk": 108,
         "fields": {
             "name_en": "Neuro-Ophthalmology",
-            "name_ar": "طب أعصاب العين",
-            "subspecialties": []
+            "name_ar": "طب أعصاب العين"
         }
     },
     {
@@ -1116,8 +868,7 @@
         "pk": 109,
         "fields": {
             "name_en": "Oculoplastic Surgery",
-            "name_ar": "جراحة تجميل العيون",
-            "subspecialties": []
+            "name_ar": "جراحة تجميل العيون"
         }
     },
     {
@@ -1125,8 +876,7 @@
         "pk": 110,
         "fields": {
             "name_en": "Head and Neck Surgery",
-            "name_ar": "جراحة الرأس والعنق",
-            "subspecialties": []
+            "name_ar": "جراحة الرأس والعنق"
         }
     },
     {
@@ -1134,8 +884,7 @@
         "pk": 111,
         "fields": {
             "name_en": "Pediatric ENT",
-            "name_ar": "أنف وأذن وحنجرة للأطفال",
-            "subspecialties": []
+            "name_ar": "أنف وأذن وحنجرة للأطفال"
         }
     },
     {
@@ -1143,8 +892,7 @@
         "pk": 112,
         "fields": {
             "name_en": "Facial Plastic and Reconstructive Surgery",
-            "name_ar": "جراحة التجميل وإعادة بناء الوجه",
-            "subspecialties": []
+            "name_ar": "جراحة التجميل وإعادة بناء الوجه"
         }
     },
     {
@@ -1152,8 +900,7 @@
         "pk": 113,
         "fields": {
             "name_en": "Otology/Neurotology",
-            "name_ar": "أمراض الأذن / أعصاب الأذن",
-            "subspecialties": []
+            "name_ar": "أمراض الأذن / أعصاب الأذن"
         }
     },
     {
@@ -1161,8 +908,7 @@
         "pk": 114,
         "fields": {
             "name_en": "Rhinology",
-            "name_ar": "أمراض الأنف",
-            "subspecialties": []
+            "name_ar": "أمراض الأنف"
         }
     },
     {
@@ -1170,8 +916,7 @@
         "pk": 115,
         "fields": {
             "name_en": "Laryngology",
-            "name_ar": "أمراض الحنجرة",
-            "subspecialties": []
+            "name_ar": "أمراض الحنجرة"
         }
     },
     {
@@ -1179,8 +924,7 @@
         "pk": 116,
         "fields": {
             "name_en": "Pediatric Urology",
-            "name_ar": "مسالك بولية للأطفال",
-            "subspecialties": []
+            "name_ar": "مسالك بولية للأطفال"
         }
     },
     {
@@ -1188,8 +932,7 @@
         "pk": 117,
         "fields": {
             "name_en": "Urologic Oncology",
-            "name_ar": "أورام المسالك البولية",
-            "subspecialties": []
+            "name_ar": "أورام المسالك البولية"
         }
     },
     {
@@ -1197,8 +940,7 @@
         "pk": 118,
         "fields": {
             "name_en": "Female Pelvic Medicine",
-            "name_ar": "طب الحوض النسائي",
-            "subspecialties": []
+            "name_ar": "طب الحوض النسائي"
         }
     },
     {
@@ -1206,8 +948,7 @@
         "pk": 119,
         "fields": {
             "name_en": "Male Infertility",
-            "name_ar": "عقم الذكور",
-            "subspecialties": []
+            "name_ar": "عقم الذكور"
         }
     },
     {
@@ -1215,8 +956,7 @@
         "pk": 120,
         "fields": {
             "name_en": "Endourology",
-            "name_ar": "جراحة المسالك البولية بالمنظار",
-            "subspecialties": []
+            "name_ar": "جراحة المسالك البولية بالمنظار"
         }
     },
     {
@@ -1224,8 +964,7 @@
         "pk": 121,
         "fields": {
             "name_en": "Neurourology",
-            "name_ar": "أعصاب المسالك البولية",
-            "subspecialties": []
+            "name_ar": "أعصاب المسالك البولية"
         }
     },
     {
@@ -1233,8 +972,7 @@
         "pk": 122,
         "fields": {
             "name_en": "Spinal Cord Injury Medicine",
-            "name_ar": "إصابات الحبل الشوكي",
-            "subspecialties": []
+            "name_ar": "إصابات الحبل الشوكي"
         }
     },
     {
@@ -1242,8 +980,7 @@
         "pk": 123,
         "fields": {
             "name_en": "Pediatric Rehabilitation",
-            "name_ar": "تأهيل الأطفال",
-            "subspecialties": []
+            "name_ar": "تأهيل الأطفال"
         }
     },
     {
@@ -1251,8 +988,7 @@
         "pk": 124,
         "fields": {
             "name_en": "Brain Injury Medicine",
-            "name_ar": "طب إصابات الدماغ",
-            "subspecialties": []
+            "name_ar": "طب إصابات الدماغ"
         }
     },
     {
@@ -1260,8 +996,7 @@
         "pk": 125,
         "fields": {
             "name_en": "Pediatric Allergy",
-            "name_ar": "حساسية الأطفال",
-            "subspecialties": []
+            "name_ar": "حساسية الأطفال"
         }
     },
     {
@@ -1269,8 +1004,7 @@
         "pk": 126,
         "fields": {
             "name_en": "Clinical Immunology",
-            "name_ar": "علم المناعة السريري",
-            "subspecialties": []
+            "name_ar": "علم المناعة السريري"
         }
     },
     {
@@ -1278,8 +1012,7 @@
         "pk": 127,
         "fields": {
             "name_en": "Asthma and Respiratory Allergy",
-            "name_ar": "الربو والحساسية التنفسية",
-            "subspecialties": []
+            "name_ar": "الربو والحساسية التنفسية"
         }
     },
     {
@@ -1287,8 +1020,7 @@
         "pk": 128,
         "fields": {
             "name_en": "Environmental Medicine",
-            "name_ar": "الطب البيئي",
-            "subspecialties": []
+            "name_ar": "الطب البيئي"
         }
     },
     {
@@ -1296,8 +1028,7 @@
         "pk": 129,
         "fields": {
             "name_en": "Corporate Health",
-            "name_ar": "الصحة المؤسسية",
-            "subspecialties": []
+            "name_ar": "الصحة المؤسسية"
         }
     },
     {
@@ -1305,8 +1036,7 @@
         "pk": 130,
         "fields": {
             "name_en": "Disability Evaluation",
-            "name_ar": "تقييم الإعاقة",
-            "subspecialties": []
+            "name_ar": "تقييم الإعاقة"
         }
     },
     {
@@ -1314,8 +1044,7 @@
         "pk": 131,
         "fields": {
             "name_en": "Occupational Health",
-            "name_ar": "الصحة المهنية",
-            "subspecialties": []
+            "name_ar": "الصحة المهنية"
         }
     },
     {
@@ -1323,8 +1052,7 @@
         "pk": 132,
         "fields": {
             "name_en": "Epidemiology",
-            "name_ar": "علم الأوبئة",
-            "subspecialties": []
+            "name_ar": "علم الأوبئة"
         }
     },
     {
@@ -1332,8 +1060,7 @@
         "pk": 133,
         "fields": {
             "name_en": "Health Policy",
-            "name_ar": "السياسة الصحية",
-            "subspecialties": []
+            "name_ar": "السياسة الصحية"
         }
     },
     {
@@ -1341,8 +1068,7 @@
         "pk": 134,
         "fields": {
             "name_en": "Preventive Cardiology",
-            "name_ar": "الوقاية من أمراض القلب",
-            "subspecialties": []
+            "name_ar": "الوقاية من أمراض القلب"
         }
     }
 ]
