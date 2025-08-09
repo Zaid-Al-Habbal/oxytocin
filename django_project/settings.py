@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
 from django.core.management.utils import get_random_secret_key
 
@@ -353,5 +354,18 @@ UNFOLD = {
     "SHOW_LANGUAGES": True,
     "SITE_TITLE": "Oxytocin",
     "SITE_HEADER": "Oxytocin",
-    "SITE_SUBHEADER": "Oxytocin is a platform for managing clinics.",
+    "SITE_SUBHEADER": _("Oxytocin is a platform for managing clinics."),
+    "SITE_ICON": lambda request: static("logo.svg"),
+    "SITE_FAVICONS": [
+        {
+            "rel": "icon",
+            "sizes": "32x32",
+            "type": "image/svg+xml",
+            "href": lambda request: static("favicon.svg"),
+        },
+    ],
+    "SHOW_BACK_BUTTON": True,
+    "SIDEBAR": {
+        "show_search": True,
+    },
 }
