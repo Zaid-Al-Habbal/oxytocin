@@ -1,13 +1,14 @@
 from django.contrib import admin
 from django.contrib.gis.db import models
 
+from unfold.admin import ModelAdmin
 import mapwidgets
 
 from .models import Patient, PatientSpecialtyAccess
 
 
 @admin.register(Patient)
-class PatientAdmin(admin.ModelAdmin):
+class PatientAdmin(ModelAdmin):
     list_display = ["user_id", "job", "address", "blood_type"]
     list_filter = ["blood_type"]
     search_fields = ["job"]
@@ -17,7 +18,7 @@ class PatientAdmin(admin.ModelAdmin):
 
 
 @admin.register(PatientSpecialtyAccess)
-class PatientSpecialtyAccessAdmin(admin.ModelAdmin):
+class PatientSpecialtyAccessAdmin(ModelAdmin):
     list_display = ["id", "patient", "specialty", "visibility"]
     list_filter = [
         ("patient__user", admin.RelatedOnlyFieldListFilter),

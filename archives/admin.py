@@ -1,10 +1,12 @@
 from django.contrib import admin
 
+from unfold.admin import ModelAdmin
+
 from .models import Archive, ArchiveAccessPermission
 
 
 @admin.register(Archive)
-class ArchiveAdmin(admin.ModelAdmin):
+class ArchiveAdmin(ModelAdmin):
     list_display = [
         "id",
         "main_complaint",
@@ -34,7 +36,7 @@ class ArchiveAdmin(admin.ModelAdmin):
 
 
 @admin.register(ArchiveAccessPermission)
-class ArchiveAccessPermissionAdmin(admin.ModelAdmin):
+class ArchiveAccessPermissionAdmin(ModelAdmin):
     list_display = ["id", "patient", "doctor", "specialty"]
     list_filter = [
         ("patient__user", admin.RelatedOnlyFieldListFilter),

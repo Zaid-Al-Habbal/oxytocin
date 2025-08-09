@@ -1,19 +1,21 @@
 from django.contrib import admin
 from django.contrib.gis.db import models
 
+from unfold.admin import ModelAdmin, TabularInline
+from simple_history.admin import SimpleHistoryAdmin
+
 import mapwidgets
-from nested_admin import nested
 
 from .models import BannedPatient, Clinic, ClinicImage
 
 
-class ClinicImageInline(nested.NestedTabularInline):
+class ClinicImageInline(TabularInline):
     model = ClinicImage
     raw_id_fields = ["clinic"]
 
 
 @admin.register(Clinic)
-class ClinicAdmin(nested.NestedModelAdmin):
+class ClinicAdmin(SimpleHistoryAdmin, ModelAdmin):
     list_display = ["doctor_id", "doctor", "address", "phone"]
     search_fields = ["phone"]
     inlines = [ClinicImageInline]

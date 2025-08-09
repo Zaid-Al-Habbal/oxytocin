@@ -6,6 +6,8 @@ from django.contrib.auth.models import (
 from django.db import models
 from django.utils import timezone
 
+from simple_history.models import HistoricalRecords
+
 from common.utils import years_since
 
 
@@ -78,6 +80,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
+
+    history = HistoricalRecords()
 
     objects = CustomUserManager()
 

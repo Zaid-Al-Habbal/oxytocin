@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from simple_history.models import HistoricalRecords
 from users.models import CustomUser
 from clinics.models import Clinic
 from drf_spectacular.utils import extend_schema_field, OpenApiTypes
@@ -28,6 +29,8 @@ class Assistant(models.Model):
     about = models.TextField(null=True, blank=True)
     education = models.TextField()
     start_work_date = models.DateField()
+
+    history = HistoricalRecords()
 
     objects = AssistantQuerySet.as_manager()
 

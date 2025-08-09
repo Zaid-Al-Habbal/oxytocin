@@ -1,5 +1,7 @@
 from django.db import models
 
+from simple_history.models import HistoricalRecords
+
 from doctors.models import Doctor
 from patients.models import Patient
 
@@ -16,6 +18,8 @@ class Favorite(models.Model):
         related_name="favorites_of",
     )
     created_at = models.DateTimeField(auto_now_add=True)
+
+    history = HistoricalRecords()
 
     class Meta:
         indexes = [models.Index(fields=["-created_at"])]

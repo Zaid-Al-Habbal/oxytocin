@@ -1,5 +1,7 @@
 from django.db import models
 
+from simple_history.models import HistoricalRecords
+
 from patients.models import Patient
 from doctors.models import Doctor, Specialty
 from appointments.models import Appointment
@@ -58,6 +60,8 @@ class Archive(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    history = HistoricalRecords()
+
     objects = ArchiveQuerySet.as_manager()
 
     class Meta:
@@ -94,6 +98,8 @@ class ArchiveAccessPermission(models.Model):
         related_name="archive_access_permissions",
     )
     created_at = models.DateTimeField(auto_now_add=True)
+
+    history = HistoricalRecords()
 
     class Meta:
         db_table = "archives_archive_access_permission"

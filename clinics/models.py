@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models.functions import Distance
 
+from simple_history.models import HistoricalRecords
+
 from doctors.models import Doctor, DoctorSpecialty
 from patients.models import Patient
 
@@ -66,6 +68,8 @@ class Clinic(models.Model):
         default=15, help_text="Length of each appointment slot in minutes"
     )
 
+    history = HistoricalRecords()
+
     objects = ClinicQuerySet.as_manager()
 
     @property
@@ -94,6 +98,8 @@ class ClinicImage(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    history = HistoricalRecords()
 
     class Meta:
         indexes = [

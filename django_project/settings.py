@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from django.utils.translation import gettext_lazy as _
 from django.core.management.utils import get_random_secret_key
 
 from pathlib import Path
@@ -29,12 +30,18 @@ SECRET_KEY = config("DJANGO_SECRET_KEY", cast=str, default=get_random_secret_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool, default=False)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
+    "unfold.contrib.inlines",
+    "unfold.contrib.location_field",
+    "unfold.contrib.simple_history",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -52,6 +59,7 @@ INSTALLED_APPS = [
     "nested_admin",
     "file_validator",
     "mapwidgets",
+    "simple_history",
     # project apps
     "users",
     "patients",
@@ -77,6 +85,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "simple_history.middleware.HistoryRequestMiddleware",
 ]
 
 ROOT_URLCONF = "django_project.urls"
@@ -148,6 +157,11 @@ LANGUAGE_CODE = "ar-sy"
 TIME_ZONE = "Asia/Damascus"
 
 USE_I18N = True
+
+LANGUAGES = (
+    ("en-us", _("English")),
+    ("ar-sy", _("Arabic")),
+)
 
 USE_TZ = True
 
@@ -301,7 +315,6 @@ CELERY_RESULT_BACKEND = f"redis://:{REDIS_PASSWORD}@redis:6379/0"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 
-
 # Textbee
 TEXTBEE_API_KEY = config("TEXTBEE_API_KEY")
 TEXTBEE_DEVICE_ID = config("TEXTBEE_DEVICE_ID")
@@ -334,3 +347,7 @@ SAFE_PHONE_NUMBERS = config(
     cast=lambda v: [s for s in v.split(",")],
     default=[],
 )
+
+UNFOLD = {
+    "SHOW_LANGUAGES": True,
+}

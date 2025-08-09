@@ -1,17 +1,22 @@
 from django.contrib import admin
-
-from nested_admin import nested
+from unfold.admin import ModelAdmin, TabularInline
+from unfold.contrib.filters.admin import (
+    MultipleDropdownFilter,
+    ChoicesCheckboxFilter,
+    DropdownFilter,
+)
 
 from .models import Doctor, Specialty, DoctorSpecialty, Achievement
 
 
-class DoctorSpecialtyInline(nested.NestedTabularInline):
+class DoctorSpecialtyInline(TabularInline):
     model = DoctorSpecialty
     autocomplete_fields = ["specialty"]
+    tab = True
 
 
 @admin.register(Doctor)
-class DoctorAdmin(nested.NestedModelAdmin):
+class DoctorAdmin(ModelAdmin):
     list_display = [
         "user_id",
         "user",
@@ -21,12 +26,13 @@ class DoctorAdmin(nested.NestedModelAdmin):
         "status",
         "certificate",
     ]
-    list_filter = ["status"]
+    list_filter_submit = True
+    list_filter = [("status", ChoicesCheckboxFilter)]
     list_editable = ["status"]
     inlines = [DoctorSpecialtyInline]
 
 
-class SpecialtyFilter(admin.SimpleListFilter):
+class SpecialtyFilter(MultipleDropdownFilter):
     title = "Main Specialty"
     parameter_name = "main_specialty"
 
@@ -39,20 +45,35 @@ class SpecialtyFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value():
-            return queryset.filter(main_specialties__id=self.value())
+            return queryset.filter(main_specialties__id__in=self.value())
         return queryset
 
 
 @admin.register(Specialty)
-class SpecialtyAdmin(admin.ModelAdmin):
+class SpecialtyAdmin(ModelAdmin):
     list_display = ["id", "name_en", "name_ar"]
+    list_filter_submit = True
     list_filter = [SpecialtyFilter]
     search_fields = ["name_en", "name_ar"]
 
 
+class AchievementDoctorFilter(admin.SimpleListFilter):
+    title = "Doctor"
+    parameter_name = "doctor_id"
+
+    def lookups(self, request, model_admin):
+        doctors = Doctor.objects.with_user().all()
+        return [(doctor.user.id, str(doctor.user)) for doctor in doctors]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(doctor_id=self.value())
+        return queryset
+
+
 @admin.register(Achievement)
-class AchievementAdmin(admin.ModelAdmin):
+class AchievementAdmin(ModelAdmin):
     list_display = ["id", "title", "description", "doctor", "created_at", "updated_at"]
-    list_filter = ["doctor", "created_at", "updated_at"]
+    list_filter = [AchievementDoctorFilter, "created_at", "updated_at"]
     search_fields = ["title", "description"]
     readonly_fields = ["created_at", "updated_at"]

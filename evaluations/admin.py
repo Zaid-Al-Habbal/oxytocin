@@ -1,15 +1,21 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
+from unfold.contrib.filters.admin import SliderNumericFilter
 
 from .models import Evaluation
 
 
+class RateFilter(SliderNumericFilter):
+    MAX_DECIMALS = 5
+    STEP = 1
+
+
 @admin.register(Evaluation)
-class EvaluationAdmin(admin.ModelAdmin):
+class EvaluationAdmin(ModelAdmin):
     list_display = ["id", "patient", "appointment", "rate", "created_at", "updated_at"]
     list_filter = [
         ("patient", admin.RelatedOnlyFieldListFilter),
-        ("appointment", admin.RelatedOnlyFieldListFilter),
-        "rate",
+        ("rate", RateFilter),
         "created_at",
         "updated_at",
     ]

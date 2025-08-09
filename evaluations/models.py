@@ -3,6 +3,8 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 from datetime import timedelta
 
+from simple_history.models import HistoricalRecords
+
 from appointments.models import Appointment
 from clinics.models import Clinic
 from patients.models import Patient
@@ -55,6 +57,8 @@ class Evaluation(models.Model):
     comment = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    history = HistoricalRecords()
 
     objects = EvaluationQuerySet.as_manager()
 

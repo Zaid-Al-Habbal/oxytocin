@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.gis.db import models as gis_models
 
+from simple_history.models import HistoricalRecords
+
 from users.models import CustomUser
 from doctors.models import Specialty
 
@@ -36,6 +38,8 @@ class Patient(models.Model):
     is_smoker = models.BooleanField(default=False)
     is_drinker = models.BooleanField(default=False)
     is_married = models.BooleanField(default=False)
+
+    history = HistoricalRecords()
 
     @property
     def longitude(self):
@@ -74,6 +78,8 @@ class PatientSpecialtyAccess(models.Model):
     visibility = models.CharField(max_length=15, choices=Visibility)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    history = HistoricalRecords()
 
     objects = PatientSpecialtyAccessQuerySet.as_manager()
 

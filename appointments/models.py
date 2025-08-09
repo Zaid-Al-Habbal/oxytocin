@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models import Q
 
+from simple_history.models import HistoricalRecords
+
 from users.models import CustomUser as User
 from clinics.models import Clinic
 
@@ -68,6 +70,8 @@ class Appointment(models.Model):
         related_name="cancelled_appointments",
     )
 
+    history = HistoricalRecords()
+
     objects = AppointmentQuerySet.as_manager()
 
     class Meta:
@@ -101,6 +105,8 @@ class Attachment(models.Model):
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    history = HistoricalRecords()
 
     def __str__(self):
         return f"Attachment for Appointment {self.appointment.id}"

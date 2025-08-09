@@ -4,6 +4,8 @@ from django.conf import settings
 from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models.functions import Distance
 
+from simple_history.models import HistoricalRecords
+
 from common.utils import years_since
 
 
@@ -105,6 +107,8 @@ class Doctor(models.Model):
     )
     rate = models.FloatField(default=0.0)
 
+    history = HistoricalRecords()
+
     objects = DoctorQuerySet.as_manager()
 
     @property
@@ -176,6 +180,8 @@ class Specialty(models.Model):
         db_table="doctors_main_specialty_subspecialty",
     )
 
+    history = HistoricalRecords()
+
     objects = SpecialtyQuerySet.as_manager()
 
     class Meta:
@@ -214,6 +220,8 @@ class DoctorSpecialty(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    history = HistoricalRecords()
+
     objects = DoctorSpecialtyQuerySet.as_manager()
 
     class Meta:
@@ -233,6 +241,9 @@ class DoctorSpecialty(models.Model):
     def __str__(self):
         return f"{self.doctor} - {self.specialty}"
 
+    def get_inline_title(self):
+        return "Specialties"
+
 
 class Achievement(models.Model):
     title = models.CharField(max_length=100)
@@ -244,6 +255,8 @@ class Achievement(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    history = HistoricalRecords()
 
     class Meta:
         indexes = [
