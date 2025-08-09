@@ -60,7 +60,7 @@ class Archive(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     objects = ArchiveQuerySet.as_manager()
 
@@ -99,7 +99,7 @@ class ArchiveAccessPermission(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     class Meta:
         db_table = "archives_archive_access_permission"

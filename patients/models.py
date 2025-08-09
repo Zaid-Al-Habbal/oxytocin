@@ -39,7 +39,7 @@ class Patient(models.Model):
     is_drinker = models.BooleanField(default=False)
     is_married = models.BooleanField(default=False)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     @property
     def longitude(self):
@@ -79,7 +79,7 @@ class PatientSpecialtyAccess(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     objects = PatientSpecialtyAccessQuerySet.as_manager()
 

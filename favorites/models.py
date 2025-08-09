@@ -19,7 +19,7 @@ class Favorite(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     class Meta:
         indexes = [models.Index(fields=["-created_at"])]

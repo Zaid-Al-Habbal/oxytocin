@@ -68,7 +68,7 @@ class Clinic(models.Model):
         default=15, help_text="Length of each appointment slot in minutes"
     )
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     objects = ClinicQuerySet.as_manager()
 
@@ -99,7 +99,7 @@ class ClinicImage(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     class Meta:
         indexes = [

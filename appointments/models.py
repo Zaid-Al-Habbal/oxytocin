@@ -70,7 +70,7 @@ class Appointment(models.Model):
         related_name="cancelled_appointments",
     )
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     objects = AppointmentQuerySet.as_manager()
 
@@ -106,7 +106,7 @@ class Attachment(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     def __str__(self):
         return f"Attachment for Appointment {self.appointment.id}"

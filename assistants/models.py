@@ -30,7 +30,7 @@ class Assistant(models.Model):
     education = models.TextField()
     start_work_date = models.DateField()
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     objects = AssistantQuerySet.as_manager()
 

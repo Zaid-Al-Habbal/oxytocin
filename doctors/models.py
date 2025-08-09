@@ -107,7 +107,7 @@ class Doctor(models.Model):
     )
     rate = models.FloatField(default=0.0)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     objects = DoctorQuerySet.as_manager()
 
@@ -184,7 +184,7 @@ class MainSpecialtySubspecialty(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     class Meta:
         db_table = "doctors_main_specialty_subspecialty"
@@ -221,7 +221,7 @@ class Specialty(models.Model):
         blank=True,
     )
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     objects = SpecialtyQuerySet.as_manager()
 
@@ -261,7 +261,7 @@ class DoctorSpecialty(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     objects = DoctorSpecialtyQuerySet.as_manager()
 
@@ -297,7 +297,7 @@ class Achievement(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    history = HistoricalRecords()
+    history = HistoricalRecords(cascade_delete_history=True)
 
     class Meta:
         indexes = [
