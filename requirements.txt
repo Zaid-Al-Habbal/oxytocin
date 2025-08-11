@@ -19,7 +19,6 @@ django-cors-headers==4.7.0
 django-crispy-forms==2.4
 django-import-export==4.3.9
 django-map-widgets==0.5.1
-django-modeltranslation==0.19.16
 django-nested-admin==4.1.1
 django-redis==5.4.0
 django-rest-framework==0.1.0
