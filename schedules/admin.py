@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 from django.contrib import admin
 
 from unfold.admin import ModelAdmin
@@ -44,7 +45,7 @@ class AvailableHourAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin)
     fieldsets = (
         (None, {"fields": ("schedule", "start_hour", "end_hour")}),
         (
-            "Timestamps",
+            _("Timestamps"),
             {
                 "fields": (),
                 "classes": ("collapse",),

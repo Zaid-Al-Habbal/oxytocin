@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 21:32+0300\n"
+"POT-Creation-Date: 2025-08-11 18:41+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,98 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: appointments/apps.py:8 appointments/models.py:106
+msgid "Appointments"
+msgstr "المواعيد"
+
+#: appointments/models.py:26
+msgid "Cancelled"
+msgstr "إلغي"
+
+#: appointments/models.py:27
+msgid "Waiting"
+msgstr "في الإنتظار"
+
+#: appointments/models.py:28
+msgid "In Consultation"
+msgstr "قيد الإستشارة"
+
+#: appointments/models.py:29
+msgid "Completed"
+msgstr "مكتمل"
+
+#: appointments/models.py:30
+msgid "Absent"
+msgstr "غائب"
+
+#: appointments/models.py:39
+msgid "Patient"
+msgstr "المريض"
+
+#: appointments/models.py:40
+msgid "Patient who booked the appointment"
+msgstr "المريض الذي حجز الموعد"
+
+#: appointments/models.py:47
+msgid "Clinic"
+msgstr "العيادة"
+
+#: appointments/models.py:50
+msgid "Visit Date"
+msgstr "تاريخ الزيارة"
+
+#: appointments/models.py:51
+msgid "Visit Time"
+msgstr "وقت الزيارة"
+
+#: appointments/models.py:56
+msgid "Actual Start Time"
+msgstr "وقت البدء الفعلي"
+
+#: appointments/models.py:61
+msgid "Actual End Time"
+msgstr "وقت النهاية الفعلي"
+
+#: appointments/models.py:68
+msgid "Status"
+msgstr "الحالة"
+
+#: appointments/models.py:74
+msgid "Notes"
+msgstr "ملاحظات"
+
+#: appointments/models.py:79 appointments/models.py:142
+msgid "Created At"
+msgstr "تاريخ الإنشاء"
+
+#: appointments/models.py:83
+msgid "Updated At"
+msgstr "تاريخ التحديث"
+
+#: appointments/models.py:89
+msgid "Cancelled At"
+msgstr "تاريخ الإلغاء"
+
+#: appointments/models.py:97
+msgid "Cancelled By"
+msgstr "إلغي بواسطة"
+
+#: appointments/models.py:105 appointments/models.py:137
+msgid "Appointment"
+msgstr "موعد"
+
+#: appointments/models.py:130
+msgid "Document"
+msgstr "المستند"
+
+#: appointments/models.py:148
+msgid "Attachment"
+msgstr "المرفق"
+
+#: appointments/models.py:149
+msgid "Attachments"
+msgstr "المرفقات"
 
 #: appointments/serializers/book_appointment.py:41
 #: appointments/serializers/update_appointment.py:41
@@ -58,10 +150,8 @@ msgid "Appointment has been cancelled successfully"
 msgstr "تم إلغاء الموعد بنجاح"
 
 #: appointments/views/delete_attachment.py:37
-#, fuzzy
-#| msgid "Appointment has been rebooked successfully"
 msgid "Attachment deleted successfully."
-msgstr "تم إعادة حجز الموعد بنجاح"
+msgstr "تم حذف المرفق بنجاح"
 
 #: appointments/views/rebook_appointment.py:56
 msgid "Cannot rebook this appointment because its time is passed"
@@ -73,13 +163,10 @@ msgid ""
 msgstr "لا يمكنك إعادة حجز هذا الموعد لأنه أصبح محجوز من قبل مريض آخر"
 
 #: appointments/views/rebook_appointment.py:78
-#, fuzzy
-#| msgid ""
-#| "You can not rebook this appointment because its booked by another patient"
 msgid ""
 "You can not rebook this appointment because its time slot is not available "
 "anymore"
-msgstr "لا يمكنك إعادة حجز هذا الموعد لأن ميعاده أصبح غير متاح"
+msgstr "لا يمكنك إعادة حجز هذا الموعد لأن وقته غير متاح"
 
 #: appointments/views/rebook_appointment.py:86
 msgid "Appointment has been rebooked successfully"

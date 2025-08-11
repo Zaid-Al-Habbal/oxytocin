@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 21:32+0300\n"
+"POT-Creation-Date: 2025-08-11 19:03+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: assistants/apps.py:8 assistants/models.py:43
+msgid "Assistants"
+msgstr "المساعدات"
+
+#: assistants/models.py:22
+msgid "User"
+msgstr "المستخدم"
+
+#: assistants/models.py:30
+msgid "Clinic"
+msgstr "العيادة"
+
+#: assistants/models.py:32
+msgid "Joined Clinic At"
+msgstr "انضمت إلى العيادة في"
+
+#: assistants/models.py:33
+msgid "About"
+msgstr "عن"
+
+#: assistants/models.py:34
+msgid "Education"
+msgstr "التعليم"
+
+#: assistants/models.py:35
+msgid "Start Work Date"
+msgstr "تاريخ البدء في العمل"
+
+#: assistants/models.py:42
+msgid "Assistant"
+msgstr "المساعدة"
+
+#: assistants/models.py:50
+msgid "Years of Experience"
+msgstr "سنوات الخبرة"
 
 #: assistants/permissions.py:17
 msgid "You don't have the required role."
@@ -33,19 +69,19 @@ msgstr "قم بالإنضمام لعيادة أولا"
 
 #: assistants/serializers.py:30
 msgid "Invalid credentials"
-msgstr ""
+msgstr "البيانات غير صالحة"
 
 #: assistants/serializers.py:33
 msgid "Only assistants can log in here."
-msgstr "فقط المساعدون/المساعدات يستطيعون تسجيل الدحول هنا"
+msgstr "فقط المساعدات يستطيعون تسجيل الدخول هنا"
 
 #: assistants/serializers.py:36
 msgid "Please, verify your phone number first"
-msgstr ""
+msgstr "من فضلك، قم بتحقق رقم هاتفك أولا"
 
 #: assistants/serializers.py:64
 msgid "Phone number is not verified."
-msgstr ""
+msgstr "رقم الهاتف غير متحقق."
 
 #: assistants/serializers.py:66
 msgid "Assistant profile already exists."
@@ -53,7 +89,7 @@ msgstr "لقد قمت بإنشاء ملف مساعد من قبل"
 
 #: assistants/serializers.py:68
 msgid "You have no access to complete this registration"
-msgstr ""
+msgstr "ليس لديك صلاحية لإكمال هذا التسجيل"
 
 #: assistants/views.py:92 assistants/views.py:112
 msgid "You leaved your clinic."

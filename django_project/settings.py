@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from django.urls import reverse_lazy
 from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
 from django.core.management.utils import get_random_secret_key
@@ -80,6 +81,7 @@ INSTALLED_APPS = [
     "evaluations",
     "financials",
     "clinic_statistics",
+    "stubs",
 ]
 
 MIDDLEWARE = [
@@ -186,13 +188,16 @@ LOCALE_PATHS = [
     BASE_DIR / "favorites/locale",
     BASE_DIR / "evaluations/locale",
     BASE_DIR / "financials/locale",
+    BASE_DIR / "clinic_statistics/locale",
+    BASE_DIR / "stubs/locale",
 ]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "static"
+STATICFILES_DIRS = [BASE_DIR / "staticfiles"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -358,9 +363,10 @@ SAFE_PHONE_NUMBERS = config(
 
 UNFOLD = {
     "SHOW_LANGUAGES": True,
-    "SITE_TITLE": "Oxytocin",
-    "SITE_HEADER": "Oxytocin",
+    "SITE_TITLE": _("Oxytocin"),
+    "SITE_HEADER": _("Oxytocin"),
     "SITE_SUBHEADER": _("Oxytocin is a platform for managing clinics."),
+    "SITE_URL": "/admin",
     "SITE_ICON": lambda request: static("logo.svg"),
     "SITE_FAVICONS": [
         {
@@ -370,10 +376,27 @@ UNFOLD = {
             "href": lambda request: static("favicon.svg"),
         },
     ],
+    "LOGIN": {
+        "image": lambda request: static("logo.svg"),
+    },
     "SHOW_BACK_BUTTON": True,
     "SIDEBAR": {
         "show_search": True,
+        "show_all_applications": False,
     },
+    "TABS": [
+        {
+            "models": [
+                "users.customuser",
+            ],
+            "items": [
+                {
+                    "title": _("Users"),
+                    "link": reverse_lazy("admin:users_customuser_changelist"),
+                },
+            ],
+        },
+    ],
 }
 
 CRISPY_TEMPLATE_PACK = "unfold_crispy"

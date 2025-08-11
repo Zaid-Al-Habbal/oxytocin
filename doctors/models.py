@@ -3,6 +3,8 @@ from django.db.models import BooleanField, Exists, OuterRef, Value
 from django.conf import settings
 from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models.functions import Distance
+from django.utils.translation import gettext_lazy as _
+from django.contrib import admin
 
 from simple_history.models import HistoricalRecords
 
@@ -81,37 +83,53 @@ class DoctorQuerySet(models.QuerySet):
 class Doctor(models.Model):
 
     class Status(models.TextChoices):
-        APPROVED = "approved", "Approved"
-        PENDING = "pending", "Pending"
-        DECLINED = "declined", "Declined"
+        APPROVED = "approved", _("Approved")
+        PENDING = "pending", _("Pending")
+        DECLINED = "declined", _("Declined")
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         primary_key=True,
         related_name="doctor",
+        verbose_name=_("User"),
     )
-    about = models.TextField()
-    education = models.TextField()
-    start_work_date = models.DateField(null=True, blank=True)
-    certificate = models.FileField(upload_to="documents/certificates/%Y/%m/%d/")
+    about = models.TextField(verbose_name=_("About"))
+    education = models.TextField(verbose_name=_("Education"))
+    start_work_date = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name=_("Start Work Date"),
+    )
+    certificate = models.FileField(
+        upload_to="documents/certificates/%Y/%m/%d/",
+        verbose_name=_("Certificate"),
+    )
     status = models.CharField(
         max_length=20,
         choices=Status.choices,
         default=Status.APPROVED,  # Just for now
+        verbose_name=_("Status"),
     )
     specialties = models.ManyToManyField(
         "doctors.Specialty",
         through="doctors.DoctorSpecialty",
         related_name="doctors",
+        verbose_name=_("Specialties"),
     )
-    rate = models.FloatField(default=0.0)
+    rate = models.FloatField(default=0.0, verbose_name=_("Rate"))
 
     history = HistoricalRecords(cascade_delete_history=True)
 
     objects = DoctorQuerySet.as_manager()
 
     @property
+    @admin.display(description=_("ID"))
+    def id(self):
+        return self.user_id
+
+    @property
+    @admin.display(description=_("Experience"))
     def experience(self):
         return years_since(self.start_work_date)
 
@@ -147,6 +165,8 @@ class Doctor(models.Model):
         return self._rates
 
     class Meta:
+        verbose_name = _("Doctor")
+        verbose_name_plural = _("Doctors")
         indexes = [models.Index(fields=["start_work_date"])]
         ordering = ["start_work_date"]
 
@@ -173,23 +193,23 @@ class MainSpecialtySubspecialty(models.Model):
         "Specialty",
         on_delete=models.CASCADE,
         related_name="subspecialty_relations",
-        verbose_name="Main Specialty",
+        verbose_name=_("Main Specialty"),
     )
     subspecialty = models.ForeignKey(
         "Specialty",
         on_delete=models.CASCADE,
         related_name="main_specialty_relations",
-        verbose_name="Subspecialty",
+        verbose_name=_("Subspecialty"),
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
 
     history = HistoricalRecords(cascade_delete_history=True)
 
     class Meta:
         db_table = "doctors_main_specialty_subspecialty"
-        verbose_name = "Main Specialty Subspecialty"
-        verbose_name_plural = "Main Specialty Subspecialties"
+        verbose_name = _("Main Specialty Subspecialty")
+        verbose_name_plural = _("Main Specialty Subspecialties")
         constraints = [
             models.UniqueConstraint(
                 fields=["main_specialty", "subspecialty"],
@@ -210,15 +230,21 @@ class MainSpecialtySubspecialty(models.Model):
 
 
 class Specialty(models.Model):
-    name_en = models.CharField(max_length=100)
-    name_ar = models.CharField(max_length=100)
-    image = models.ImageField(upload_to="specialties/images/", null=True, blank=True)
+    name_en = models.CharField(max_length=100, verbose_name=_("Name (English)"))
+    name_ar = models.CharField(max_length=100, verbose_name=_("Name (Arabic)"))
+    image = models.ImageField(
+        upload_to="specialties/images/",
+        null=True,
+        blank=True,
+        verbose_name=_("Image"),
+    )
     subspecialties = models.ManyToManyField(
         "self",
         through="MainSpecialtySubspecialty",
         related_name="main_specialties",
         symmetrical=False,
         blank=True,
+        verbose_name=_("Subspecialties"),
     )
 
     history = HistoricalRecords(cascade_delete_history=True)
@@ -229,8 +255,8 @@ class Specialty(models.Model):
         constraints = [
             models.UniqueConstraint(fields=["name_en", "name_ar"], name="unique_name"),
         ]
-        verbose_name = "specialty"
-        verbose_name_plural = "specialties"
+        verbose_name = _("Specialty")
+        verbose_name_plural = _("Specialties")
 
     def __str__(self):
         return f"{self.name_en} - {self.name_ar}"
@@ -255,11 +281,16 @@ class DoctorSpecialty(models.Model):
         Doctor,
         on_delete=models.CASCADE,
         related_name="doctor_specialties",
+        verbose_name=_("Doctor"),
     )
-    specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE)
-    university = models.CharField(max_length=150)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    specialty = models.ForeignKey(
+        Specialty,
+        on_delete=models.CASCADE,
+        verbose_name=_("Specialty"),
+    )
+    university = models.CharField(max_length=150, verbose_name=_("University"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
 
     history = HistoricalRecords(cascade_delete_history=True)
 
@@ -276,8 +307,8 @@ class DoctorSpecialty(models.Model):
             models.Index(fields=["-updated_at"]),
         ]
         ordering = ["-created_at"]
-        verbose_name = "Doctor Specialty"
-        verbose_name_plural = "Doctor Specialties"
+        verbose_name = _("Doctor Specialty")
+        verbose_name_plural = _("Doctor Specialties")
 
     def __str__(self):
         return f"{self.doctor} - {self.specialty}"
@@ -287,19 +318,22 @@ class DoctorSpecialty(models.Model):
 
 
 class Achievement(models.Model):
-    title = models.CharField(max_length=100)
-    description = models.TextField()
+    title = models.CharField(max_length=100, verbose_name=_("Title"))
+    description = models.TextField(verbose_name=_("Description"))
     doctor = models.ForeignKey(
         Doctor,
         on_delete=models.CASCADE,
         related_name="achievements",
+        verbose_name=_("Doctor"),
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
 
     history = HistoricalRecords(cascade_delete_history=True)
 
     class Meta:
+        verbose_name = _("Achievement")
+        verbose_name_plural = _("Achievements")
         indexes = [
             models.Index(fields=["-created_at"]),
             models.Index(fields=["-updated_at"]),

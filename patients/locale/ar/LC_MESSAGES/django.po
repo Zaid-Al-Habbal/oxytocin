@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 21:32+0300\n"
+"POT-Creation-Date: 2025-08-11 19:03+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,102 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: patients/apps.py:8 patients/models.py:56
+msgid "Patients"
+msgstr "المرضى"
+
+#: patients/models.py:18
+msgid "User"
+msgstr "المستخدم"
+
+#: patients/models.py:21
+msgid "Address"
+msgstr "العنوان"
+
+#: patients/models.py:22
+msgid "Location"
+msgstr "الموقع"
+
+#: patients/models.py:23
+msgid "Job"
+msgstr "الوظيفة"
+
+#: patients/models.py:40
+msgid "Blood Type"
+msgstr "زمرة الدم"
+
+#: patients/models.py:43
+msgid "Medical History"
+msgstr "السجل الطبي"
+
+#: patients/models.py:44
+msgid "Surgical History"
+msgstr "السجل الجراحي"
+
+#: patients/models.py:45
+msgid "Allergies"
+msgstr "الحساسيات"
+
+#: patients/models.py:46
+msgid "Medicines"
+msgstr "الأدوية"
+
+#: patients/models.py:48
+msgid "Smoker"
+msgstr "مدخن"
+
+#: patients/models.py:49
+msgid "Drinker"
+msgstr "مشروب"
+
+#: patients/models.py:50
+msgid "Married"
+msgstr "متزوج"
+
+#: patients/models.py:55 patients/models.py:88
+msgid "Patient"
+msgstr "المريض"
+
+#: patients/models.py:59
+msgid "Longitude"
+msgstr "الطول"
+
+#: patients/models.py:64
+msgid "Latitude"
+msgstr "العرض"
+
+#: patients/models.py:81
+msgid "Public"
+msgstr "عام"
+
+#: patients/models.py:82
+msgid "Restricted"
+msgstr "مقيد"
+
+#: patients/models.py:94
+msgid "Specialty"
+msgstr "التخصص"
+
+#: patients/models.py:97
+msgid "Visibility"
+msgstr "الرؤية"
+
+#: patients/models.py:99
+msgid "Created At"
+msgstr "تاريخ الإنشاء"
+
+#: patients/models.py:100
+msgid "Updated At"
+msgstr "تاريخ التحديث"
+
+#: patients/models.py:108
+msgid "Patient Specialty Access"
+msgstr "الوصول إلى تخصص المريض"
+
+#: patients/models.py:109
+msgid "Patient Specialty Accesses"
+msgstr "الوصول إلى تخصصات المرضى"
 
 #: patients/permissions.py:25
 msgid "You are banned from this clinic"

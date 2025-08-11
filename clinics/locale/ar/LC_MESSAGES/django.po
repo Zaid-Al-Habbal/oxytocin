@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 21:33+0300\n"
+"POT-Creation-Date: 2025-08-11 19:03+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,91 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: clinics/apps.py:8 clinics/models.py:86
+msgid "Clinics"
+msgstr "العيادات"
+
+#: clinics/models.py:59
+msgid "Doctor"
+msgstr "الطبيب"
+
+#: clinics/models.py:61
+msgid "Address"
+msgstr "العنوان"
+
+#: clinics/models.py:62
+msgid "Location"
+msgstr "الموقع"
+
+#: clinics/models.py:63
+msgid "Phone"
+msgstr "الهاتف"
+
+#: clinics/models.py:66
+msgid "Length of each appointment slot in minutes"
+msgstr "طول كل فترة موعد في الدقائق"
+
+#: clinics/models.py:67
+msgid "Time Slot Per Patient"
+msgstr "فترة موعد للمريض"
+
+#: clinics/models.py:75
+msgid "Longitude"
+msgstr "الطول"
+
+#: clinics/models.py:80
+msgid "Latitude"
+msgstr "العرض"
+
+#: clinics/models.py:85 clinics/models.py:97 clinics/models.py:125
+#: clinics/models.py:158
+msgid "Clinic"
+msgstr "العيادة"
+
+#: clinics/models.py:103
+msgid "Image"
+msgstr "الصورة"
+
+#: clinics/models.py:105 clinics/models.py:134 clinics/models.py:168
+msgid "Created At"
+msgstr "تاريخ الإنشاء"
+
+#: clinics/models.py:106 clinics/models.py:169
+msgid "Updated At"
+msgstr "تاريخ التحديث"
+
+#: clinics/models.py:111
+msgid "Clinic Image"
+msgstr "صورة العيادة"
+
+#: clinics/models.py:112
+msgid "Clinic Images"
+msgstr "صور العيادة"
+
+#: clinics/models.py:131 clinics/models.py:164
+msgid "Patient"
+msgstr "المريض"
+
+#: clinics/models.py:140
+msgid "Banned Patient"
+msgstr "المريض المحظور"
+
+#: clinics/models.py:141
+msgid "Banned Patients"
+msgstr "المرضى المحظورين"
+
+#: clinics/models.py:166
+msgid "Cost"
+msgstr "التكلفة"
+
+#: clinics/models.py:176
+msgid "Clinic Patient"
+msgstr "مريض العيادة"
+
+#: clinics/models.py:177
+msgid "Clinic Patients"
+msgstr "مرضى العيادة"
 
 #: clinics/serializers.py:41 clinics/serializers/base.py:37
 msgid "You don't have the required role."
@@ -40,20 +125,20 @@ msgstr "لديك عيادة بالفعل."
 msgid "This field is required."
 msgstr "هذا الحقل مطلوب."
 
-#: clinics/serializers.py:137 clinics/serializers/image.py:83
+#: clinics/serializers.py:137 clinics/serializers/image.py:90
 msgid "You can upload a maximum of 8 images."
 msgstr "يمكنك رفع مايصل الى 8 صور كحد أقصى."
 
-#: clinics/serializers.py:192 clinics/serializers/image.py:138
+#: clinics/serializers.py:192 clinics/serializers/image.py:145
 msgid "Duplicate is not allowed."
 msgstr "التكرار غير مسموح به."
 
-#: clinics/serializers.py:195 clinics/serializers/image.py:141
+#: clinics/serializers.py:195 clinics/serializers/image.py:148
 #, python-format
 msgid "Invalid pk \"%(value)s\" - object does not exist."
 msgstr "معرف العنصر \"%(value)s\" غير صالح - العنصر غير موجود."
 
-#: clinics/serializers.py:196 clinics/serializers/image.py:142
+#: clinics/serializers.py:196 clinics/serializers/image.py:149
 msgid "value"
 msgstr ""
 

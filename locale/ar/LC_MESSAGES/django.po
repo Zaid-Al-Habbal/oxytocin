@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-03 09:57+0300\n"
+"POT-Creation-Date: 2025-08-11 22:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#, python-brace-format
-msgid "Invalid pk \"{pk_value}\" - object does not exist."
-msgstr "معرف العنصر \"{pk_value}\" غير صالح - العنصر غير موجود."
+#: django_project/settings.py:170
+msgid "English"
+msgstr "الإنجليزية"
 
-#, python-brace-format
-msgid "Ensure this field has no more than {max_length} elements."
-msgstr "تأكد من أن هذا الحقل لا يحتوي على أكثر من {max_length} عناصر."
+#: django_project/settings.py:171
+msgid "Arabic"
+msgstr "العربية"
 
-#: validators.py:39
-msgid "This field must be unique."
-msgstr "يجب أن يكون هذا الحقل فريدًا."
+#: django_project/settings.py:363 django_project/settings.py:364
+msgid "Oxytocin"
+msgstr "أوكسيتوسين"
+
+#: django_project/settings.py:365
+msgid "Oxytocin is a platform for managing clinics."
+msgstr "أوكسيتوسين هي منصة لإدارة العيادات."
+
+#: django_project/settings.py:391
+msgid "Users"
+msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-04 22:15+0300\n"
+"POT-Creation-Date: 2025-08-11 19:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,102 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: users/apps.py:8 users/models.py:99
+msgid "Users"
+msgstr "المستخدمين"
+
+#: users/models.py:60
+msgid "Patient"
+msgstr "مريض"
+
+#: users/models.py:61
+msgid "Assistant"
+msgstr "مساعدة"
+
+#: users/models.py:62
+msgid "Doctor"
+msgstr "طبيب"
+
+#: users/models.py:63
+msgid "Admin"
+msgstr "ادمن"
+
+#: users/models.py:65
+msgid "First Name"
+msgstr "الاسم الأول"
+
+#: users/models.py:66
+msgid "Last Name"
+msgstr "الاسم الأخير"
+
+#: users/models.py:67
+msgid "Phone"
+msgstr "الهاتف"
+
+#: users/models.py:68
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: users/models.py:69
+msgid "Image"
+msgstr "الصورة"
+
+#: users/models.py:70
+msgid "Gender"
+msgstr "الجنس"
+
+#: users/models.py:71
+msgid "Birth Date"
+msgstr "تاريخ الميلاد"
+
+#: users/models.py:74
+msgid "Phone Verified"
+msgstr "تم التحقق من رقم الهاتف."
+
+#: users/models.py:75
+msgid "Email Verified"
+msgstr "تم التحقق من البريد الإلكتروني."
+
+#: users/models.py:76
+msgid "Active"
+msgstr "فعال"
+
+#: users/models.py:77
+msgid "Staff Status"
+msgstr "حالة الموظف"
+
+#: users/models.py:78
+msgid "Last Login"
+msgstr "آخر تسجيل الدخول"
+
+#: users/models.py:79
+msgid "Role"
+msgstr "الدور"
+
+#: users/models.py:81
+msgid "Created At"
+msgstr "تاريخ الإنشاء"
+
+#: users/models.py:82
+msgid "Updated At"
+msgstr "تاريخ التحديث"
+
+#: users/models.py:83
+msgid "Deleted At"
+msgstr "تاريخ الحذف"
+
+#: users/models.py:90
+msgid "Age"
+msgstr "العمر"
+
+#: users/models.py:98
+msgid "User"
+msgstr "المستخدم"
+
+#: users/models.py:111
+msgid "Full Name"
+msgstr "الاسم الكامل"
 
 #: users/permissions.py:28
 msgid "You don't have the required role."
@@ -67,7 +163,6 @@ msgstr "لا يُسمح باستخدام رقم الهاتف هذا أثناء �
 
 #: users/serializers/change_phone.py:46 users/serializers/create.py:52
 #: users/serializers/signup_otp.py:33 users/serializers/signup_otp.py:83
-#, fuzzy
 msgid "Phone number must start with '09'."
 msgstr "يجب أن يبدأ رقم الهاتف بـ '09'."
 
@@ -163,9 +258,6 @@ msgid "Password must contain at least one special character (!@#$%^&*()_-+=)."
 msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد الرموز التالية على أقل."
 
 #: users/validators.py:40
-#, fuzzy
-#| msgid ""
-#| "Password must contain at least one special character (!@#$%^&*()_-+=)."
 msgid ""
 "Your password must contain at least one number and one special character (!"
 "@#$%^&*()_-+=)."

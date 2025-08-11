@@ -1,3 +1,5 @@
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
 from django.db import models
 
 from simple_history.models import HistoricalRecords
@@ -30,6 +32,7 @@ class Archive(models.Model):
         Patient,
         on_delete=models.CASCADE,
         related_name="archives",
+        verbose_name=_("Patient"),
     )
     doctor = models.ForeignKey(
         Doctor,
@@ -37,6 +40,7 @@ class Archive(models.Model):
         null=True,
         blank=True,
         related_name="archives",
+        verbose_name=pgettext_lazy("the_doctor", "Doctor"),
     )
     appointment = models.OneToOneField(
         Appointment,
@@ -44,6 +48,7 @@ class Archive(models.Model):
         null=True,
         blank=True,
         related_name="archives",
+        verbose_name=_("Appointment"),
     )
     specialty = models.ForeignKey(
         Specialty,
@@ -51,20 +56,23 @@ class Archive(models.Model):
         null=True,
         blank=True,
         related_name="archives",
+        verbose_name=_("Specialty"),
     )
-    main_complaint = models.TextField()
-    case_history = models.TextField()
-    vital_signs = models.JSONField(null=True, blank=True)
-    recommendations = models.TextField(null=True, blank=True)
-    cost = models.FloatField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    main_complaint = models.TextField(verbose_name=_("Main Complaint"))
+    case_history = models.TextField(verbose_name=_("Case History"))
+    vital_signs = models.JSONField(null=True, blank=True, verbose_name=_("Vital Signs"))
+    recommendations = models.TextField(null=True, blank=True, verbose_name=_("Recommendations"))
+    cost = models.FloatField(verbose_name=_("Cost"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
 
     history = HistoricalRecords(cascade_delete_history=True)
 
     objects = ArchiveQuerySet.as_manager()
 
     class Meta:
+        verbose_name = _("Archive")
+        verbose_name_plural = _("Archives")
         constraints = [
             models.UniqueConstraint(
                 fields=["patient", "doctor", "appointment", "specialty"],
@@ -86,22 +94,27 @@ class ArchiveAccessPermission(models.Model):
         Patient,
         on_delete=models.CASCADE,
         related_name="archive_access_permissions",
+        verbose_name=_("Patient"),
     )
     doctor = models.ForeignKey(
         Doctor,
         on_delete=models.CASCADE,
         related_name="archive_access_permissions",
+        verbose_name=pgettext_lazy("the_doctor", "Doctor"),
     )
     specialty = models.ForeignKey(
         Specialty,
         on_delete=models.CASCADE,
         related_name="archive_access_permissions",
+        verbose_name=_("Specialty"),
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
 
     history = HistoricalRecords(cascade_delete_history=True)
 
     class Meta:
+        verbose_name = _("Archive Access Permission")
+        verbose_name_plural = _("Archive Access Permissions")
         db_table = "archives_archive_access_permission"
         constraints = [
             models.UniqueConstraint(

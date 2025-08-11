@@ -1,3 +1,6 @@
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
+from django.utils.html import format_html
 from django.contrib import admin
 from unfold.admin import ModelAdmin, TabularInline
 from unfold.contrib.filters.admin import (
@@ -5,7 +8,7 @@ from unfold.contrib.filters.admin import (
     ChoicesCheckboxFilter,
 )
 from import_export.admin import ImportExportModelAdmin
-from unfold.contrib.import_export.forms import ExportForm, ImportForm, SelectableFieldsExportForm
+from unfold.contrib.import_export.forms import ImportForm, SelectableFieldsExportForm
 from simple_history.admin import SimpleHistoryAdmin
 
 from .models import (
@@ -27,24 +30,33 @@ class DoctorSpecialtyInline(TabularInline):
 class DoctorAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = SelectableFieldsExportForm
-    
+
     list_display = [
-        "user_id",
+        "id",  # This is the user_id
         "user",
         "about",
         "education",
         "start_work_date",
         "status",
-        "certificate",
+        "certificate_link",
     ]
     list_filter_submit = True
     list_filter = [("status", ChoicesCheckboxFilter)]
     list_editable = ["status"]
     inlines = [DoctorSpecialtyInline]
 
+    def certificate_link(self, obj):
+        doctor: Doctor = obj
+        return format_html(
+            '<a href="{}" target="_blank">{}</a>',
+            doctor.certificate.url,
+            _("View Certificate"),
+        )
+    certificate_link.short_description = _("Certificate")
+
 
 class SpecialtyFilter(MultipleDropdownFilter):
-    title = "Main Specialty"
+    title = _("Main Specialty")
     parameter_name = "main_specialty"
 
     def lookups(self, request, model_admin):
@@ -71,7 +83,7 @@ class SpecialtyInline(TabularInline):
 class SpecialtyAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = SelectableFieldsExportForm
-    
+
     list_display = ["id", "name_en", "name_ar"]
     list_filter_submit = True
     list_filter = [SpecialtyFilter]
@@ -80,7 +92,7 @@ class SpecialtyAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
 
 
 class AchievementDoctorFilter(admin.SimpleListFilter):
-    title = "Doctor"
+    title = pgettext_lazy("the_doctor", "Doctor")
     parameter_name = "doctor_id"
 
     def lookups(self, request, model_admin):
@@ -97,7 +109,7 @@ class AchievementDoctorFilter(admin.SimpleListFilter):
 class AchievementAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = SelectableFieldsExportForm
-    
+
     list_display = ["id", "title", "description", "doctor", "created_at", "updated_at"]
     list_filter = [AchievementDoctorFilter, "created_at", "updated_at"]
     search_fields = ["title", "description"]

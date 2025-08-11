@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 21:19+0300\n"
+"POT-Creation-Date: 2025-08-11 22:16+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,8 +16,144 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: doctors/admin.py:53
+msgid "View Certificate"
+msgstr "عرض الشهادة"
+
+#: doctors/admin.py:55 doctors/models.py:89
+msgid "Certificate"
+msgstr "الشهادة"
+
+#: doctors/admin.py:59 doctors/models.py:164
+msgid "Main Specialty"
+msgstr "التخصص الرئيسي"
+
+#: doctors/admin.py:95
+msgctxt "the_doctor"
+msgid "Doctor"
+msgstr "الطبيب"
+
+#: doctors/apps.py:8 doctors/models.py:137
+msgid "Doctors"
+msgstr "الأطباء"
+
+#: doctors/models.py:69
+msgid "Approved"
+msgstr "موافق"
+
+#: doctors/models.py:70
+msgid "Pending"
+msgstr "قيد الانتظار"
+
+#: doctors/models.py:71
+msgid "Declined"
+msgstr "مرفوض"
+
+#: doctors/models.py:78
+msgid "User"
+msgstr "المستخدم"
+
+#: doctors/models.py:80
+msgid "About"
+msgstr "عن"
+
+#: doctors/models.py:81
+msgid "Education"
+msgstr "التعليم"
+
+#: doctors/models.py:85
+msgid "Start Work Date"
+msgstr "تاريخ البدء في العمل"
+
+#: doctors/models.py:95
+msgid "Status"
+msgstr "الحالة"
+
+#: doctors/models.py:101 doctors/models.py:221
+msgid "Specialties"
+msgstr "التخصصات"
+
+#: doctors/models.py:103
+msgid "Rate"
+msgstr "التقييم"
+
+#: doctors/models.py:110
+msgid "ID"
+msgstr "المعرف"
+
+#: doctors/models.py:115
+msgid "Experience"
+msgstr "الخبرة"
+
+#: doctors/models.py:136 doctors/models.py:246 doctors/models.py:289
+msgid "Doctor"
+msgstr "الطبيب"
+
+#: doctors/models.py:170
+msgid "Subspecialty"
+msgstr "التخصص الفرعي"
+
+#: doctors/models.py:172 doctors/models.py:254 doctors/models.py:291
+msgid "Created At"
+msgstr "تاريخ الإنشاء"
+
+#: doctors/models.py:173 doctors/models.py:255 doctors/models.py:292
+msgid "Updated At"
+msgstr "تاريخ التحديث"
+
+#: doctors/models.py:179
+msgid "Main Specialty Subspecialty"
+msgstr "التخصص الرئيسي والتخصص الفرعي"
+
+#: doctors/models.py:180
+msgid "Main Specialty Subspecialties"
+msgstr "التخصصات الرئيسية والتخصصات الفرعية"
+
+#: doctors/models.py:201
+msgid "Name (English)"
+msgstr "الاسم (الانجليزية)"
+
+#: doctors/models.py:202
+msgid "Name (Arabic)"
+msgstr "الاسم (العربية)"
+
+#: doctors/models.py:209
+msgid "Subspecialties"
+msgstr "التخصصات الفرعية"
+
+#: doctors/models.py:220 doctors/models.py:251
+msgid "Specialty"
+msgstr "التخصص"
+
+#: doctors/models.py:253
+msgid "University"
+msgstr "الجامعة"
+
+#: doctors/models.py:272
+msgid "Doctor Specialty"
+msgstr "تخصص الطبيب"
+
+#: doctors/models.py:273
+msgid "Doctor Specialties"
+msgstr "تخصصات الطبيب"
+
+#: doctors/models.py:283
+msgid "Title"
+msgstr "العنوان"
+
+#: doctors/models.py:284
+msgid "Description"
+msgstr "الوصف"
+
+#: doctors/models.py:297
+msgid "Achievement"
+msgstr "الأنجاز"
+
+#: doctors/models.py:298
+msgid "Achievements"
+msgstr "الأنجازات"
 
 #: doctors/permissions.py:16 doctors/serializers/certificate.py:43
 #: doctors/serializers/create.py:56
@@ -29,7 +165,6 @@ msgid "Please create a doctor profile first."
 msgstr "الرجاء إنشاء حساب طبيب أولاً."
 
 #: doctors/permissions.py:23
-#, fuzzy
 msgid "Please upload a certificate first."
 msgstr "يرجى رفع الشهادة اولاً."
 
@@ -38,9 +173,7 @@ msgid "Please create a clinic first."
 msgstr "الرجاء إنشاء عيادة أولاً."
 
 #: doctors/serializers/base.py:54 doctors/serializers/create.py:69
-msgid ""
-"You cannot provide more subspecialties than the ones available for the main "
-"specialty."
+msgid "You cannot provide more subspecialties than the ones available for the main specialty."
 msgstr "لا يمكنك توفير تخصصات فرعية أكثر من تلك المتوفرة للتخصص الرئيسي."
 
 #: doctors/serializers/base.py:61 doctors/serializers/create.py:49

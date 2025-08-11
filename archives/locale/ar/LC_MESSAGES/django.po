@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 21:20+0300\n"
+"POT-Creation-Date: 2025-08-11 20:26+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,8 +16,69 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: archives/apps.py:8 archives/models.py:75
+msgid "Archives"
+msgstr "الأرشيف"
+
+#: archives/models.py:35 archives/models.py:97
+msgid "Patient"
+msgstr "المريض"
+
+#: archives/models.py:43 archives/models.py:103
+msgctxt "the_doctor"
+msgid "Doctor"
+msgstr "الطبيب"
+
+#: archives/models.py:51
+msgid "Appointment"
+msgstr "الموعد"
+
+#: archives/models.py:59 archives/models.py:109
+msgid "Specialty"
+msgstr "التخصص"
+
+#: archives/models.py:61
+msgid "Main Complaint"
+msgstr "الشكوى الرئيسية"
+
+#: archives/models.py:62
+msgid "Case History"
+msgstr "سجل الحالة"
+
+#: archives/models.py:63
+msgid "Vital Signs"
+msgstr "الإشارات الحيوية"
+
+#: archives/models.py:64
+msgid "Recommendations"
+msgstr "التوصيات"
+
+#: archives/models.py:65
+msgid "Cost"
+msgstr "التكلفة"
+
+#: archives/models.py:66 archives/models.py:111
+msgid "Created At"
+msgstr "تاريخ الإنشاء"
+
+#: archives/models.py:67
+msgid "Updated At"
+msgstr "تاريخ التحديث"
+
+#: archives/models.py:74
+msgid "Archive"
+msgstr "الأرشيف"
+
+#: archives/models.py:116
+msgid "Archive Access Permission"
+msgstr "صلاحية الوصول إلى الأرشيف"
+
+#: archives/models.py:117
+msgid "Archive Access Permissions"
+msgstr "صلاحيات الوصول إلى الأرشيف"
+
 #: archives/serializers.py:56
 #, python-format
 msgid "Invalid pk \"%(value)s\" - appointment does not belong to the clinic."
@@ -25,6 +86,5 @@ msgstr "معرف العنصر \"%(value)s\" - الموعد لا ينتمي لل�
 
 #: archives/serializers.py:61
 #, python-format
-msgid ""
-"Invalid pk \"%(value)s\" - an archive already exists for this appointment."
+msgid "Invalid pk \"%(value)s\" - an archive already exists for this appointment."
 msgstr "معرف العنصر \"%(value)s\" غير صالح - يوجد أرشيف بالفعل لهذا الموعد."

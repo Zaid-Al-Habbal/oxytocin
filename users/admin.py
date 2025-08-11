@@ -4,9 +4,12 @@ from unfold.admin import ModelAdmin
 from import_export.admin import ImportExportModelAdmin
 from unfold.contrib.import_export.forms import ExportForm, ImportForm, SelectableFieldsExportForm
 from simple_history.admin import SimpleHistoryAdmin
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
 
 from .models import CustomUser as User
 
+admin.site.unregister(BlacklistedToken)
+admin.site.unregister(OutstandingToken)
 
 @admin.register(User)
 class UserAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):

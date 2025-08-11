@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-04 22:15+0300\n"
+"POT-Creation-Date: 2025-08-11 19:03+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,45 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
+#: evaluations/apps.py:8 evaluations/models.py:84
+msgid "Evaluations"
+msgstr "التقييمات"
+
+#: evaluations/models.py:52
+msgid "Patient"
+msgstr "المريض"
+
+#: evaluations/models.py:58
+msgid "Appointment"
+msgstr "الموعد"
+
+#: evaluations/models.py:60
+msgid "Rate"
+msgstr "التقييم"
+
+#: evaluations/models.py:61
+msgid "Comment"
+msgstr "التعليق"
+
+#: evaluations/models.py:62
+msgid "Created At"
+msgstr "تاريخ الإنشاء"
+
+#: evaluations/models.py:63
+msgid "Updated At"
+msgstr "تاريخ التحديث"
+
+#: evaluations/models.py:70
+msgid "Editable"
+msgstr "قابل للتعديل"
+
+#: evaluations/models.py:75
+msgid "Clinic"
+msgstr "العيادة"
+
+#: evaluations/models.py:83
+msgid "Evaluation"
+msgstr "التقييم"
 
 #: evaluations/serializers.py:39
 msgid "You are not allowed to evaluate this appointment."
