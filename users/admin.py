@@ -1,12 +1,18 @@
 from django.contrib import admin
 
 from unfold.admin import ModelAdmin
+from import_export.admin import ImportExportModelAdmin
+from unfold.contrib.import_export.forms import ExportForm, ImportForm, SelectableFieldsExportForm
+from simple_history.admin import SimpleHistoryAdmin
 
 from .models import CustomUser as User
 
 
 @admin.register(User)
-class UserAdmin(ModelAdmin):
+class UserAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
+
     list_display = [
         "id",
         "first_name",

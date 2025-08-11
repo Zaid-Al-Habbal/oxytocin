@@ -37,12 +37,17 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    # unfold
     "unfold",
     "unfold.contrib.filters",
     "unfold.contrib.forms",
     "unfold.contrib.inlines",
     "unfold.contrib.location_field",
     "unfold.contrib.simple_history",
+    "unfold.contrib.import_export",
+    # django-crispy-forms
+    "crispy_forms",
+    # django
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -61,6 +66,7 @@ INSTALLED_APPS = [
     "file_validator",
     "mapwidgets",
     "simple_history",
+    "import_export",
     # project apps
     "users",
     "patients",
@@ -369,3 +375,6 @@ UNFOLD = {
         "show_search": True,
     },
 }
+
+CRISPY_TEMPLATE_PACK = "unfold_crispy"
+CRISPY_ALLOWED_TEMPLATE_PACKS = ["unfold_crispy"]

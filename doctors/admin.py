@@ -4,6 +4,9 @@ from unfold.contrib.filters.admin import (
     MultipleDropdownFilter,
     ChoicesCheckboxFilter,
 )
+from import_export.admin import ImportExportModelAdmin
+from unfold.contrib.import_export.forms import ExportForm, ImportForm, SelectableFieldsExportForm
+from simple_history.admin import SimpleHistoryAdmin
 
 from .models import (
     Doctor,
@@ -21,7 +24,10 @@ class DoctorSpecialtyInline(TabularInline):
 
 
 @admin.register(Doctor)
-class DoctorAdmin(ModelAdmin):
+class DoctorAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
+    
     list_display = [
         "user_id",
         "user",
@@ -62,7 +68,10 @@ class SpecialtyInline(TabularInline):
 
 
 @admin.register(Specialty)
-class SpecialtyAdmin(ModelAdmin):
+class SpecialtyAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
+    
     list_display = ["id", "name_en", "name_ar"]
     list_filter_submit = True
     list_filter = [SpecialtyFilter]
@@ -85,7 +94,10 @@ class AchievementDoctorFilter(admin.SimpleListFilter):
 
 
 @admin.register(Achievement)
-class AchievementAdmin(ModelAdmin):
+class AchievementAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
+    
     list_display = ["id", "title", "description", "doctor", "created_at", "updated_at"]
     list_filter = [AchievementDoctorFilter, "created_at", "updated_at"]
     search_fields = ["title", "description"]

@@ -1,12 +1,18 @@
 from django.contrib import admin
 
 from unfold.admin import ModelAdmin
+from import_export.admin import ImportExportModelAdmin
+from unfold.contrib.import_export.forms import ExportForm, ImportForm, SelectableFieldsExportForm
+from simple_history.admin import SimpleHistoryAdmin
 
 from .models import Archive, ArchiveAccessPermission
 
 
 @admin.register(Archive)
-class ArchiveAdmin(ModelAdmin):
+class ArchiveAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
+    
     list_display = [
         "id",
         "main_complaint",
@@ -36,7 +42,10 @@ class ArchiveAdmin(ModelAdmin):
 
 
 @admin.register(ArchiveAccessPermission)
-class ArchiveAccessPermissionAdmin(ModelAdmin):
+class ArchiveAccessPermissionAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
+    
     list_display = ["id", "patient", "doctor", "specialty"]
     list_filter = [
         ("patient__user", admin.RelatedOnlyFieldListFilter),

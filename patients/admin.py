@@ -2,13 +2,19 @@ from django.contrib import admin
 from django.contrib.gis.db import models
 
 from unfold.admin import ModelAdmin
+from import_export.admin import ImportExportModelAdmin
+from unfold.contrib.import_export.forms import ExportForm, ImportForm, SelectableFieldsExportForm
+from simple_history.admin import SimpleHistoryAdmin
 import mapwidgets
 
 from .models import Patient, PatientSpecialtyAccess
 
 
 @admin.register(Patient)
-class PatientAdmin(ModelAdmin):
+class PatientAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
+    
     list_display = ["user_id", "job", "address", "blood_type"]
     list_filter = ["blood_type"]
     search_fields = ["job"]
@@ -18,7 +24,10 @@ class PatientAdmin(ModelAdmin):
 
 
 @admin.register(PatientSpecialtyAccess)
-class PatientSpecialtyAccessAdmin(ModelAdmin):
+class PatientSpecialtyAccessAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
+    
     list_display = ["id", "patient", "specialty", "visibility"]
     list_filter = [
         ("patient__user", admin.RelatedOnlyFieldListFilter),

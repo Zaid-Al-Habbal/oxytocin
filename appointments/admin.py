@@ -1,6 +1,9 @@
 from django.contrib import admin
 
 from unfold.admin import ModelAdmin, TabularInline
+from import_export.admin import ImportExportModelAdmin
+from unfold.contrib.import_export.forms import ExportForm, ImportForm, SelectableFieldsExportForm
+from simple_history.admin import SimpleHistoryAdmin
 
 from .models import Appointment, Attachment
 
@@ -13,7 +16,10 @@ class AttachmentInline(TabularInline):
 
 
 @admin.register(Appointment)
-class AppointmentAdmin(ModelAdmin):
+class AppointmentAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
+    
     list_display = (
         "id",
         "patient",
@@ -31,6 +37,9 @@ class AppointmentAdmin(ModelAdmin):
 
 
 @admin.register(Attachment)
-class AttachmentAdmin(ModelAdmin):
+class AttachmentAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
+    
     list_display = ("id", "appointment", "document", "created_at")
     list_filter = ("created_at",)

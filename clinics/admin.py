@@ -3,6 +3,8 @@ from django.contrib.gis.db import models
 
 from unfold.admin import ModelAdmin, TabularInline
 from simple_history.admin import SimpleHistoryAdmin
+from import_export.admin import ImportExportModelAdmin
+from unfold.contrib.import_export.forms import ExportForm, ImportForm, SelectableFieldsExportForm
 
 import mapwidgets
 
@@ -15,7 +17,10 @@ class ClinicImageInline(TabularInline):
 
 
 @admin.register(Clinic)
-class ClinicAdmin(SimpleHistoryAdmin, ModelAdmin):
+class ClinicAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
+    
     list_display = ["doctor_id", "doctor", "address", "phone"]
     search_fields = ["phone"]
     inlines = [ClinicImageInline]
