@@ -117,6 +117,16 @@ class DoctorNewestListView(generics.ListAPIView):
 
 
 @extend_schema(
+    summary="List Highest Rated Doctors",
+    description="Retrieve a list of the 7 highest rated doctors.",
+    tags=["Doctor"],
+)
+class DoctorHighestRatedListView(generics.ListAPIView):
+    queryset = Doctor.objects.not_deleted().approved().order_by("-rate")[:7]
+    serializer_class = DoctorSummarySerializer
+
+
+@extend_schema(
     summary="Retrieve Doctor Detailed Profile",
     description="Fetch the full profile of a specific doctor by ID.",
     tags=["Doctor"],
