@@ -383,6 +383,25 @@ UNFOLD = {
     "SIDEBAR": {
         "show_search": True,
         "show_all_applications": False,
+        "navigation": [
+            {
+                "title": _("Navigation"),
+                "separator": True,  # Top border
+                "collapsible": True,  # Collapsible group of links
+                "items": [
+                    {
+                        "title": _("Dashboard"),
+                        "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
+                        "link": reverse_lazy("admin:index"),
+                    },
+                    {
+                        "title": _("Users"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:users_customuser_changelist"),
+                    },
+                ],
+            },
+        ],
     },
     "TABS": [
         {

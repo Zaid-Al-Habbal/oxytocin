@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-11 22:45+0300\n"
+"POT-Creation-Date: 2025-08-11 23:16+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,14 +25,22 @@ msgstr "الإنجليزية"
 msgid "Arabic"
 msgstr "العربية"
 
-#: django_project/settings.py:363 django_project/settings.py:364
+#: django_project/settings.py:364 django_project/settings.py:365
 msgid "Oxytocin"
 msgstr "أوكسيتوسين"
 
-#: django_project/settings.py:365
+#: django_project/settings.py:366
 msgid "Oxytocin is a platform for managing clinics."
 msgstr "أوكسيتوسين هي منصة لإدارة العيادات."
 
+#: django_project/settings.py:386
+msgid "Navigation"
+msgstr ""
+
 #: django_project/settings.py:391
+msgid "Dashboard"
+msgstr ""
+
+#: django_project/settings.py:396 django_project/settings.py:411
 msgid "Users"
 msgstr ""

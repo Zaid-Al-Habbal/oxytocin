@@ -1,18 +1,38 @@
 from django.contrib import admin
+from django.contrib.admin.exceptions import NotRegistered
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
+from django.contrib.auth.models import User, Group
 
+from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.admin import ModelAdmin
 from import_export.admin import ImportExportModelAdmin
-from unfold.contrib.import_export.forms import ExportForm, ImportForm, SelectableFieldsExportForm
+from unfold.contrib.import_export.forms import (
+    ImportForm,
+    SelectableFieldsExportForm,
+)
 from simple_history.admin import SimpleHistoryAdmin
-from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
+from rest_framework_simplejwt.token_blacklist.models import (
+    OutstandingToken,
+    BlacklistedToken,
+)
 
 from .models import CustomUser as User
 
-admin.site.unregister(BlacklistedToken)
-admin.site.unregister(OutstandingToken)
+try:
+    admin.site.unregister(User)
+    admin.site.unregister(Group)
+    admin.site.unregister(BlacklistedToken)
+    admin.site.unregister(OutstandingToken)
+except NotRegistered:
+    pass
+
 
 @admin.register(User)
 class UserAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
+    form = UserChangeForm
+    add_form = UserCreationForm
+    change_password_form = AdminPasswordChangeForm
     import_form_class = ImportForm
     export_form_class = SelectableFieldsExportForm
 
