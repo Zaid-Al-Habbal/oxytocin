@@ -64,5 +64,225 @@
             "created_at": "2025-01-15T10:00:00Z",
             "updated_at": "2025-01-15T10:00:00Z"
         }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 7,
+        "fields": {
+            "doctor": 11,
+            "specialty": 2,
+            "university": "Damascus University",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 8,
+        "fields": {
+            "doctor": 11,
+            "specialty": 34,
+            "university": "American University of Beirut",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 9,
+        "fields": {
+            "doctor": 12,
+            "specialty": 4,
+            "university": "Damascus University",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 10,
+        "fields": {
+            "doctor": 12,
+            "specialty": 45,
+            "university": "Cairo University",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 11,
+        "fields": {
+            "doctor": 13,
+            "specialty": 7,
+            "university": "Damascus University",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 12,
+        "fields": {
+            "doctor": 13,
+            "specialty": 68,
+            "university": "Jordan University Hospital",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 13,
+        "fields": {
+            "doctor": 14,
+            "specialty": 8,
+            "university": "Damascus University",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 14,
+        "fields": {
+            "doctor": 14,
+            "specialty": 71,
+            "university": "American University of Beirut",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 15,
+        "fields": {
+            "doctor": 15,
+            "specialty": 9,
+            "university": "Damascus University",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 16,
+        "fields": {
+            "doctor": 15,
+            "specialty": 74,
+            "university": "Cairo University",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 17,
+        "fields": {
+            "doctor": 16,
+            "specialty": 10,
+            "university": "Damascus University",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 18,
+        "fields": {
+            "doctor": 16,
+            "specialty": 81,
+            "university": "American University of Beirut",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 19,
+        "fields": {
+            "doctor": 17,
+            "specialty": 11,
+            "university": "Damascus University",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 20,
+        "fields": {
+            "doctor": 17,
+            "specialty": 84,
+            "university": "Jordan University Hospital",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 21,
+        "fields": {
+            "doctor": 18,
+            "specialty": 12,
+            "university": "Damascus University",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 22,
+        "fields": {
+            "doctor": 18,
+            "specialty": 92,
+            "university": "American University of Beirut",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 23,
+        "fields": {
+            "doctor": 19,
+            "specialty": 13,
+            "university": "Damascus University",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 24,
+        "fields": {
+            "doctor": 19,
+            "specialty": 95,
+            "university": "Cairo University",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 25,
+        "fields": {
+            "doctor": 20,
+            "specialty": 15,
+            "university": "Damascus University",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "doctors.doctorspecialty",
+        "pk": 26,
+        "fields": {
+            "doctor": 20,
+            "specialty": 104,
+            "university": "American University of Beirut",
+            "created_at": "2025-01-15T10:00:00Z",
+            "updated_at": "2025-01-15T10:00:00Z"
+        }
     }
 ]

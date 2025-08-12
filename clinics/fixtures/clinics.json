@@ -4,8 +4,8 @@
         "pk": 5,
         "fields": {
             "doctor": 5,
-            "address": "Al-Mezzeh, Damascus, Syria",
-            "location": "POINT(36.2765 33.5138)",
+            "address": "Khaled Ibn Al-Walid Street, Damascus, Syria",
+            "location": "POINT(36.29550 33.50670)",
             "phone": "+963-11-234-5678",
             "time_slot_per_patient": 30
         }
@@ -16,7 +16,7 @@
         "fields": {
             "doctor": 6,
             "address": "Abu Rummaneh, Damascus, Syria",
-            "location": "POINT(36.2765 33.5138)",
+            "location": "POINT(36.2856 33.5179)",
             "phone": "+963-11-345-6789",
             "time_slot_per_patient": 25
         }
@@ -26,10 +26,120 @@
         "pk": 7,
         "fields": {
             "doctor": 7,
-            "address": "Bab Touma, Damascus, Syria",
-            "location": "POINT(36.2765 33.5138)",
+            "address": "Bab Touma Square, Old City, Damascus, Syria",
+            "location": "POINT(36.31521 33.51355)",
             "phone": "+963-11-456-7890",
             "time_slot_per_patient": 45
+        }
+    },
+    {
+        "model": "clinics.clinic",
+        "pk": 11,
+        "fields": {
+            "doctor": 11,
+            "address": "Al-Malki Street, Damascus, Syria",
+            "location": "POINT(36.2754 33.5089)",
+            "phone": "+963-11-567-8901",
+            "time_slot_per_patient": 35
+        }
+    },
+    {
+        "model": "clinics.clinic",
+        "pk": 12,
+        "fields": {
+            "doctor": 12,
+            "address": "Mojamh alsham Medical Center, Damascus, Syria",
+            "location": "POINT(36.2831 33.5059)",
+            "phone": "+963-11-678-9012",
+            "time_slot_per_patient": 40
+        }
+    },
+    {
+        "model": "clinics.clinic",
+        "pk": 13,
+        "fields": {
+            "doctor": 13,
+            "address": "Al-Mezzeh District, Damascus, Syria",
+            "location": "POINT(36.2658 33.5156)",
+            "phone": "+963-11-789-0123",
+            "time_slot_per_patient": 50
+        }
+    },
+    {
+        "model": "clinics.clinic",
+        "pk": 14,
+        "fields": {
+            "doctor": 14,
+            "address": "Bab Sharqi, Damascus, Syria",
+            "location": "POINT(36.3189 33.5098)",
+            "phone": "+963-11-890-1234",
+            "time_slot_per_patient": 60
+        }
+    },
+    {
+        "model": "clinics.clinic",
+        "pk": 15,
+        "fields": {
+            "doctor": 15,
+            "address": "Al-Qanawat District, Damascus, Syria",
+            "location": "POINT(36.2987 33.5012)",
+            "phone": "+963-11-901-2345",
+            "time_slot_per_patient": 45
+        }
+    },
+    {
+        "model": "clinics.clinic",
+        "pk": 16,
+        "fields": {
+            "doctor": 16,
+            "address": "Al-Kassa'a District, Damascus, Syria",
+            "location": "POINT(36.2876 33.5245)",
+            "phone": "+963-11-012-3456",
+            "time_slot_per_patient": 30
+        }
+    },
+    {
+        "model": "clinics.clinic",
+        "pk": 17,
+        "fields": {
+            "doctor": 17,
+            "address": "Al-Rabwa District, Damascus, Syria",
+            "location": "POINT(36.2567 33.5189)",
+            "phone": "+963-11-123-4567",
+            "time_slot_per_patient": 55
+        }
+    },
+    {
+        "model": "clinics.clinic",
+        "pk": 18,
+        "fields": {
+            "doctor": 18,
+            "address": "Al-Midan District, Damascus, Syria",
+            "location": "POINT(36.3098 33.4956)",
+            "phone": "+963-11-234-1678",
+            "time_slot_per_patient": 40
+        }
+    },
+    {
+        "model": "clinics.clinic",
+        "pk": 19,
+        "fields": {
+            "doctor": 19,
+            "address": "Al-Hajar Al-Aswad, Damascus, Syria",
+            "location": "POINT(36.2789 33.5078)",
+            "phone": "+963-11-355-6789",
+            "time_slot_per_patient": 25
+        }
+    },
+    {
+        "model": "clinics.clinic",
+        "pk": 20,
+        "fields": {
+            "doctor": 20,
+            "address": "Al-Qadam District, Damascus, Syria",
+            "location": "POINT(36.2678 33.5123)",
+            "phone": "+963-11-454-7890",
+            "time_slot_per_patient": 35
         }
     }
 ]

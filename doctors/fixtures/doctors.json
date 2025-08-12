@@ -37,5 +37,135 @@
             "status": "approved",
             "rate": 4.7
         }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 11,
+        "fields": {
+            "user": 11,
+            "about": "Expert family medicine physician with focus on preventive care and chronic disease management. Committed to building long-term patient relationships and comprehensive healthcare.",
+            "education": "MD in Family Medicine - Damascus University (2012)\nResidency in Family Medicine - Al-Mouwasat University Hospital (2013-2016)\nFellowship in Preventive Medicine - American University of Beirut (2017-2018)",
+            "start_work_date": "2018-04-12",
+            "certificate": "documents/certificates/2025/01/15/family_med_cert_eren.pdf",
+            "status": "approved",
+            "rate": 4.6
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 12,
+        "fields": {
+            "user": 12,
+            "about": "Specialized obstetrician and gynecologist with expertise in high-risk pregnancies and minimally invasive gynecological surgery. Dedicated to women's health and reproductive care.",
+            "education": "MD in Obstetrics and Gynecology - Damascus University (2011)\nResidency in OB/GYN - Al-Assad University Hospital (2012-2015)\nFellowship in Maternal-Fetal Medicine - Cairo University (2016-2017)",
+            "start_work_date": "2017-08-25",
+            "certificate": "documents/certificates/2025/01/15/obgyn_cert_mikasa.pdf",
+            "status": "approved",
+            "rate": 4.8
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 13,
+        "fields": {
+            "user": 13,
+            "about": "Experienced neurologist specializing in movement disorders and epilepsy. Skilled in both diagnostic procedures and treatment of complex neurological conditions.",
+            "education": "MD in Neurology - Damascus University (2010)\nResidency in Neurology - Al-Mouwasat University Hospital (2011-2014)\nFellowship in Movement Disorders - Jordan University Hospital (2015-2016)",
+            "start_work_date": "2016-11-03",
+            "certificate": "documents/certificates/2025/01/15/neurology_cert_levi.pdf",
+            "status": "approved",
+            "rate": 4.9
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 14,
+        "fields": {
+            "user": 14,
+            "about": "Skilled neurosurgeon with expertise in brain and spine surgery. Experienced in both traditional and minimally invasive neurosurgical procedures.",
+            "education": "MD in Neurosurgery - Damascus University (2009)\nResidency in Neurosurgery - Al-Assad University Hospital (2010-2015)\nFellowship in Functional Neurosurgery - American University of Beirut (2016-2017)",
+            "start_work_date": "2017-05-18",
+            "certificate": "documents/certificates/2025/01/15/neurosurgery_cert_armin.pdf",
+            "status": "approved",
+            "rate": 4.7
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 15,
+        "fields": {
+            "user": 15,
+            "about": "Compassionate psychiatrist specializing in child and adolescent mental health. Experienced in treating anxiety, depression, and behavioral disorders.",
+            "education": "MD in Psychiatry - Damascus University (2013)\nResidency in Psychiatry - Al-Mouwasat University Hospital (2014-2017)\nFellowship in Child and Adolescent Psychiatry - Cairo University (2018-2019)",
+            "start_work_date": "2019-02-14",
+            "certificate": "documents/certificates/2025/01/15/psychiatry_cert_historia.pdf",
+            "status": "approved",
+            "rate": 4.5
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 16,
+        "fields": {
+            "user": 16,
+            "about": "Expert dermatologist with specialization in cosmetic and procedural dermatology. Skilled in treating various skin conditions and performing aesthetic procedures.",
+            "education": "MD in Dermatology - Damascus University (2012)\nResidency in Dermatology - Al-Assad University Hospital (2013-2016)\nFellowship in Cosmetic Dermatology - American University of Beirut (2017-2018)",
+            "start_work_date": "2018-07-09",
+            "certificate": "documents/certificates/2025/01/15/dermatology_cert_erwin.pdf",
+            "status": "approved",
+            "rate": 4.6
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 17,
+        "fields": {
+            "user": 17,
+            "about": "Specialized radiologist with expertise in diagnostic and interventional radiology. Experienced in advanced imaging techniques and image-guided procedures.",
+            "education": "MD in Radiology - Damascus University (2011)\nResidency in Radiology - Al-Mouwasat University Hospital (2012-2015)\nFellowship in Interventional Radiology - Jordan University Hospital (2016-2017)",
+            "start_work_date": "2017-10-22",
+            "certificate": "documents/certificates/2025/01/15/radiology_cert_hange.pdf",
+            "status": "approved",
+            "rate": 4.8
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 18,
+        "fields": {
+            "user": 18,
+            "about": "Experienced anesthesiologist with specialization in cardiac and neuroanesthesiology. Skilled in managing complex surgical procedures and critical care.",
+            "education": "MD in Anesthesiology - Damascus University (2010)\nResidency in Anesthesiology - Al-Assad University Hospital (2011-2014)\nFellowship in Cardiac Anesthesiology - American University of Beirut (2015-2016)",
+            "start_work_date": "2016-12-05",
+            "certificate": "documents/certificates/2025/01/15/anesthesiology_cert_jean.pdf",
+            "status": "approved",
+            "rate": 4.7
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 19,
+        "fields": {
+            "user": 19,
+            "about": "Dedicated emergency medicine physician with expertise in trauma care and critical emergency procedures. Experienced in managing acute medical conditions.",
+            "education": "MD in Emergency Medicine - Damascus University (2013)\nResidency in Emergency Medicine - Al-Mouwasat University Hospital (2014-2017)\nFellowship in Trauma Medicine - Cairo University (2018-2019)",
+            "start_work_date": "2019-03-30",
+            "certificate": "documents/certificates/2025/01/15/emergency_cert_connie.pdf",
+            "status": "approved",
+            "rate": 4.5
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": 20,
+        "fields": {
+            "user": 20,
+            "about": "Specialized ophthalmologist with expertise in retinal diseases and cataract surgery. Committed to preserving and restoring vision through advanced surgical techniques.",
+            "education": "MD in Ophthalmology - Damascus University (2012)\nResidency in Ophthalmology - Al-Assad University Hospital (2013-2016)\nFellowship in Retina/Vitreous - American University of Beirut (2017-2018)",
+            "start_work_date": "2018-09-15",
+            "certificate": "documents/certificates/2025/01/15/ophthalmology_cert_sasha.pdf",
+            "status": "approved",
+            "rate": 4.8
+        }
     }
 ]

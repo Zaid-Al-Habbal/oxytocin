@@ -200,5 +200,215 @@
             "created_at": "2025-08-07T00:00:00Z",
             "updated_at": "2025-08-07T00:00:00Z"
         }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 11,
+        "fields": {
+            "first_name": "Eren",
+            "last_name": "Yeager",
+            "phone": "0987654330",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "eren@example.com",
+            "image": "images/users/2025/08/07/Eren_Yeager.jpg",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "doctor",
+            "gender": "male",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 12,
+        "fields": {
+            "first_name": "Mikasa",
+            "last_name": "Ackerman",
+            "phone": "0987654331",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "mikasa@example.com",
+            "image": "images/users/2025/08/07/Mikasa_Ackerman.jpg",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "doctor",
+            "gender": "female",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 13,
+        "fields": {
+            "first_name": "Levi",
+            "last_name": "Ackerman",
+            "phone": "0987654332",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "levi@example.com",
+            "image": "images/users/2025/08/07/Levi_Ackerman.jpg",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "doctor",
+            "gender": "male",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 14,
+        "fields": {
+            "first_name": "Armin",
+            "last_name": "Arlert",
+            "phone": "0987654333",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "armin@example.com",
+            "image": "images/users/2025/08/07/Armin_Arlert.jpg",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "doctor",
+            "gender": "male",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 15,
+        "fields": {
+            "first_name": "Historia",
+            "last_name": "Reiss",
+            "phone": "0987654334",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "historia@example.com",
+            "image": "images/users/2025/08/07/Historia_Reiss.jpg",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "doctor",
+            "gender": "female",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 16,
+        "fields": {
+            "first_name": "Erwin",
+            "last_name": "Smith",
+            "phone": "0987654335",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "erwin@example.com",
+            "image": "images/users/2025/08/07/Erwin_Smith.jpg",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "doctor",
+            "gender": "male",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 17,
+        "fields": {
+            "first_name": "Hange",
+            "last_name": "Zoe",
+            "phone": "0987654336",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "hange@example.com",
+            "image": "images/users/2025/08/07/Hange_Zoe.jpg",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "doctor",
+            "gender": "female",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 18,
+        "fields": {
+            "first_name": "Jean",
+            "last_name": "Kirstein",
+            "phone": "0987654337",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "jean@example.com",
+            "image": "images/users/2025/08/07/Jean_Kirstein.jpg",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "doctor",
+            "gender": "male",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 19,
+        "fields": {
+            "first_name": "Connie",
+            "last_name": "Springer",
+            "phone": "0987654338",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "connie@example.com",
+            "image": "images/users/2025/08/07/Connie_Springer.jpg",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "doctor",
+            "gender": "male",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": 20,
+        "fields": {
+            "first_name": "Sasha",
+            "last_name": "Braus",
+            "phone": "0987654339",
+            "password": "pbkdf2_sha256$1000000$Ry1nOZA1HyNsdH94AHGjVq$MwEy42WYEjTnWaFURaEoyBG+kEP4BLVvq22s3v6CvfE=",
+            "email": "sasha@example.com",
+            "image": "images/users/2025/08/07/Sasha_Braus.jpg",
+            "is_verified_phone": true,
+            "is_verified_email": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "role": "doctor",
+            "gender": "female",
+            "created_at": "2025-08-07T00:00:00Z",
+            "updated_at": "2025-08-07T00:00:00Z"
+        }
     }
 ]
