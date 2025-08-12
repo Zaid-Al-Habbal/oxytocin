@@ -1,29 +1,22 @@
 from rest_framework import serializers
-from drf_spectacular.utils import extend_schema_field
 
 from doctors.models import Doctor
 from users.serializers import UserSummarySerializer
 
-from .specialty import SpecialtySerializer
+from .base import DoctorSpecialtySerializer
 
 
 class DoctorSummarySerializer(serializers.ModelSerializer):
-    user = UserSummarySerializer()
-    main_specialty = serializers.SerializerMethodField()
+    user = UserSummarySerializer(read_only=True)
+    main_specialty = DoctorSpecialtySerializer(read_only=True)
+    rates = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Doctor
         fields = [
             "user",
-            "about",
             "main_specialty",
             "rate",
+            "rates",
         ]
         read_only_fields = ["rate"]
-
-    @extend_schema_field(SpecialtySerializer)
-    def get_main_specialty(self, obj):
-        doctor: Doctor = obj
-        main_specialty = doctor.main_specialty.specialty
-        serializer = SpecialtySerializer(main_specialty)
-        return serializer.data

@@ -110,6 +110,21 @@ class Doctor(models.Model):
         )
         return self._main_specialty
 
+    @property
+    def rates(self):
+        if hasattr(self, "_rates"):
+            return self._rates
+
+        from evaluations.models import Evaluation
+
+        self._rates = (
+            Evaluation.objects.by_clinic(self.pk)
+            .values("patient_id")
+            .distinct()
+            .count()
+        )
+        return self._rates
+
     class Meta:
         indexes = [models.Index(fields=["start_work_date"])]
         ordering = ["start_work_date"]
