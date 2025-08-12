@@ -22,7 +22,7 @@ class ArchiveDestroyTestCase(ArchiveBaseTestCase):
             case_history="string",
             cost=10.0,
         )
-        cls.path = reverse("archive-destroy", kwargs={"pk": archive.pk})
+        cls.path = reverse("archive-retrieve-update-destroy", kwargs={"pk": archive.pk})
 
     def test_destroy_successful(self):
         self.client.force_authenticate(self.patient_user)
@@ -30,13 +30,13 @@ class ArchiveDestroyTestCase(ArchiveBaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_destroy_fails_on_non_existing(self):
-        path = reverse("archive-destroy", kwargs={"pk": 9999})
+        path = reverse("archive-retrieve-update-destroy", kwargs={"pk": 9999})
         self.client.force_authenticate(self.patient_user)
         response = self.client.delete(path)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_view_fails_on_non_own_patient(self):
-        path = reverse("archive-destroy", kwargs={"pk": self.archive.pk})
+        path = reverse("archive-retrieve-update-destroy", kwargs={"pk": self.archive.pk})
         patient_user = User.objects.create_user(
             phone="0999111199",
             password="abcX123!",

@@ -55,7 +55,7 @@ class ArchiveUpdateTestCase(ArchiveBaseTestCase):
             location=Point(44.2, 32.1, srid=4326),
             phone="011 223 3351",
         )
-        cls.path = reverse("archive-update", kwargs={"pk": archive.pk})
+        cls.path = reverse("archive-retrieve-update-destroy", kwargs={"pk": archive.pk})
         cls.data = {
             "main_complaint": "string",
             "case_history": "string",
@@ -67,7 +67,7 @@ class ArchiveUpdateTestCase(ArchiveBaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_view_rejects_non_in_consultation_appointment(self):
-        path = reverse("archive-update", kwargs={"pk": self.archive.pk})
+        path = reverse("archive-retrieve-update-destroy", kwargs={"pk": self.archive.pk})
         self.client.force_authenticate(self.doctor_user)
         response = self.client.patch(path, self.data)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

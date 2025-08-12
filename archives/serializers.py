@@ -4,6 +4,7 @@ from rest_framework import serializers
 
 from archives.models import Archive
 
+from patients.models import Patient
 from patients.serializers import PatientSummarySerializer
 
 from doctors.serializers import DoctorSummarySerializer
@@ -18,19 +19,26 @@ class ArchiveSerializer(serializers.ModelSerializer):
         source="appointment",
         write_only=True,
     )
-
-    patient = PatientSummarySerializer(read_only=True)
-    doctor = DoctorSummarySerializer(read_only=True)
     appointment = AppointmentSummarySerializer(read_only=True)
+
+    patient_id = serializers.PrimaryKeyRelatedField(
+        queryset=Patient.objects.all(),
+        source="patient",
+        write_only=True,
+    )
+    patient = PatientSummarySerializer(read_only=True)
+
+    doctor = DoctorSummarySerializer(read_only=True)
 
     class Meta:
         model = Archive
         fields = [
             "id",
             "appointment_id",
+            "appointment",
+            "patient_id",
             "patient",
             "doctor",
-            "appointment",
             "main_complaint",
             "case_history",
             "vital_signs",
@@ -62,6 +70,16 @@ class ArchiveSerializer(serializers.ModelSerializer):
             )
             raise serializers.ValidationError(msg % {"value": appointment.pk})
         return value
+
+    def validate(self, data):
+        patient = data.get("patient")
+        appointment = data.get("appointment")
+        if patient.pk != appointment.patient_id:
+            msg = _(
+                'Invalid pk "%(value)s" - appointment does not belong to the patient.'
+            )
+            raise serializers.ValidationError(msg % {"value": appointment.pk})
+        return data
 
 
 class ArchiveUpdateSerializer(serializers.ModelSerializer):

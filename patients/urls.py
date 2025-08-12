@@ -10,6 +10,8 @@ from .views import (
     ClinicPatientRetrieveView,
 )
 
+from archives.views import PatientArchiveListView
+
 urlpatterns = [
     path("favorites/", include("favorites.urls")),
     path("login/", LoginPatientView.as_view(), name="login-patient"),
@@ -35,4 +37,5 @@ urlpatterns = [
         ClinicPatientRetrieveView.as_view(),
         name="patient-clinic-retrieve",
     ),
+    path("archives/", PatientArchiveListView.as_view(), name="patient-archive-list"),
 ]

@@ -9,7 +9,7 @@ class ArchivePatientListTestCase(ArchiveBaseTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.path = reverse("archive-patient-list")
+        cls.path = reverse("patient-archive-list")
 
     def test_list_successful(self):
         self.client.force_authenticate(self.patient_user)

@@ -18,7 +18,10 @@ class ArchiveListTestCase(ArchiveBaseTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.path = reverse("archive-list", kwargs={"patient_pk": cls.patient_user.pk})
+        cls.path = reverse("archive-list-create")
+        cls.data = {
+            "patient_id": cls.patient.pk,
+        }
         patient_user = User.objects.create_user(
             phone="0999111124",
             password="abcX123!",
@@ -53,7 +56,7 @@ class ArchiveListTestCase(ArchiveBaseTestCase):
 
     def test_list_successful(self):
         self.client.force_authenticate(self.doctor_user)
-        response = self.client.get(self.path)
+        response = self.client.get(self.path, self.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.data
         self.assertIn("results", str(data))
@@ -89,14 +92,14 @@ class ArchiveListTestCase(ArchiveBaseTestCase):
             phone="011 223 3345",
         )
         self.client.force_authenticate(doctor_user)
-        response = self.client.get(self.path)
+        response = self.client.get(self.path, self.data)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_view_rejects_users_with_non_doctor_role(self):
         self.client.force_authenticate(self.patient_user)
-        response = self.client.get(self.path)
+        response = self.client.get(self.path, self.data)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_view_rejects_unauthenticated_users(self):
-        response = self.client.get(self.path)
+        response = self.client.get(self.path, self.data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

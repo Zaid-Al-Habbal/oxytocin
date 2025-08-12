@@ -1,4 +1,5 @@
 from rest_framework.permissions import BasePermission
+from rest_framework.exceptions import ValidationError
 
 from archives.models import Archive
 from archives.models import ArchiveAccessPermission
@@ -11,13 +12,14 @@ from appointments.models import Appointment
 
 class ArchiveListPermission(BasePermission):
     def has_permission(self, request, view):
-        patient_pk = view.kwargs.get("patient_pk")
-        if not patient_pk:
-            return False
+        patient_id = request.query_params.get("patient_id")
+        if not patient_id:
+            raise ValidationError({"patient_id": "This field is required."})
 
+        user: User = request.user
         return Appointment.objects.filter(
-            patient_id=patient_pk,
-            clinic_id=request.user.pk,
+            patient_id=patient_id,
+            clinic_id=user.pk,
         ).exists()
 
 
@@ -54,9 +56,10 @@ class ArchiveUpdatePermission(BasePermission):
         if not appointment:
             return False
         doctor = archive.doctor
+        user: User = request.user
         return (
             appointment.status == Appointment.Status.IN_CONSULTATION
-            and doctor.pk == request.user.pk
+            and doctor.pk == user.pk
         )
 
 
@@ -64,4 +67,5 @@ class ArchiveDestroyPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
         archive: Archive = obj
         patient = archive.patient
-        return patient.pk == request.user.pk
+        user: User = request.user
+        return patient.pk == user.pk

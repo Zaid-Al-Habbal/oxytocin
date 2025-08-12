@@ -11,8 +11,9 @@ class ArchiveCreateTestCase(ArchiveBaseTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.path = reverse("archive-create", kwargs={"patient_pk": cls.patient_user.pk})
+        cls.path = reverse("archive-list-create")
         cls.data = {
+            "patient_id": cls.patient.pk,
             "appointment_id": cls.in_consultation_appointment.pk,
             "main_complaint": "string",
             "case_history": "string",

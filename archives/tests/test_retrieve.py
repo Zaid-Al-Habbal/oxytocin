@@ -19,7 +19,7 @@ class ArchiveRetrieveTestCase(ArchiveBaseTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.path = reverse("archive-retrieve", kwargs={"pk": cls.archive.pk})
+        cls.path = reverse("archive-retrieve-update-destroy", kwargs={"pk": cls.archive.pk})
         cls.non_own_patient_user = User.objects.create_user(
             phone="0999111131",
             password="abcX123!",
@@ -155,7 +155,7 @@ class ArchiveRetrieveTestCase(ArchiveBaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_retrieve_successful_public_archive(self):
-        path = reverse("archive-retrieve", kwargs={"pk": self.public_archive.pk})
+        path = reverse("archive-retrieve-update-destroy", kwargs={"pk": self.public_archive.pk})
         self.client.force_authenticate(self.public_doctor_user)
         response = self.client.get(path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

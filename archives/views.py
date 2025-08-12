@@ -4,13 +4,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import (
     ListAPIView,
-    CreateAPIView,
-    RetrieveAPIView,
-    UpdateAPIView,
-    DestroyAPIView,
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
 )
+from rest_framework.exceptions import ValidationError
 
-from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.utils import extend_schema_field, extend_schema, OpenApiParameter
 
 from patients.models import PatientSpecialtyAccess
 from users.models import CustomUser as User
@@ -64,19 +63,27 @@ class ArchivePagination(PageNumberPagination):
     ],
     tags=["Archive"],
 )
-class ArchiveListView(ListAPIView):
+class ArchiveListCreateView(ListCreateAPIView):
     serializer_class = ArchiveSerializer
-    permission_classes = [IsAuthenticated, HasRole, ArchiveListPermission]
     filter_backends = [ArchiveSpecialtyFilter]
     required_roles = [User.Role.DOCTOR]
     pagination_class = ArchivePagination
 
+    def get_permissions(self):
+        permissions = [IsAuthenticated(), HasRole()]
+        if self.request.method == "GET":
+            permissions.append(ArchiveListPermission())
+        return permissions
+
     def get_queryset(self):
-        patient_pk = self.kwargs["patient_pk"]
+        patient_id = self.request.query_params.get("patient_id")
+        if not patient_id:
+            raise ValidationError({"patient_id": "This field is required."})
+
         doctor: Doctor = self.request.user.doctor
 
         query1 = ArchiveAccessPermission.objects.filter(
-            patient_id=patient_pk, doctor_id=doctor.pk
+            patient_id=patient_id, doctor_id=doctor.pk
         ).values_list("specialty_id", flat=True)
 
         query2 = PatientSpecialtyAccess.objects.public_only().values_list(
@@ -88,6 +95,25 @@ class ArchiveListView(ListAPIView):
         return Archive.objects.with_full_relations().filter(
             Q(specialty_id__in=specialty_ids) | Q(doctor_id=doctor.pk)
         )
+
+    def perform_create(self, serializer):
+        doctor: Doctor = self.request.user.doctor
+        archive: Archive = serializer.save(
+            doctor_id=doctor.pk,
+            specialty_id=doctor.main_specialty.specialty.pk,
+        )
+        clinic = archive.doctor.clinic
+        patient = archive.patient
+        cost = archive.cost
+
+        clinic_patient, created = ClinicPatient.objects.get_or_create(
+            clinic=clinic,
+            patient=patient,
+            defaults={"cost": cost},
+        )
+        if not created:
+            clinic_patient.cost += cost
+            clinic_patient.save()
 
 
 @extend_schema(
@@ -118,7 +144,7 @@ class ArchiveListView(ListAPIView):
     ],
     tags=["Archive"],
 )
-class ArchivePatientListView(ListAPIView):
+class PatientArchiveListView(ListAPIView):
     serializer_class = ArchiveSerializer
     permission_classes = [IsAuthenticated, HasRole]
     filter_backends = [ArchiveSpecialtyFilter]
@@ -127,37 +153,8 @@ class ArchivePatientListView(ListAPIView):
 
     def get_queryset(self):
         return Archive.objects.with_full_relations().filter(
-            patient__pk=self.request.user.pk
+            patient_id=self.request.user.pk
         )
-
-
-@extend_schema(
-    summary="Create a new archive (doctor only)",
-    description="Creates a new archive for the specified patient. Only accessible by users with the DOCTOR role.",
-    tags=["Archive"],
-)
-class ArchiveCreateView(CreateAPIView):
-    serializer_class = ArchiveSerializer
-    permission_classes = [IsAuthenticated, HasRole]
-    required_roles = [User.Role.DOCTOR]
-
-    def perform_create(self, serializer):
-        doctor: Doctor = self.request.user.doctor
-        archive: Archive = serializer.save(
-            patient_id=self.kwargs["patient_pk"],
-            doctor_id=doctor.pk,
-            specialty_id=doctor.main_specialty.specialty.pk,
-        )
-        clinic = archive.doctor.clinic
-        patient = archive.patient
-        cost = archive.cost
-
-        clinic_patient, created = ClinicPatient.objects.get_or_create(
-            clinic=clinic, patient=patient, defaults={"cost": cost}
-        )
-        if not created:
-            clinic_patient.cost += cost
-            clinic_patient.save()
 
 
 @extend_schema(
@@ -165,23 +162,30 @@ class ArchiveCreateView(CreateAPIView):
     description="Retrieves detailed information about a specific archive. Accessible by both PATIENT and DOCTOR roles.",
     tags=["Archive"],
 )
-class ArchiveRetrieveView(RetrieveAPIView):
-    serializer_class = ArchiveSerializer
+class ArchiveRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Archive.objects.with_full_relations().all()
-    permission_classes = [IsAuthenticated, HasRole, ArchiveRetrievePermission]
-    required_roles = [User.Role.PATIENT, User.Role.DOCTOR]
 
+    def get_serializer_class(self):
+        if self.request.method == "PUT" or self.request.method == "PATCH":
+            return ArchiveUpdateSerializer
+        return ArchiveSerializer
 
-@extend_schema(
-    summary="Update an archive (doctor only)",
-    description="Updates an existing archive. Only accessible by users with the DOCTOR role.",
-    tags=["Archive"],
-)
-class ArchiveUpdateView(UpdateAPIView):
-    serializer_class = ArchiveUpdateSerializer
-    queryset = Archive.objects.with_full_relations().all()
-    permission_classes = [IsAuthenticated, HasRole, ArchiveUpdatePermission]
-    required_roles = [User.Role.DOCTOR]
+    def get_required_roles(self):
+        if self.request.method == "PUT" or self.request.method == "PATCH":
+            return [User.Role.DOCTOR]
+        if self.request.method == "DELETE":
+            return [User.Role.PATIENT]
+        return [User.Role.PATIENT, User.Role.DOCTOR]
+
+    def get_permissions(self):
+        permissions = [IsAuthenticated(), HasRole()]
+        if self.request.method == "GET":
+            permissions.append(ArchiveRetrievePermission())
+        if self.request.method == "PUT" or self.request.method == "PATCH":
+            permissions.append(ArchiveUpdatePermission())
+        if self.request.method == "DELETE":
+            permissions.append(ArchiveDestroyPermission())
+        return permissions
 
     def perform_update(self, serializer):
         old_archive = self.get_object()
@@ -193,20 +197,10 @@ class ArchiveUpdateView(UpdateAPIView):
             doctor = archive.doctor
             patient = archive.patient
             clinic_patient, created = ClinicPatient.objects.get_or_create(
-                clinic__pk=doctor.pk, patient__pk=patient.pk, defaults={"cost": cost}
+                clinic_id=doctor.pk,
+                patient_id=patient.pk,
+                defaults={"cost": cost},
             )
             if not created:
                 clinic_patient.cost += cost
                 clinic_patient.save()
-
-
-@extend_schema(
-    summary="Delete an archive (patient only)",
-    description="Deletes a specific archive. Only accessible by users with the PATIENT role.",
-    tags=["Archive"],
-)
-class ArchiveDestroyView(DestroyAPIView):
-    serializer_class = ArchiveSerializer
-    queryset = Archive.objects.with_full_relations().all()
-    permission_classes = [IsAuthenticated, HasRole, ArchiveDestroyPermission]
-    required_roles = [User.Role.PATIENT]
