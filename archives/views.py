@@ -3,13 +3,12 @@ from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import (
-    ListAPIView,
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
 )
 from rest_framework.exceptions import ValidationError
 
-from drf_spectacular.utils import extend_schema_field, extend_schema, OpenApiParameter
+from drf_spectacular.utils import extend_schema_view, extend_schema, OpenApiParameter
 
 from patients.models import PatientSpecialtyAccess
 from users.models import CustomUser as User
@@ -35,33 +34,47 @@ class ArchivePagination(PageNumberPagination):
     max_page_size = 50
 
 
-@extend_schema(
-    summary="List archives for a patient (doctor only)",
-    description="Returns a paginated list of all archives for a specific patient. Only accessible by users with the DOCTOR role.",
-    parameters=[
-        OpenApiParameter(
-            name="specialties",
-            required=False,
-            type=str,
-            location=OpenApiParameter.QUERY,
-            description="Comma-separated list of specialty IDs to filter archives by specialty.",
-        ),
-        OpenApiParameter(
-            name="page",
-            required=False,
-            type=int,
-            location=OpenApiParameter.QUERY,
-            description="Page number for pagination.",
-        ),
-        OpenApiParameter(
-            name="page_size",
-            required=False,
-            type=int,
-            location=OpenApiParameter.QUERY,
-            description="Number of items per page.",
-        ),
-    ],
-    tags=["Archive"],
+@extend_schema_view(
+    get=extend_schema(
+        summary="List Archives",
+        description="Get a paginated list of archives for a specific patient. Results are filtered based on doctor's access permissions and public specialties.",
+        parameters=[
+            OpenApiParameter(
+                name="patient_id",
+                required=True,
+                type=int,
+                location=OpenApiParameter.QUERY,
+                description="ID of the patient to list archives for",
+            ),
+            OpenApiParameter(
+                name="specialties",
+                required=False,
+                type=str,
+                location=OpenApiParameter.QUERY,
+                description="Comma-separated list of specialty IDs to filter archives by specialty",
+            ),
+            OpenApiParameter(
+                name="page",
+                required=False,
+                type=int,
+                location=OpenApiParameter.QUERY,
+                description="Page number for pagination",
+            ),
+            OpenApiParameter(
+                name="page_size",
+                required=False,
+                type=int,
+                location=OpenApiParameter.QUERY,
+                description="Number of items per page (max 50)",
+            ),
+        ],
+        tags=["Archive"],
+    ),
+    post=extend_schema(
+        summary="Create Archive",
+        description="Create a new archive for a patient. The archive will be automatically associated with the current doctor and their main specialty. Cost will be added to the clinic-patient relationship.",
+        tags=["Archive"],
+    ),
 )
 class ArchiveListCreateView(ListCreateAPIView):
     serializer_class = ArchiveSerializer
@@ -116,51 +129,27 @@ class ArchiveListCreateView(ListCreateAPIView):
             clinic_patient.save()
 
 
-@extend_schema(
-    summary="List archives for the current patient",
-    description="Returns a paginated list of all archives for the currently authenticated patient. Only accessible by users with the PATIENT role.",
-    parameters=[
-        OpenApiParameter(
-            name="specialties",
-            required=False,
-            type=str,
-            location=OpenApiParameter.QUERY,
-            description="Comma-separated list of specialty IDs to filter archives by specialty.",
-        ),
-        OpenApiParameter(
-            name="page",
-            required=False,
-            type=int,
-            location=OpenApiParameter.QUERY,
-            description="Page number for pagination.",
-        ),
-        OpenApiParameter(
-            name="page_size",
-            required=False,
-            type=int,
-            location=OpenApiParameter.QUERY,
-            description="Number of items per page.",
-        ),
-    ],
-    tags=["Archive"],
-)
-class PatientArchiveListView(ListAPIView):
-    serializer_class = ArchiveSerializer
-    permission_classes = [IsAuthenticated, HasRole]
-    filter_backends = [ArchiveSpecialtyFilter]
-    required_roles = [User.Role.PATIENT]
-    pagination_class = ArchivePagination
-
-    def get_queryset(self):
-        return Archive.objects.with_full_relations().filter(
-            patient_id=self.request.user.pk
-        )
-
-
-@extend_schema(
-    summary="Retrieve archive details",
-    description="Retrieves detailed information about a specific archive. Accessible by both PATIENT and DOCTOR roles.",
-    tags=["Archive"],
+@extend_schema_view(
+    get=extend_schema(
+        summary="Retrieve Archive",
+        description="Get detailed information about a specific archive. Accessible by both patients and doctors based on permissions.",
+        tags=["Archive"],
+    ),
+    put=extend_schema(
+        summary="Update Archive (Full)",
+        description="Update all fields of an archive. Only accessible by doctors. Cost changes will be reflected in the clinic-patient relationship.",
+        tags=["Archive"],
+    ),
+    patch=extend_schema(
+        summary="Update Archive (Partial)",
+        description="Update specific fields of an archive. Only accessible by doctors. Cost changes will be reflected in the clinic-patient relationship.",
+        tags=["Archive"],
+    ),
+    delete=extend_schema(
+        summary="Delete Archive",
+        description="Delete an archive. Only accessible by patients who own the archive.",
+        tags=["Archive"],
+    ),
 )
 class ArchiveRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Archive.objects.with_full_relations().all()

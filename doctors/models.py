@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.apps import apps
 
 from common.utils import years_since
 
@@ -50,13 +49,12 @@ class DoctorQuerySet(models.QuerySet):
         )
 
     def with_clinic_appointments(self):
-        Appointment = apps.get_model("appointments", "Appointment")
         return self.with_clinic().prefetch_related(
-            models.Prefetch(
-                "clinic__appointments",
-                queryset=Appointment.objects.filter(clinic__doctor=self),
-            )
+            models.Prefetch("clinic__appointments")
         )
+
+    def with_archives(self):
+        return self.prefetch_related(models.Prefetch("archives"))
 
 
 class Doctor(models.Model):

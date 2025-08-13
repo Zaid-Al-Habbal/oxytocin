@@ -8,9 +8,8 @@ from .views import (
     PatientSpecialtyAccessRetrieveUpdateDestroyView,
     ClinicPatientListView,
     ClinicPatientRetrieveView,
+    PatientArchiveDoctorListView,
 )
-
-from archives.views import PatientArchiveListView
 
 urlpatterns = [
     path("favorites/", include("favorites.urls")),
@@ -37,5 +36,5 @@ urlpatterns = [
         ClinicPatientRetrieveView.as_view(),
         name="patient-clinic-retrieve",
     ),
-    path("archives/", PatientArchiveListView.as_view(), name="patient-archive-list"),
+    path("archives/doctors/", PatientArchiveDoctorListView.as_view(), name="patient-archive-doctor-list"),
 ]
