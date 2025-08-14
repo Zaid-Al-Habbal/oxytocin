@@ -28,7 +28,7 @@ msgstr "العيادة"
 
 #: financials/models.py:26
 msgid "Patient"
-msgstr "المريض"
+msgstr "مريض"
 
 #: financials/models.py:28
 msgid "Cost"

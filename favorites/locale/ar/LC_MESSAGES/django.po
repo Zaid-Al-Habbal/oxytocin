@@ -25,7 +25,7 @@ msgstr "المفضلات"
 
 #: favorites/models.py:15
 msgid "Patient"
-msgstr "المريض"
+msgstr "مريض"
 
 #: favorites/models.py:21
 msgid "Doctor"

@@ -408,21 +408,25 @@ UNFOLD = {
                     },
                 ],
             },
+            {
+                "title": _("Patients"),
+                "separator": True,  # Top border
+                "collapsible": True,  # Collapsible group of links
+                "items": [
+                    {
+                        "title": _("Patients"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:patients_patient_changelist"),
+                    },
+                    {
+                        "title": _("Patient Specialty Accesses"),
+                        "icon": "group",
+                        "link": reverse_lazy("admin:patients_patientspecialtyaccess_changelist"),
+                    },
+                ],
+            },
         ],
     },
-    "TABS": [
-        {
-            "models": [
-                "users.customuser",
-            ],
-            "items": [
-                {
-                    "title": _("Users"),
-                    "link": reverse_lazy("admin:users_customuser_changelist"),
-                },
-            ],
-        },
-    ],
 }
 
 CRISPY_TEMPLATE_PACK = "unfold_crispy"

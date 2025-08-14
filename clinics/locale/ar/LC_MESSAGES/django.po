@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 20:19+0300\n"
+"POT-Creation-Date: 2025-08-14 23:13+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,10 +16,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: clinics/apps.py:8 clinics/models.py:86
+#: clinics/apps.py:8 clinics/models.py:91
 msgid "Clinics"
 msgstr "العيادات"
 
@@ -48,46 +47,50 @@ msgid "Time Slot Per Patient"
 msgstr "فترة موعد للمريض"
 
 #: clinics/models.py:75
+msgid "ID"
+msgstr "المعرف"
+
+#: clinics/models.py:80
 msgid "Longitude"
 msgstr "الطول"
 
-#: clinics/models.py:80
+#: clinics/models.py:85
 msgid "Latitude"
 msgstr "العرض"
 
-#: clinics/models.py:85 clinics/models.py:97 clinics/models.py:125
+#: clinics/models.py:90 clinics/models.py:102 clinics/models.py:130
 msgid "Clinic"
-msgstr "العيادة"
+msgstr "عيادة"
 
-#: clinics/models.py:103
+#: clinics/models.py:108
 msgid "Image"
 msgstr "الصورة"
 
-#: clinics/models.py:105 clinics/models.py:134
+#: clinics/models.py:110 clinics/models.py:139
 msgid "Created At"
 msgstr "تاريخ الإنشاء"
 
-#: clinics/models.py:106
+#: clinics/models.py:111
 msgid "Updated At"
 msgstr "تاريخ التحديث"
 
-#: clinics/models.py:111
+#: clinics/models.py:116
 msgid "Clinic Image"
 msgstr "صورة العيادة"
 
-#: clinics/models.py:112
+#: clinics/models.py:117
 msgid "Clinic Images"
 msgstr "صور العيادة"
 
-#: clinics/models.py:131
+#: clinics/models.py:136
 msgid "Patient"
-msgstr "المريض"
+msgstr "مريض"
 
-#: clinics/models.py:140
+#: clinics/models.py:145
 msgid "Banned Patient"
-msgstr "المريض المحظور"
+msgstr "مريض محظور"
 
-#: clinics/models.py:141
+#: clinics/models.py:146
 msgid "Banned Patients"
 msgstr "المرضى المحظورين"
 

@@ -21,7 +21,7 @@ class ClinicAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = SelectableFieldsExportForm
     
-    list_display = ["doctor_id", "doctor", "address", "phone"]
+    list_display = ["id", "doctor", "address", "phone"]
     search_fields = ["phone"]
     inlines = [ClinicImageInline]
     formfield_overrides = {

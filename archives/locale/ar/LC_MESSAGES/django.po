@@ -25,7 +25,7 @@ msgstr "الأرشيف"
 
 #: archives/models.py:35 archives/models.py:97
 msgid "Patient"
-msgstr "المريض"
+msgstr "مريض"
 
 #: archives/models.py:43 archives/models.py:103
 msgctxt "the_doctor"

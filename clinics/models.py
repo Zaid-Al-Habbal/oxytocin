@@ -78,6 +78,11 @@ class Clinic(models.Model):
     objects = ClinicQuerySet.as_manager()
 
     @property
+    @admin.display(description=_("ID"))
+    def id(self):
+        return self.pk
+
+    @property
     @admin.display(description=_("Longitude"))
     def longitude(self):
         return self.location.x

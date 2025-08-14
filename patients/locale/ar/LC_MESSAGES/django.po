@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-11 19:03+0300\n"
+"POT-Creation-Date: 2025-08-14 23:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,8 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: patients/apps.py:8 patients/models.py:56
 msgid "Patients"
@@ -71,47 +70,51 @@ msgstr "مشروب"
 msgid "Married"
 msgstr "متزوج"
 
-#: patients/models.py:55 patients/models.py:88
+#: patients/models.py:55 patients/models.py:93
 msgid "Patient"
-msgstr "المريض"
+msgstr "مريض"
 
 #: patients/models.py:59
+msgid "ID"
+msgstr "المعرف"
+
+#: patients/models.py:64
 msgid "Longitude"
 msgstr "الطول"
 
-#: patients/models.py:64
+#: patients/models.py:69
 msgid "Latitude"
 msgstr "العرض"
 
-#: patients/models.py:81
+#: patients/models.py:86
 msgid "Public"
 msgstr "عام"
 
-#: patients/models.py:82
+#: patients/models.py:87
 msgid "Restricted"
 msgstr "مقيد"
 
-#: patients/models.py:94
+#: patients/models.py:99
 msgid "Specialty"
 msgstr "التخصص"
 
-#: patients/models.py:97
+#: patients/models.py:102
 msgid "Visibility"
 msgstr "الرؤية"
 
-#: patients/models.py:99
+#: patients/models.py:104
 msgid "Created At"
 msgstr "تاريخ الإنشاء"
 
-#: patients/models.py:100
+#: patients/models.py:105
 msgid "Updated At"
 msgstr "تاريخ التحديث"
 
-#: patients/models.py:108
+#: patients/models.py:113
 msgid "Patient Specialty Access"
 msgstr "الوصول إلى تخصص المريض"
 
-#: patients/models.py:109
+#: patients/models.py:114
 msgid "Patient Specialty Accesses"
 msgstr "الوصول إلى تخصصات المرضى"
 

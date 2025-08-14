@@ -37,3 +37,6 @@ _('Raw passwords are not stored, so there is no way to see this user’s passwor
 _("All applications")
 _("Image preview")
 _("Go back")
+_("View selected %(model)s")
+_("Select action")
+_("Edit coordinates")

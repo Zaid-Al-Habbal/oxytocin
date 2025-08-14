@@ -25,7 +25,7 @@ msgstr "التقييمات"
 
 #: evaluations/models.py:52
 msgid "Patient"
-msgstr "المريض"
+msgstr "مريض"
 
 #: evaluations/models.py:58
 msgid "Appointment"

@@ -45,7 +45,7 @@ msgstr "غائب"
 
 #: appointments/models.py:39
 msgid "Patient"
-msgstr "المريض"
+msgstr "مريض"
 
 #: appointments/models.py:40
 msgid "Patient who booked the appointment"

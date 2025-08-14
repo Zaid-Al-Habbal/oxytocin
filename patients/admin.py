@@ -15,7 +15,7 @@ class PatientAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = SelectableFieldsExportForm
     
-    list_display = ["user_id", "job", "address", "blood_type"]
+    list_display = ["id", "job", "address", "blood_type"]
     list_filter = ["blood_type"]
     search_fields = ["job"]
     formfield_overrides = {

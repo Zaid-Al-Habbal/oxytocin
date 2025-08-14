@@ -56,6 +56,11 @@ class Patient(models.Model):
         verbose_name_plural = _("Patients")
 
     @property
+    @admin.display(description=_("ID"))
+    def id(self):
+        return self.pk
+
+    @property
     @admin.display(description=_("Longitude"))
     def longitude(self):
         return self.location.x
