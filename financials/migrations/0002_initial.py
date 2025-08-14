@@ -10,48 +10,45 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("doctors", "0002_initial"),
-        ("favorites", "0001_initial"),
+        ("clinics", "0002_initial"),
+        ("financials", "0001_initial"),
         ("patients", "0002_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name="favorite",
-            name="doctor",
+            model_name="financial",
+            name="clinic",
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name="favorites_of",
-                to="doctors.doctor",
-                verbose_name="Doctor",
+                related_name="financials",
+                to="clinics.clinic",
             ),
         ),
         migrations.AddField(
-            model_name="favorite",
+            model_name="financial",
             name="patient",
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name="favorites",
+                related_name="financials",
                 to="patients.patient",
-                verbose_name="Patient",
             ),
         ),
         migrations.AddField(
-            model_name="historicalfavorite",
-            name="doctor",
+            model_name="historicalfinancial",
+            name="clinic",
             field=models.ForeignKey(
                 blank=True,
                 db_constraint=False,
                 null=True,
                 on_delete=django.db.models.deletion.DO_NOTHING,
                 related_name="+",
-                to="doctors.doctor",
-                verbose_name="Doctor",
+                to="clinics.clinic",
             ),
         ),
         migrations.AddField(
-            model_name="historicalfavorite",
+            model_name="historicalfinancial",
             name="history_user",
             field=models.ForeignKey(
                 null=True,
@@ -61,7 +58,7 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.AddField(
-            model_name="historicalfavorite",
+            model_name="historicalfinancial",
             name="patient",
             field=models.ForeignKey(
                 blank=True,
@@ -70,13 +67,18 @@ class Migration(migrations.Migration):
                 on_delete=django.db.models.deletion.DO_NOTHING,
                 related_name="+",
                 to="patients.patient",
-                verbose_name="Patient",
             ),
         ),
         migrations.AddIndex(
-            model_name="favorite",
+            model_name="financial",
             index=models.Index(
-                fields=["-created_at"], name="favorites_f_created_49a632_idx"
+                fields=["-created_at"], name="financials__created_dcf613_idx"
+            ),
+        ),
+        migrations.AddIndex(
+            model_name="financial",
+            index=models.Index(
+                fields=["-updated_at"], name="financials__updated_02338f_idx"
             ),
         ),
     ]

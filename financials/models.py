@@ -1,5 +1,7 @@
 from django.db import models
 
+from simple_history.models import HistoricalRecords
+
 from clinics.models import Clinic
 from patients.models import Patient
 
@@ -24,6 +26,8 @@ class Financial(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    history = HistoricalRecords(cascade_delete_history=True)
 
     objects = FinancialQuerySet.as_manager()
 
