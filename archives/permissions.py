@@ -4,7 +4,10 @@ from rest_framework.exceptions import ValidationError
 from archives.models import Archive
 from archives.models import ArchiveAccessPermission
 
-from patients.models import PatientSpecialtyAccess
+from doctors.models import Doctor, Specialty
+
+from patients.models import Patient, PatientSpecialtyAccess
+
 from users.models import CustomUser as User
 
 from appointments.models import Appointment
@@ -29,20 +32,30 @@ class ArchiveRetrievePermission(BasePermission):
         archive: Archive = obj
 
         if user.role == User.Role.DOCTOR:
-            specialty = archive.specialty
-            patient = archive.patient
+            doctor: Doctor = user.doctor
+            specialty: Specialty = archive.specialty
+            patient: Patient = archive.patient
+            # has previous appointment with this doctor
             return Appointment.objects.filter(
                 patient_id=patient.pk,
                 clinic_id=user.pk,
             ).exists() and (
-                archive.doctor.pk == user.pk
+                # belongs to this doctor
+                archive.doctor.pk == doctor.pk
+                # or same specialty as doctor
+                or specialty.pk == doctor.main_specialty.specialty.pk
+                # or has access permission
                 or ArchiveAccessPermission.objects.filter(
                     patient_id=patient.pk,
                     doctor_id=user.pk,
                     specialty_id=specialty.pk,
                 ).exists()
+                # or public access
                 or PatientSpecialtyAccess.objects.public_only()
-                .filter(patient_id=patient.pk)
+                .filter(
+                    patient_id=patient.pk,
+                    specialty_id=specialty.pk,
+                )
                 .exists()
             )
         else:

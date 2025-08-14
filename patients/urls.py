@@ -6,8 +6,6 @@ from .views import (
     PatientProfileView,
     PatientSpecialtyAccessListCreateView,
     PatientSpecialtyAccessRetrieveUpdateDestroyView,
-    ClinicPatientListView,
-    ClinicPatientRetrieveView,
     PatientArchiveDoctorListView,
     PatientDoctorArchiveListView,
 )
@@ -30,12 +28,6 @@ urlpatterns = [
         "specialties/access/<int:pk>/",
         PatientSpecialtyAccessRetrieveUpdateDestroyView.as_view(),
         name="patient-specialty-access-retrieve-update-destroy",
-    ),
-    path("clinics/", ClinicPatientListView.as_view(), name="patient-clinic-list"),
-    path(
-        "clinics/<int:pk>",
-        ClinicPatientRetrieveView.as_view(),
-        name="patient-clinic-retrieve",
     ),
     path(
         "archives/doctors/",

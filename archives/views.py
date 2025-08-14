@@ -25,7 +25,7 @@ from archives.permissions import (
     ArchiveUpdatePermission,
     ArchiveDestroyPermission,
 )
-from clinics.models import ClinicPatient
+from financials.models import Financial
 
 
 class ArchivePagination(PageNumberPagination):
@@ -119,14 +119,14 @@ class ArchiveListCreateView(ListCreateAPIView):
         patient = archive.patient
         cost = archive.cost
 
-        clinic_patient, created = ClinicPatient.objects.get_or_create(
+        financial, created = Financial.objects.get_or_create(
             clinic=clinic,
             patient=patient,
             defaults={"cost": cost},
         )
         if not created:
-            clinic_patient.cost += cost
-            clinic_patient.save()
+            financial.cost += cost
+            financial.save()
 
 
 @extend_schema_view(
@@ -185,11 +185,11 @@ class ArchiveRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
             archive: Archive = serializer.save()
             doctor = archive.doctor
             patient = archive.patient
-            clinic_patient, created = ClinicPatient.objects.get_or_create(
+            financial, created = Financial.objects.get_or_create(
                 clinic_id=doctor.pk,
                 patient_id=patient.pk,
                 defaults={"cost": cost},
             )
             if not created:
-                clinic_patient.cost += cost
-                clinic_patient.save()
+                financial.cost += cost
+                financial.save()

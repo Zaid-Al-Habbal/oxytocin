@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "archives",
     "favorites",
     "evaluations",
+    "financials",
     "clinic_statistics",
 ]
 
@@ -163,6 +164,7 @@ LOCALE_PATHS = [
     BASE_DIR / "archives/locale",
     BASE_DIR / "favorites/locale",
     BASE_DIR / "evaluations/locale",
+    BASE_DIR / "financials/locale",
 ]
 
 # Static files (CSS, JavaScript, Images)

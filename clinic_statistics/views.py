@@ -23,11 +23,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 
-from users.models import CustomUser
 from doctors.permissions import IsDoctorWithClinic
 from .serializers import *
 from evaluations.models import Evaluation
-from clinics.models import ClinicPatient
+from financials.models import Financial
 from appointments.models import Appointment
 
 
@@ -145,7 +144,7 @@ class IncomesDetailView(APIView):
         clinic = getattr(user.doctor, "clinic", None)
         
         aggregated = (
-            ClinicPatient.objects
+            Financial.objects
             .filter(
                 clinic=clinic,
                 created_at__date__range=(start_date, end_date)
@@ -203,7 +202,7 @@ class CalculateStatisticsView(APIView):
         user = request.user
         clinic = getattr(user.doctor, "clinic", None)
         
-        patients_qs = ClinicPatient.objects.filter(clinic=clinic).select_related('patient__user')
+        patients_qs = Financial.objects.filter(clinic=clinic).select_related('patient__user')
 
         # Annotate age using extract and arithmetic
         age_annotation = (ExtractYear(now()) - ExtractYear(F('patient__user__birth_date')) +

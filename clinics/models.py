@@ -56,7 +56,9 @@ class Clinic(models.Model):
     address = models.CharField(max_length=255)
     location = gis_models.PointField()
     phone = models.CharField(max_length=20, unique=True)
-    time_slot_per_patient = models.PositiveIntegerField(default=15, help_text="Length of each appointment slot in minutes")
+    time_slot_per_patient = models.PositiveIntegerField(
+        default=15, help_text="Length of each appointment slot in minutes"
+    )
 
     objects = ClinicQuerySet.as_manager()
 
@@ -95,43 +97,21 @@ class ClinicImage(models.Model):
         ordering = ["-created_at"]
 
 
-
 class BannedPatient(models.Model):
-    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE, related_name='banned_patients')
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='banned_from')
-    created_at = models.DateTimeField(default=timezone.now)
-
-    class Meta:
-        unique_together = ('clinic', 'patient')
-
-    def __str__(self):
-        return f"{self.patient} banned from {self.clinic}"
-class ClinicPatientQuerySet(models.QuerySet):
-    def with_positive_cost(self):
-        return self.filter(cost__gt=0)
-
-
-class ClinicPatient(models.Model):
     clinic = models.ForeignKey(
         Clinic,
         on_delete=models.CASCADE,
-        related_name="clinics",
+        related_name="banned_patients",
     )
     patient = models.ForeignKey(
         Patient,
         on_delete=models.CASCADE,
-        related_name="patients",
+        related_name="banned_from",
     )
-    cost = models.FloatField()
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    objects = ClinicPatientQuerySet.as_manager()
+    created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        indexes = [
-            models.Index(fields=["-created_at"]),
-            models.Index(fields=["-updated_at"]),
-        ]
-        ordering = ["-created_at"]
+        unique_together = ("clinic", "patient")
+
+    def __str__(self):
+        return f"{self.patient} banned from {self.clinic}"
