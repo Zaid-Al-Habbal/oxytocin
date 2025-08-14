@@ -92,7 +92,7 @@ class Clinic(models.Model):
         verbose_name_plural = _("Clinics")
 
     def __str__(self):
-        return f"{self.doctor.user.first_name} {self.doctor.user.last_name} - {self.location} - ({self.phone})"
+        return f"{self.doctor.user.first_name} {self.doctor.user.last_name} - {self.address} - ({self.phone})"
 
 
 class ClinicImage(models.Model):
