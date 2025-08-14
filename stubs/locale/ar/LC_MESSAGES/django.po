@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 21:15+0300\n"
+"POT-Creation-Date: 2025-08-14 22:20+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -159,3 +159,11 @@ msgstr "لا يتم تخزين كلمات المرور الخام ، لذلك ل
 #: stubs/translations.py:37
 msgid "All applications"
 msgstr "جميع التطبيقات"
+
+#: stubs/translations.py:38
+msgid "Image preview"
+msgstr "معاينة الصورة"
+
+#: stubs/translations.py:39
+msgid "Go back"
+msgstr "العودة"

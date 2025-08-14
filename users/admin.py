@@ -19,13 +19,16 @@ from rest_framework_simplejwt.token_blacklist.models import (
 
 from .models import CustomUser as User
 
-try:
-    admin.site.unregister(User)
-    admin.site.unregister(Group)
-    admin.site.unregister(BlacklistedToken)
-    admin.site.unregister(OutstandingToken)
-except NotRegistered:
-    pass
+
+def safe_unregister(model):
+    try:
+        admin.site.unregister(model)
+    except NotRegistered:
+        pass
+
+
+for model in [User, Group, BlacklistedToken, OutstandingToken]:
+    safe_unregister(model)
 
 
 @admin.register(User)

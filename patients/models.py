@@ -66,7 +66,7 @@ class Patient(models.Model):
         return self.location.y
 
     def __str__(self):
-        return f"Patient Profile: {self.user.phone}"
+        return str(self.user)
 
 
 class PatientSpecialtyAccessQuerySet(models.QuerySet):

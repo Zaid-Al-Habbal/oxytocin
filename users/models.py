@@ -53,8 +53,8 @@ class CustomUserManager(BaseUserManager.from_queryset(CustomUserQuerySet)):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     class Gender(models.TextChoices):
-        MALE = "male", "Male"
-        FEMALE = "female", "Female"
+        MALE = "male", _("Male")
+        FEMALE = "female", _("Female")
 
     class Role(models.TextChoices):
         PATIENT = "patient", _("Patient")
