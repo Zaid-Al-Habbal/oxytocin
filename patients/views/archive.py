@@ -1,11 +1,13 @@
 from django.db.models import Count, Q
 
-from rest_framework.pagination import PageNumberPagination
-
 from appointments.models import Appointment
 
-from patients.serializers.archive import PatientArchiveDoctorSerializer
+from patients.serializers.archive import (
+    PatientArchiveDoctorSerializer,
+    PatientDoctorArchiveSerializer,
+)
 from doctors.models import Doctor
+from archives.models import Archive
 
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -15,11 +17,7 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter
 from users.permissions import HasRole
 from users.models import CustomUser as User
 
-
-class PatientArchiveDoctorPagination(PageNumberPagination):
-    page_size = 30
-    page_size_query_param = "page_size"
-    max_page_size = 50
+from .base import PatientPagination
 
 
 @extend_schema(
@@ -51,7 +49,7 @@ class PatientArchiveDoctorPagination(PageNumberPagination):
     tags=["Patient Archives"],
 )
 class PatientArchiveDoctorListView(ListAPIView):
-    pagination_class = PatientArchiveDoctorPagination
+    pagination_class = PatientPagination
     permission_classes = [IsAuthenticated, HasRole]
     required_roles = [User.Role.PATIENT]
     serializer_class = PatientArchiveDoctorSerializer
@@ -81,4 +79,51 @@ class PatientArchiveDoctorListView(ListAPIView):
             )
             .distinct()
             .order_by("-appointments_count")
+        )
+
+
+@extend_schema(
+    summary="List Patient Archives by Doctor",
+    description="Get a paginated list of archives for the authenticated patient from a specific doctor. This endpoint allows patients to view their medical archives created by a particular doctor.",
+    parameters=[
+        OpenApiParameter(
+            name="doctor_id",
+            type=int,
+            location=OpenApiParameter.PATH,
+            required=True,
+            description="ID of the doctor to filter archives by",
+        ),
+        OpenApiParameter(
+            name="page",
+            type=int,
+            location=OpenApiParameter.QUERY,
+            required=False,
+            description="Page number for pagination",
+        ),
+        OpenApiParameter(
+            name="page_size",
+            type=int,
+            location=OpenApiParameter.QUERY,
+            required=False,
+            description="Number of items per page (max 50)",
+        ),
+    ],
+    tags=["Patient Archives"],
+)
+class PatientDoctorArchiveListView(ListAPIView):
+    pagination_class = PatientPagination
+    permission_classes = [IsAuthenticated, HasRole]
+    required_roles = [User.Role.PATIENT]
+    serializer_class = PatientDoctorArchiveSerializer
+
+    def get_queryset(self):
+        user: User = self.request.user
+        doctor_id = self.kwargs.get("doctor_id")
+
+        if not doctor_id:
+            return Archive.objects.none()
+
+        return Archive.objects.with_full_relations().filter(
+            doctor_id=doctor_id,
+            patient_id=user.pk,
         )

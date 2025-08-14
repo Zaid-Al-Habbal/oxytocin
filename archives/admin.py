@@ -29,6 +29,7 @@ class ArchiveAdmin(admin.ModelAdmin):
         "specialty__name_en",
         "specialty__name_ar",
     ]
+    autocomplete_fields = ["specialty"]
     readonly_fields = ["created_at"]
 
 
