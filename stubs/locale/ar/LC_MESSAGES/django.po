@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-11 23:16+0300\n"
+"POT-Creation-Date: 2025-08-14 21:15+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -155,3 +155,7 @@ msgstr "تسجيل الخروج"
 #: stubs/translations.py:36
 msgid "Raw passwords are not stored, so there is no way to see this user’s password, but you can change the password using <a href=\"{}\" class=\"text-primary-600 dark:text-primary-500\">this form</a>."
 msgstr "لا يتم تخزين كلمات المرور الخام ، لذلك لا توجد طريقة لرؤية كلمة مرور هذا المستخدم، ولكن يمكنك تغيير كلمة المرور باستخدام <a href=\"{}\" class=\"text-primary-600 dark:text-primary-500\">هذا النموذج</a>."
+
+#: stubs/translations.py:37
+msgid "All applications"
+msgstr "جميع التطبيقات"

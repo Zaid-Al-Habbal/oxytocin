@@ -382,7 +382,7 @@ UNFOLD = {
     "SHOW_BACK_BUTTON": True,
     "SIDEBAR": {
         "show_search": True,
-        "show_all_applications": False,
+        "show_all_applications": True,
         "navigation": [
             {
                 "title": _("Navigation"),
@@ -394,9 +394,16 @@ UNFOLD = {
                         "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
                         "link": reverse_lazy("admin:index"),
                     },
+                ],
+            },
+            {
+                "title": _("Users"),
+                "separator": True,  # Top border
+                "collapsible": True,  # Collapsible group of links
+                "items": [
                     {
                         "title": _("Users"),
-                        "icon": "people",
+                        "icon": "account_circle",
                         "link": reverse_lazy("admin:users_customuser_changelist"),
                     },
                 ],
