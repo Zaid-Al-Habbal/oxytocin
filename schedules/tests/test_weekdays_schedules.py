@@ -30,13 +30,13 @@ class WeekdaysScheduleTest(ScheduleBaseTest):
         response = self.client.get(self.list_url)
         
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("Sunday", str(response.data))
-        self.assertIn("Monday", str(response.data))
-        self.assertIn("Tuesday", str(response.data))
-        self.assertIn("Wednesday", str(response.data))
-        self.assertIn("Thursday", str(response.data))
-        self.assertIn("Friday", str(response.data))
-        self.assertIn("Saturday", str(response.data))
+        self.assertIn("الأحد", str(response.data))
+        self.assertIn("الاثنين", str(response.data))
+        self.assertIn("الثلاثاء", str(response.data))
+        self.assertIn("الأربعاء", str(response.data))
+        self.assertIn("الخميس", str(response.data))
+        self.assertIn("الجمعة", str(response.data))
+        self.assertIn("السبت", str(response.data))
         self.assertIn("available_hours", str(response.data))
         
     def test_list_clinic_weekdays_schedules_fail_if_assistant_not_connect_to_clinic(self):
@@ -69,7 +69,7 @@ class WeekdaysScheduleTest(ScheduleBaseTest):
         
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data['available_hours']), 2)
-        self.assertEqual(response.data['day_name_display'], 'Sunday')
+        self.assertEqual(response.data['day_name_display'], 'الأحد')
         
     def test_replace_available_hours_overlap_failure(self):
         invalid_data = [

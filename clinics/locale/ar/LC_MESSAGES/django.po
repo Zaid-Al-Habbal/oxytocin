@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-11 19:03+0300\n"
+"POT-Creation-Date: 2025-08-14 20:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,7 +56,6 @@ msgid "Latitude"
 msgstr "العرض"
 
 #: clinics/models.py:85 clinics/models.py:97 clinics/models.py:125
-#: clinics/models.py:158
 msgid "Clinic"
 msgstr "العيادة"
 
@@ -64,11 +63,11 @@ msgstr "العيادة"
 msgid "Image"
 msgstr "الصورة"
 
-#: clinics/models.py:105 clinics/models.py:134 clinics/models.py:168
+#: clinics/models.py:105 clinics/models.py:134
 msgid "Created At"
 msgstr "تاريخ الإنشاء"
 
-#: clinics/models.py:106 clinics/models.py:169
+#: clinics/models.py:106
 msgid "Updated At"
 msgstr "تاريخ التحديث"
 
@@ -80,7 +79,7 @@ msgstr "صورة العيادة"
 msgid "Clinic Images"
 msgstr "صور العيادة"
 
-#: clinics/models.py:131 clinics/models.py:164
+#: clinics/models.py:131
 msgid "Patient"
 msgstr "المريض"
 
@@ -91,18 +90,6 @@ msgstr "المريض المحظور"
 #: clinics/models.py:141
 msgid "Banned Patients"
 msgstr "المرضى المحظورين"
-
-#: clinics/models.py:166
-msgid "Cost"
-msgstr "التكلفة"
-
-#: clinics/models.py:176
-msgid "Clinic Patient"
-msgstr "مريض العيادة"
-
-#: clinics/models.py:177
-msgid "Clinic Patients"
-msgstr "مرضى العيادة"
 
 #: clinics/serializers.py:41 clinics/serializers/base.py:37
 msgid "You don't have the required role."
@@ -163,7 +150,5 @@ msgid "Assistant not found or not in your clinic."
 msgstr "المساعدة غير موجودة"
 
 #: clinics/views/ban_patient.py:48
-#, fuzzy
-#| msgid "Assistant added successfully!"
 msgid "Patient has been banned successfully."
-msgstr "تمت إضافة المساعدة بنجاح"
+msgstr "تم حظر المريض بنجاح"

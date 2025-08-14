@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-11 23:16+0300\n"
+"POT-Creation-Date: 2025-08-14 20:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,30 +17,30 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: django_project/settings.py:170
+#: django_project/settings.py:171
 msgid "English"
 msgstr "الإنجليزية"
 
-#: django_project/settings.py:171
+#: django_project/settings.py:172
 msgid "Arabic"
 msgstr "العربية"
 
-#: django_project/settings.py:364 django_project/settings.py:365
+#: django_project/settings.py:366 django_project/settings.py:367
 msgid "Oxytocin"
 msgstr "أوكسيتوسين"
 
-#: django_project/settings.py:366
+#: django_project/settings.py:368
 msgid "Oxytocin is a platform for managing clinics."
 msgstr "أوكسيتوسين هي منصة لإدارة العيادات."
 
-#: django_project/settings.py:386
+#: django_project/settings.py:388
 msgid "Navigation"
 msgstr ""
 
-#: django_project/settings.py:391
+#: django_project/settings.py:393
 msgid "Dashboard"
-msgstr ""
+msgstr "داش بورد"
 
-#: django_project/settings.py:396 django_project/settings.py:411
+#: django_project/settings.py:398 django_project/settings.py:413
 msgid "Users"
-msgstr ""
+msgstr "المستخدمين"
