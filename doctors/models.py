@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models import BooleanField, Exists, OuterRef, Value
 from django.conf import settings
+from django.contrib.gis.geos import Point
+from django.contrib.gis.db.models.functions import Distance
 
 from common.utils import years_since
 
@@ -68,6 +70,10 @@ class DoctorQuerySet(models.QuerySet):
             patient_id=patient_id,
         )
         return self.annotate(is_favorite=Exists(favorite_exists))
+
+    def with_clinic_distance(self, latitude, longitude):
+        location = Point(longitude, latitude, srid=4326)
+        return self.annotate(clinic_distance=Distance("clinic__location", location))
 
 
 class Doctor(models.Model):

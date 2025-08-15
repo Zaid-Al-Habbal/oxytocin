@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.gis.db import models as gis_models
 from django.utils import timezone
+from django.contrib.gis.geos import Point
+from django.contrib.gis.db.models.functions import Distance
 
 from doctors.models import Doctor, DoctorSpecialty
 from patients.models import Patient
@@ -44,6 +46,10 @@ class ClinicQuerySet(models.QuerySet):
             .with_doctor_categorized_specialties()
             .with_doctor_user()
         )
+
+    def with_distance(self, latitude, longitude):
+        location = Point(longitude, latitude, srid=4326)
+        return self.annotate(distance=Distance("location", location))
 
 
 class Clinic(models.Model):

@@ -1,24 +1,13 @@
-from django.contrib.gis.geos import Point
-from django.contrib.gis.db.models.functions import Distance
-
-from google.maps.routing_v2.types import (
-    RouteTravelMode,
-    Units,
-    RouteMatrixElementCondition,
-)
-
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes
-from services.googlemaps import GoogleMapsService, X_GOOG_FIELDMASK
+from services.googlemaps import X_GOOG_FIELDMASK
+from services import get_route_matrix_elements
 
 from clinics.models import Clinic
 from clinics.serializers import ClinicNearestSerializer
 from patients.serializers import LocationQuerySerializer
-
-
-googlemaps_service = GoogleMapsService()
 
 
 @extend_schema(
@@ -45,36 +34,37 @@ class ClinicNearestListView(generics.GenericAPIView):
     serializer_class = ClinicNearestSerializer
 
     def get(self, request, *args, **kwargs):
-        serializer = LocationQuerySerializer(data=request.query_params)
-        try:
-            serializer.is_valid(raise_exception=True)
-            origins = [serializer.validated_data]
-        except ValidationError as e:
-            if hasattr(request.user, "patient"):
-                patient = request.user.patient
-                origins = [
-                    {"longitude": patient.longitude, "latitude": patient.latitude}
-                ]
-            else:
-                raise e
-        location = Point(origins[0]["longitude"], origins[0]["latitude"], srid=4326)
+        latitude, longitude = self.get_lat_lng()
+        origins = [{"longitude": longitude, "latitude": latitude}]
         clinics = (
             Clinic.objects.with_doctor_user()
             .not_deleted_doctor()
             .approved_doctor_only()
-            .annotate(distance=Distance("location", location))
+            .with_distance(origins[0]["latitude"], origins[0]["longitude"])
             .order_by("distance")[:10]
         )
         destinations = [
             {"longitude": clinic.longitude, "latitude": clinic.latitude}
             for clinic in clinics
         ]
-        if not destinations:
+        route_matrix_elements = self.get_route_matrix_elements(origins, destinations)
+        if not route_matrix_elements:
             return Response([])
-        route_matrix_elements = googlemaps_service.route_matrix(
+
+        route_matrix_elements.sort(key=lambda route: route.duration.seconds)
+        data = []
+        for route_matrix_element in route_matrix_elements[:7]:
+            clinic = clinics[route_matrix_element.destination_index]
+            clinic.distance = route_matrix_element.distance_meters
+            data.append(clinic)
+        serializer = self.get_serializer(data, many=True)
+        return Response(serializer.data)
+
+    def get_route_matrix_elements(self, origins, destinations):
+        return get_route_matrix_elements(
             origins,
             destinations,
-            field_mask_list=[
+            [
                 X_GOOG_FIELDMASK.ORIGIN_INDEX,
                 X_GOOG_FIELDMASK.DESTINATION_INDEX,
                 X_GOOG_FIELDMASK.DURATION,
@@ -82,20 +72,19 @@ class ClinicNearestListView(generics.GenericAPIView):
                 X_GOOG_FIELDMASK.STATUS,
                 X_GOOG_FIELDMASK.CONDITION,
             ],
-            travel_mode=RouteTravelMode.WALK,
-            units=Units.METRIC,
         )
-        valid_route_matrix_elements = [
-            route_matrix_element
-            for route_matrix_element in route_matrix_elements
-            if route_matrix_element.condition
-            == RouteMatrixElementCondition.ROUTE_EXISTS
-        ]
-        valid_route_matrix_elements.sort(key=lambda route: route.duration.seconds)
-        data = []
-        for route_matrix_element in valid_route_matrix_elements[:7]:
-            clinic = clinics[route_matrix_element.destination_index]
-            clinic.distance = route_matrix_element.distance_meters
-            data.append(clinic)
-        serializer = self.get_serializer(data, many=True)
-        return Response(serializer.data)
+
+    def get_lat_lng(self):
+        serializer = LocationQuerySerializer(data=self.request.query_params)
+        try:
+            serializer.is_valid(raise_exception=True)
+            latitude = serializer.validated_data["latitude"]
+            longitude = serializer.validated_data["longitude"]
+        except ValidationError as e:
+            if hasattr(self.request.user, "patient"):
+                patient = self.request.user.patient
+                latitude = patient.latitude
+                longitude = patient.longitude
+            else:
+                raise e
+        return latitude, longitude

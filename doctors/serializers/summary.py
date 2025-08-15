@@ -32,6 +32,7 @@ class DoctorHighestRatedSerializer(serializers.ModelSerializer):
     rates = serializers.IntegerField(read_only=True)
     is_favorite = serializers.BooleanField(read_only=True)
     appointment = serializers.JSONField(read_only=True)
+    clinic_distance = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Doctor
@@ -43,4 +44,5 @@ class DoctorHighestRatedSerializer(serializers.ModelSerializer):
             "address",
             "is_favorite",
             "appointment",
+            "clinic_distance",
         ]

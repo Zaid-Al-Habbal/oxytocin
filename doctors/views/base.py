@@ -17,12 +17,9 @@ from doctors.serializers import (
     SpecialtyListSerializer,
     DoctorSummarySerializer,
     DoctorDetailSerializer,
-    DoctorHighestRatedSerializer,
 )
 from doctors.permissions import IsDoctorWithClinic
 from users.models import CustomUser as User
-
-from appointments.services import get_next_available_slots_for_clinics
 
 
 class DoctorLoginView(generics.GenericAPIView):
@@ -118,39 +115,6 @@ class DoctorNewestListView(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         qs = Doctor.objects.with_full_profile().order_by("-user__created_at")
-        if isinstance(user, AnonymousUser):
-            return qs[:7]
-        return qs.with_is_favorite_for_patient(user.id)[:7]
-
-
-@extend_schema(
-    summary="List Highest Rated Doctors",
-    description="Retrieve a list of the 7 highest rated doctors.",
-    tags=["Doctor"],
-)
-class DoctorHighestRatedListView(generics.ListAPIView):
-    serializer_class = DoctorHighestRatedSerializer
-
-    def list(self, request, *args, **kwargs):
-        qs = self.get_queryset()
-        slots = get_next_available_slots_for_clinics(
-            list(qs.values_list("user_id", flat=True))
-        )
-        for doctor in qs:
-            visit_date, visit_time = slots.get(doctor.pk, (None, None))
-            if visit_date is None:
-                doctor.appointment = None
-                continue
-            doctor.appointment = {
-                "visit_date": visit_date,
-                "visit_time": visit_time,
-            }
-        serializer = self.get_serializer(qs, many=True)
-        return Response(serializer.data)
-
-    def get_queryset(self):
-        user = self.request.user
-        qs = Doctor.objects.with_full_profile().order_by("-rate")
         if isinstance(user, AnonymousUser):
             return qs[:7]
         return qs.with_is_favorite_for_patient(user.id)[:7]
