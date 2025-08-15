@@ -103,3 +103,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def full_name(self):
         "Returns the person's full name."
         return f"{self.first_name} {self.last_name}"
+
+    def soft_delete(self):
+        self.deleted_at = timezone.now()
+        self.save()

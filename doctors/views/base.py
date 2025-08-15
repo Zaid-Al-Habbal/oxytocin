@@ -1,5 +1,5 @@
+from django.contrib.auth.models import AnonymousUser
 from django.utils.translation import gettext_lazy as _
-
 from rest_framework import status
 from rest_framework import generics
 from rest_framework.response import Response
@@ -17,8 +17,12 @@ from doctors.serializers import (
     SpecialtyListSerializer,
     DoctorSummarySerializer,
     DoctorDetailSerializer,
+    DoctorHighestRatedSerializer,
 )
 from doctors.permissions import IsDoctorWithClinic
+from users.models import CustomUser as User
+
+from appointments.services import get_next_available_slots_for_clinics
 
 
 class DoctorLoginView(generics.GenericAPIView):
@@ -86,11 +90,8 @@ class DoctorRetrieveUpdateView(generics.RetrieveUpdateAPIView):
     http_method_names = ["get", "put"]
 
     def get_queryset(self):
-        return (
-            Doctor.objects.not_deleted()
-            .with_categorized_specialties()
-            .filter(user=self.request.user)
-        )
+        user: User = self.request.user
+        return Doctor.objects.with_full_profile().filter(user=user)
 
     def get_object(self):
         return self.get_queryset().first()
@@ -112,8 +113,14 @@ class SpecialtyListView(generics.ListAPIView):
     tags=["Doctor"],
 )
 class DoctorNewestListView(generics.ListAPIView):
-    queryset = Doctor.objects.not_deleted().approved().order_by("-user__created_at")[:7]
     serializer_class = DoctorSummarySerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Doctor.objects.with_full_profile().order_by("-user__created_at")
+        if isinstance(user, AnonymousUser):
+            return qs[:7]
+        return qs.with_is_favorite_for_patient(user.id)[:7]
 
 
 @extend_schema(
@@ -122,8 +129,31 @@ class DoctorNewestListView(generics.ListAPIView):
     tags=["Doctor"],
 )
 class DoctorHighestRatedListView(generics.ListAPIView):
-    queryset = Doctor.objects.not_deleted().approved().order_by("-rate")[:7]
-    serializer_class = DoctorSummarySerializer
+    serializer_class = DoctorHighestRatedSerializer
+
+    def list(self, request, *args, **kwargs):
+        qs = self.get_queryset()
+        slots = get_next_available_slots_for_clinics(
+            list(qs.values_list("user_id", flat=True))
+        )
+        for doctor in qs:
+            visit_date, visit_time = slots.get(doctor.pk, (None, None))
+            if visit_date is None:
+                doctor.appointment = None
+                continue
+            doctor.appointment = {
+                "visit_date": visit_date,
+                "visit_time": visit_time,
+            }
+        serializer = self.get_serializer(qs, many=True)
+        return Response(serializer.data)
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Doctor.objects.with_full_profile().order_by("-rate")
+        if isinstance(user, AnonymousUser):
+            return qs[:7]
+        return qs.with_is_favorite_for_patient(user.id)[:7]
 
 
 @extend_schema(
@@ -132,5 +162,11 @@ class DoctorHighestRatedListView(generics.ListAPIView):
     tags=["Doctor"],
 )
 class DoctorDetailRetrieveView(generics.RetrieveAPIView):
-    queryset = Doctor.objects.with_full_profile()
     serializer_class = DoctorDetailSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Doctor.objects.with_full_profile()
+        if isinstance(user, AnonymousUser):
+            return qs
+        return qs.with_is_favorite_for_patient(user.id)

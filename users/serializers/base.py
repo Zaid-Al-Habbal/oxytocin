@@ -70,6 +70,7 @@ class UserSummarySerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "image",
+            "gender",
         ]
 
 

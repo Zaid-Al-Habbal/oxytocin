@@ -5,11 +5,9 @@ from rest_framework import serializers
 from doctors.models import Doctor
 from doctors.serializers.summary import DoctorSummarySerializer
 from favorites.models import Favorite
-from patients.serializers.summary import PatientSummarySerializer
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
-    patient = PatientSummarySerializer(read_only=True)
     doctor_id = serializers.PrimaryKeyRelatedField(
         queryset=Doctor.objects.not_deleted(),
         source="doctor",
@@ -19,7 +17,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Favorite
-        fields = ["id", "patient", "doctor_id", "doctor", "created_at"]
+        fields = ["id", "doctor_id", "doctor", "created_at"]
         read_only_fields = ["id", "created_at"]
 
     @property

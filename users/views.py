@@ -1,5 +1,4 @@
 from django.utils.translation import gettext_lazy as _
-from django.utils.timezone import now
 
 from rest_framework import status
 from rest_framework import generics
@@ -77,11 +76,11 @@ class UserCreateDestroyView(generics.CreateAPIView, generics.DestroyAPIView):
         return super().get_queryset()
 
     def perform_destroy(self, instance):
-        if instance.role == User.Role.DOCTOR:
-            instance.deleted_at = now()
-            instance.save()
+        user: User = instance
+        if user.role == User.Role.DOCTOR:
+            user.soft_delete()
         else:
-            instance.delete()
+            user.delete()
 
 @extend_schema(
     summary="Logout",

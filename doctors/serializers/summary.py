@@ -9,7 +9,9 @@ from .base import DoctorSpecialtySerializer
 class DoctorSummarySerializer(serializers.ModelSerializer):
     user = UserSummarySerializer(read_only=True)
     main_specialty = DoctorSpecialtySerializer(read_only=True)
+    address = serializers.CharField(source="clinic.address", read_only=True)
     rates = serializers.IntegerField(read_only=True)
+    is_favorite = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Doctor
@@ -18,5 +20,27 @@ class DoctorSummarySerializer(serializers.ModelSerializer):
             "main_specialty",
             "rate",
             "rates",
+            "address",
+            "is_favorite",
         ]
-        read_only_fields = ["rate"]
+
+
+class DoctorHighestRatedSerializer(serializers.ModelSerializer):
+    user = UserSummarySerializer(read_only=True)
+    main_specialty = DoctorSpecialtySerializer(read_only=True)
+    address = serializers.CharField(source="clinic.address", read_only=True)
+    rates = serializers.IntegerField(read_only=True)
+    is_favorite = serializers.BooleanField(read_only=True)
+    appointment = serializers.JSONField(read_only=True)
+
+    class Meta:
+        model = Doctor
+        fields = [
+            "user",
+            "main_specialty",
+            "rate",
+            "rates",
+            "address",
+            "is_favorite",
+            "appointment",
+        ]

@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import BooleanField, Exists, OuterRef, Value
 from django.conf import settings
 
 from common.utils import years_since
@@ -55,6 +56,18 @@ class DoctorQuerySet(models.QuerySet):
 
     def with_archives(self):
         return self.prefetch_related(models.Prefetch("archives"))
+
+    def with_is_favorite_for_patient(self, patient_id: int | None):
+        if not patient_id:
+            return self.annotate(is_favorite=Value(False, output_field=BooleanField()))
+
+        from favorites.models import Favorite
+
+        favorite_exists = Favorite.objects.filter(
+            doctor_id=OuterRef("pk"),
+            patient_id=patient_id,
+        )
+        return self.annotate(is_favorite=Exists(favorite_exists))
 
 
 class Doctor(models.Model):
