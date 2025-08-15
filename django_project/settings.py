@@ -406,22 +406,51 @@ UNFOLD = {
                         "icon": "account_circle",
                         "link": reverse_lazy("admin:users_customuser_changelist"),
                     },
+                    {
+                        "title": _("Doctors"),
+                        "icon": "stethoscope",
+                        "link": reverse_lazy("admin:doctors_doctor_changelist"),
+                    },
                 ],
             },
             {
-                "title": _("Patients"),
+                "title": _("Clinics"),
                 "separator": True,  # Top border
                 "collapsible": True,  # Collapsible group of links
                 "items": [
                     {
-                        "title": _("Patients"),
-                        "icon": "people",
-                        "link": reverse_lazy("admin:patients_patient_changelist"),
+                        "title": _("Clinics"),
+                        "icon": "local_hospital",
+                        "link": reverse_lazy("admin:clinics_clinic_changelist"),
                     },
                     {
-                        "title": _("Patient Specialty Accesses"),
-                        "icon": "group",
-                        "link": reverse_lazy("admin:patients_patientspecialtyaccess_changelist"),
+                        "title": _("Banned Patients"),
+                        "icon": "person_off",
+                        "link": reverse_lazy("admin:clinics_bannedpatient_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": _("Specialties"),
+                "separator": True,  # Top border
+                "collapsible": True,  # Collapsible group of links
+                "items": [
+                    {
+                        "title": _("Specialties"),
+                        "icon": "medical_information",
+                        "link": reverse_lazy("admin:doctors_specialty_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": _("Evaluations"),
+                "separator": True,  # Top border
+                "collapsible": True,  # Collapsible group of links
+                "items": [
+                    {
+                        "title": _("Evaluations"),
+                        "icon": "star",
+                        "link": reverse_lazy("admin:evaluations_evaluation_changelist"),
                     },
                 ],
             },

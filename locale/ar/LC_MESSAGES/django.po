@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 23:00+0300\n"
+"POT-Creation-Date: 2025-08-15 21:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,10 +45,22 @@ msgstr "داش بورد"
 msgid "Users"
 msgstr "المستخدمين"
 
-#: django_project/settings.py:412 django_project/settings.py:417
-msgid "Patients"
-msgstr "المرضى"
+#: django_project/settings.py:410
+msgid "Doctors"
+msgstr "الأطباء"
 
-#: django_project/settings.py:422
-msgid "Patient Specialty Accesses"
-msgstr "الوصول إلى تخصصات المريض"
+#: django_project/settings.py:417 django_project/settings.py:422
+msgid "Clinics"
+msgstr "العيادات"
+
+#: django_project/settings.py:427
+msgid "Banned Patients"
+msgstr "المرضى المحظورين"
+
+#: django_project/settings.py:434 django_project/settings.py:439
+msgid "Specialties"
+msgstr "التخصصات"
+
+#: django_project/settings.py:446 django_project/settings.py:451
+msgid "Evaluations"
+msgstr "التقييمات"
