@@ -167,6 +167,7 @@ class SpecialtyQuerySet(models.QuerySet):
 class Specialty(models.Model):
     name_en = models.CharField(max_length=100)
     name_ar = models.CharField(max_length=100)
+    image = models.ImageField(upload_to="specialties/images/", null=True, blank=True)
     subspecialties = models.ManyToManyField(
         "self",
         related_name="main_specialties",

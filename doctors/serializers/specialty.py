@@ -9,7 +9,7 @@ class SpecialtySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Specialty
-        fields = ["id", "name_en", "name_ar"]
+        fields = ["id", "name_en", "name_ar", "image"]
 
 
 class SpecialtyListSerializer(serializers.ModelSerializer):
@@ -17,4 +17,4 @@ class SpecialtyListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Specialty
-        fields = ["id", "name_en", "name_ar", "subspecialties"]
+        fields = ["id", "name_en", "name_ar", "image", "subspecialties"]
