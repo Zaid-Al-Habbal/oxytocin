@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 23:13+0300\n"
+"POT-Creation-Date: 2025-08-15 21:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,79 +18,79 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: clinics/apps.py:8 clinics/models.py:91
+#: clinics/apps.py:8 clinics/models.py:97
 msgid "Clinics"
 msgstr "العيادات"
 
-#: clinics/models.py:59
+#: clinics/models.py:65
 msgid "Doctor"
 msgstr "الطبيب"
 
-#: clinics/models.py:61
+#: clinics/models.py:67
 msgid "Address"
 msgstr "العنوان"
 
-#: clinics/models.py:62
+#: clinics/models.py:68
 msgid "Location"
 msgstr "الموقع"
 
-#: clinics/models.py:63
+#: clinics/models.py:69
 msgid "Phone"
 msgstr "الهاتف"
 
-#: clinics/models.py:66
+#: clinics/models.py:72
 msgid "Length of each appointment slot in minutes"
 msgstr "طول كل فترة موعد في الدقائق"
 
-#: clinics/models.py:67
+#: clinics/models.py:73
 msgid "Time Slot Per Patient"
 msgstr "فترة موعد للمريض"
 
-#: clinics/models.py:75
+#: clinics/models.py:81
 msgid "ID"
 msgstr "المعرف"
 
-#: clinics/models.py:80
+#: clinics/models.py:86
 msgid "Longitude"
 msgstr "الطول"
 
-#: clinics/models.py:85
+#: clinics/models.py:91
 msgid "Latitude"
 msgstr "العرض"
 
-#: clinics/models.py:90 clinics/models.py:102 clinics/models.py:130
+#: clinics/models.py:96 clinics/models.py:108 clinics/models.py:136
 msgid "Clinic"
 msgstr "عيادة"
 
-#: clinics/models.py:108
+#: clinics/models.py:114
 msgid "Image"
 msgstr "الصورة"
 
-#: clinics/models.py:110 clinics/models.py:139
+#: clinics/models.py:116 clinics/models.py:145
 msgid "Created At"
 msgstr "تاريخ الإنشاء"
 
-#: clinics/models.py:111
+#: clinics/models.py:117
 msgid "Updated At"
 msgstr "تاريخ التحديث"
 
-#: clinics/models.py:116
+#: clinics/models.py:122
 msgid "Clinic Image"
 msgstr "صورة العيادة"
 
-#: clinics/models.py:117
+#: clinics/models.py:123
 msgid "Clinic Images"
 msgstr "صور العيادة"
 
-#: clinics/models.py:136
+#: clinics/models.py:142
 msgid "Patient"
 msgstr "مريض"
 
-#: clinics/models.py:145
+#: clinics/models.py:151
 msgid "Banned Patient"
 msgstr "مريض محظور"
 
-#: clinics/models.py:146
+#: clinics/models.py:152
 msgid "Banned Patients"
 msgstr "المرضى المحظورين"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 22:19+0300\n"
+"POT-Creation-Date: 2025-08-15 21:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -266,14 +266,14 @@ msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد ا
 msgid "Your password must contain at least one number and one special character (!@#$%^&*()_-+=)."
 msgstr "(!@#$%^&*()_-+=) كلمة السر يجب أن تحوي على أحد الرموز التالية على أقل."
 
-#: users/views.py:102
+#: users/views.py:101
 msgid "Logout successful."
 msgstr "تم تسجيل الخروج."
 
-#: users/views.py:270
+#: users/views.py:269
 msgid "Your verification code has been sent. Please check your phone shortly."
 msgstr "تم إرسال رمز التحقق. يرجى التحقق من هاتفك قريبًا."
 
-#: users/views.py:307
+#: users/views.py:306
 msgid "Password changed successfully"
 msgstr "تم تغيير كلمة السر بنجاح"
