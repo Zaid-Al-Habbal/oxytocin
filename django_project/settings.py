@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     "financials",
     "clinic_statistics",
     "stubs",
+    "custom_admin",
 ]
 
 MIDDLEWARE = [
@@ -377,7 +378,35 @@ UNFOLD = {
         },
     ],
     "LOGIN": {
-        "image": lambda request: static("logo.svg"),
+        "image": lambda request: static("login.svg"),
+    },
+    "COLORS": {
+        "base": {
+            "50": "249, 250, 255",
+            "100": "243, 244, 250",
+            "200": "229, 231, 241",
+            "300": "209, 213, 225",
+            "400": "156, 163, 181",
+            "500": "107, 114, 138",
+            "600": "75, 85, 109",
+            "700": "55, 65, 91",
+            "800": "31, 41, 65",
+            "900": "17, 24, 49",
+            "950": "3, 7, 28",
+        },
+        "primary": {
+            "50": "0, 74, 173",
+            "100": "0, 69, 162",
+            "200": "0, 65, 152",
+            "300": "0, 60, 142",
+            "400": "0, 56, 132",
+            "500": "0, 52, 122",
+            "600": "0, 47, 111",
+            "700": "0, 43, 101",
+            "800": "0, 38, 91",
+            "900": "0, 34, 81",
+            "950": "0, 30, 71",
+        },
     },
     "SHOW_BACK_BUTTON": True,
     "SIDEBAR": {
@@ -456,6 +485,7 @@ UNFOLD = {
             },
         ],
     },
+    "DASHBOARD_CALLBACK": "custom_admin.views.dashboard_callback",
 }
 
 CRISPY_TEMPLATE_PACK = "unfold_crispy"

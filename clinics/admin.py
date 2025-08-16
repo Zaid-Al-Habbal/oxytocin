@@ -30,7 +30,10 @@ class ClinicAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
 
 
 @admin.register(BannedPatient)
-class BannedPatientAdmin(admin.ModelAdmin):
+class BannedPatientAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
+    
     list_display = ["id", "clinic", "patient", "created_at"]
     readonly_fields = ["created_at"]
     search_fields = ["clinic__phone", "patient__first_name", "patient__last_name"]
