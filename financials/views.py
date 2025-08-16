@@ -40,7 +40,7 @@ class FinancialListView(ListAPIView):
     def get_permissions(self):
         user: User = self.request.user
         permissions_classes = [IsAuthenticated(), HasRole()]
-        if user.role == User.Role.ASSISTANT:
+        if isinstance(user, User) and user.role == User.Role.ASSISTANT:
             permissions_classes.append(IsAssistantAssociatedWithClinic())
         return permissions_classes
 
