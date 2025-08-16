@@ -191,6 +191,7 @@ LOCALE_PATHS = [
     BASE_DIR / "financials/locale",
     BASE_DIR / "clinic_statistics/locale",
     BASE_DIR / "stubs/locale",
+    BASE_DIR / "custom_admin/locale",
 ]
 
 # Static files (CSS, JavaScript, Images)

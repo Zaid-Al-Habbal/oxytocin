@@ -1,20 +1,21 @@
 from unfold.components import BaseComponent, register_component
 from doctors.models import Doctor
+from django.utils.translation import gettext_lazy as _
 from django.db.models import Count, Q
 from appointments.models import Appointment
 from django.utils import timezone
-from datetime import timedelta
+from datetime import timedelta, date
+import calendar
 
 
 @register_component
 class AppointmentsCohortComponent(BaseComponent):
-    days = 7
-
     def get_color_levels(self):
         return [
             "bg-primary-50 dark:bg-primary-800 text-white",
-            "bg-primary-200 dark:bg-primary-300 text-white",
-            "bg-primary-300 dark:bg-primary-200 text-white",
+            "bg-primary-100 dark:bg-primary-400 text-white",
+            "bg-primary-200 dark:bg-primary-200 text-white",
+            "bg-primary-400 dark:bg-primary-100 text-white",
             "bg-primary-800 dark:bg-primary-50 text-white",
         ]
 
@@ -30,8 +31,7 @@ class AppointmentsCohortComponent(BaseComponent):
                         clinic__appointments__status=Appointment.Status.CANCELLED.value
                     )
                     & Q(
-                        clinic__appointments__visit_date__gte=timezone.localdate()
-                        - timedelta(days=self.days - 1)
+                        clinic__appointments__visit_date__year=timezone.localdate().year
                     ),
                     distinct=True,
                 )
@@ -50,10 +50,10 @@ class AppointmentsCohortComponent(BaseComponent):
         ]
 
     def get_row(self, **kwargs):
-        date = kwargs["date"]
+        month = kwargs["month"]
         # Fetch counts for all selected doctors in a single query for this date
         doctor_user_ids = [doctor.user_id for doctor in self.doctors]
-        per_day_rows = (
+        per_month_rows = (
             Doctor.objects.not_deleted()
             .approved()
             .with_clinic_appointments()
@@ -64,7 +64,7 @@ class AppointmentsCohortComponent(BaseComponent):
                     filter=~Q(
                         clinic__appointments__status=Appointment.Status.CANCELLED.value
                     )
-                    & Q(clinic__appointments__visit_date=date),
+                    & Q(clinic__appointments__visit_date__month=month),
                     distinct=True,
                 )
             )
@@ -72,7 +72,7 @@ class AppointmentsCohortComponent(BaseComponent):
         )
 
         appointments_count_by_user_id = {
-            row["user_id"]: row["appointments_count"] for row in per_day_rows
+            row["user_id"]: row["appointments_count"] for row in per_month_rows
         }
 
         cols = []
@@ -88,7 +88,7 @@ class AppointmentsCohortComponent(BaseComponent):
 
         return {
             "header": {
-                "title": date.strftime("%A"),
+                "title": _(calendar.month_name[month]),
                 "subtitle": total_appointments_count or "0",
             },
             "cols": cols,
@@ -97,13 +97,11 @@ class AppointmentsCohortComponent(BaseComponent):
     def get_data(self):
         self.doctors = list(self.get_queryset())
         rows = []
-        end_date = timezone.localdate()
-        start_date = end_date - timedelta(days=self.days - 1)
-        current_date = start_date
-        while current_date <= end_date:
-            row = self.get_row(date=current_date)
+        current_month = 1
+        while current_month <= 12:
+            row = self.get_row(month=current_month)
             rows.append(row)
-            current_date += timedelta(days=1)
+            current_month += 1
 
         value_to_color = self.build_value_to_color_mapping(rows)
 
@@ -127,7 +125,7 @@ class AppointmentsCohortComponent(BaseComponent):
 
         value_to_color = {}
         for idx, value in enumerate(unique_values_desc):
-            if idx < len(color_levels) - 1:
+            if idx < len(color_levels) - 1 and value > 0:
                 color_index = len(color_levels) - (idx + 1)
             else:
                 color_index = 0

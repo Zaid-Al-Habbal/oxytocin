@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-15 21:48+0300\n"
+"POT-Creation-Date: 2025-08-16 23:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,50 +17,54 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: django_project/settings.py:171
+#: django_project/settings.py:172
 msgid "English"
 msgstr "الإنجليزية"
 
-#: django_project/settings.py:172
+#: django_project/settings.py:173
 msgid "Arabic"
 msgstr "العربية"
 
-#: django_project/settings.py:366 django_project/settings.py:367
+#: django_project/settings.py:368 django_project/settings.py:369
 msgid "Oxytocin"
 msgstr "أوكسيتوسين"
 
-#: django_project/settings.py:368
+#: django_project/settings.py:370
 msgid "Oxytocin is a platform for managing clinics."
 msgstr "أوكسيتوسين هي منصة لإدارة العيادات."
 
-#: django_project/settings.py:388
+#: django_project/settings.py:418
 msgid "Navigation"
 msgstr "التنقل"
 
-#: django_project/settings.py:393
+#: django_project/settings.py:423
 msgid "Dashboard"
 msgstr "داش بورد"
 
-#: django_project/settings.py:400 django_project/settings.py:405
+#: django_project/settings.py:430 django_project/settings.py:435
 msgid "Users"
 msgstr "المستخدمين"
 
-#: django_project/settings.py:410
+#: django_project/settings.py:440
 msgid "Doctors"
 msgstr "الأطباء"
 
-#: django_project/settings.py:417 django_project/settings.py:422
+#: django_project/settings.py:447 django_project/settings.py:452
 msgid "Clinics"
 msgstr "العيادات"
 
-#: django_project/settings.py:427
+#: django_project/settings.py:457
 msgid "Banned Patients"
 msgstr "المرضى المحظورين"
 
-#: django_project/settings.py:434 django_project/settings.py:439
+#: django_project/settings.py:464 django_project/settings.py:469
 msgid "Specialties"
 msgstr "التخصصات"
 
-#: django_project/settings.py:446 django_project/settings.py:451
+#: django_project/settings.py:476 django_project/settings.py:481
 msgid "Evaluations"
 msgstr "التقييمات"
+
+#: templates/admin/index.html:12
+msgid "Django site admin"
+msgstr ""
