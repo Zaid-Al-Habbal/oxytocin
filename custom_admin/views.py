@@ -113,6 +113,13 @@ class PasswordResetCompleteView(FormView):
         )
         return context
 
+    def form_valid(self, form):
+        user: User = self.request.user
+        user.set_password(form.cleaned_data["password"])
+        user.save()
+        login(self.request, user)
+        return super().form_valid(form)
+
 
 def dashboard_callback(request, context):
     context.update(
