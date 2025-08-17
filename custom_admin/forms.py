@@ -76,6 +76,7 @@ class PasswordResetConfirmFormHelper(FormHelper):
             Field("phone"),
             Field("otp", wrapper_class="mb-4"),
         )
+        self.add_input(Submit("resend", _("Resend code"), css_class="mt-2"))
         self.add_input(Submit("submit", _("Submit"), css_class="mt-2"))
 
 
@@ -86,11 +87,13 @@ class PasswordResetConfirmForm(forms.Form):
         min_length=5,
         max_length=5,
         widget=UnfoldAdminTextInputWidget(attrs={"placeholder": _("Enter your code")}),
-        required=True,
+        required=False,
     )
 
     def clean_otp(self):
         otp = self.cleaned_data["otp"]
+        if not otp:
+            raise ValidationError(_("This field is required."))
         if not otp.isdigit():
             raise ValidationError(_("Code must be a number."))
         return otp

@@ -22,6 +22,7 @@ from custom_admin.forms import (
 from users.tasks import send_sms
 from users.services import OTPService
 from users.models import CustomUser as User
+from django.contrib import messages
 
 
 otp_service = OTPService()
@@ -96,6 +97,37 @@ class PasswordResetConfirmView(FormView):
         if phone:
             initial["phone"] = phone
         return initial
+
+    def post(self, request, *args, **kwargs):
+        # Allow resending code without validating the OTP field
+        if request.POST.get("resend") is not None:
+            phone = request.POST.get("phone") or request.session.get(
+                "password_reset_phone"
+            )
+            if phone:
+                try:
+                    user = User.objects.not_deleted().get(
+                        phone=phone, role=User.Role.ADMIN
+                    )
+                    key = PASSWORD_RESET_KEY % {"user": user.id}
+                    otp = otp_service.generate(key)
+                    message = _(
+                        "🩺 Oxytocin:\nUse code %(otp)s to reset your password.\nDon’t share this code with anyone."
+                    ) % {"otp": otp}
+                    send_sms.delay(user.phone, message)
+
+                except User.DoesNotExist:
+                    pass
+
+                messages.success(request, _("A new code has been sent."))
+                # Persist phone for subsequent requests
+                request.session["password_reset_phone"] = phone
+
+            # Re-render with an unbound form (pre-filled from initial) to avoid errors
+            form = self.form_class(initial=self.get_initial())
+            return self.render_to_response(self.get_context_data(form=form))
+
+        return super().post(request, *args, **kwargs)
 
 
 class PasswordResetCompleteView(FormView):
