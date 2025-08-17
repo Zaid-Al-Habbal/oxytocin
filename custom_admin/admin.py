@@ -158,7 +158,6 @@ class UsersLineComponent(BaseComponent):
         )
 
     def get_count(self):
-        print(self.get_queryset().count())
         return self.get_queryset().count()
 
     def get_data(self, **kwargs):
