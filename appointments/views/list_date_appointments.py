@@ -33,6 +33,7 @@ from rest_framework.exceptions import PermissionDenied
             value=[
             {
                 "date": "2025-07-28",
+                "is_special": True,
                 "visit_times": [
                     {
                         "visit_time": "11:00:00",
@@ -106,6 +107,7 @@ from rest_framework.exceptions import PermissionDenied
             },
             {
                 "date": "2025-07-29",
+                "is_special": False,
                 "visit_times": []
             }
             ],
@@ -145,13 +147,15 @@ class MyClinicAppointmentsView(APIView):
         output = []
         current_date = start_date
         while current_date <= end_date:
+            is_special_date = False
             try:
                 schedule = ClinicSchedule.objects.get(clinic=clinic, special_date=current_date)
+                is_special_date = True
             except ClinicSchedule.DoesNotExist:
                 weekday = current_date.strftime('%A').lower()
                 schedule = ClinicSchedule.objects.get(clinic=clinic, day_name=weekday)
                 
-            day_data = {"date": current_date, "visit_times": []}
+            day_data = {"date": current_date, "is_special": is_special_date, "visit_times": []}
             
             available_hours = AvailableHour.objects.filter(schedule=schedule).order_by("start_hour")
             start_times = get_split_visit_times(available_hours, clinic.time_slot_per_patient)

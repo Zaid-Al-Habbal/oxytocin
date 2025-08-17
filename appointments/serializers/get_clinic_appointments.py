@@ -25,6 +25,7 @@ class VisitTimesSerializer(serializers.Serializer):
     
 class DateDetailsSerializer(serializers.Serializer):
     date = serializers.DateField()
+    is_special = serializers.BooleanField()
     visit_times = VisitTimesSerializer(many=True)
     
 
