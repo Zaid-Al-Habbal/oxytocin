@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-17 12:10+0300\n"
+"POT-Creation-Date: 2025-08-17 22:32+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,18 +65,41 @@ msgstr "التخصصات"
 msgid "Evaluations"
 msgstr "التقييمات"
 
-#: templates/admin/index.html:12
+#: templates/admin/index.html:12 templates/admin/login.html:15
+#: templates/registration/password_reset_complete.html:15
+#: templates/registration/password_reset_confirm.html:15
+#: templates/registration/password_reset_form.html:15
 msgid "Django site admin"
 msgstr ""
 
-#: templates/admin/index.html:35
-msgid "Current year patients"
-msgstr "مرضى العام الحالي"
-
-#: templates/admin/index.html:45
+#: templates/admin/index.html:36
 msgid "Current year doctors"
 msgstr "أطباء العام الحالي"
 
-#: templates/admin/index.html:55
+#: templates/admin/index.html:46
 msgid "Current year assistants"
 msgstr "مساعدي العام الحالي"
+
+#: templates/admin/index.html:58
+msgid "Current year patients"
+msgstr "مرضى العام الحالي"
+
+#: templates/admin/login.html:15
+msgid "Welcome back to"
+msgstr ""
+
+#: templates/admin/login.html:26
+#, python-format
+msgid "You are authenticated as %(username)s, but are not authorized to access this page. Would you like to login to a different account?"
+msgstr ""
+
+#: templates/admin/login.html:47
+msgid "Log in"
+msgstr ""
+
+#: templates/admin/login.html:55
+#: templates/registration/password_reset_complete.html:15
+#: templates/registration/password_reset_confirm.html:15
+#: templates/registration/password_reset_form.html:15
+msgid "Forgotten your password?"
+msgstr "هل نسيت كلمة المرور؟"

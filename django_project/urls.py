@@ -15,7 +15,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
@@ -29,6 +28,7 @@ from drf_spectacular.views import (
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
+    path("admin/", include("custom_admin.urls")),
     path("admin/", admin.site.urls),
     path("_nested_admin/", include("nested_admin.urls")),
     path("api/users/", include("users.urls")),

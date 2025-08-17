@@ -1,0 +1,98 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-17 22:32+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: custom_admin/forms.py:37 custom_admin/forms.py:79 custom_admin/forms.py:137
+msgid "Submit"
+msgstr "إرسال"
+
+#: custom_admin/forms.py:42
+msgid "Phone number"
+msgstr "رقم الهاتف"
+
+#: custom_admin/forms.py:45
+msgid "Enter your phone number"
+msgstr "أدخل رقم هاتفك"
+
+#: custom_admin/forms.py:55
+msgid "This phone number is not allowed during development."
+msgstr "هذا رقم الهاتف غير مسموح به أثناء التطوير."
+
+#: custom_admin/forms.py:58
+msgid "Phone number must start with '09'."
+msgstr "يجب أن يبدأ رقم الهاتف ب '09'."
+
+#: custom_admin/forms.py:85
+msgid "Code"
+msgstr "الرمز"
+
+#: custom_admin/forms.py:88
+msgid "Enter your code"
+msgstr "أدخل الرمز"
+
+#: custom_admin/forms.py:95
+msgid "Code must be a number."
+msgstr "يجب أن يكون الرمز رقمًا."
+
+#: custom_admin/forms.py:109 custom_admin/forms.py:116
+msgid "Invalid code."
+msgstr "الرمز غير صالح."
+
+#: custom_admin/forms.py:142
+msgid "Password"
+msgstr "كلمة المرور"
+
+#: custom_admin/forms.py:144
+msgid "Enter your password"
+msgstr "أدخل كلمة المرور"
+
+#: custom_admin/forms.py:148
+msgid "Confirm password"
+msgstr "تأكيد كلمة المرور"
+
+#: custom_admin/forms.py:150
+msgid "Confirm your password"
+msgstr "تأكيد كلمة المرور"
+
+#: custom_admin/forms.py:159
+msgid "Passwords do not match."
+msgstr "كلمات المرور غير متطابقة."
+
+#: custom_admin/views.py:31
+msgid "Password Reset"
+msgstr "إعادة تعيين كلمة المرور"
+
+#: custom_admin/views.py:59
+#, python-format
+msgid ""
+"🩺 Oxytocin:\n"
+"Use code %(otp)s to reset your password.\n"
+"Don’t share this code with anyone."
+msgstr ""
+"🩺 Oxytocin:\n"
+"استخدم الرمز %(otp)s لإعادة تعيين كلمة المرور.\n"
+"لا تشارك هذا الرمز مع أي شخص."
+
+#: custom_admin/views.py:70
+msgid "Password Reset Confirmation"
+msgstr "تأكيد إعادة تعيين كلمة المرور"
+
+#: custom_admin/views.py:102
+msgid "Password Reset Complete"
+msgstr "إعادة تعيين كلمة المرور تمت"
