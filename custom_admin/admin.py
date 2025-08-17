@@ -1,11 +1,13 @@
+from abc import abstractmethod
 from unfold.components import BaseComponent, register_component
 from doctors.models import Doctor
-from django.utils.translation import gettext_lazy as _
+from users.models import CustomUser as User
+from django.utils.translation import gettext as _
 from django.db.models import Count, Q
 from appointments.models import Appointment
 from django.utils import timezone
-from datetime import timedelta, date
 import calendar
+import json
 
 
 @register_component
@@ -136,3 +138,74 @@ class AppointmentsCohortComponent(BaseComponent):
         context = super().get_context_data(**kwargs)
         context.update({"data": self.get_data()})
         return context
+
+
+class UsersLineComponent(BaseComponent):
+
+    @property
+    @abstractmethod
+    def role(self):
+        pass
+
+    def get_queryset(self):
+        return (
+            User.objects.filter(
+                role=self.role,
+                created_at__year=timezone.localdate().year,
+            )
+            .not_deleted()
+            .verified_phone()
+        )
+
+    def get_count(self):
+        print(self.get_queryset().count())
+        return self.get_queryset().count()
+
+    def get_data(self, **kwargs):
+        month = kwargs["month"]
+        queryset = self.get_queryset().filter(created_at__month=month)
+        return [1, queryset.count()]
+
+    def get_labels(self):
+        return [_(calendar.month_name[month]) for month in range(1, 13)]
+
+    def get_datasets(self):
+        self.users = list(self.get_queryset())
+        data = []
+        current_month = 1
+        while current_month <= 12:
+            data.append(self.get_data(month=current_month))
+            current_month += 1
+
+        return [
+            {
+                "data": data,
+                "borderColor": "var(--color-primary-500)",
+            }
+        ]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        data = json.dumps(
+            {
+                "labels": self.get_labels(),
+                "datasets": self.get_datasets(),
+            }
+        )
+        context.update({"data": data})
+        return context
+
+
+@register_component
+class PatientsLineComponent(UsersLineComponent):
+    role = User.Role.PATIENT
+
+
+@register_component
+class DoctorsLineComponent(UsersLineComponent):
+    role = User.Role.DOCTOR
+
+
+@register_component
+class AssistantsLineComponent(UsersLineComponent):
+    role = User.Role.ASSISTANT

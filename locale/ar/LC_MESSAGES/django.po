@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-16 23:11+0300\n"
+"POT-Creation-Date: 2025-08-17 12:10+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,3 +68,15 @@ msgstr "التقييمات"
 #: templates/admin/index.html:12
 msgid "Django site admin"
 msgstr ""
+
+#: templates/admin/index.html:35
+msgid "Current year patients"
+msgstr "مرضى العام الحالي"
+
+#: templates/admin/index.html:45
+msgid "Current year doctors"
+msgstr "أطباء العام الحالي"
+
+#: templates/admin/index.html:55
+msgid "Current year assistants"
+msgstr "مساعدي العام الحالي"

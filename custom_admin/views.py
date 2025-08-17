@@ -1,21 +1,17 @@
 from django.shortcuts import render
+from custom_admin.admin import (
+    PatientsLineComponent,
+    DoctorsLineComponent,
+    AssistantsLineComponent,
+)
 
 
-# Create your views here.
 def dashboard_callback(request, context):
     context.update(
         {
-            "cards": [
-                {
-                    "title": "Card 1",
-                    "metric": "100",
-                },
-                {
-                    "title": "Card 2",
-                    "metric": "200",
-                },
-                
-            ],
+            "patients_count": PatientsLineComponent(request).get_count(),
+            "doctors_count": DoctorsLineComponent(request).get_count(),
+            "assistants_count": AssistantsLineComponent(request).get_count(),
         }
     )
 
