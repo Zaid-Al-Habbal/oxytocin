@@ -26,7 +26,7 @@ from rest_framework import status
 from doctors.permissions import IsDoctorWithClinic
 from .serializers import *
 from evaluations.models import Evaluation
-from financials.models import Financial
+from financials.models import Financial, Payment
 from appointments.models import Appointment
 
 
@@ -144,7 +144,7 @@ class IncomesDetailView(APIView):
         clinic = getattr(user.doctor, "clinic", None)
         
         aggregated = (
-            Financial.objects
+            Payment.objects
             .filter(
                 clinic=clinic,
                 created_at__date__range=(start_date, end_date)
