@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 21:20+0300\n"
+"POT-Creation-Date: 2025-08-18 14:38+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,19 +22,19 @@ msgstr ""
 msgid "Financials"
 msgstr "الماليات"
 
-#: financials/models.py:20
+#: financials/models.py:20 financials/models.py:52
 msgid "Clinic"
 msgstr "العيادة"
 
-#: financials/models.py:26
+#: financials/models.py:26 financials/models.py:58
 msgid "Patient"
 msgstr "مريض"
 
-#: financials/models.py:28
+#: financials/models.py:28 financials/models.py:60
 msgid "Cost"
 msgstr "التكلفة"
 
-#: financials/models.py:30
+#: financials/models.py:30 financials/models.py:62
 msgid "Created at"
 msgstr "تاريخ الإنشاء"
 
@@ -45,3 +45,19 @@ msgstr "تاريخ التحديث"
 #: financials/models.py:38
 msgid "Financial"
 msgstr "مالية"
+
+#: financials/models.py:65
+msgid "Payment"
+msgstr "دفعة"
+
+#: financials/models.py:66
+msgid "Payments"
+msgstr "المدفوعات"
+
+#: financials/serializers.py:29
+msgid "must be greater than 0"
+msgstr "يجب أن يكون أكبر من 0"
+
+#: financials/serializers.py:31
+msgid "must be less than or equal to the cost"
+msgstr "يجب أن يكون أقل من أو يساوي التكلفة"

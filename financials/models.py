@@ -42,3 +42,29 @@ class Financial(models.Model):
             models.Index(fields=["-updated_at"]),
         ]
         ordering = ["-created_at"]
+
+
+class Payment(models.Model):
+    clinic = models.ForeignKey(
+        Clinic,
+        on_delete=models.CASCADE,
+        related_name="payments",
+        verbose_name=_("Clinic"),
+    )
+    patient = models.ForeignKey(
+        Patient,
+        on_delete=models.CASCADE,
+        related_name="payments",
+        verbose_name=_("Patient"),
+    )
+    cost = models.FloatField(verbose_name=_("Cost"))
+
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
+
+    class Meta:
+        verbose_name = _("Payment")
+        verbose_name_plural = _("Payments")
+        indexes = [
+            models.Index(fields=["-created_at"]),
+        ]
+        ordering = ["-created_at"]
