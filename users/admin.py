@@ -1,7 +1,5 @@
 from django.contrib import admin
 from django.contrib.admin.exceptions import NotRegistered
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.models import User, Group
 
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
@@ -43,6 +41,7 @@ class UserAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
         "id",
         "first_name",
         "last_name",
+        "phone",
         "email",
         "role",
         "is_active",
@@ -50,5 +49,5 @@ class UserAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
         "is_superuser",
     ]
     list_filter = ["role", "is_active", "is_staff", "is_superuser"]
-    search_fields = ["first_name", "last_name", "email"]
+    search_fields = ["first_name", "last_name", "phone", "email"]
     readonly_fields = ["created_at", "updated_at"]
