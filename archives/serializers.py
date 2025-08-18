@@ -44,10 +44,11 @@ class ArchiveSerializer(serializers.ModelSerializer):
             "vital_signs",
             "recommendations",
             "cost",
+            "paid",
             "created_at",
             "updated_at",
         ]
-        read_only_fields = ["id", "created_at", "updated_at"]
+        read_only_fields = ["id", "paid", "created_at", "updated_at"]
 
     @property
     def request(self):
@@ -99,7 +100,8 @@ class ArchiveUpdateSerializer(serializers.ModelSerializer):
             "vital_signs",
             "recommendations",
             "cost",
+            "paid",
             "created_at",
             "updated_at",
         ]
-        read_only_fields = ["id", "created_at", "updated_at"]
+        read_only_fields = ["id", "paid", "created_at", "updated_at"]
