@@ -26,6 +26,7 @@ class DoctorDetailSerializer(serializers.ModelSerializer):
     main_specialty = DoctorSpecialtyDetailSerializer()
     subspecialties = DoctorSpecialtyDetailSerializer(many=True)
     clinic = ClinicSerializer()
+    is_favorite = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Doctor
@@ -38,5 +39,6 @@ class DoctorDetailSerializer(serializers.ModelSerializer):
             "main_specialty",
             "subspecialties",
             "clinic",
+            "is_favorite",
         ]
         read_only_fields = ["rate"]
