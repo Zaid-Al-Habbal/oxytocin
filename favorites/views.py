@@ -14,6 +14,7 @@ from users.models import CustomUser as User
 from users.permissions import HasRole
 
 from favorites.serializers import FavoriteSerializer
+from favorites.filters import DoctorFilter
 
 
 class FavoritePagination(PageNumberPagination):
@@ -27,6 +28,13 @@ class FavoritePagination(PageNumberPagination):
         summary="List patient's favorite doctors",
         description="Retrieve a paginated list of all doctors that the current authenticated patient has marked as favorites.",
         parameters=[
+            OpenApiParameter(
+                name="doctor_id",
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.QUERY,
+                description="Doctor ID to filter by",
+                required=False,
+            ),
             OpenApiParameter(
                 name="page",
                 type=OpenApiTypes.INT,
@@ -54,6 +62,7 @@ class FavoriteListCreateView(ListCreateAPIView):
     serializer_class = FavoriteSerializer
     permission_classes = [IsAuthenticated, HasRole]
     required_roles = [User.Role.PATIENT]
+    filter_backends = [DoctorFilter]
     pagination_class = FavoritePagination
 
     def get_queryset(self):
