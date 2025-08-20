@@ -51,7 +51,7 @@ class FavoriteDestroyTestCase(FavoriteBaseTestCase):
             patient=cls.patient,
             doctor=favorite_doctor_for_destroy,
         )
-        cls.path = reverse("favorite-destroy", kwargs={"pk": favorite.pk})
+        cls.path = reverse("favorite-destroy", kwargs={"doctor_id": favorite.doctor.pk})
 
     def test_destroy_successful(self):
         self.client.force_authenticate(self.patient_user)
@@ -59,12 +59,12 @@ class FavoriteDestroyTestCase(FavoriteBaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_view_rejects_users_with_non_patient_role(self):
-        path = reverse("favorite-destroy", kwargs={"pk": self.favorite.pk})
+        path = reverse("favorite-destroy", kwargs={"doctor_id": self.favorite.doctor.pk})
         self.client.force_authenticate(self.favorite_doctor_user)
         response = self.client.delete(path)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_view_rejects_unauthenticated_users(self):
-        path = reverse("favorite-destroy", kwargs={"pk": self.favorite.pk})
+        path = reverse("favorite-destroy", kwargs={"doctor_id": self.favorite.doctor.pk})
         response = self.client.delete(path)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

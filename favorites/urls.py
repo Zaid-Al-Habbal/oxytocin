@@ -10,7 +10,7 @@ urlpatterns = [
         name="favorite-list-create",
     ),
     path(
-        "<int:pk>/",
+        "<int:doctor_id>/",
         views.FavoriteDestroyView.as_view(),
         name="favorite-destroy",
     ),

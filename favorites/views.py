@@ -76,12 +76,14 @@ class FavoriteListCreateView(ListCreateAPIView):
 
 @extend_schema(
     summary="Remove doctor from favorites",
-    description="Delete a favorite entry by ID for the current authenticated patient. Only favorites belonging to the authenticated patient can be deleted.",
+    description="Delete a favorite entry by doctor ID for the current authenticated patient. Only favorites belonging to the authenticated patient can be deleted.",
     tags=["Favorites"],
 )
 class FavoriteDestroyView(DestroyAPIView):
     permission_classes = [IsAuthenticated, HasRole]
     required_roles = [User.Role.PATIENT]
+    lookup_field = "doctor_id"
+    lookup_url_kwarg = "doctor_id"
 
     def get_queryset(self):
         patient: Patient = self.request.user.patient
