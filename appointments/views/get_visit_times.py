@@ -99,8 +99,6 @@ class ClinicVisitTimesForMultipleDaysView(APIView):
                 schedule = ClinicSchedule.objects.get(clinic=clinic, day_name=weekday)
 
             available_hours = AvailableHour.objects.filter(schedule=schedule).order_by("start_hour")
-            if not available_hours.exists():
-                return Response([], status=200)
 
             time_slot = clinic.time_slot_per_patient
             start_times = get_split_visit_times(available_hours, time_slot)
