@@ -10,7 +10,13 @@ class AttachmentUploadSerializer(serializers.Serializer):
             DjangoFileValidator(
                 libraries=["python_magic", "filetype"],
                 acceptable_mimes=[
-                    "application/pdf"
+                    "application/pdf",
+                    "image/jpg",
+                    "image/jpeg",
+                    "image/png",
+                    "image/gif",
+                    "image/webp",
+                    "image/bmp",
                 ],
                 acceptable_types=["archive"],
                 max_upload_file_size=7 * 1024 * 1024,  
