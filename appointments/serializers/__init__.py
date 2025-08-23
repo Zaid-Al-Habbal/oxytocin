@@ -6,3 +6,4 @@ from .change_appointment_status import *
 from .upload_attachments import *
 from .appointment_queue import *
 from .summary import *
+from .change_time_slot_per_patient import *

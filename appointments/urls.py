@@ -17,5 +17,6 @@ urlpatterns = [
     path('<int:appointment_id>/attachments/<int:attachment_id>/delete/', DeleteAttachmentView.as_view(), name='delete-attachment'),
     path('<int:appointment_id>/attachments/', ListAppointmentAttachmentsView.as_view(), name='list-attachments'),
     path('<int:appointment_id>/queue/', AppointmentQueueView.as_view(), name='appointment-queue'),
+    path('my-clinic/change-time-slot/', ChangeTimeSlotView.as_view(), name='change-time-slot'),
 
 ]
