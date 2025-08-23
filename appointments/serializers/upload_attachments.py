@@ -18,7 +18,7 @@ class AttachmentUploadSerializer(serializers.Serializer):
                     "image/webp",
                     "image/bmp",
                 ],
-                acceptable_types=["archive"],
+                acceptable_types=["archive", "image"],
                 max_upload_file_size=7 * 1024 * 1024,  
             )
         ],
