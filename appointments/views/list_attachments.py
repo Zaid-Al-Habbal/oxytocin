@@ -37,11 +37,15 @@ from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_v
 )
 
 class ListAppointmentAttachmentsView(APIView):
-    required_roles = [User.Role.PATIENT]
+    required_roles = [User.Role.PATIENT, User.Role.DOCTOR]
     permission_classes = [IsAuthenticated, HasRole]
 
     def get(self, request, appointment_id):
-        appointment = get_object_or_404(Appointment, id=appointment_id, patient=request.user)
+        user = request.user
+        if user.role == User.Role.PATIENT:
+            appointment = get_object_or_404(Appointment, id=appointment_id, patient=request.user)
+        else :
+            appointment = get_object_or_404(Appointment, id=appointment_id, clinic=user.id)
 
         attachments = Attachment.objects.filter(appointment=appointment)
         serializer = AttachmentSerializer(attachments, many=True)
