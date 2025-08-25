@@ -69,6 +69,7 @@ class UserSummarySerializer(serializers.ModelSerializer):
             "id",
             "first_name",
             "last_name",
+            "phone",
             "image",
             "gender",
         ]
