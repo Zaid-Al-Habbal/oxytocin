@@ -10,4 +10,4 @@ class ClinicSummarySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Clinic
-        fields = ["doctor", "address", 'longitude', 'latitude']
+        fields = ["doctor", "phone","address", 'longitude', 'latitude']
