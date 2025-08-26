@@ -32,7 +32,7 @@ class AppointmentAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
         "cancelled_at",
         "cancelled_by",
     )
-    list_filter = ("visit_date", "status", "clinic")
+    list_filter = ("visit_date", "status", "clinic__doctor__user")
     ordering = ("-visit_date", "-visit_time")
 
 
