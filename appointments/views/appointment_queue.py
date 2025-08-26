@@ -17,10 +17,10 @@ from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_v
     summary="Get Appointment Queue",
     description="Patients can see the appointment queue details for previous appointments and the estimated_wait_minutes",
     methods=['get'],
-    responses={200, AppointmentQueueSerializer},
+    responses={200: AppointmentQueueSerializer},
     examples=[
         OpenApiExample(
-            name="List Uploaded Attachments to an appointment",
+            name="Get Appointment Queue",
             value={
                 "estimated_wait_minutes": 321,
                 "queue": [
@@ -63,19 +63,21 @@ class AppointmentQueueView(RetrieveAPIView):
             clinic=clinic,
             visit_date=date,
             visit_time__lt=visit_time,
-        ).order_by('-visit_time')[:3]
+        ).order_by('-visit_time')
         
         # Fetch historical delays
         recent_completed = Appointment.objects.filter(
             clinic=clinic,
             actual_start_time__isnull=False,
             actual_end_time__isnull=False,
-            visit_date__lt=date  # only past appointments
-        ).order_by('-visit_date', '-visit_time')[:10]
+            visit_date=date  # only past appointments
+        ).order_by('-visit_date', '-visit_time')
 
         delays = []
         for a in recent_completed:
-            delay = (a.actual_start_time - a.visit_time).total_seconds()
+            scheduled = datetime.combine(a.visit_date, a.visit_time)
+            actual = datetime.combine(a.visit_date, a.actual_start_time)
+            delay = (actual - scheduled).total_seconds()
             if delay > 0:
                 delays.append(delay)
 
