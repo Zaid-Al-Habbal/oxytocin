@@ -117,7 +117,7 @@ class Doctor(models.Model):
         related_name="doctors",
         verbose_name=_("Specialties"),
     )
-    rate = models.FloatField(default=0.0, verbose_name=_("Rate"))
+    rate = models.DecimalField(max_digits=2, decimal_places=1, default=0.0, verbose_name=_("Rate"))
 
     history = HistoricalRecords(cascade_delete_history=True)
 
