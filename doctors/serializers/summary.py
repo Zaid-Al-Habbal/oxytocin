@@ -10,6 +10,7 @@ class DoctorSummarySerializer(serializers.ModelSerializer):
     user = UserSummarySerializer(read_only=True)
     main_specialty = DoctorSpecialtySerializer(read_only=True)
     address = serializers.CharField(source="clinic.address", read_only=True)
+    rate = serializers.FloatField(read_only=True)
     rates = serializers.IntegerField(read_only=True)
     is_favorite = serializers.BooleanField(read_only=True)
 
