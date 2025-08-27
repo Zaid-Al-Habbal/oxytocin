@@ -11,6 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
+            "id",
             "first_name",
             "last_name",
             "phone",
@@ -18,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
             "gender",
             "birth_date",
         ]
-        read_only_fields = ["phone", "image"]
+        read_only_fields = ["id", "phone", "image"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
