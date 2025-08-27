@@ -8,6 +8,7 @@ from users.serializers import UserSerializer, UserNestedSerializer
 from users.models import CustomUser as User
 
 from .models import Assistant
+from clinics.serializers.summary import ClinicSummarySerializer
 
 
 class LoginAssistantSerializer(serializers.Serializer):
@@ -82,17 +83,20 @@ class CompleteAssistantRegistrationSerializer(serializers.ModelSerializer):
     
 class AssistantProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
+    clinic = ClinicSummarySerializer()
+    
     class Meta:
         model = Assistant
         fields = [
             'user',
+            'clinic',
             'about',
             'education',
             'start_work_date',
             'joined_clinic_at',
             'years_of_experience',
         ]
-        read_only_fields = ['joined_clinic_at', 'years_of_experience',]
+        read_only_fields = ['clinic', 'joined_clinic_at', 'years_of_experience',]
     
     def update(self, instance, validated_data):
         user_data = validated_data.pop('user')
