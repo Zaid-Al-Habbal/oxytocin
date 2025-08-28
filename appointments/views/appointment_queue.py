@@ -62,7 +62,7 @@ class AppointmentQueueView(RetrieveAPIView):
         previous_appointments = Appointment.objects.filter(
             clinic=clinic,
             visit_date=date,
-            visit_time__lt=visit_time,
+            visit_time__lte=visit_time,
         ).order_by('-visit_time')
         
         # Fetch historical delays

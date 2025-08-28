@@ -28,14 +28,12 @@ class AttachmentUploadSerializer(serializers.Serializer):
         write_only=True
     )
 
-    def validate_attachments(self, value):
-        if len(value) > 5:
-            raise serializers.ValidationError("You can upload a maximum of 5 attachments.")
-        return value
 
     def create(self, validated_data):
         appointment = self.context['appointment']
         files = validated_data['attachments']
+        if Attachment.objects.filter(appointment=appointment).count() + len(files) > 5:
+          raise serializers.ValidationError("You can upload a maximum of 5 attachments.") 
         for file in files:
             Attachment.objects.create(appointment=appointment, document=file)
         return {"details": "Attachments uploaded successfully"}

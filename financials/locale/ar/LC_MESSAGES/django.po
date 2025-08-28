@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-18 14:38+0300\n"
+"POT-Creation-Date: 2025-08-28 19:44+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: financials/apps.py:8 financials/models.py:39
 msgid "Financials"
@@ -54,10 +55,10 @@ msgstr "دفعة"
 msgid "Payments"
 msgstr "المدفوعات"
 
-#: financials/serializers.py:29
+#: financials/serializers.py:32
 msgid "must be greater than 0"
 msgstr "يجب أن يكون أكبر من 0"
 
-#: financials/serializers.py:31
+#: financials/serializers.py:35
 msgid "must be less than or equal to the cost"
 msgstr "يجب أن يكون أقل من أو يساوي التكلفة"

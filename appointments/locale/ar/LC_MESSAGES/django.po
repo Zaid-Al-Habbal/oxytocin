@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-15 21:06+0300\n"
+"POT-Creation-Date: 2025-08-28 19:44+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: appointments/apps.py:8 appointments/models.py:106
 msgid "Appointments"
@@ -120,6 +121,10 @@ msgstr "تاريخ الزيارة يحب أن يكون في المستقبل"
 msgid "This time slot is already booked."
 msgstr "هذا الوقت محجوز من قبل مريض آخر"
 
+#: appointments/serializers/change_time_slot_per_patient.py:12
+msgid "time slot must be positive"
+msgstr ""
+
 #: appointments/serializers/update_appointment.py:62
 msgid "Invalid visit time. Must match available hours."
 msgstr "وقت الزيارة غير صحيح. يجب أن يتطابق مع الساعات المتاحة."
@@ -128,17 +133,20 @@ msgstr "وقت الزيارة غير صحيح. يجب أن يتطابق مع ا�
 #, python-brace-format
 msgid ""
 "Dear {patient},\n"
-" your appointment on {date} at {time} with Dr. {doctor} has been cancelled due to clinic schedule changes.\n"
+" your appointment on {date} at {time} with Dr. {doctor} has been cancelled "
+"due to clinic schedule changes.\n"
 "Please reschedule through our app. We apologize for any inconvenience."
 msgstr ""
 "عزيزي/عزيزتي {patient}،\n"
 "\n"
-"نود إعلامك بأن موعدك المحدد في تاريخ {date} الساعة {time} مع الدكتور/ة {doctor} قد تم إلغاؤه بسبب تغييرات في جدول العيادة.\n"
+"نود إعلامك بأن موعدك المحدد في تاريخ {date} الساعة {time} مع الدكتور/ة "
+"{doctor} قد تم إلغاؤه بسبب تغييرات في جدول العيادة.\n"
 "نعتذر عن هذا الإزعاج، ونرجو منك إعادة حجز موعد جديد من خلال التطبيق\n"
 "شكرًا لتفهمك."
 
 #: appointments/views/cancel_appointment.py:54
-msgid "Cannot cancel an appointment less than 24 hours before the scheduled time."
+msgid ""
+"Cannot cancel an appointment less than 24 hours before the scheduled time."
 msgstr "لا يمكنك إلغاء موعد قبل أقل من 24 ساعة من ميعاده"
 
 #: appointments/views/cancel_appointment.py:62
@@ -154,11 +162,14 @@ msgid "Cannot rebook this appointment because its time is passed"
 msgstr "لا يمكنك إعادة حجز هذا الموعد لأن ميعاده أصبح في الماضي"
 
 #: appointments/views/rebook_appointment.py:65
-msgid "You can not rebook this appointment because its booked by another patient"
+msgid ""
+"You can not rebook this appointment because its booked by another patient"
 msgstr "لا يمكنك إعادة حجز هذا الموعد لأنه أصبح محجوز من قبل مريض آخر"
 
 #: appointments/views/rebook_appointment.py:78
-msgid "You can not rebook this appointment because its time slot is not available anymore"
+msgid ""
+"You can not rebook this appointment because its time slot is not available "
+"anymore"
 msgstr "لا يمكنك إعادة حجز هذا الموعد لأن وقته غير متاح"
 
 #: appointments/views/rebook_appointment.py:86

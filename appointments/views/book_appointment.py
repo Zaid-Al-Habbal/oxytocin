@@ -4,8 +4,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.exceptions import PermissionDenied, ValidationError
 
 from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
+from django.utils.translation import gettext_lazy as _
 
 
 from users.permissions import HasRole
@@ -63,6 +65,7 @@ class BookAppointmentView(APIView):
 
         patient = request.user
         validated = serializer.validated_data
+        
 
         appointment = Appointment.objects.create(
             patient=patient,
