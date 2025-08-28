@@ -34,6 +34,7 @@ DEBUG = config("DEBUG", cast=bool, default=False)
 
 ALLOWED_HOSTS = ["*"]
 
+CSRF_TRUSTED_ORIGINS = ["*"]
 
 # Application definition
 
@@ -412,7 +413,7 @@ UNFOLD = {
     "SHOW_BACK_BUTTON": True,
     "SIDEBAR": {
         "show_search": True,
-        "show_all_applications": True,
+        "show_all_applications": DEBUG,
         "navigation": [
             {
                 "title": _("Navigation"),
