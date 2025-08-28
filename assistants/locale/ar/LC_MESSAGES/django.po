@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-11 19:03+0300\n"
+"POT-Creation-Date: 2025-08-29 00:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,8 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: assistants/apps.py:8 assistants/models.py:43
 msgid "Assistants"
@@ -51,7 +50,11 @@ msgstr "تاريخ البدء في العمل"
 msgid "Assistant"
 msgstr "المساعدة"
 
-#: assistants/models.py:50
+#: assistants/models.py:49
+msgid "ID"
+msgstr "المعرف"
+
+#: assistants/models.py:55
 msgid "Years of Experience"
 msgstr "سنوات الخبرة"
 
@@ -67,27 +70,27 @@ msgstr "من فضلك, قم بإنشاء ملف شحصي (مساعدة)"
 msgid "Please join a clinic first."
 msgstr "قم بالإنضمام لعيادة أولا"
 
-#: assistants/serializers.py:30
+#: assistants/serializers.py:31
 msgid "Invalid credentials"
 msgstr "البيانات غير صالحة"
 
-#: assistants/serializers.py:33
+#: assistants/serializers.py:34
 msgid "Only assistants can log in here."
 msgstr "فقط المساعدات يستطيعون تسجيل الدخول هنا"
 
-#: assistants/serializers.py:36
+#: assistants/serializers.py:37
 msgid "Please, verify your phone number first"
 msgstr "من فضلك، قم بتحقق رقم هاتفك أولا"
 
-#: assistants/serializers.py:64
+#: assistants/serializers.py:65
 msgid "Phone number is not verified."
 msgstr "رقم الهاتف غير متحقق."
 
-#: assistants/serializers.py:66
+#: assistants/serializers.py:67
 msgid "Assistant profile already exists."
 msgstr "لقد قمت بإنشاء ملف مساعد من قبل"
 
-#: assistants/serializers.py:68
+#: assistants/serializers.py:69
 msgid "You have no access to complete this registration"
 msgstr "ليس لديك صلاحية لإكمال هذا التسجيل"
 
