@@ -17,6 +17,7 @@ class IncomesDetailSerializer(serializers.Serializer):
 class PatientAgesRanges(serializers.Serializer):
     baby = serializers.IntegerField()
     child = serializers.IntegerField()
+    teenager = serializers.IntegerField()
     young_adult = serializers.IntegerField()
     adult = serializers.IntegerField()
     elderly = serializers.IntegerField()
