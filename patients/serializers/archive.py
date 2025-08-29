@@ -36,6 +36,7 @@ class PatientDoctorArchiveSerializer(serializers.ModelSerializer):
             "vital_signs",
             "recommendations",
             "cost",
+            "paid",
             "created_at",
             "updated_at",
         ]
@@ -46,6 +47,7 @@ class PatientDoctorArchiveSerializer(serializers.ModelSerializer):
             "vital_signs",
             "recommendations",
             "cost",
+            "paid",
             "created_at",
             "updated_at",
         ]
