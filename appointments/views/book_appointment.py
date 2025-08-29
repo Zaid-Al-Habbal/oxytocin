@@ -1,4 +1,8 @@
 from django.shortcuts import get_object_or_404
+from django_celery_beat.models import PeriodicTask, ClockedSchedule
+import json
+from django.utils.timezone import make_aware
+from django.utils.timezone import datetime, timedelta, now
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -76,4 +80,45 @@ class BookAppointmentView(APIView):
             status=Appointment.Status.WAITING,
         )
 
+        # -----------------
+        # Schedule reminder
+        # -----------------
+        visit_datetime = make_aware(datetime.combine(appointment.visit_date, appointment.visit_time))
+
+        # Reminder 1 day before
+        reminder_time = visit_datetime - timedelta(days=1)
+        if reminder_time > now():
+            clocked, _ = ClockedSchedule.objects.get_or_create(clocked_time=reminder_time)
+            PeriodicTask.objects.create(
+                clocked=clocked,
+                one_off=True,
+                name=f"appointment-reminder-day-{appointment.id}",
+                task="appointments.tasks.send_appointment_reminder",
+                args=json.dumps([appointment.id]),
+            )
+        
+        # Reminder 1 day before
+        reminder_time = visit_datetime - timedelta(minutes=15)
+        if reminder_time > now():
+            clocked, _ = ClockedSchedule.objects.get_or_create(clocked_time=reminder_time)
+            PeriodicTask.objects.create(
+                clocked=clocked,
+                one_off=True,
+                name=f"appointment-reminder-day-{appointment.id}",
+                task="appointments.tasks.send_appointment_reminder",
+                args=json.dumps([appointment.id]),
+            )
+
+        # Reminder 1 hour before
+        reminder_time = visit_datetime - timedelta(hours=1)
+        if reminder_time > now():
+            clocked, _ = ClockedSchedule.objects.get_or_create(clocked_time=reminder_time)
+            PeriodicTask.objects.create(
+                clocked=clocked,
+                one_off=True,
+                name=f"appointment-reminder-hour-{appointment.id}",
+                task="appointments.tasks.send_appointment_reminder",
+                args=json.dumps([appointment.id]),
+            )
+        
         return Response(AppointmentBookingSerializer(appointment).data, status=status.HTTP_201_CREATED)

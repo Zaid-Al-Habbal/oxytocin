@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-17 22:32+0300\n"
+"POT-Creation-Date: 2025-08-29 16:03+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,51 +17,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: django_project/settings.py:172
+#: django_project/settings.py:173
 msgid "English"
 msgstr "الإنجليزية"
 
-#: django_project/settings.py:173
+#: django_project/settings.py:174
 msgid "Arabic"
 msgstr "العربية"
 
-#: django_project/settings.py:368 django_project/settings.py:369
+#: django_project/settings.py:369 django_project/settings.py:370
 msgid "Oxytocin"
 msgstr "أوكسيتوسين"
 
-#: django_project/settings.py:370
+#: django_project/settings.py:371
 msgid "Oxytocin is a platform for managing clinics."
 msgstr "أوكسيتوسين هي منصة لإدارة العيادات."
 
-#: django_project/settings.py:418
+#: django_project/settings.py:419
 msgid "Navigation"
 msgstr "التنقل"
 
-#: django_project/settings.py:423
+#: django_project/settings.py:424
 msgid "Dashboard"
 msgstr "داش بورد"
 
-#: django_project/settings.py:430 django_project/settings.py:435
+#: django_project/settings.py:431 django_project/settings.py:436
 msgid "Users"
 msgstr "المستخدمين"
 
-#: django_project/settings.py:440
+#: django_project/settings.py:441
 msgid "Doctors"
 msgstr "الأطباء"
 
-#: django_project/settings.py:447 django_project/settings.py:452
+#: django_project/settings.py:448 django_project/settings.py:453
 msgid "Clinics"
 msgstr "العيادات"
 
-#: django_project/settings.py:457
+#: django_project/settings.py:458
 msgid "Banned Patients"
 msgstr "المرضى المحظورين"
 
-#: django_project/settings.py:464 django_project/settings.py:469
+#: django_project/settings.py:465 django_project/settings.py:470
 msgid "Specialties"
 msgstr "التخصصات"
 
-#: django_project/settings.py:476 django_project/settings.py:481
+#: django_project/settings.py:477 django_project/settings.py:482
 msgid "Evaluations"
 msgstr "التقييمات"
 
@@ -90,7 +90,9 @@ msgstr ""
 
 #: templates/admin/login.html:26
 #, python-format
-msgid "You are authenticated as %(username)s, but are not authorized to access this page. Would you like to login to a different account?"
+msgid ""
+"You are authenticated as %(username)s, but are not authorized to access this "
+"page. Would you like to login to a different account?"
 msgstr ""
 
 #: templates/admin/login.html:47
