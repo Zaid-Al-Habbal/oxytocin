@@ -39,7 +39,6 @@ class EvaluationAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
         EvaluationPatientFilter,
         ("rate", RateFilter),
         ("created_at", RangeDateFilter),
-        ("updated_at", RangeDateFilter),
     ]
     search_fields = ["patient__user__first_name", "patient__user__last_name", "patient__user__phone"]
     readonly_fields = ["created_at", "updated_at"]
