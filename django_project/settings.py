@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "mapwidgets",
     "simple_history",
     "import_export",
+    "django_celery_beat",
     # project apps
     "users",
     "patients",
