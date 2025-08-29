@@ -5,6 +5,7 @@ from django.contrib.auth.models import User, Group
 from unfold.forms import AdminPasswordChangeForm
 from unfold.admin import ModelAdmin
 from import_export.admin import ImportExportModelAdmin
+from unfold.contrib.filters.admin import RangeDateFilter
 from unfold.contrib.import_export.forms import (
     ImportForm,
     SelectableFieldsExportForm,
@@ -48,8 +49,16 @@ class UserAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
         "is_active",
         "is_staff",
         "is_superuser",
+        "created_at",
     ]
-    list_filter = ["role", "is_active", "is_staff", "is_superuser"]
+    list_filter = [
+        "role",
+        "is_active",
+        "is_staff",
+        "is_superuser",
+        ("created_at", RangeDateFilter),
+    ]
+    list_filter_submit = True
     search_fields = ["first_name", "last_name", "phone", "email"]
     readonly_fields = ["created_at", "updated_at"]
 

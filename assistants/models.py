@@ -46,6 +46,11 @@ class Assistant(models.Model):
         return f"Assistant: {self.user.email}"
 
     @property
+    @admin.display(description=_("ID"))
+    def id(self):
+        return self.pk
+
+    @property
     @extend_schema_field(OpenApiTypes.INT)
     @admin.display(description=_("Years of Experience"))
     def years_of_experience(self):

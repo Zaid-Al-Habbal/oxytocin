@@ -15,7 +15,7 @@ class AssistantAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
     export_form_class = SelectableFieldsExportForm
     
     list_display = [
-        "user_id",
+        "id",
         "user",
         "clinic",
         "joined_clinic_at",

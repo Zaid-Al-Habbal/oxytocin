@@ -17,51 +17,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: django_project/settings.py:173
+#: django_project/settings.py:177
 msgid "English"
 msgstr "الإنجليزية"
 
-#: django_project/settings.py:174
+#: django_project/settings.py:178
 msgid "Arabic"
 msgstr "العربية"
 
-#: django_project/settings.py:369 django_project/settings.py:370
+#: django_project/settings.py:373 django_project/settings.py:374
 msgid "Oxytocin"
 msgstr "أوكسيتوسين"
 
-#: django_project/settings.py:371
+#: django_project/settings.py:375
 msgid "Oxytocin is a platform for managing clinics."
 msgstr "أوكسيتوسين هي منصة لإدارة العيادات."
 
-#: django_project/settings.py:419
+#: django_project/settings.py:423
 msgid "Navigation"
 msgstr "التنقل"
 
-#: django_project/settings.py:424
+#: django_project/settings.py:428
 msgid "Dashboard"
 msgstr "داش بورد"
 
-#: django_project/settings.py:431 django_project/settings.py:436
+#: django_project/settings.py:435 django_project/settings.py:440
 msgid "Users"
 msgstr "المستخدمين"
 
-#: django_project/settings.py:441
+#: django_project/settings.py:445
 msgid "Doctors"
 msgstr "الأطباء"
 
-#: django_project/settings.py:448 django_project/settings.py:453
+#: django_project/settings.py:452 django_project/settings.py:457
 msgid "Clinics"
 msgstr "العيادات"
 
-#: django_project/settings.py:458
+#: django_project/settings.py:462
 msgid "Banned Patients"
 msgstr "المرضى المحظورين"
 
-#: django_project/settings.py:465 django_project/settings.py:470
+#: django_project/settings.py:469 django_project/settings.py:474
 msgid "Specialties"
 msgstr "التخصصات"
 
-#: django_project/settings.py:477 django_project/settings.py:482
+#: django_project/settings.py:481 django_project/settings.py:486
 msgid "Evaluations"
 msgstr "التقييمات"
 
@@ -70,7 +70,7 @@ msgstr "التقييمات"
 #: templates/registration/password_reset_confirm.html:15
 #: templates/registration/password_reset_form.html:15
 msgid "Django site admin"
-msgstr ""
+msgstr "مدير الموقع"
 
 #: templates/admin/index.html:36
 msgid "Current year doctors"
@@ -86,18 +86,16 @@ msgstr "مرضى العام الحالي"
 
 #: templates/admin/login.html:15
 msgid "Welcome back to"
-msgstr ""
+msgstr "مرحبا بعودتك"
 
 #: templates/admin/login.html:26
 #, python-format
-msgid ""
-"You are authenticated as %(username)s, but are not authorized to access this "
-"page. Would you like to login to a different account?"
-msgstr ""
+msgid "You are authenticated as %(username)s, but are not authorized to access this page. Would you like to login to a different account?"
+msgstr "أنت مصرح للدخول ك %(username)s, لكن ليس لديك صلاحية للدخول إلى هذه الصفحة. هل تريد تسجيل الدخول إلى حساب مختلف؟"
 
 #: templates/admin/login.html:47
 msgid "Log in"
-msgstr ""
+msgstr "تسجيل الدخول"
 
 #: templates/admin/login.html:55
 #: templates/registration/password_reset_complete.html:15

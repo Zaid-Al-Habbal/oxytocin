@@ -24,13 +24,13 @@ services:
       app:
         condition: service_completed_successfully
 
-  seeder:
-    extends:
-      service: app
-    entrypoint: ["./seed.sh"]
-    depends_on:
-      migrate:
-        condition: service_completed_successfully
+  # seeder:
+  #   extends:
+  #     service: app
+  #   entrypoint: ["./seed.sh"]
+  #   depends_on:
+  #     migrate:
+  #       condition: service_completed_successfully
 
   server:
     extends:

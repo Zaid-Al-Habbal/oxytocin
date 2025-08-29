@@ -35,11 +35,11 @@ class DoctorAdmin(SimpleHistoryAdmin, ModelAdmin, ImportExportModelAdmin):
         "id",  # This is the user_id
         "user",
         "about",
-        "education",
         "start_work_date",
         "status",
         "certificate_link",
     ]
+    search_fields = ["user__first_name", "user__last_name", "user__phone"]
     list_filter_submit = True
     list_filter = [("status", ChoicesCheckboxFilter)]
     list_editable = ["status"]
