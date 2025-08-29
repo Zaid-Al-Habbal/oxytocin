@@ -5,12 +5,12 @@ set -e
 
 echo "🚀 Starting database seed process..."
 
-python manage.py loaddata specialties
-python manage.py loaddata main_specialty_subspecialties
+# python manage.py loaddata specialties
+# python manage.py loaddata main_specialty_subspecialties
 python manage.py loaddata users
 python manage.py loaddata patients
 python manage.py loaddata doctors
-python manage.py loaddata doctor_specialties
+# python manage.py loaddata doctor_specialties
 python manage.py loaddata clinics
 python manage.py loaddata assistants
 
