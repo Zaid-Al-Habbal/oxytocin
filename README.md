@@ -1,4 +1,4 @@
-# Oxytocin 
+# 🧬 Oxytocin 
 
 ## Overview
 
@@ -83,7 +83,7 @@ cd oxytocin
 cp .env.example .env
 
 # Build and start services
-docker-compose up --build
+docker compose up --build
 ```
 
 ---
@@ -100,7 +100,7 @@ docker-compose up --build
 Run all tests:
 
 ```bash
-docker-compose run app python manage.py test
+docker compose run app python manage.py test
 ```
 
 Every endpoint is covered with **unit tests** to ensure correctness and maintainability.
